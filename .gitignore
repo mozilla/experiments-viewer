@@ -1,0 +1,10 @@
+*.pyc
+.env
+staticfiles/
+.tox
+env/
+
+node_modules/
+npm-debug.log
+
+distributionviewer/core/static/**/bundle.*

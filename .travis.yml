@@ -1,0 +1,35 @@
+sudo: false
+language: python
+python: "2.7"
+branches:
+    only: master
+cache:
+    directories:
+        - $HOME/.cache/pip
+services:
+    - postgresql
+env:
+    matrix:
+        - TOXENV=py27
+        - TOXENV=flake8
+    global:
+        - CFLAGS=-O0
+        - DATABASE_URL=postgres://postgres:@localhost:5432/distributionviewer_test
+        - DEBIAN_FRONTEND=noninteractive
+        - DJANGO_SETTINGS_MODULE=distributionviewer.settings
+before_install:
+    - pip install -U pip
+install:;
+    - pip install tox
+before_script:
+    - psql -c 'create database distributionviewer_test;' -U postgres
+script: tox -v
+after_failure:
+    - dmesg | tail
+notifications:
+    irc:
+        channels:
+            - "irc.mozilla.org#datatools"
+        on_success: always
+        on_failure: always
+        use_notice: true
