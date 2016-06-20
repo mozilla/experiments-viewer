@@ -1,22 +1,23 @@
+from django.db.models.expressions import RawSQL
+
 from rest_framework.decorators import (api_view, permission_classes,
                                        renderer_classes)
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
-from .fakedata import FAKE_DISTRIBUTION_DATA
+from .models import CategoryCollection, LogCollection
 from .renderers import DistributionJSONRenderer
 from .serializers import (CategoryDistributionSerializer,
-                          CategoryPointSerializer,
-                          LogDistributionSerializer,
-                          LogPointSerializer)
+                          LogDistributionSerializer)
 
 
-def renderit(dist):
-    if dist['type'] == 'log':
-        s = LogDistributionSerializer(data=dist)
-    else:
-        s = CategoryDistributionSerializer(data=dist)
-    s.is_valid(raise_exception=True)
+def render_category(dist):
+    s = CategoryDistributionSerializer(dist)
+    return s.data
+
+
+def render_log(dist):
+    s = LogDistributionSerializer(dist)
     return s.data
 
 
@@ -24,5 +25,8 @@ def renderit(dist):
 @permission_classes([AllowAny])
 @renderer_classes([DistributionJSONRenderer])
 def distributions(request):
-    return Response([renderit(d) for d in FAKE_DISTRIBUTION_DATA])
-
+    qc = CategoryCollection.objects.all()
+    ql = LogCollection.objects.all()
+    return Response(
+        [render_category(d) for d in qc] +
+        [render_log(d) for d in ql])

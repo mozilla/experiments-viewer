@@ -1744,3 +1744,28 @@ FAKE_DISTRIBUTION_DATA = [
      u'pop': u'channel_release',
      u'type': u'log'}
 ]
+
+
+def load():
+    from distributionviewer.api.models import (
+        LogCollection, CategoryCollection, LogPoint, CategoryPoint)
+    for coll in FAKE_DISTRIBUTION_DATA:
+        if coll['type'] == 'categ':
+            c, _ = CategoryCollection.objects.get_or_create(
+                metric=coll['metric'],
+                num_observations=coll['numObs'],
+                population=coll['pop'])
+            for p in coll['points']:
+                CategoryPoint.objects.create(
+                    collection=c, bucket=p['b'],
+                    proportion=p['p'],
+                    rank=p['refRank'])
+        else:
+            c, _ = LogCollection.objects.get_or_create(
+                metric=coll['metric'],
+                num_observations=coll['numObs'],
+                population=coll['pop'])
+            for p in coll['points']:
+                LogPoint.objects.create(
+                    collection=c, bucket=p['b'],
+                    proportion=p['p'])
