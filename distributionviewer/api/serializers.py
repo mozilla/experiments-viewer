@@ -8,16 +8,20 @@ class CategoryPointSerializer(serializers.Serializer):
     refRank = serializers.IntegerField(source='rank')
 
 
-class CategoryDistributionSerializer(serializers.Serializer):
-
-    points = CategoryPointSerializer(many=True)
-    metric = serializers.CharField()
+class DistributionSerializer(serializers.Serializer):
     numObs = serializers.IntegerField(source='num_observations')
+    metric = serializers.CharField(source='metric.name')
+    description = serializers.CharField(source='metric.description')
 
     def to_representation(self, obj):
         data = serializers.Serializer.to_representation(self, obj)
-        data['type'] = 'category'
+        data['type'] = self._type
         return data
+
+
+class CategoryDistributionSerializer(DistributionSerializer):
+    points = CategoryPointSerializer(many=True)
+    _type = 'category'
 
 
 class LogPointSerializer(serializers.Serializer):
@@ -26,13 +30,6 @@ class LogPointSerializer(serializers.Serializer):
     p = serializers.FloatField(source='proportion')
 
 
-class LogDistributionSerializer(serializers.Serializer):
-
+class LogDistributionSerializer(DistributionSerializer):
     points = LogPointSerializer(many=True)
-    metric = serializers.CharField()
-    numObs = serializers.IntegerField(source='num_observations')
-
-    def to_representation(self, obj):
-        data = serializers.Serializer.to_representation(self, obj)
-        data['type'] = 'log'
-        return data
+    _type = 'log'

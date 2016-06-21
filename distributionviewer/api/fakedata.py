@@ -1748,11 +1748,15 @@ FAKE_DISTRIBUTION_DATA = [
 
 def load():
     from distributionviewer.api.models import (
-        LogCollection, CategoryCollection, LogPoint, CategoryPoint)
+        CategoryCollection, CategoryPoint, LogCollection, LogPoint, Metric)
     for coll in FAKE_DISTRIBUTION_DATA:
+        m, _ = Metric.objects.get_or_create(
+            name=coll['metric'],
+            description=u'Fake data ' + coll['metric'],
+            metadata={})
         if coll['type'] == 'categ':
             c, _ = CategoryCollection.objects.get_or_create(
-                metric=coll['metric'],
+                metric=m,
                 num_observations=coll['numObs'],
                 population=coll['pop'])
             for p in coll['points']:
@@ -1762,7 +1766,7 @@ def load():
                     rank=p['refRank'])
         else:
             c, _ = LogCollection.objects.get_or_create(
-                metric=coll['metric'],
+                metric=m,
                 num_observations=coll['numObs'],
                 population=coll['pop'])
             for p in coll['points']:

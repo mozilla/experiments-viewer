@@ -1,5 +1,3 @@
-from django.db.models.expressions import RawSQL
-
 from rest_framework.decorators import (api_view, permission_classes,
                                        renderer_classes)
 from rest_framework.permissions import AllowAny
