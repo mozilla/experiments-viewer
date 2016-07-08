@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'distributionviewer.api',
+    'distributionviewer.core',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -62,7 +63,6 @@ TEMPLATES = [
                 'django.template.context_processors.static',
                 'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
-                'distributionviewer.studies.context_processors.google_auth_key',
             ],
         }
     }
@@ -109,7 +109,7 @@ REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
     ),
-    
+
     'DEFAULT_PERMISSION_CLASSES': (
         'distributionviewer.authentication.OptionsOrIsAuthenticated',
     ),
