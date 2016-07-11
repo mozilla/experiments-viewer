@@ -10,12 +10,13 @@ var concat = require('gulp-concat');
 require('es6-promise').polyfill();
 
 var ROOT = './';
+var JS = path.resolve(ROOT, 'distributionviewer/core/static/js');
 var CSS = path.resolve(ROOT, 'distributionviewer/core/static/css');
 
 // Webpack
 gulp.task('webpack', function() {
   return gulp.src('./distributionviewer/core/static/js/app/app.js')
-             .pipe(webpack(require('./distributionviewer/core/static/js/webpack.config.js')))
+             .pipe(webpack(require('./webpack.config.js')))
              .pipe(gulp.dest('./'));
 });
 
@@ -31,6 +32,7 @@ gulp.task('css', function() {
 });
 
 gulp.task('watch', ['build'], function() {
+  gulp.watch([path.resolve(JS, '**/*.js'), '!' + path.resolve(JS, 'bundle.js')], ['webpack']);
   gulp.watch(path.resolve(CSS, '**/*.styl'), ['css']);
 });
 
