@@ -1,9 +1,9 @@
 import React from 'react';
 
-import ExampleChartContainer from './containers/example-chart-container';
+import ChartList from './containers/chart-list-container';
 
 export default function(props) {
   return (
-    <ExampleChartContainer />
+    <ChartList />
   );
 }
