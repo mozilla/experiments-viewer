@@ -1,11 +1,12 @@
 import React from 'react';
 
-const Home = React.createClass({
-  render: function() {
-    return (
-      <h1>Distribution Viewer</h1>
-    );
-  }
-});
+import ExampleChartContainer from './containers/example-chart-container';
 
-export default Home;
+export default function(props) {
+  return (
+    <div>
+      <h1>Distribution Viewer</h1>
+      <ExampleChartContainer />
+    </div>
+  );
+}
