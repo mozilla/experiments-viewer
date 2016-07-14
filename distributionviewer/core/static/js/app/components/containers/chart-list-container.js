@@ -1,25 +1,24 @@
 import React from 'react';
 import ChartList from '../views/chart-list';
 
-// numCharts is updated and provided to ChartList just for demonstration
-// purposes, and so that ChartList doesn't just have to include <ExampleChart />
-// 30 times in its source.
-const ChartListContainer = React.createClass({
-  getInitialState: function() {
-    return {
-      numCharts: 0
-    }
-  },
+export class ChartListContainer extends React.Component {
 
-  componentDidMount: function() {
-    this.setState({numCharts: 30})
-  },
+  // numCharts is updated and provided to ChartList just for demonstration
+  // purposes, and so that ChartList doesn't just have to include <ExampleChart />
+  // 30 times in its source.
 
-  render: function() {
+  constructor(props) {
+    super(props);
+    this.state = {numCharts: 0};
+  }
+
+  componentDidMount() {
+    this.setState({numCharts: 30});
+  }
+
+  render() {
     return (
       <ChartList numCharts={this.state.numCharts} />
     );
   }
-});
-
-export default ChartListContainer;
+}
