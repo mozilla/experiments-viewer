@@ -1,9 +1,10 @@
 import React from 'react';
-import { LineChart } from 'rd3';
 
-export default function(props) {
-  var exampleData = [{
-    values : [
+import MG from 'metrics-graphics';
+
+export class ExampleChart extends React.Component {
+  componentDidMount() {
+    var exampleData = [
       { x: 0,   y: 10 },
       { x: 5,   y: 10 },
       { x: 10,  y: 10 },
@@ -25,30 +26,35 @@ export default function(props) {
       { x: 90,  y: 86 },
       { x: 95,  y: 86 },
       { x: 100, y: 86 },
-    ]
-  }];
+    ];
 
-  return  (
-    <LineChart
-      data={exampleData}
+    MG.data_graphic({
+      target: this.target,
+
+      // Data
+      data: exampleData,
+      x_accessor: 'x',
+      y_accessor: 'y',
 
       // General display
-      title="Number of available TV channels"
-      gridHorizontal={false}
-      circleRadius={0}
-      width={350}
-      height={250}
-
-      // Axes
-      domain={{x: [,100], y: [0,100]}}
+      title: "Number of available TV channels",
+      width: 350,
+      height: 250,
+      area: false,
 
       // x-axis
-      xAxisLabel="channels"
-      xAxisTickValues={[0, 5, 100]}
+      x_label: "channels",
+      x_mouseover: data => 'x: ' + data.x + '%',
 
       // y-axis
-      yAxisFormatter={tickLabel => tickLabel + '%' }
-      yAxisTickValues={[0, 25, 50, 75, 100]}
-    />
-  );
+      max_y: 100,
+      y_mouseover: data => '   y: ' + data.y + '%',
+    });
+  }
+
+  render() {
+    return  (
+      <div ref={ref => this.target = ref}></div>
+    );
+  }
 }
