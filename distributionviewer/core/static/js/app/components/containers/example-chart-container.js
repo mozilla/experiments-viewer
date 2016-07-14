@@ -5,4 +5,4 @@ export default function(props) {
   return (
     <ExampleChart />
   );
-};
+}

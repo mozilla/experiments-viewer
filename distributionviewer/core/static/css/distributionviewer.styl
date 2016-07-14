@@ -1,0 +1,48 @@
+$background-color = #fff;
+$normal-text = rgba(0,0,0,0.6);
+$mild-blue = #4A90E2;
+
+body {
+  background-color: $background-color;
+  color: $normal-text;
+  font-family: helvetica, sans-serif;
+}
+
+a {
+  color: $mild-blue;
+}
+
+.global-wrapper {
+  margin: 0 auto;
+  padding: 0 0 40px;
+  width: 1200px;
+}
+
+.primary-header {
+  h1 {
+    font-size: 20px;
+    font-weight: 200;
+  }
+}
+
+.primary-header-link {
+  text-decoration: none;
+
+  &:hover {
+    border-bottom: 1px solid $mild-blue;
+  }
+}
+
+.chart-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+/*
+  Workaround for this issue:
+  https://github.com/yang-wei/rd3/issues/45
+*/
+.rd3-chart {
+  overflow: visible;
+}

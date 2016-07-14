@@ -36,8 +36,8 @@ export default function(props) {
       title="Number of available TV channels"
       gridHorizontal={false}
       circleRadius={0}
-      width={400}
-      height={300}
+      width={350}
+      height={250}
 
       // Axes
       domain={{x: [,100], y: [0,100]}}
