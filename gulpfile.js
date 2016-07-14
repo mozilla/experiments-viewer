@@ -7,6 +7,7 @@ var stylus = require('gulp-stylus');
 var autoprefixer = require('gulp-autoprefixer');
 var concat = require('gulp-concat');
 var cp = require('child_process');
+var sourcemaps = require('gulp-sourcemaps');
 
 require('es6-promise').polyfill();
 
@@ -25,9 +26,11 @@ gulp.task('webpack', function() {
 gulp.task('css', function() {
   gulp.src([path.resolve(CSS, '**/*.styl'),
            path.resolve(CSS, 'lib/*.css')])
+    .pipe(sourcemaps.init())
     .pipe(stylus({compress: true, use: [nib()]}))
     .pipe(autoprefixer())
     .pipe(concat('bundle.css'))
+    .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(CSS))
     .pipe(browserSync.stream());
 });
