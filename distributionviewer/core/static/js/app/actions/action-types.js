@@ -1,0 +1,1 @@
+export const GET_CHARTS_SUCCESS = 'GET_CHARTS_SUCCESS';

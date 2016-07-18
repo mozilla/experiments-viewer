@@ -6,6 +6,7 @@ var nib = require('nib');
 var stylus = require('gulp-stylus');
 var autoprefixer = require('gulp-autoprefixer');
 var concat = require('gulp-concat');
+var cp = require('child_process');
 
 require('es6-promise').polyfill();
 
@@ -34,6 +35,12 @@ gulp.task('css', function() {
 gulp.task('watch', ['build'], function() {
   gulp.watch([path.resolve(JS, '**/*.js'), '!' + path.resolve(JS, 'bundle.js')], ['webpack']);
   gulp.watch(path.resolve(CSS, '**/*.styl'), ['css']);
+});
+
+// Fake API
+gulp.task('serve:api', function(done) {
+  cp.exec('json-server --watch db.json --port 3009', {stdio: 'inherit'})
+    .on('close', done);
 });
 
 gulp.task('build', ['webpack', 'css']);
