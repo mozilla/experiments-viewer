@@ -3,10 +3,10 @@ import React from 'react';
 
 export default function(props) {
   return (
-    <div>
+    <section className="redux-chart-list">
       {props.charts.map(chart => {
         return (<p>{chart.name}</p>);
       })}
-    </div>
+    </section>
   );
 };

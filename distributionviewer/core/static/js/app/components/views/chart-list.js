@@ -9,8 +9,8 @@ export default function(props) {
   }
 
   return (
-    <article className="chart-list">
+    <section className="chart-list">
       {charts}
-    </article>
+    </section>
   );
 }
