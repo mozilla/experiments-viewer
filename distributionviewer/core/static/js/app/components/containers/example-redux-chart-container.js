@@ -4,16 +4,17 @@ import ExampleReduxChart from '../views/example-redux-chart';
 import * as chartApi from '../../api/chart-api';
 
 
-const ExampleReduxChartContainer = React.createClass({
-  componentDidMount: function() {
+class ExampleReduxChartContainer extends React.Component {
+  componentDidMount() {
     chartApi.getCharts();
-  },
-  render: function() {
+  }
+
+  render() {
     return (
       <ExampleReduxChart {...this.props} />
     );
   }
-});
+}
 
 const mapStateToProps = function(store) {
   return {
