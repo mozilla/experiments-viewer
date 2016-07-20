@@ -4,9 +4,9 @@ import ExampleReduxChartContainer from './containers/example-redux-chart-contain
 
 export default function(props) {
   return (
-    <div>
+    <main>
       <ChartListContainer />
       <ExampleReduxChartContainer />
-    </div>
+    </main>
   );
 }

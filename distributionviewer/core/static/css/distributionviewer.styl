@@ -1,11 +1,15 @@
 $background-color = #fff;
 $normal-text = rgba(0,0,0,0.6);
 $mild-blue = #4A90E2;
+$header-height = 70px;
+$h1-margin-top = 15px;
+$green = #b3c89b;
 
 body {
   background-color: $background-color;
   color: $normal-text;
   font-family: helvetica, sans-serif;
+  margin: 0;
 }
 
 a {
@@ -13,15 +17,42 @@ a {
 }
 
 .global-wrapper {
+  display: flex;
   margin: 0 auto;
-  padding: 0 0 40px;
-  width: 1200px;
+  width: 1400px;
+}
+
+.filters {
+  background-color: $green;
+  margin-right: 30px;
+  padding: ($header-height + $h1-margin-top) 40px 0;
+  width: 250px;
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    margin-bottom: 10px;
+  }
+
+  a {
+    color: $normal-text;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+  }
 }
 
 .primary-header {
+  height: $header-height;
+
   h1 {
     font-size: 20px;
     font-weight: 200;
+    margin-top: $h1-margin-top;
   }
 }
 
@@ -45,4 +76,12 @@ a {
 */
 .rd3-chart {
   overflow: visible;
+}
+
+.rd3-chart-title {
+  margin-top: 0;
+}
+
+.rd3-basic-chart {
+  margin-bottom: 20px;
 }
