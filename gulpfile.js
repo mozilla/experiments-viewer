@@ -25,7 +25,8 @@ gulp.task('webpack', function() {
 // CSS
 gulp.task('css', function() {
   gulp.src([path.resolve(CSS, '**/*.styl'),
-           path.resolve(CSS, 'lib/*.css')])
+           path.resolve(CSS, 'lib/*.css'),
+           './node_modules/metrics-graphics/dist/metricsgraphics.css'])
     .pipe(sourcemaps.init())
     .pipe(stylus({compress: true, use: [nib()]}))
     .pipe(autoprefixer())
