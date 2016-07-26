@@ -29,6 +29,7 @@ export class ExampleChart extends React.Component {
       { x: 100, y: 86 },
     ];
 
+    /* eslint-disable camelcase */
     MG.data_graphic({
       target: this.target,
 
@@ -38,19 +39,20 @@ export class ExampleChart extends React.Component {
       y_accessor: 'y',
 
       // General display
-      title: "Number of available TV channels",
+      title: 'Number of available TV channels',
       width: this.props.width,
       height: this.props.height,
       area: false,
 
       // x-axis
-      x_label: "channels",
+      x_label: 'channels',
       x_mouseover: data => 'x: ' + data.x + '%',
 
       // y-axis
       max_y: 100,
       y_mouseover: data => '   y: ' + data.y + '%',
     });
+    /* eslint-enable camelcase */
   }
 
   render() {
@@ -62,4 +64,10 @@ export class ExampleChart extends React.Component {
       return chart;
     }
   }
+}
+
+ExampleChart.propTypes = {
+  height: React.PropTypes.number.isRequired,
+  link: React.PropTypes.bool.isRequired,
+  width: React.PropTypes.number.isRequired,
 }

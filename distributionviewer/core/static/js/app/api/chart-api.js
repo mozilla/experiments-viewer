@@ -6,10 +6,10 @@ const mockEndpoints = {
   GET_CHARTS: 'http://localhost:3009/charts'
 };
 
-const prodEndpoints = {
-  // TODO: Likely subject to change.
-  GET_CHARTS: 'https://moz-distribution-viewer.herokuapp.com/charts'
-}
+// const prodEndpoints = {
+//   // TODO: Likely subject to change.
+//   GET_CHARTS: 'https://moz-distribution-viewer.herokuapp.com/charts'
+// }
 
 // TODO: Check node environment to set this.
 const endpoints = mockEndpoints;

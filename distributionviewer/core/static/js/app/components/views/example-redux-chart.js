@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-export default function(props) {
+export default function ExampleReduxChart(props) {
   return (
     <section className="redux-chart-list">
       {props.charts.map(chart => {
@@ -9,4 +9,8 @@ export default function(props) {
       })}
     </section>
   );
-};
+}
+
+ExampleReduxChart.propTypes = {
+  charts: React.PropTypes.node.isRequired,
+}
