@@ -1,9 +1,17 @@
+// Colors
 $background-color = #fff;
 $normal-text = rgba(0,0,0,0.6);
 $mild-blue = #4A90E2;
-$header-height = 90px;
-$h1-margin-top = 15px;
 $green = #b3c89b;
+
+// Spacing
+$header-height = 85px;
+$filters-width = 300px;
+$filters-margin-right = 30px;
+
+* {
+  box-sizing: border-box;
+}
 
 body {
   background-color: $background-color;
@@ -17,16 +25,25 @@ a {
 }
 
 .global-wrapper {
-  display: flex;
   margin: 0 auto;
   width: 1400px;
 }
 
+.filtered-charts {
+  display: flex;
+}
+
 .filters {
   background-color: $green;
-  margin-right: 30px;
-  padding: ($header-height + $h1-margin-top) 40px 0;
-  width: 250px;
+  margin-right: $filters-margin-right;
+  padding-left: 40px;
+  padding-right: @padding-left;
+  min-width: $filters-width;
+
+  /* Make the filter sidebar touch the top of the page, but keep the text
+     aligned with the main content. */
+  margin-top: -($header-height)
+  padding-top: $header-height;
 
   ul {
     list-style: none;
@@ -49,10 +66,15 @@ a {
 .primary-header {
   height: $header-height;
 
+  .filtered & {
+    margin-left: $filters-width + $filters-margin-right;
+  }
+
   h1 {
     font-size: 20px;
     font-weight: 200;
-    margin-top: $h1-margin-top;
+    padding-top: 15px;
+    margin-top: 0;
   }
 
   .date-range {
@@ -73,6 +95,11 @@ a {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+}
+
+/* TODO: Un-hide this section when Redux is hooked up to real charts */
+.redux-chart-list {
+  display: none;
 }
 
 /*

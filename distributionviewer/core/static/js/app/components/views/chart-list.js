@@ -5,7 +5,7 @@ export default function(props) {
   var charts = [];
 
   for (var i = 0; i < props.numCharts; i++) {
-    charts.push(<ExampleChartContainer key={i} />);
+    charts.push(<ExampleChartContainer key={i} width={350} height={250} link={true} />);
   }
 
   return (

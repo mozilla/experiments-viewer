@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 import MG from 'metrics-graphics';
 
@@ -38,8 +39,8 @@ export class ExampleChart extends React.Component {
 
       // General display
       title: "Number of available TV channels",
-      width: 350,
-      height: 250,
+      width: this.props.width,
+      height: this.props.height,
       area: false,
 
       // x-axis
@@ -53,8 +54,12 @@ export class ExampleChart extends React.Component {
   }
 
   render() {
-    return  (
-      <div ref={ref => this.target = ref}></div>
-    );
+    var chart = <div ref={ref => this.target = ref}></div>;
+
+    if (this.props.link) {
+      return <Link to="/chart/1/">{chart}</Link>;
+    } else {
+      return chart;
+    }
   }
 }
