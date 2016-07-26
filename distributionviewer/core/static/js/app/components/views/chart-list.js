@@ -1,7 +1,7 @@
 import React from 'react';
 import ExampleChartContainer from '../containers/example-chart-container';
 
-export default function(props) {
+export default function ChartList(props) {
   var charts = [];
 
   for (var i = 0; i < props.numCharts; i++) {
@@ -13,4 +13,8 @@ export default function(props) {
       {charts}
     </section>
   );
+}
+
+ChartList.propTypes = {
+  numCharts: React.PropTypes.number.isRequired,
 }

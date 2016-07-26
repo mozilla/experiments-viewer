@@ -2,7 +2,8 @@ import React from 'react';
 import { Link } from 'react-router';
 import ExampleDateRangeContainer from '../containers/example-date-range-container';
 
-export default function(props) {
+
+export default function MainLayout(props) {
   return (
     <div className="global-wrapper">
       <header className="primary-header">
@@ -12,4 +13,8 @@ export default function(props) {
       {props.children}
     </div>
   );
+}
+
+MainLayout.propTypes = {
+  children: React.PropTypes.node.isRequired,
 }

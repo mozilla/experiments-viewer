@@ -32,3 +32,7 @@ export class FilteredCharts extends React.Component {
     );
   }
 }
+
+FilteredCharts.propTypes = {
+  children: React.PropTypes.node.isRequired,
+}

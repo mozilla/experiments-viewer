@@ -12,7 +12,7 @@ export class ChartListContainer extends React.Component {
     this.state = {numCharts: 0};
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.setState({numCharts: 30});
   }
 
