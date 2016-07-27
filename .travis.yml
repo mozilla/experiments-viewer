@@ -6,8 +6,8 @@ branches:
 cache:
     directories:
         - $HOME/.cache/pip
-services:
-    - postgresql
+addons:
+    postgresql: "9.4"
 env:
     matrix:
         - TOXENV=py27
@@ -17,13 +17,23 @@ env:
         - DATABASE_URL=postgres://postgres:@localhost:5432/distributionviewer_test
         - DEBIAN_FRONTEND=noninteractive
         - DJANGO_SETTINGS_MODULE=distributionviewer.settings
+        - TRAVIS_NODE_VERSION="4"
 before_install:
     - pip install -U pip
 install:
     - pip install tox
+
+    # Install newer versions of Node and NPM
+    # http://austinpray.com/ops/2015/09/20/change-travis-node-version.html
+    - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION
+    - npm install -g npm
+
+    - npm install
 before_script:
     - psql -c 'create database distributionviewer_test;' -U postgres
-script: tox -v
+script:
+    - tox -v
+    - npm test
 after_failure:
     - dmesg | tail
 notifications:

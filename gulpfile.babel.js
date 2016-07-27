@@ -58,10 +58,11 @@ gulp.task('serve:api', done => {
     .on('close', done);
 });
 
-gulp.task('lint:js', () => {
+gulp.task('lint:js', ['build:js'], () => {
   return gulp.src([path.resolve(paths.js, '**/*.js'), '!' + path.resolve(paths.js, 'bundle.js')])
              .pipe(eslint('.eslintrc.json'))
-             .pipe(eslint.format());
+             .pipe(eslint.format())
+             .pipe(eslint.failAfterError());
 });
 
 gulp.task('build', ['build:js', 'build:css']);
