@@ -19,7 +19,7 @@ env:
         - DJANGO_SETTINGS_MODULE=distributionviewer.settings
 before_install:
     - pip install -U pip
-install:;
+install:
     - pip install tox
 before_script:
     - psql -c 'create database distributionviewer_test;' -U postgres
