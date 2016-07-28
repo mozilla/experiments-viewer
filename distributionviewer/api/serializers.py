@@ -1,6 +1,11 @@
 from rest_framework import serializers
 
 
+class MetricSerializer(serializers.Serializer):
+    name = serializers.CharField()
+    description = serializers.CharField()
+
+
 class CategoryPointSerializer(serializers.Serializer):
     b = serializers.CharField(source='bucket')
     c = serializers.FloatField(source='cumulative')

@@ -45,7 +45,6 @@ class TestDistribution(TestCase):
                 proportion=proportion)
 
     def test_basic(self):
-        self.maxDiff = None
         self.create_data()
         response = self.client.get(self.url)
         expected = {
@@ -69,6 +68,32 @@ class TestDistribution(TestCase):
                 ],
                 u'type': u'log',
                 u'description': u'searches descr'
+            }]
+        }
+        self.assertEqual(response.json(), expected)
+
+
+class TestMetrics(TestCase):
+
+    def setUp(self):
+        self.url = reverse('metrics')
+
+    def create_data(self):
+        Metric.objects.create(name='architecture',
+                              description='architecture descr', metadata={})
+        Metric.objects.create(name='searchesPerActiveDay',
+                              description='searches descr', metadata={})
+
+    def test_basic(self):
+        self.create_data()
+        response = self.client.get(self.url)
+        expected = {
+            u'metrics': [{
+                u'name': u'architecture',
+                u'description': u'architecture descr',
+            }, {
+                u'name': u'searchesPerActiveDay',
+                u'description': u'searches descr',
             }]
         }
         self.assertEqual(response.json(), expected)

@@ -12,3 +12,7 @@ class NamespaceJSONRenderer(JSONRenderer):
 
 class DistributionJSONRenderer(NamespaceJSONRenderer):
     namespace = 'distributions'
+
+
+class MetricsJSONRenderer(NamespaceJSONRenderer):
+    namespace = 'metrics'
