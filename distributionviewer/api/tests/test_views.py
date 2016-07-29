@@ -7,9 +7,6 @@ from distributionviewer.api.models import (CategoryCollection, CategoryPoint,
 
 class TestDistribution(TestCase):
 
-    def setUp(self):
-        self.url = reverse('distributions')
-
     def create_data(self):
         cat_metric = Metric.objects.create(name='architecture',
                                            description='architecture descr',
@@ -46,7 +43,8 @@ class TestDistribution(TestCase):
 
     def test_basic(self):
         self.create_data()
-        response = self.client.get(self.url)
+        url = reverse('distributions', args=['architecture'])
+        response = self.client.get(url)
         expected = {
             u'distributions': [{
                 u'numObs': 2,
@@ -57,7 +55,12 @@ class TestDistribution(TestCase):
                 ],
                 u'type': u'category',
                 u'description': u'architecture descr'
-            }, {
+            }]
+        }
+        url = reverse('distributions', args=['searchesPerActiveDay'])
+        response = self.client.get(url)
+        expected = {
+            u'distributions': [{
                 u'numObs': 4,
                 u'metric': u'searchesPerActiveDay',
                 u'points': [
@@ -71,6 +74,11 @@ class TestDistribution(TestCase):
             }]
         }
         self.assertEqual(response.json(), expected)
+
+    def test_404(self):
+        url = reverse('distributions', args=['numFoxesFired'])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 404)
 
 
 class TestMetrics(TestCase):

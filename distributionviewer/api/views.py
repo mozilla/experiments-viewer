@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from rest_framework.decorators import (api_view, permission_classes,
                                        renderer_classes)
 from rest_framework.permissions import AllowAny
@@ -22,9 +23,10 @@ def render_log(dist):
 @api_view(['GET'])
 @permission_classes([AllowAny])
 @renderer_classes([DistributionJSONRenderer])
-def distributions(request):
-    qc = CategoryCollection.objects.all()
-    ql = LogCollection.objects.all()
+def distributions(request, metric):
+    metric = get_object_or_404(Metric, name=metric)
+    qc = CategoryCollection.objects.filter(metric=metric)
+    ql = LogCollection.objects.filter(metric=metric)
     return Response(
         [render_category(d) for d in qc] +
         [render_log(d) for d in ql])
