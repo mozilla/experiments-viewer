@@ -1,13 +1,23 @@
-// Colors
+/* Sizes */
+$min-sidebar-width = 1030px;
+
+/* Colors */
 $background-color = #fff;
 $normal-text = rgba(0,0,0,0.6);
 $mild-blue = #4A90E2;
 $green = #b3c89b;
 
-// Spacing
-$header-height = 85px;
+/* Spacing */
+$default-whitespace = 20px;
+$header-height = 70px;
 $filters-width = 300px;
 $filters-margin-right = 30px;
+$mobile-filter-button-padding = 10px;
+
+/* Placeholder selectors */
+$clearfix {
+  overflow: auto;
+}
 
 * {
   box-sizing: border-box;
@@ -18,6 +28,10 @@ body {
   color: $normal-text;
   font-family: helvetica, sans-serif;
   margin: 0;
+
+  &:not(.filtered) {
+    padding: 0 $default-whitespace;
+  }
 }
 
 a {
@@ -26,11 +40,15 @@ a {
 
 .global-wrapper {
   margin: 0 auto;
-  width: 1400px;
+  max-width: 1400px;
 }
 
 .filtered-charts {
   display: flex;
+
+  @media all and (max-width: $min-sidebar-width) {
+    display: block;
+  }
 }
 
 .filters {
@@ -45,7 +63,14 @@ a {
   margin-top: -($header-height)
   padding-top: $header-height;
 
+  @media all and (max-width: $min-sidebar-width) {
+    margin: $default-whitespace 0;
+    padding: 20px 20px 20px (20px - $mobile-filter-button-padding);
+  }
+
   ul {
+    @extends $clearfix;
+
     list-style: none;
     padding: 0;
     margin: 0;
@@ -53,6 +78,15 @@ a {
 
   li {
     margin-bottom: 10px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    @media all and (max-width: $min-sidebar-width) {
+      float: left;
+      margin: 5px 5px 5px 0;
+    }
   }
 
   a {
@@ -60,6 +94,11 @@ a {
     font-size: 14px;
     font-weight: bold;
     text-decoration: none;
+
+    @media all and (max-width: $min-sidebar-width) {
+      display: block;
+      padding: $mobile-filter-button-padding;
+    }
   }
 }
 
@@ -68,6 +107,10 @@ a {
 
   .filtered & {
     margin-left: $filters-width + $filters-margin-right;
+
+    @media all and (max-width: $min-sidebar-width) {
+      margin: 0 $default-whitespace;
+    }
   }
 
   h1 {
@@ -94,21 +137,22 @@ a {
 .chart-list {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-around;
+
+  .chart {
+    width: 350px;
+    height: 250px;
+  }
+
+  .chart-link {
+    margin-bottom: #default-whitespace;
+  }
 }
 
-/*
-  Workaround for this issue:
-  https://github.com/yang-wei/rd3/issues/45
-*/
-.rd3-chart {
-  overflow: visible;
-}
-
-.rd3-chart-title {
-  margin-top: 0;
-}
-
-.rd3-basic-chart {
-  margin-bottom: 20px;
+.chart-detail {
+  .chart {
+    height: 60vh;
+    margin: $default-whitespace auto;
+    width: 100%;
+  }
 }

@@ -20,7 +20,7 @@ function formatData(item) {
   return result;
 }
 
-function generateChart(name, chart, width, height) {
+function generateChart(name, chart) {
   var refLabels = {};
   var formattedData = formatData(chart);
 
@@ -39,8 +39,8 @@ function generateChart(name, chart, width, height) {
 
     // General display
     title: chart.metric,
-    width,
-    height,
+    full_width: true,
+    full_height: true,
     area: false,
     missing_is_hidden: true,
     axes_not_compact: false,
@@ -61,15 +61,15 @@ export class Chart extends React.Component {
   componentDidMount() {
     // TODO: We need to do more here about managing isFetching.
     axios.get(`${metricApi.endpoints.GET_METRIC}${this.props.chartName}/`).then(response => {
-      generateChart(this.props.chartName, response.data, this.props.width, this.props.height);
+      generateChart(this.props.chartName, response.data);
     });
   }
 
   render() {
-    var chart = <div className={this.props.chartName} />;
+    var chart = <div className={`chart ${this.props.chartName}`} />;
 
     if (this.props.link) {
-      return <Link to={`/metric/${this.props.chartName}/`}>{chart}</Link>
+      return <Link className="chart-link" to={`/metric/${this.props.chartName}/`}>{chart}</Link>
     } else {
       return chart;
     }
@@ -78,9 +78,7 @@ export class Chart extends React.Component {
 
 Chart.propTypes = {
   chartName: React.PropTypes.string.isRequired,
-  height: React.PropTypes.number.isRequired,
   isDataReady: React.PropTypes.bool.isRequired,
   item: React.PropTypes.object.isRequired,
   link: React.PropTypes.bool.isRequired,
-  width: React.PropTypes.number.isRequired,
 }
