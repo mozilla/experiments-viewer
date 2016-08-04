@@ -28,6 +28,10 @@
 }
 ```
 
+Where:
+
+* Each "name" value is unique
+
 ### /distributions/[metric-name]/
 
 ```
