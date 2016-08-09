@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 
 // Individual reducers
-import chartReducer from './chart-reducer';
+import metricReducer from './metric-reducer';
 
 var reducers = combineReducers({
-  chartState: chartReducer
+  metricState: metricReducer
 });
 
 export default reducers;

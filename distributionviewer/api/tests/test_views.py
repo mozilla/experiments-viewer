@@ -46,32 +46,28 @@ class TestDistribution(TestCase):
         url = reverse('distributions', args=['architecture'])
         response = self.client.get(url)
         expected = {
-            u'distributions': [{
-                u'numObs': 2,
-                u'metric': u'architecture',
-                u'points': [
-                    {u'p': 0.95, u'c': 0.95, u'b': u'x86', u'refRank': 1},
-                    {u'p': 0.05, u'c': 1.0, u'b': u'x86-64', u'refRank': 2}
-                ],
-                u'type': u'category',
-                u'description': u'architecture descr'
-            }]
+            u'numObs': 2,
+            u'metric': u'architecture',
+            u'points': [
+                {u'p': 0.95, u'c': 0.95, u'b': u'x86', u'refRank': 1},
+                {u'p': 0.05, u'c': 1.0, u'b': u'x86-64', u'refRank': 2}
+            ],
+            u'type': u'category',
+            u'description': u'architecture descr'
         }
         url = reverse('distributions', args=['searchesPerActiveDay'])
         response = self.client.get(url)
         expected = {
-            u'distributions': [{
-                u'numObs': 4,
-                u'metric': u'searchesPerActiveDay',
-                u'points': [
-                    {u'p': 0.1, u'c': 0.1, u'b': u'0.0'},
-                    {u'p': 0.4, u'c': 0.5, u'b': u'1.0'},
-                    {u'p': 0.3, u'c': 0.8, u'b': u'5.0'},
-                    {u'p': 0.1, u'c': 0.9, u'b': u'10.0'}
-                ],
-                u'type': u'log',
-                u'description': u'searches descr'
-            }]
+            u'numObs': 4,
+            u'metric': u'searchesPerActiveDay',
+            u'points': [
+                {u'p': 0.1, u'c': 0.1, u'b': u'0.0'},
+                {u'p': 0.4, u'c': 0.5, u'b': u'1.0'},
+                {u'p': 0.3, u'c': 0.8, u'b': u'5.0'},
+                {u'p': 0.1, u'c': 0.9, u'b': u'10.0'}
+            ],
+            u'type': u'log',
+            u'description': u'searches descr'
         }
         self.assertEqual(response.json(), expected)
 

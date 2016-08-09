@@ -1,14 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router';
-import ExampleDateRangeContainer from '../containers/example-date-range-container';
+import DateRangeContainer from '../containers/date-range-container';
 
 
 export default function MainLayout(props) {
   return (
-    <div className="global-wrapper">
+    <div className="global-wrapper" id="global-wrapper">
       <header className="primary-header">
         <h1><Link className="primary-header-link" to="/">Firefox Distribution Viewer</Link></h1>
-        <ExampleDateRangeContainer />
+        <DateRangeContainer />
       </header>
       {props.children}
     </div>

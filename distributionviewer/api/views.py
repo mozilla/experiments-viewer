@@ -3,9 +3,10 @@ from rest_framework.decorators import (api_view, permission_classes,
                                        renderer_classes)
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
+from rest_framework.renderers import JSONRenderer
 
 from .models import CategoryCollection, LogCollection, Metric
-from .renderers import DistributionJSONRenderer, MetricsJSONRenderer
+from .renderers import MetricsJSONRenderer
 from .serializers import (CategoryDistributionSerializer,
                           LogDistributionSerializer, MetricSerializer)
 
@@ -22,14 +23,13 @@ def render_log(dist):
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
-@renderer_classes([DistributionJSONRenderer])
+@renderer_classes([JSONRenderer])
 def distributions(request, metric):
     metric = get_object_or_404(Metric, name=metric)
     qc = CategoryCollection.objects.filter(metric=metric)
     ql = LogCollection.objects.filter(metric=metric)
-    return Response(
-        [render_category(d) for d in qc] +
-        [render_log(d) for d in ql])
+    data = [render_category(d) for d in qc] + [render_log(d) for d in ql]
+    return Response(data[0])
 
 
 @api_view(['GET'])

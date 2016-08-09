@@ -1,24 +1,28 @@
 import React from 'react';
-import ChartList from '../views/chart-list';
+import { connect } from 'react-redux';
 
-export class ChartListContainer extends React.Component {
+import { ChartList } from '../views/chart-list';
+import * as metricApi from '../../api/metric-api';
 
-  // numCharts is updated and provided to ChartList just for demonstration
-  // purposes, and so that ChartList doesn't just have to include <ExampleChart />
-  // 30 times in its source.
 
-  constructor(props) {
-    super(props);
-    this.state = {numCharts: 0};
-  }
-
-  componentWillMount() {
-    this.setState({numCharts: 30});
+class ChartListContainer extends React.Component {
+  componentDidMount() {
+    metricApi.getMetrics();
   }
 
   render() {
     return (
-      <ChartList numCharts={this.state.numCharts} />
+      <ChartList {...this.props} />
     );
   }
 }
+
+const mapStateToProps = function(store) {
+  return {
+    isFetching: store.metricState.isFetching,
+    items: store.metricState.items,
+    status: store.metricState.status
+  };
+}
+
+export default connect(mapStateToProps)(ChartListContainer);

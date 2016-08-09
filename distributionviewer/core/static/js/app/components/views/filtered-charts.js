@@ -7,7 +7,7 @@ export class FilteredCharts extends React.Component {
   }
 
   componentDidMount() {
-    this.wrapper = document.getElementsByClassName('global-wrapper')[0];
+    this.wrapper = document.getElementById('global-wrapper');
     this.wrapper.classList.add(this.filteredClass);
   }
 

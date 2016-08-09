@@ -3,6 +3,7 @@
   "scripts": {
   },
   "env": {
+    "NODE_ENV": "production"
   },
   "formation": {
     "web": {
