@@ -29,6 +29,9 @@ Follow these steps to install distribution-viewer locally:
     2. Create a new database named *distributionviewer* that the
        *distributionviewer* user has read/write access to
         * Mac: `createdb -Odistributionviewer -Eutf8 distributionviewer`
+    3. Give the user *distributionviewer* access to create new tables (needed to
+       run tests later)
+        * Mac: `psql -c "ALTER USER distributionviewer CREATEDB" postgres`
 
 ## Run
 
@@ -46,3 +49,8 @@ if you see an error about a missing or out-of-date dependency:
 
 1. `pip install -U -r requirements.txt`
 2. `npm install`
+
+## Test
+
+* `./manage.py test`
+* `gulp test`
