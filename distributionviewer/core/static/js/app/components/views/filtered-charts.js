@@ -7,12 +7,11 @@ export class FilteredCharts extends React.Component {
   }
 
   componentDidMount() {
-    this.wrapper = document.getElementById('global-wrapper');
-    this.wrapper.classList.add(this.filteredClass);
+    document.body.classList.add(this.filteredClass);
   }
 
   componentWillUnmount() {
-    this.wrapper.classList.remove(this.filteredClass);
+    document.body.classList.remove(this.filteredClass);
   }
 
   render() {
