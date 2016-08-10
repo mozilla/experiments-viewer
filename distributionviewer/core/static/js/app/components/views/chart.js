@@ -12,7 +12,7 @@ function formatData(item) {
 
   for (let i = 0; i < data.length; i++) {
     result.push({
-      x: data[i]['refRank'],
+      x: data[i]['refRank'] || data[i]['b'],
       y: data[i]['c'] * 100,
       label: data[i]['b']
     });
@@ -29,7 +29,7 @@ function generateChart(name, chart, width, height) {
   });
 
   /* eslint-disable camelcase */
-  MG.data_graphic({
+  const graphOptions = {
     target: '.' + name,
 
     // Data
@@ -47,13 +47,18 @@ function generateChart(name, chart, width, height) {
 
     // x-axis
     x_mouseover: data => `x: ${refLabels[data.x]}`,
-    xax_format: d => refLabels[d],
-    xax_count: formattedData.length,
 
     // y-axis
     max_y: 100,
     y_mouseover: data => `   y: ${data.y.toFixed(4)}%`,
-  });
+  };
+
+  if (chart.type === 'category') {
+    graphOptions['xax_format'] = d => refLabels[d];
+    graphOptions['xax_count'] = formattedData.length;
+  }
+
+  MG.data_graphic(graphOptions);
   /* eslint-enable camelcase */
 }
 
