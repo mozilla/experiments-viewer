@@ -4,9 +4,11 @@ import gulp from 'gulp';
 
 import autoprefixer from 'gulp-autoprefixer';
 import browserSync from 'browser-sync';
+import cleanCSS from 'gulp-clean-css';
 import concat from 'gulp-concat';
 import cp from 'child_process';
 import eslint from 'gulp-eslint';
+import filter from 'gulp-filter';
 import nib from 'nib';
 import path from 'path';
 import sourcemaps from 'gulp-sourcemaps';
@@ -24,7 +26,6 @@ const bundles = {
   css: {
     main: [
       path.resolve(paths.css, '**/*.styl'),
-      path.resolve(paths.css, 'lib/*.css'),
       path.resolve(paths.root, 'node_modules/metrics-graphics/dist/metricsgraphics.css'),
     ],
   },
@@ -37,11 +38,19 @@ gulp.task('build:js', () => {
 });
 
 gulp.task('build:css', () => {
+  const stylusFilter = filter(['**/*.styl'], {restore: true});
+
   gulp.src(bundles.css.main)
       .pipe(sourcemaps.init())
-      .pipe(stylus({compress: true, use: [nib()]}))
+
+      // Compile Stylus files only
+      .pipe(stylusFilter)
+      .pipe(stylus({use: [nib()]}))
+      .pipe(stylusFilter.restore)
+
       .pipe(autoprefixer())
       .pipe(concat('bundle.css'))
+      .pipe(cleanCSS())
       .pipe(sourcemaps.write('.'))
       .pipe(gulp.dest(paths.css))
       .pipe(browserSync.stream());
