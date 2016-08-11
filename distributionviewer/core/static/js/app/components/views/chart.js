@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import MG from 'metrics-graphics';
 import * as metricApi from '../../api/metric-api';
+import Fetching from './fetching';
 
 
 function formatData(item) {
@@ -64,14 +65,14 @@ function generateChart(name, chart) {
 
 export class Chart extends React.Component {
   componentDidMount() {
-    // TODO: We need to do more here about managing isFetching.
     axios.get(`${metricApi.endpoints.GET_METRIC}${this.props.chartName}/`).then(response => {
       generateChart(this.props.chartName, response.data);
+      document.querySelector(`.${this.props.chartName}`).classList.remove('is-fetching');
     });
   }
 
   render() {
-    var chart = <div className={`chart ${this.props.chartName}`} />;
+    var chart = <div className={`chart is-fetching ${this.props.chartName}`}><Fetching /></div>;
 
     if (this.props.link) {
       return <Link className="chart-link" to={`/metric/${this.props.chartName}/`}>{chart}</Link>
@@ -83,7 +84,6 @@ export class Chart extends React.Component {
 
 Chart.propTypes = {
   chartName: React.PropTypes.string.isRequired,
-  isDataReady: React.PropTypes.bool.isRequired,
   item: React.PropTypes.object.isRequired,
   link: React.PropTypes.bool.isRequired,
 }

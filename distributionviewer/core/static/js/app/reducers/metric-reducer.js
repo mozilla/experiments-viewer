@@ -2,7 +2,6 @@ import * as types from '../actions/action-types';
 
 
 const initialState = {
-  isDataReady: false,
   isFetching: false,
   item: {},
   items: [],
