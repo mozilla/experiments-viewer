@@ -2,13 +2,14 @@ import React from 'react';
 
 import ChartContainer from '../containers/chart-container';
 
+
 export class ChartList extends React.Component {
   render() {
     return (
       <section className="chart-list">
         {this.props.items.map(chart => {
           return (
-            <ChartContainer key={chart.name} link={true} chartName={chart.name} />
+            <ChartContainer key={chart.name} isDetail={false} chartName={chart.name} />
           );
         })}
       </section>
