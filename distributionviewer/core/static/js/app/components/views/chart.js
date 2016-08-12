@@ -7,6 +7,9 @@ import * as metricApi from '../../api/metric-api';
 import Fetching from './fetching';
 
 
+// Number of x-axis ticks on the chart list page.
+const numTicks = 4;
+
 function formatData(item) {
   var result = [];
   var data = item.points;
@@ -15,19 +18,22 @@ function formatData(item) {
     result.push({
       x: data[i]['refRank'] || data[i]['b'],
       y: data[i]['c'] * 100,
+      p: data[i]['p'] * 100,
       label: data[i]['b']
     });
   }
   return result;
 }
 
-function generateChart(name, chart) {
+function generateChart(name, isDetail, chart) {
   var refLabels = {};
   var formattedData = formatData(chart);
 
   formattedData.map(chartItem => {
     refLabels['' + chartItem.x] = chartItem.label;
   });
+
+  var infoElm = document.querySelector(`.${name} .chart-rollover-container`);
 
   /* eslint-disable camelcase */
   const graphOptions = {
@@ -37,26 +43,37 @@ function generateChart(name, chart) {
     data: formattedData,
     x_accessor: 'x',
     y_accessor: 'y',
+    show_rollover_text: false,
 
     // General display
     title: chart.metric,
     full_width: true,
-    full_height: true,
     area: false,
     missing_is_hidden: true,
-    axes_not_compact: false,
-
-    // x-axis
-    x_mouseover: data => `x: ${refLabels[data.x]}`,
 
     // y-axis
     max_y: 100,
-    y_mouseover: data => `   y: ${data.y.toFixed(4)}%`,
+    mouseover: data => {
+      infoElm.classList.add('show');
+      infoElm.querySelector('span').textContent = refLabels[data.x];
+      infoElm.querySelector('span:last-child').textContent = `${data.p.toFixed(4)}%`;
+    },
+    mouseout: () => {
+      infoElm.classList.remove('show');
+    },
+    yax_units: '%',
+    yax_units_append: true,
   };
 
   if (chart.type === 'category') {
     graphOptions['xax_format'] = d => refLabels[d];
-    graphOptions['xax_count'] = formattedData.length;
+    graphOptions['xax_count'] = isDetail ? formatData.length : numTicks;
+  }
+
+  if (!isDetail) {
+    graphOptions.height = 250;
+  } else {
+    graphOptions.full_height = true;
   }
 
   MG.data_graphic(graphOptions);
@@ -66,15 +83,20 @@ function generateChart(name, chart) {
 export class Chart extends React.Component {
   componentDidMount() {
     axios.get(`${metricApi.endpoints.GET_METRIC}${this.props.chartName}/`).then(response => {
-      generateChart(this.props.chartName, response.data);
+      generateChart(this.props.chartName, this.props.isDetail, response.data);
       document.querySelector(`.${this.props.chartName}`).classList.remove('is-fetching');
     });
   }
 
   render() {
-    var chart = <div className={`chart is-fetching ${this.props.chartName}`}><Fetching /></div>;
+    var chart = (
+      <div className={`chart is-fetching ${this.props.chartName}`}>
+        <Fetching />
+        <p className="chart-rollover-container"><span /><span /></p>
+      </div>
+    );
 
-    if (this.props.link) {
+    if (!this.props.isDetail) {
       return <Link className="chart-link" to={`/metric/${this.props.chartName}/`}>{chart}</Link>
     } else {
       return chart;
@@ -85,5 +107,5 @@ export class Chart extends React.Component {
 Chart.propTypes = {
   chartName: React.PropTypes.string.isRequired,
   item: React.PropTypes.object.isRequired,
-  link: React.PropTypes.bool.isRequired,
+  isDetail: React.PropTypes.bool.isRequired,
 }

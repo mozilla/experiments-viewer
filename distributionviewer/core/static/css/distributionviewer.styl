@@ -22,6 +22,11 @@ a {
 .global-wrapper {
   margin: 0 auto;
   max-width: 1400px;
+  padding: 10px;
+
+  .filtered & {
+    padding: 10px 0 0 $filters-width;
+  }
 }
 
 .filtered-charts {
@@ -33,19 +38,15 @@ a {
 }
 
 .filters {
-  background-color: $green;
-  margin-right: $filters-margin-right;
-  padding-left: 40px;
-  padding-right: @padding-left;
-  min-width: $filters-width;
-
-  /* Make the filter sidebar touch the top of the page, but keep the text
-     aligned with the main content. */
-  margin-top: -($header-height)
-  padding-top: $header-height;
+  font-weight: 100;
+  height: 100%;
+  left: 0;
+  padding: $header-height 20px 20px 0;
+  position: absolute;
+  top: 0;
+  width: $filters-width;
 
   @media all and (max-width: $min-sidebar-width) {
-    margin: $default-whitespace 0;
     padding: 20px 20px 20px (20px - $mobile-filter-button-padding);
   }
 
@@ -54,16 +55,10 @@ a {
 
     list-style: none;
     padding: 0;
-    margin: 0;
+    margin: 10px 0 0;
   }
 
   li {
-    margin-bottom: 10px;
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-
     @media all and (max-width: $min-sidebar-width) {
       float: left;
       margin: 5px 5px 5px 0;
@@ -72,9 +67,17 @@ a {
 
   a {
     color: $normal-text;
-    font-size: 14px;
-    font-weight: bold;
+    font-size: 12px;
     text-decoration: none;
+    line-height: 2.5;
+    display: block;
+    border-radius: 0 4px 4px 0;
+    padding: 0 10px 0 0;
+    text-align: right;
+
+    &:hover {
+      background-image: linear-gradient(90deg, #001021 0%, #00224A 100%);
+    }
 
     @media all and (max-width: $min-sidebar-width) {
       display: block;
@@ -84,26 +87,26 @@ a {
 }
 
 .primary-header {
+  display: flex;
+  justify-content: space-between;
   height: $header-height;
+  padding: 20px;
 
+  > * {
+    align-self: center;
+  }
   .filtered & {
-    margin-left: $filters-width + $filters-margin-right;
-
     @media all and (max-width: $min-sidebar-width) {
       margin: 0 $default-whitespace;
     }
   }
-
   h1 {
     font-size: 20px;
     font-weight: 200;
-    padding-top: 15px;
-    margin-top: 0;
+    margin: 0;
   }
-
   .date-range {
-    font-size: 14px;
-    font-weight: bold;
+    font-size: 12px;
   }
 }
 
@@ -121,12 +124,10 @@ a {
   justify-content: space-around;
 
   .chart {
-    width: 350px;
-    height: 250px;
-  }
-
-  .chart-link {
-    margin-bottom: #default-whitespace;
+    width: 320px;
+    height: 270px;
+    position: relative;
+    padding-bottom: 40px;
   }
 }
 
@@ -137,3 +138,73 @@ a {
     width: 100%;
   }
 }
+
+.chart-rollover-container {
+  background-image: linear-gradient(90deg, #000 0%, #00224A 100%);
+  border-radius: 0 4px 4px 0;
+  bottom: -15px;
+  color: $normal-text;
+  display: none;
+  font-size: 12px;
+  padding: 5px 10px 5px 20px;
+  position: absolute;
+  right: 10px;
+  width: 100%;
+
+  &.show {
+    display: flex;
+    justify-content: space-between;
+  }
+  .filtered & {
+    bottom: 0;
+  }
+}
+
+/* Dark Theme MG */
+$chart-gray = rgba(255,255,255,0.6);
+.chart {
+  position: relative;
+
+  .filtered & {
+    margin-bottom: 0;
+  }
+  .mg-x-axis line,
+  .mg-y-axis line {
+    stroke: $chart-gray;
+  }
+  .mg-line1-color {
+    stroke: $mild-blue;
+  }
+  .mg-chart-title {
+    stroke: none;
+    fill: $normal-text;
+    font-size: 18px;
+
+    .filtered & {
+      font-size: 13px;
+    }
+  }
+  .mg-x-axis,
+  .mg-y-axis {
+    text {
+      fill: $chart-gray;
+      font-size: 11px;
+    }
+  }
+  .mg-area1-color {
+    fill: $mild-blue;
+  }
+  .mg-header {
+    font-size: inherit;
+    transform: translate(0, 15px);
+  }
+  .mg-active-datapoint-container {
+    fill: green;
+
+    text {
+      font-size: 11px;
+      fill: $normal-text;
+    }
+  }
+}
+/* End Dark Theme MG */
