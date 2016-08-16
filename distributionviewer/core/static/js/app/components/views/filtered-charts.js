@@ -18,15 +18,6 @@ export class FilteredCharts extends React.Component {
   render() {
     return (
       <div className="filtered-charts">
-        <nav className="filters">
-          <ul>
-            <li><a href="#">OS by Version</a></li>
-            <li><a href="#">Update Channel</a></li>
-            <li><a href="#">Firefox Version</a></li>
-            <li><a href="#">CPU Count</a></li>
-            <li><a href="#">System Memory</a></li>
-          </ul>
-        </nav>
         {this.props.children}
       </div>
     );

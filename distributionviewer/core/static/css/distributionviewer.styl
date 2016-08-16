@@ -9,10 +9,6 @@ body {
   color: $normal-text;
   font-family: helvetica, sans-serif;
   margin: 0;
-
-  &:not(.filtered) {
-    padding: 0 $default-whitespace;
-  }
 }
 
 a {
@@ -20,51 +16,29 @@ a {
 }
 
 .global-wrapper {
-  margin: 0 auto;
-  max-width: 1400px;
-  padding: 10px;
-
-  .filtered & {
-    padding: 10px 0 0 $filters-width;
-  }
+  display: flex;
+  flex-wrap: wrap;
+  padding: $min-padding;
+  width: 100%;
 }
 
 .filtered-charts {
   display: flex;
-
-  @media all and (max-width: $min-sidebar-width) {
-    display: block;
-  }
 }
 
 .filters {
+  display: none;
   font-weight: 100;
   height: 100%;
-  left: 0;
-  padding: $header-height 20px 20px 0;
-  position: absolute;
-  top: 0;
+  margin-left: - $min-padding; // Offset .global-wrapper padding-left.
+  padding: $lrg-padding $med-padding $med-padding 0;
   width: $filters-width;
 
-  @media all and (max-width: $min-sidebar-width) {
-    padding: 20px 20px 20px (20px - $mobile-filter-button-padding);
-  }
-
   ul {
-    @extends $clearfix;
-
     list-style: none;
+    margin: $min-padding 0 0;
     padding: 0;
-    margin: 10px 0 0;
   }
-
-  li {
-    @media all and (max-width: $min-sidebar-width) {
-      float: left;
-      margin: 5px 5px 5px 0;
-    }
-  }
-
   a {
     color: $normal-text;
     font-size: 12px;
@@ -72,33 +46,25 @@ a {
     line-height: 2.5;
     display: block;
     border-radius: 0 4px 4px 0;
-    padding: 0 10px 0 0;
+    padding: 0 $min-padding 0 0;
     text-align: right;
 
     &:hover {
       background-image: linear-gradient(90deg, #001021 0%, #00224A 100%);
-    }
-
-    @media all and (max-width: $min-sidebar-width) {
-      display: block;
-      padding: $mobile-filter-button-padding;
     }
   }
 }
 
 .primary-header {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   height: $header-height;
-  padding: 20px;
+  width: 100%;
 
   > * {
-    align-self: center;
-  }
-  .filtered & {
-    @media all and (max-width: $min-sidebar-width) {
-      margin: 0 $default-whitespace;
-    }
+    text-align: center;
+    width: 100%;
   }
   h1 {
     font-size: 20px;
@@ -107,6 +73,7 @@ a {
   }
   .date-range {
     font-size: 12px;
+    margin: 8px 0;
   }
 }
 
@@ -124,17 +91,24 @@ a {
   justify-content: space-around;
 
   .chart {
-    width: 320px;
-    height: 270px;
+    height: $chart-preview-height;
+    padding-bottom: $lrg-padding;
     position: relative;
-    padding-bottom: 40px;
+    width: $chart-preview-width;
   }
 }
 
 .chart-detail {
   .chart {
     height: 60vh;
-    margin: $default-whitespace auto;
+    margin: $med-padding auto $lrg-padding;
+    width: 100%;
+  }
+  p {
+    font-size: 14px;
+    font-weight: 100;
+  }
+  .chart-rollover-container {
     width: 100%;
   }
 }
@@ -146,18 +120,20 @@ a {
   color: $normal-text;
   display: none;
   font-size: 12px;
-  padding: 5px 10px 5px 20px;
+  padding: 5px $min-padding;
   position: absolute;
-  right: 10px;
-  width: 100%;
+  right: $min-padding;
+  width: $chart-preview-width - 60; // Chart Y-Axis padding.
 
   &.show {
     display: flex;
     justify-content: space-between;
   }
-  .filtered & {
-    bottom: 0;
-  }
+}
+
+.sign-in-wrapper {
+  margin: 5px 0;
+  width: 100%;
 }
 
 /* Dark Theme MG */
@@ -208,3 +184,34 @@ $chart-gray = rgba(255,255,255,0.6);
   }
 }
 /* End Dark Theme MG */
+
+@media $base-tablet {
+  .filtered .filters {
+    display: block;
+  }
+  .global-wrapper > main {
+    width: unquote('calc(100% - ' + $filters-width + ')');
+  }
+  .primary-header {
+    justify-content: space-between;
+    padding: $med-padding;
+
+    > * {
+      align-self: center;
+      text-align: left;
+      width: auto;
+    }
+    .sign-in-wrapper {
+      width: 100%;
+    }
+  }
+  .chart-detail {
+    padding: 0 $med-padding;
+  }
+}
+
+@media $base-desktop {
+  .primary-header .sign-in-wrapper {
+    width: auto;
+  }
+}
