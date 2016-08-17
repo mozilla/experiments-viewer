@@ -10,7 +10,17 @@ export default function MainLayout(props) {
       <header className="primary-header">
         <h1><Link className="primary-header-link" to="/">Firefox Distribution Viewer</Link></h1>
         <DateRangeContainer />
+        <div className="sign-in-wrapper" />
       </header>
+      <nav className="filters">
+        <ul>
+          <li><a href="#">OS by Version</a></li>
+          <li><a href="#">Update Channel</a></li>
+          <li><a href="#">Firefox Version</a></li>
+          <li><a href="#">CPU Count</a></li>
+          <li><a href="#">System Memory</a></li>
+        </ul>
+      </nav>
       {props.children}
     </div>
   );

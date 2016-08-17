@@ -1,6 +1,3 @@
-/* Sizes */
-$min-sidebar-width = 1030px;
-
 /* Colors */
 $background-color = #000;
 $normal-text = rgba(255,255,255,0.7);
@@ -8,13 +5,16 @@ $mild-blue = #4A90E2;
 $green = #b3c89b;
 
 /* Spacing */
-$default-whitespace = 20px;
 $header-height = 70px;
 $filters-width = 200px;
-$filters-margin-right = 30px;
-$mobile-filter-button-padding = 10px;
+$min-padding = 10px;
+$med-padding = 2 * $min-padding;
+$lrg-padding = 2 * $med-padding;
 
-/* Placeholder selectors */
-$clearfix {
-  overflow: auto;
-}
+/* Charts */
+$chart-preview-height = 250px;
+$chart-preview-width = 300px;
+
+/* Responsive Breakpoints */
+$base-tablet = unquote('all and (min-width: 550px)');
+$base-desktop = unquote('all and (min-width: 1050px)');
