@@ -12,7 +12,6 @@ TODO Migrations:
 """
 # TODO: Get real parquet data.
 df = sqlContext.read.json("/Users/rob/sample.json")
-total_count = df.count()
 
 # TODO: Send db credentials to mreid to set up.
 # Set up database connection to shielddash.
@@ -85,15 +84,68 @@ for metric in metrics:
 
     elif metric_type == 'numerical':
 
+        cdf = df.select(df[metric_raw_name])
+        cdf = cdf.filter("%s != 'NaN'" % metric_raw_name)
+        cdf = cdf.select(cdf[metric_raw_name].cast('float').alias('bucket'))
+
+        total_count = cdf.count()
         num_partitions = total_count / 500
-        ws = Window.orderBy(metric_raw_name)
-        cdf = df.select(
-            df[metric_raw_name],
+        ws = Window.orderBy('bucket')
+        cdf = cdf.select(
+            cdf['bucket'],
             cume_dist().over(ws).alias('c'),
             row_number().over(ws).alias('i'))
-        partitioned_cdf = cdf.filter("i = 1 OR i %% %d = 0" % num_partitions)
+        cdf = cdf.filter("i = 1 OR i %% %d = 0" % num_partitions)
+        cdf = cdf.collect()
 
-        # Clean up data:
-        #   * Collapse any rows that contain duplicate bins
-        #       - if bin is the same as previous bin, overwrite it
-        #   * Calculate 'p' from 'c'.
+        # Collapse rows with duplicate buckets.
+        collapsed_data = []
+        prev = None
+        for d in cdf:
+            if not collapsed_data:
+                collapsed_data.append(d)  # Always keep first record.
+                continue
+            if prev and prev['bucket'] == d['bucket']:
+                collapsed_data.pop()
+            collapsed_data.append(d)
+            prev = d
+
+        # Calculate `p` from `c`, and add a `rank` column.
+        data = []
+        prev = None
+        for i, d in enumerate(collapsed_data):
+            p = d['c'] - prev['c'] if prev else d['c']
+            data.append({
+                'bucket': d['bucket'],
+                'c': d['c'],
+                'p': p,
+            })
+            prev = d
+        """
+        Example of what `data` looks like now::
+
+            [{'bucket': 0.0, 'c': 0.001260567401753613, 'p': 0.001260567401753613},
+             {'bucket': 3.0, 'c': 0.0037231330757179046, 'p': 0.0024625656739642914},
+             {'bucket': 4.0, 'c': 0.004306162137986207, 'p': 0.0005830290622683026},
+             {'bucket': 6.133196830749512, 'c': 0.005998011311828701, 'p': 0.0016918491738424938},
+             {'bucket': 8.0, 'c': 0.08114486674857471, 'p': 0.07514685543674601},
+             {'bucket': 8.230878829956055, 'c': 0.08197282126165892, 'p': 0.0008279545130842059},
+             ...]
+         """
+
+        # Push data to database.
+        sql = """
+            INSERT INTO api_logcollection
+                (num_observations, population, metric_id)
+            VALUES (%s, 'channel_release', %d)
+        """
+        cur.execute(sql, total_count, metric_id)
+        collection_id = cur.lastrowid
+
+        for d in data:
+            sql = """
+                INSERT INTO api_logpoint
+                    (bucket, proportion, collection_id)
+                VALUES (%f, %f, %d)
+            """
+            cur.execute(sql, d['bucket'], d['p'], collection_id)
