@@ -6,6 +6,12 @@ from django.db import models
 class Metric(models.Model):
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField()
+    type = models.CharField(
+        max_length=1, choices=(('C', 'Categorical'), ('N', 'Numerical')),
+        default='N')
+    source_name = models.CharField(
+        max_length=255,
+        help_text="The metric's name in the source telemetry data.")
     metadata = JSONField()
 
 
