@@ -1,0 +1,87 @@
+@import 'lib';
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: $background-color;
+  color: $normal-text;
+  font-family: helvetica, sans-serif;
+  margin: 0;
+}
+
+a {
+  color: $mild-blue;
+}
+
+.global-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  padding: $min-padding;
+  width: 100%;
+}
+
+.primary-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  height: $header-height;
+  width: 100%;
+
+  > * {
+    text-align: center;
+    width: 100%;
+  }
+}
+
+h1 {
+  font-size: 20px;
+  font-weight: 200;
+  margin: 0;
+}
+
+.date-range {
+  font-size: 12px;
+  margin: 8px 0;
+}
+
+.primary-header-link {
+  text-decoration: none;
+
+  &:hover {
+    border-bottom: 1px solid $mild-blue;
+  }
+}
+
+.sign-in-wrapper {
+  margin: 5px 0;
+  width: 100%;
+}
+
+@media $base-tablet {
+  .global-wrapper > main {
+    width: unquote('calc(100% - ' + $filters-width + ')');
+  }
+
+  .primary-header {
+    justify-content: space-between;
+    padding: $med-padding;
+
+    > * {
+      align-self: center;
+      text-align: left;
+      width: auto;
+    }
+
+    .sign-in-wrapper {
+      width: 100%;
+    }
+  }
+}
+
+@media $base-desktop {
+  .primary-header .sign-in-wrapper {
+    width: auto;
+  }
+}

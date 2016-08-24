@@ -1,0 +1,68 @@
+@import 'lib';
+
+.chart-rollover-container {
+  background-image: linear-gradient(90deg, #000 0%, #00224A 100%);
+  border-radius: 0 4px 4px 0;
+  bottom: -15px;
+  color: $normal-text;
+  display: none;
+  font-size: 12px;
+  padding: 5px $min-padding;
+  position: absolute;
+  right: $min-padding;
+  width: $chart-preview-width - 60; // Chart Y-Axis padding.
+
+  &.show {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+/* Dark Theme MG */
+$chart-gray = rgba(255,255,255,0.6);
+.chart {
+  position: relative;
+
+  .filtered & {
+    margin-bottom: 0;
+  }
+  .mg-x-axis line,
+  .mg-y-axis line {
+    stroke: $chart-gray;
+  }
+  .mg-line1-color {
+    stroke: $mild-blue;
+  }
+  .mg-chart-title {
+    stroke: none;
+    fill: $normal-text;
+    font-size: 18px;
+
+    .filtered & {
+      font-size: 13px;
+    }
+  }
+  .mg-x-axis,
+  .mg-y-axis {
+    text {
+      fill: $chart-gray;
+      font-size: 11px;
+    }
+  }
+  .mg-area1-color {
+    fill: $mild-blue;
+  }
+  .mg-header {
+    font-size: inherit;
+    transform: translate(0, 15px);
+  }
+  .mg-active-datapoint-container {
+    fill: green;
+
+    text {
+      font-size: 11px;
+      fill: $normal-text;
+    }
+  }
+}
+/* End Dark Theme MG */
