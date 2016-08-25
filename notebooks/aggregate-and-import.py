@@ -6,14 +6,11 @@ from pyspark.sql.window import Window
 
 """
 TODO Migrations:
-    * Add date range table for weekly distributions
-    * Add 'type' field for metric for categorical vs numerical
-    * Add 'raw_name' field for the metric's name in the raw data source
+    * Add date range table for weekly distributions (issue #62)
 """
 # TODO: Get real parquet data.
 df = sqlContext.read.json("/Users/rob/sample.json")
 
-# TODO: Send db credentials to mreid to set up.
 # Set up database connection to shielddash.
 s3 = boto3.resource('s3')
 metasrcs = ujson.load(
@@ -32,18 +29,15 @@ cur = conn.cursor()
 
 
 # Get the metrics we need to gather data for.
-cur.execute('SELECT * FROM api_metric')
+cur.execute('SELECT id, name, description, source_name, type FROM api_metric')
 metrics = cur.fetchall()
 
-# TODO: Find a place for a key mapping our metric name to that stored in source
-# parquet data set.
 for metric in metrics:
-    (metric_id, metric_name, metric_descr, metric_metadata,
-     metric_type, metric_raw_name) = metric
+    metric_id, metric_name, metric_descr, metric_type, metric_src = metric
 
     if metric_type == 'categorical':
 
-        totals = (df.groupBy(metric_raw_name)
+        totals = (df.groupBy(metric_src)
                     .count()
                     .sort('count', ascending=False)
                     .collect())
@@ -84,9 +78,9 @@ for metric in metrics:
 
     elif metric_type == 'numerical':
 
-        cdf = df.select(df[metric_raw_name])
-        cdf = cdf.filter("%s != 'NaN'" % metric_raw_name)
-        cdf = cdf.select(cdf[metric_raw_name].cast('float').alias('bucket'))
+        cdf = df.select(df[metric_src])
+        cdf = cdf.filter("%s != 'NaN'" % metric_src)
+        cdf = cdf.select(cdf[metric_src].cast('float').alias('bucket'))
 
         total_count = cdf.count()
         num_partitions = total_count / 500
@@ -124,12 +118,12 @@ for metric in metrics:
         """
         Example of what `data` looks like now::
 
-            [{'bucket': 0.0, 'c': 0.001260567401753613, 'p': 0.001260567401753613},
-             {'bucket': 3.0, 'c': 0.0037231330757179046, 'p': 0.0024625656739642914},
-             {'bucket': 4.0, 'c': 0.004306162137986207, 'p': 0.0005830290622683026},
-             {'bucket': 6.133196830749512, 'c': 0.005998011311828701, 'p': 0.0016918491738424938},
-             {'bucket': 8.0, 'c': 0.08114486674857471, 'p': 0.07514685543674601},
-             {'bucket': 8.230878829956055, 'c': 0.08197282126165892, 'p': 0.0008279545130842059},
+            [{'bucket': 0.0, 'c': 0.00126056, 'p': 0.00126056},
+             {'bucket': 3.0, 'c': 0.00372313, 'p': 0.00246256},
+             {'bucket': 4.0, 'c': 0.00430616, 'p': 0.0005830290622683026},
+             {'bucket': 6.13319683, 'c': 0.00599801, 'p': 0.00169184},
+             {'bucket': 8.0, 'c': 0.08114486, 'p': 0.07514685},
+             {'bucket': 8.23087882, 'c': 0.08197282, 'p': 0.00082795},
              ...]
          """
 
@@ -144,8 +138,7 @@ for metric in metrics:
 
         for d in data:
             sql = """
-                INSERT INTO api_logpoint
-                    (bucket, proportion, collection_id)
+                INSERT INTO api_logpoint (bucket, proportion, collection_id)
                 VALUES (%f, %f, %d)
             """
             cur.execute(sql, d['bucket'], d['p'], collection_id)
