@@ -23,9 +23,6 @@ $chart-gray = rgba(255,255,255,0.6);
 .chart {
   position: relative;
 
-  .filtered & {
-    margin-bottom: 0;
-  }
   .mg-x-axis line,
   .mg-y-axis line {
     stroke: $chart-gray;
@@ -37,10 +34,6 @@ $chart-gray = rgba(255,255,255,0.6);
     stroke: none;
     fill: $normal-text;
     font-size: 18px;
-
-    .filtered & {
-      font-size: 13px;
-    }
   }
   .mg-x-axis,
   .mg-y-axis {

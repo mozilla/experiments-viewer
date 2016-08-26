@@ -1,14 +1,13 @@
 import React from 'react';
-import FilteredChartsContainer from './containers/filtered-charts-container';
 import ChartListContainer from './containers/chart-list-container';
+import ChartMenuContainer from './containers/chart-menu-container';
 
 
 export default function(props) {
   return (
     <main>
-      <FilteredChartsContainer>
-        <ChartListContainer />
-      </FilteredChartsContainer>
+      <ChartMenuContainer />
+      <ChartListContainer />
     </main>
   );
 }
