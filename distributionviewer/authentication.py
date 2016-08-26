@@ -1,3 +1,7 @@
+import hashlib
+import hmac
+import os
+
 from django.conf import settings
 from django.contrib.auth import get_user_model
 
@@ -5,8 +9,6 @@ from rest_framework import exceptions
 from rest_framework.authentication import (BaseAuthentication,
                                            get_authorization_header)
 from rest_framework.permissions import IsAuthenticated
-
-from oauth2client import client, crypt
 
 
 class OptionsOrIsAuthenticated(IsAuthenticated):
@@ -21,10 +23,11 @@ class OptionsOrIsAuthenticated(IsAuthenticated):
                                                                     view)
 
 
-class GoogleJSONWebTokenAuthentication(BaseAuthentication):
-    def get_jwt_value(self, request):
+class SharedSecretAuthentication(BaseAuthentication):
+
+    def get_shared_secret(self, request):
         auth = get_authorization_header(request).split()
-        if not auth or auth[0].lower() != 'jwt':
+        if not auth or auth[0].lower() != 'moz-shared-secret':
             return None
 
         if len(auth) == 1:
@@ -38,28 +41,35 @@ class GoogleJSONWebTokenAuthentication(BaseAuthentication):
         return auth[1]
 
     def authenticate(self, request):
-        token = self.get_jwt_value(request)
-        if token is None:
+        User = get_user_model()
+        auth = self.get_shared_secret(request)
+        if not auth:
             return None, None
         try:
-            idinfo = client.verify_id_token(token, settings.GOOGLE_AUTH_KEY)
-            if idinfo['iss'] not in ['accounts.google.com',
-                                     'https://accounts.google.com']:
-                raise crypt.AppIdentityError("Wrong issuer.")
-            if idinfo.get('hd') != settings.GOOGLE_AUTH_HOSTED_DOMAIN:
-                raise crypt.AppIdentityError("Wrong hosted domain.")
-        except crypt.AppIdentityError as e:
-            raise exceptions.AuthenticationFailed(e)
+            email, hm, unique_id = str(auth).split(',')
+            consumer_id = hashlib.sha1(
+                email + settings.SECRET_KEY).hexdigest()
+            matches = hmac.new(unique_id + settings.SECRET_KEY,
+                               consumer_id, hashlib.sha512).hexdigest() == hm
+            if matches:
+                try:
+                    return User.objects.get(email=email), {'email': email}
+                except User.DoesNotExist:
+                    return None, None
+        except Exception:
+            return None, None
 
-        defaults = {
-            'email': idinfo['email'],
-            'first_name': idinfo['given_name'],
-            'last_name': idinfo['family_name'],
-        }
-        user, created = get_user_model().objects.get_or_create(
-            username=idinfo['email'], defaults=defaults,
-        )
-        return user, idinfo
+token_auth = SharedSecretAuthentication()
 
 
-google_auth = GoogleJSONWebTokenAuthentication()
+def commonplace_token(email):
+    unique_id = os.urandom(8)
+
+    consumer_id = hashlib.sha1(
+        email + settings.SECRET_KEY).hexdigest()
+
+    hm = hmac.new(
+        unique_id + settings.SECRET_KEY,
+        consumer_id, hashlib.sha512)
+
+    return ','.join((email, hm.hexdigest(), unique_id))
