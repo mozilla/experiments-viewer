@@ -19,9 +19,7 @@ class ChartListContainer extends React.Component {
 
 const mapStateToProps = function(store) {
   return {
-    isFetching: store.metricState.isFetching,
-    items: store.metricState.items,
-    status: store.metricState.status
+    items: store.metricState.items
   };
 }
 
