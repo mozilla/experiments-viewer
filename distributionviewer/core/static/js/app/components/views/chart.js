@@ -9,6 +9,8 @@ import Fetching from './fetching';
 
 // Number of x-axis ticks on the chart list page.
 const numTicks = 4;
+// After how many characters should the x-axis labels get ellipsised?
+const xLabelsChopLength = 11;
 
 function formatData(item) {
   var result = [];
@@ -23,6 +25,13 @@ function formatData(item) {
     });
   }
   return result;
+}
+
+function getShortLabel(lbl) {
+  if (lbl.length > xLabelsChopLength) {
+    return `${lbl.substring(0, xLabelsChopLength - 1)}…`;
+  }
+  return lbl;
 }
 
 function generateChart(name, isDetail, chart) {
@@ -66,7 +75,7 @@ function generateChart(name, isDetail, chart) {
   };
 
   if (chart.type === 'category') {
-    graphOptions['xax_format'] = d => refLabels[d];
+    graphOptions['xax_format'] = d => getShortLabel(refLabels[d]);
     graphOptions['xax_count'] = isDetail ? formatData.length : numTicks;
   }
 

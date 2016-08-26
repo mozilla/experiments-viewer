@@ -45,7 +45,7 @@
       {
         "p": 0.0000362676,
         "refRank": 4,
-        "b": "arm",
+        "b": "armbutwithlongname",
         "c": 0.999992
       },
       {
@@ -57,7 +57,7 @@
       {
         "p": 0.00000357038,
         "refRank": 6,
-        "b": "sparc",
+        "b": "sparclongname",
         "c": 0.999996
       },
       {
