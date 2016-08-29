@@ -20,3 +20,17 @@ export function getMetricsFailure(status) {
     status
   };
 }
+
+export function getMetricSuccess(item) {
+  return {
+    type: types.GET_METRIC_SUCCESS,
+    item
+  };
+}
+
+export function getMetricFailure(status) {
+  return {
+    type: types.GET_METRIC_FAILURE,
+    status
+  };
+}

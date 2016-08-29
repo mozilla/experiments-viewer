@@ -1,104 +1,52 @@
 import React from 'react';
 import { Link } from 'react-router';
 import axios from 'axios';
-
 import MG from 'metrics-graphics';
+
+import store from '../../store';
 import * as metricApi from '../../api/metric-api';
+import {
+  getMetricSuccess, getMetricFailure
+} from '../../actions/metric-actions';
+
 import Fetching from './fetching';
 
 
-// Number of x-axis ticks on the chart list page.
-const numTicks = 4;
-// After how many characters should the x-axis labels get ellipsised?
-const xLabelsChopLength = 11;
-
-function formatData(item) {
-  var result = [];
-  var data = item.points;
-
-  for (let i = 0; i < data.length; i++) {
-    result.push({
-      x: data[i]['refRank'] || data[i]['b'],
-      y: data[i]['c'] * 100,
-      p: data[i]['p'] * 100,
-      label: data[i]['b']
-    });
-  }
-  return result;
-}
-
-function getShortLabel(lbl) {
-  if (lbl.length > xLabelsChopLength) {
-    return `${lbl.substring(0, xLabelsChopLength - 1)}…`;
-  }
-  return lbl;
-}
-
-function generateChart(name, isDetail, chart) {
-  var refLabels = {};
-  var formattedData = formatData(chart);
-
-  formattedData.map(chartItem => {
-    refLabels['' + chartItem.x] = chartItem.label;
-  });
-
-  var infoElm = document.querySelector(`.${name} .chart-rollover-container`);
-
-  /* eslint-disable camelcase */
-  const graphOptions = {
-    target: '.' + name,
-
-    // Data
-    data: formattedData,
-    x_accessor: 'x',
-    y_accessor: 'y',
-    show_rollover_text: false,
-
-    // General display
-    title: chart.metric,
-    full_width: true,
-    area: false,
-    missing_is_hidden: true,
-
-    // y-axis
-    max_y: 100,
-    mouseover: data => {
-      infoElm.classList.add('show');
-      infoElm.querySelector('span').textContent = refLabels[data.x];
-      infoElm.querySelector('span:last-child').textContent = `${data.p.toFixed(4)}%`;
-    },
-    mouseout: () => {
-      infoElm.classList.remove('show');
-    },
-    yax_units: '%',
-    yax_units_append: true,
-  };
-
-  if (chart.type === 'category') {
-    graphOptions['xax_format'] = d => getShortLabel(refLabels[d]);
-    graphOptions['xax_count'] = isDetail ? formatData.length : numTicks;
-  }
-
-  if (!isDetail) {
-    graphOptions.height = 250;
-  } else {
-    graphOptions.full_height = true;
-  }
-
-  MG.data_graphic(graphOptions);
-  /* eslint-enable camelcase */
-}
-
 export class Chart extends React.Component {
-  componentDidMount() {
+  constructor(props) {
+    super(props);
+
+    // Number of x-axis ticks on the chart list page.
+    this.numXTicksSmall = 4;
+
+    // After how many characters should the x-axis labels get ellipsised?
+    this.xLabelsChopLength = 11;
+  }
+
+  componentWillMount() {
     axios.get(`${metricApi.endpoints.GET_METRIC}${this.props.chartName}/`).then(response => {
-      generateChart(this.props.chartName, this.props.isDetail, response.data);
+      this.metric = response.data.metric;
+      this.type = response.data.type;
+      this.pointsMeta = this.buildPointsMeta(response.data.points);
+
+      this.injectChart();
       document.querySelector(`.${this.props.chartName}`).classList.remove('is-fetching');
+
+      store.dispatch(getMetricSuccess(response.data));
+    }).catch(response => {
+      console.error(response);
+      store.dispatch(getMetricFailure(response.status))
     });
+  }
+
+  componentDidUpdate() {
+    if (this.pointsMeta) {
+      this.injectChart();
+    }
   }
 
   render() {
-    var chart = (
+    const chart = (
       <div className={`chart is-fetching ${this.props.chartName}`}>
         <Fetching />
         <p className="chart-rollover-container"><span /><span /></p>
@@ -111,10 +59,93 @@ export class Chart extends React.Component {
       return chart;
     }
   }
+
+  buildPointsMeta(dataPoints) {
+    var pointsMeta = [];
+
+    for (let i = 0; i < dataPoints.length; i++) {
+      pointsMeta.push({
+        x: dataPoints[i]['refRank'] || dataPoints[i]['b'],
+        y: dataPoints[i]['c'] * 100,
+        p: dataPoints[i]['p'] * 100,
+        label: dataPoints[i]['b']
+      });
+    }
+
+    return pointsMeta;
+  }
+
+  getShortLabel(lbl) {
+    if (lbl.length > this.xLabelsChopLength) {
+      return `${lbl.substring(0, this.xLabelsChopLength - 1)}…`;
+    }
+    return lbl;
+  }
+
+  injectChart() {
+    const refLabels = {};
+    const infoElm = document.querySelector(`.${this.props.chartName} .chart-rollover-container`);
+    const pointsMetaLength = this.pointsMeta.length;
+
+    this.pointsMeta.map(chartItem => {
+      refLabels['' + chartItem.x] = chartItem.label;
+    });
+
+    /* eslint-disable camelcase */
+    const graphOptions = {
+      target: '.' + this.props.chartName,
+
+      // Data
+      data: this.pointsMeta,
+      x_accessor: 'x',
+      y_accessor: 'y',
+      show_rollover_text: false,
+
+      // General display
+      title: this.metric,
+      full_width: true,
+      area: false,
+      missing_is_hidden: true,
+
+      // y-axis
+      mouseover: data => {
+        infoElm.classList.add('show');
+        infoElm.querySelector('span').textContent = refLabels[data.x];
+        infoElm.querySelector('span:last-child').textContent = `${data.p.toFixed(4)}%`;
+      },
+      mouseout: () => {
+        infoElm.classList.remove('show');
+      },
+      yax_units: '%',
+      yax_units_append: true,
+    };
+
+    if (this.type === 'category') {
+      graphOptions.xax_format = d => this.getShortLabel(refLabels[d]);
+      graphOptions.xax_count = this.props.isDetail ? pointsMetaLength : this.numXTicksSmall;
+    }
+
+    if (!this.props.isDetail) {
+      graphOptions.height = 250;
+    } else {
+      graphOptions.full_height = true;
+    }
+
+    if (this.props.showOutliers) {
+      graphOptions.min_y = this.pointsMeta[0].y;
+      graphOptions.max_y = this.pointsMeta[pointsMetaLength - 1].y;
+    } else {
+      graphOptions.min_y = this.pointsMeta[Math.max(Math.round(pointsMetaLength * .005) - 1, 0)].y;
+      graphOptions.max_y = this.pointsMeta[Math.min(Math.round(pointsMetaLength * .995) - 1, pointsMetaLength - 1)].y;
+    }
+
+    MG.data_graphic(graphOptions);
+    /* eslint-enable camelcase */
+  }
 }
 
 Chart.propTypes = {
   chartName: React.PropTypes.string.isRequired,
-  item: React.PropTypes.object.isRequired,
   isDetail: React.PropTypes.bool.isRequired,
+  showOutliers: React.PropTypes.bool.isRequired,
 }
