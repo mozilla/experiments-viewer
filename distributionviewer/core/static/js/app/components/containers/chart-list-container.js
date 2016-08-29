@@ -21,6 +21,6 @@ const mapStateToProps = function(store) {
   return {
     items: store.metricState.items
   };
-}
+};
 
 export default connect(mapStateToProps)(ChartListContainer);

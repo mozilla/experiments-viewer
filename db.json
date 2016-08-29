@@ -2,24 +2,28 @@
   "metrics": {
     "metrics": [
       {
+        "id": 1,
         "name": "architecture",
         "description": "Some archy description."
       },
       {
+        "id": 2,
         "name": "bookmarks",
         "description": "Bookmarks description."
       },
       {
+        "id": 3,
         "name": "sysmem",
         "description": "A fascinating sysmem description."
       },
       {
+        "id": 4,
         "name": "cpucount",
         "description": "Number of CPUs."
       }
     ]
   },
-  "architecture": {
+  "1": {
     "numObs": 5321560,
     "type": "category",
     "metric": "Architecture",
@@ -68,7 +72,7 @@
       }
     ]
   },
-  "bookmarks": {
+  "2": {
     "numObs": 5321560,
     "type": "category",
     "metric": "Number of Bookmarks",
@@ -117,7 +121,7 @@
       }
     ]
   },
-  "sysmem": {
+  "3": {
     "numObs": 5321560,
     "type": "category",
     "metric": "System Memory",
@@ -166,7 +170,7 @@
       }
     ]
   },
-  "cpucount": {
+  "4": {
     "numObs": 5321560,
     "type": "category",
     "metric": "CPU Count",

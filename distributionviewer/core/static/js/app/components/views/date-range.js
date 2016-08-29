@@ -11,5 +11,5 @@ export default function DateRange(props) {
 
 DateRange.propTypes = {
   from: React.PropTypes.string.isRequired,
-  to: React.PropTypes.string.isRequired,
+  to: React.PropTypes.string.isRequired
 };

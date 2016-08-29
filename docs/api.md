@@ -2,8 +2,8 @@
 
 ## Endpoints
 
-* Names and descriptions of all metrics: /metrics/
-* Data for a specific metric: /distributions/[metric-name]/
+* IDs, names and descriptions of all metrics: /metrics/
+* Data for a specific metric: /metric/[metric-id]/
 
 ## Output
 
@@ -13,26 +13,25 @@
 {
   "metrics": [
     {
-      "name": "example",
+      "id": 1,
+      "name": "Example",
       "description": "Example metric"
     },
     {
-      "name": "anotherExample",
+      "id": 2,
+      "name": "Another Example",
       "description": "Another example meteric"
     },
     {
-      "name": "yetAnotherExample",
+      "id": 3,
+      "name": "Yet Another Example",
       "description": "Yet another example metric"
     }
   ]
 }
 ```
 
-Where:
-
-* Each `name` is unique
-
-### /distributions/[metric-name]/
+### /metric/[metric-id]/
 
 ```
 {

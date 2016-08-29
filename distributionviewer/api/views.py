@@ -24,11 +24,14 @@ def render_log(dist):
 @api_view(['GET'])
 @permission_classes([AllowAny])
 @renderer_classes([JSONRenderer])
-def distributions(request, metric):
-    metric = get_object_or_404(Metric, name=metric)
-    qc = CategoryCollection.objects.filter(metric=metric)
-    ql = LogCollection.objects.filter(metric=metric)
-    data = [render_category(d) for d in qc] + [render_log(d) for d in ql]
+def metric(request, metric_id):
+    metric = get_object_or_404(Metric, id=metric_id)
+    if metric.type == 'C':
+        qc = CategoryCollection.objects.filter(metric=metric)
+        data = [render_category(d) for d in qc]
+    elif metric.type == 'N':
+        ql = LogCollection.objects.filter(metric=metric)
+        data = [render_log(d) for d in ql]
     return Response(data[0])
 
 
