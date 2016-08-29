@@ -24,18 +24,18 @@ export class Chart extends React.Component {
   }
 
   componentWillMount() {
-    axios.get(`${metricApi.endpoints.GET_METRIC}${this.props.chartName}/`).then(response => {
+    axios.get(`${metricApi.endpoints.GET_METRIC}${this.props.chartId}/`).then(response => {
       this.metric = response.data.metric;
       this.type = response.data.type;
       this.pointsMeta = this.buildPointsMeta(response.data.points);
 
       this.injectChart();
-      document.querySelector(`.${this.props.chartName}`).classList.remove('is-fetching');
+      document.querySelector(`.chart-${this.props.chartId}`).classList.remove('is-fetching');
 
       store.dispatch(getMetricSuccess(response.data));
     }).catch(response => {
       console.error(response);
-      store.dispatch(getMetricFailure(response.status))
+      store.dispatch(getMetricFailure(response.status));
     });
   }
 
@@ -47,14 +47,14 @@ export class Chart extends React.Component {
 
   render() {
     const chart = (
-      <div className={`chart is-fetching ${this.props.chartName}`}>
+      <div className={`chart is-fetching chart-${this.props.chartId}`}>
         <Fetching />
         <p className="chart-rollover-container"><span /><span /></p>
       </div>
     );
 
     if (!this.props.isDetail) {
-      return <Link className="chart-link" to={`/metric/${this.props.chartName}/`}>{chart}</Link>
+      return <Link className="chart-link" to={`/chart/${this.props.chartId}/`}>{chart}</Link>;
     } else {
       return chart;
     }
@@ -84,7 +84,7 @@ export class Chart extends React.Component {
 
   injectChart() {
     const refLabels = {};
-    const infoElm = document.querySelector(`.${this.props.chartName} .chart-rollover-container`);
+    const infoElm = document.querySelector(`.chart-${this.props.chartId} .chart-rollover-container`);
     const pointsMetaLength = this.pointsMeta.length;
 
     this.pointsMeta.map(chartItem => {
@@ -93,7 +93,7 @@ export class Chart extends React.Component {
 
     /* eslint-disable camelcase */
     const graphOptions = {
-      target: '.' + this.props.chartName,
+      target: '.chart-' + this.props.chartId,
 
       // Data
       data: this.pointsMeta,
@@ -117,7 +117,7 @@ export class Chart extends React.Component {
         infoElm.classList.remove('show');
       },
       yax_units: '%',
-      yax_units_append: true,
+      yax_units_append: true
     };
 
     if (this.type === 'category') {
@@ -135,8 +135,8 @@ export class Chart extends React.Component {
       graphOptions.min_y = this.pointsMeta[0].y;
       graphOptions.max_y = this.pointsMeta[pointsMetaLength - 1].y;
     } else {
-      graphOptions.min_y = this.pointsMeta[Math.max(Math.round(pointsMetaLength * .005) - 1, 0)].y;
-      graphOptions.max_y = this.pointsMeta[Math.min(Math.round(pointsMetaLength * .995) - 1, pointsMetaLength - 1)].y;
+      graphOptions.min_y = this.pointsMeta[Math.max(Math.round(pointsMetaLength * 0.005) - 1, 0)].y;
+      graphOptions.max_y = this.pointsMeta[Math.min(Math.round(pointsMetaLength * 0.995) - 1, pointsMetaLength - 1)].y;
     }
 
     MG.data_graphic(graphOptions);
@@ -145,7 +145,8 @@ export class Chart extends React.Component {
 }
 
 Chart.propTypes = {
+  chartId: React.PropTypes.number.isRequired,
   chartName: React.PropTypes.string.isRequired,
   isDetail: React.PropTypes.bool.isRequired,
-  showOutliers: React.PropTypes.bool.isRequired,
-}
+  showOutliers: React.PropTypes.bool.isRequired
+};

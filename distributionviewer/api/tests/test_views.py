@@ -5,14 +5,18 @@ from distributionviewer.api.models import (CategoryCollection, CategoryPoint,
                                            LogCollection, LogPoint, Metric)
 
 
-class TestDistribution(TestCase):
+class TestMetric(TestCase):
 
     def create_data(self):
-        cat_metric = Metric.objects.create(name='architecture',
-                                           description='architecture descr',
+        cat_metric = Metric.objects.create(id=1,
+                                           name='Architecture',
+                                           description='Architecture descr',
+                                           type='C',
                                            metadata={})
-        log_metric = Metric.objects.create(name='searchesPerActiveDay',
-                                           description='searches descr',
+        log_metric = Metric.objects.create(id=2,
+                                           name='Searches Per Active Day',
+                                           description='Searches descr',
+                                           type='N',
                                            metadata={})
 
         cat_data = [
@@ -43,23 +47,23 @@ class TestDistribution(TestCase):
 
     def test_basic(self):
         self.create_data()
-        url = reverse('distributions', args=['architecture'])
+        url = reverse('metric', args=['1'])
         response = self.client.get(url)
         expected = {
             u'numObs': 2,
-            u'metric': u'architecture',
+            u'metric': u'Architecture',
             u'points': [
                 {u'p': 0.95, u'c': 0.95, u'b': u'x86', u'refRank': 1},
                 {u'p': 0.05, u'c': 1.0, u'b': u'x86-64', u'refRank': 2}
             ],
             u'type': u'category',
-            u'description': u'architecture descr'
+            u'description': u'Architecture descr'
         }
-        url = reverse('distributions', args=['searchesPerActiveDay'])
+        url = reverse('metric', args=['2'])
         response = self.client.get(url)
         expected = {
             u'numObs': 4,
-            u'metric': u'searchesPerActiveDay',
+            u'metric': u'Searches Per Active Day',
             u'points': [
                 {u'p': 0.1, u'c': 0.1, u'b': u'0.0'},
                 {u'p': 0.4, u'c': 0.5, u'b': u'1.0'},
@@ -67,12 +71,12 @@ class TestDistribution(TestCase):
                 {u'p': 0.1, u'c': 0.9, u'b': u'10.0'}
             ],
             u'type': u'log',
-            u'description': u'searches descr'
+            u'description': u'Searches descr'
         }
         self.assertEqual(response.json(), expected)
 
     def test_404(self):
-        url = reverse('distributions', args=['numFoxesFired'])
+        url = reverse('metric', args=['1'])
         response = self.client.get(url)
         self.assertEqual(response.status_code, 404)
 
@@ -83,21 +87,23 @@ class TestMetrics(TestCase):
         self.url = reverse('metrics')
 
     def create_data(self):
-        Metric.objects.create(name='architecture',
-                              description='architecture descr', metadata={})
-        Metric.objects.create(name='searchesPerActiveDay',
-                              description='searches descr', metadata={})
+        Metric.objects.create(id=1, name='Architecture',
+                              description='Architecture descr', metadata={})
+        Metric.objects.create(id=2, name='Searches Per Active Day',
+                              description='Searches descr', metadata={})
 
     def test_basic(self):
         self.create_data()
         response = self.client.get(self.url)
         expected = {
             u'metrics': [{
-                u'name': u'architecture',
-                u'description': u'architecture descr',
+                u'id': 1,
+                u'name': u'Architecture',
+                u'description': u'Architecture descr',
             }, {
-                u'name': u'searchesPerActiveDay',
-                u'description': u'searches descr',
+                u'id': 2,
+                u'name': u'Searches Per Active Day',
+                u'description': u'Searches descr',
             }]
         }
         self.assertEqual(response.json(), expected)

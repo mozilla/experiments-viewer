@@ -27,5 +27,5 @@ export default function MainLayout(props) {
 }
 
 MainLayout.propTypes = {
-  children: React.PropTypes.node.isRequired,
-}
+  children: React.PropTypes.node.isRequired
+};

@@ -9,7 +9,7 @@ export class ChartList extends React.Component {
       <section className="chart-list">
         {this.props.items.map(chart => {
           return (
-            <ChartContainer key={chart.name} isDetail={false} chartName={chart.name} showOutliers={false} />
+            <ChartContainer key={chart.name} isDetail={false} chartId={chart.id} chartName={chart.name} showOutliers={false} />
           );
         })}
       </section>
@@ -18,5 +18,5 @@ export class ChartList extends React.Component {
 }
 
 ChartList.propTypes = {
-  items: React.PropTypes.array.isRequired,
-}
+  items: React.PropTypes.array.isRequired
+};

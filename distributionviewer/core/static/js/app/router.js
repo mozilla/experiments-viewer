@@ -12,7 +12,7 @@ export default (
   <Router history={browserHistory}>
     <Route component={MainLayout}>
       <Route path="/" component={Home} />
-      <Route path="/metric/:metricName" component={ChartDetailContainer} />
+      <Route path="/chart/:chartId" component={ChartDetailContainer} />
     </Route>
   </Router>
 );

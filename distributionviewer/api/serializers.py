@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 
 class MetricSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
     name = serializers.CharField()
     description = serializers.CharField()
 

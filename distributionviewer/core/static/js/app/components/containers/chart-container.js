@@ -12,5 +12,6 @@ export class ChartContainer extends React.Component {
 }
 
 ChartContainer.propTypes = {
-  chartName: React.PropTypes.string.isRequired,
-}
+  chartId: React.PropTypes.number.isRequired,
+  chartName: React.PropTypes.string.isRequired
+};

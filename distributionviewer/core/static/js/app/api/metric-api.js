@@ -6,8 +6,8 @@ import {
 
 const prodEndpoints = {
   GET_METRICS: `${location.origin}/metrics/`,
-  GET_METRIC: `${location.origin}/distributions/`
-}
+  GET_METRIC: `${location.origin}/metric/`
+};
 
 const mockEndpoints = {
   GET_METRICS: 'http://localhost:3009/metrics',
@@ -25,7 +25,7 @@ export function getMetrics() {
     return response;
   }).catch(response => {
     console.error(response);
-    store.dispatch(getMetricsFailure(response.status))
+    store.dispatch(getMetricsFailure(response.status));
     return response;
   });
 }
