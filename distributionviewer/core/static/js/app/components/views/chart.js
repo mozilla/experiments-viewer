@@ -65,7 +65,7 @@ export class Chart extends React.Component {
 
     for (let i = 0; i < dataPoints.length; i++) {
       pointsMeta.push({
-        x: dataPoints[i]['refRank'] || dataPoints[i]['b'],
+        x: dataPoints[i]['refRank'] || parseFloat(dataPoints[i]['b']),
         y: dataPoints[i]['c'] * 100,
         p: dataPoints[i]['p'] * 100,
         label: dataPoints[i]['b']
