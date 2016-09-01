@@ -49,7 +49,20 @@ export class Chart extends React.Component {
     const chart = (
       <div className={`chart is-fetching chart-${this.props.chartId}`}>
         <Fetching />
-        <p className="chart-rollover-container"><span /><span /></p>
+        <table className="chart-rollover-table">
+          <tr>
+            <th>x</th>
+            <td className="value-x" />
+          </tr>
+          <tr>
+            <th>y</th>
+            <td className="value-y" />
+          </tr>
+          <tr>
+            <th>proportion</th>
+            <td className="value-p" />
+          </tr>
+        </table>
       </div>
     );
 
@@ -84,7 +97,7 @@ export class Chart extends React.Component {
 
   injectChart() {
     const refLabels = {};
-    const infoElm = document.querySelector(`.chart-${this.props.chartId} .chart-rollover-container`);
+    const infoElm = document.querySelector(`.chart-${this.props.chartId} .chart-rollover-table`);
     const pointsMetaLength = this.pointsMeta.length;
 
     this.pointsMeta.map(chartItem => {
@@ -113,8 +126,9 @@ export class Chart extends React.Component {
       yax_count: 5,
       mouseover: data => {
         infoElm.classList.add('show');
-        infoElm.querySelector('span').textContent = refLabels[data.x];
-        infoElm.querySelector('span:last-child').textContent = `${data.p.toFixed(4)}%`;
+        infoElm.querySelector('.value-x').textContent = refLabels[data.x];
+        infoElm.querySelector('.value-y').textContent = `${data.y.toFixed(4)}%`;
+        infoElm.querySelector('.value-p').textContent = `${data.p.toFixed(4)}%`;
       },
       mouseout: () => {
         infoElm.classList.remove('show');
