@@ -9,9 +9,9 @@ TODO Migrations:
     * Add date range table for weekly distributions (issue #62)
 """
 # TODO: Get real parquet data.
-df = sqlContext.read.json("/Users/rob/sample.json")
+df = sqlContext.read.parquet('s3n://net-mozaws-prod-us-west-2-pipeline-analysis/bcolloran/crossSectionalFrame_20160317.parquet')
 
-# Set up database connection to shielddash.
+# Set up database connection to distribution viewer.
 s3 = boto3.resource('s3')
 metasrcs = ujson.load(
     s3.Object('net-mozaws-prod-us-west-2-pipeline-metadata',
@@ -29,54 +29,59 @@ cur = conn.cursor()
 
 
 # Get the metrics we need to gather data for.
-cur.execute('SELECT id, name, description, source_name, type FROM api_metric')
+cur.execute('SELECT id, name, description, type, source_name FROM api_metric')
 metrics = cur.fetchall()
 
 for metric in metrics:
     metric_id, metric_name, metric_descr, metric_type, metric_src = metric
 
-    if metric_type == 'categorical':
+    if metric_type == 'C':
 
-        totals = (df.groupBy(metric_src)
-                    .count()
-                    .sort('count', ascending=False)
-                    .collect())
+        cdf = df.select(df[metric_src])
+        cdf = cdf.filter("%s != 'NaN' AND %s != '__MISSING'"
+                         % (metric_src, metric_src))
+        totals = (cdf.groupBy(metric_src)
+                     .count()
+                     .sort('count', ascending=False)
+                     .collect())
         observations = sum([t[1] for t in totals])
         data = [{
             k: v for (k, v) in zip(
                 ['bucket', 'count', 'proportion'],
-                [t[0], t[1], round(t[1] / float(observations), 4)])
+                [t[0], t[1], round(t[1] / float(observations), 8)])
         } for t in totals]
         """
         Example categorical data::
 
-            [{'count': 757725, 'bucket': u'Windows_NT', 'p': 0.9379},
-             {'count': 48409,  'bucket': u'Darwin',     'p': 0.0599},
-             {'count': 1122,   'bucket': u'Linux',      'p': 0.0014},
-             {'count': 591,    'bucket': u'NaN',        'p': 0.0007},
-             {'count': 4,      'bucket': u'Windows_95', 'p': 0.0},
-             {'count': 3,      'bucket': u'Windows_98', 'p': 0.0},
-             {'count': 1,      'bucket': u'__MISSING',  'p': 0.0}]
+            [{'bucket': u'Windows_NT', 'count': 757725, 'proportion': 0.93863462},
+             {'bucket': u'Darwin',     'count': 48409,  'proportion': 0.05996683},
+             {'bucket': u'Linux',      'count': 1122,   'proportion': 0.00138988},
+             {'bucket': u'Windows_95', 'count': 4,      'proportion': 4.96e-06},
+             {'bucket': u'Windows_98', 'count': 3,      'proportion': 3.72e-06}]
         """
 
         # Push data to database.
         sql = """
             INSERT INTO api_categorycollection
                 (num_observations, population, metric_id)
-            VALUES (%s, 'channel_release', %d)
+            VALUES (%s, 'channel_release', %s)
+            RETURNING id
         """
-        cur.execute(sql, observations, metric_id)
-        collection_id = cur.lastrowid
+        cur.execute(sql, [observations, metric_id])
+        conn.commit()
+        collection_id = cur.fetchone()[0]
 
         for i, d in enumerate(data):
             sql = """
                 INSERT INTO api_categorypoint
                     (bucket, proportion, rank, collection_id)
-                VALUES (%s, %f, %d, %d)
+                VALUES (%s, %s, %s, %s)
             """
-            cur.execute(sql, d['bucket'], d['proportion'], i, collection_id)
+            cur.execute(sql,
+                        [d['bucket'], d['proportion'], i + 1, collection_id])
+        conn.commit()
 
-    elif metric_type == 'numerical':
+    elif metric_type == 'N':
 
         cdf = df.select(df[metric_src])
         cdf = cdf.filter("%s != 'NaN'" % metric_src)
@@ -104,7 +109,7 @@ for metric in metrics:
             collapsed_data.append(d)
             prev = d
 
-        # Calculate `p` from `c`, and add a `rank` column.
+        # Calculate `p` from `c`.
         data = []
         prev = None
         for i, d in enumerate(collapsed_data):
@@ -118,27 +123,30 @@ for metric in metrics:
         """
         Example of what `data` looks like now::
 
-            [{'bucket': 0.0, 'c': 0.00126056, 'p': 0.00126056},
-             {'bucket': 3.0, 'c': 0.00372313, 'p': 0.00246256},
-             {'bucket': 4.0, 'c': 0.00430616, 'p': 0.0005830290622683026},
+            [{'bucket': 0.0,        'c': 0.00126056, 'p': 0.00126056},
+             {'bucket': 3.0,        'c': 0.00372313, 'p': 0.00246256},
+             {'bucket': 4.0,        'c': 0.00430616, 'p': 0.0005830290622683026},
              {'bucket': 6.13319683, 'c': 0.00599801, 'p': 0.00169184},
-             {'bucket': 8.0, 'c': 0.08114486, 'p': 0.07514685},
+             {'bucket': 8.0,        'c': 0.08114486, 'p': 0.07514685},
              {'bucket': 8.23087882, 'c': 0.08197282, 'p': 0.00082795},
              ...]
-         """
+        """
 
         # Push data to database.
         sql = """
             INSERT INTO api_logcollection
                 (num_observations, population, metric_id)
-            VALUES (%s, 'channel_release', %d)
+            VALUES (%s, 'channel_release', %s)
+            RETURNING id
         """
-        cur.execute(sql, total_count, metric_id)
-        collection_id = cur.lastrowid
+        cur.execute(sql, [total_count, metric_id])
+        conn.commit()
+        collection_id = cur.fetchone()[0]
 
         for d in data:
             sql = """
                 INSERT INTO api_logpoint (bucket, proportion, collection_id)
-                VALUES (%f, %f, %d)
+                VALUES (%s, %s, %s)
             """
-            cur.execute(sql, d['bucket'], d['p'], collection_id)
+            cur.execute(sql, [d['bucket'], d['p'], collection_id])
+        conn.commit()
