@@ -108,6 +108,8 @@ export class Chart extends React.Component {
       missing_is_hidden: true,
 
       // y-axis
+      min_y: 0,
+      max_y: 100,
       mouseover: data => {
         infoElm.classList.add('show');
         infoElm.querySelector('span').textContent = refLabels[data.x];
@@ -132,11 +134,11 @@ export class Chart extends React.Component {
     }
 
     if (this.props.showOutliers) {
-      graphOptions.min_y = this.pointsMeta[0].y;
-      graphOptions.max_y = this.pointsMeta[pointsMetaLength - 1].y;
+      graphOptions.min_x = this.pointsMeta[0].x;
+      graphOptions.max_x = this.pointsMeta[pointsMetaLength - 1].x;
     } else {
-      graphOptions.min_y = this.pointsMeta[Math.max(Math.round(pointsMetaLength * 0.005) - 1, 0)].y;
-      graphOptions.max_y = this.pointsMeta[Math.min(Math.round(pointsMetaLength * 0.995) - 1, pointsMetaLength - 1)].y;
+      graphOptions.min_x = this.pointsMeta[Math.max(Math.round(pointsMetaLength * 0.005) - 1, 0)].x;
+      graphOptions.max_x = this.pointsMeta[Math.min(Math.round(pointsMetaLength * 0.995) - 1, pointsMetaLength - 1)].x;
     }
 
     MG.data_graphic(graphOptions);
