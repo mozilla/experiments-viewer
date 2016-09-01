@@ -1,20 +1,37 @@
 @import 'lib';
 
-.chart-rollover-container {
+$table-space = 45px;
+
+.chart {
+  margin-bottom: $table-space;
+}
+
+.chart-rollover-table {
   background-image: linear-gradient(90deg, #000 0%, #00224A 100%);
   border-radius: 0 4px 4px 0;
-  bottom: -15px;
+  bottom: $table-space * -1;
   color: $normal-text;
-  display: none;
+  visibility: hidden;
   font-size: 12px;
-  padding: 5px $min-padding;
   position: absolute;
   right: $min-padding;
   width: $chart-preview-width - 60; // Chart Y-Axis padding.
 
+  th, td {
+    padding: 3px;
+  }
+
+  th {
+    text-align: left;
+    font-weight: normal;
+  }
+
+  td {
+    text-align: right;
+  }
+
   &.show {
-    display: flex;
-    justify-content: space-between;
+    visibility: visible;
   }
 }
 
