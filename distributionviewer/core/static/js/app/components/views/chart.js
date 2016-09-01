@@ -110,6 +110,7 @@ export class Chart extends React.Component {
       // y-axis
       min_y: 0,
       max_y: 100,
+      yax_count: 5,
       mouseover: data => {
         infoElm.classList.add('show');
         infoElm.querySelector('span').textContent = refLabels[data.x];
