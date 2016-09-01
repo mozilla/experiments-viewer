@@ -5,7 +5,8 @@
   display: none;
   font-weight: 100;
   height: 100%;
-  margin-left: - $min-padding; // Offset .global-wrapper padding-left.
+  // Offset total padding-left so the links are flush against the left window edge.
+  margin-left: - ($min-padding + $med-padding);
   padding: $lrg-padding $med-padding $med-padding 0;
   width: $menu-width;
 
