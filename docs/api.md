@@ -79,7 +79,7 @@
 }
 ```
 
-Field descriptions:
+#### Field descriptions
 
 <dl>
   <dt>b</dt>
@@ -107,3 +107,9 @@ Field descriptions:
     a stable ranking to display them side-by-side.
   </dd>
 </dl>
+
+#### Other notes
+
+* Data points are gauranteed to be in order, such that the *c* and the *b* (when
+  the data is numeric) of an object are always higher than those of the object
+  before it.
