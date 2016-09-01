@@ -1,16 +1,13 @@
 @import 'lib';
 
-.filtered-charts {
-  display: flex;
-}
 
-.filters {
+.chart-menu {
   display: none;
   font-weight: 100;
   height: 100%;
   margin-left: - $min-padding; // Offset .global-wrapper padding-left.
   padding: $lrg-padding $med-padding $med-padding 0;
-  width: $filters-width;
+  width: $menu-width;
 
   ul {
     list-style: none;
@@ -35,7 +32,7 @@
 }
 
 @media $base-tablet {
-  .filtered .filters {
+  .chart-menu {
     display: block;
   }
 }
