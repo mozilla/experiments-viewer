@@ -20,7 +20,7 @@ export class Chart extends React.Component {
     this.numXTicksSmall = 4;
 
     // After how many characters should the x-axis labels get ellipsised?
-    this.xLabelsChopLength = 11;
+    this.xLabelsChopLength = 8;
   }
 
   componentWillMount() {
