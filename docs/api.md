@@ -84,9 +84,9 @@
 <dl>
   <dt>type</dt>
   <dd>
-    One of <code>category</code> or <code>log</code>. When the type is
+    One of <code>category</code> or <code>numeric</code>. When the type is
     <code>category</code>, <code>points.b</code> will be a string containing a
-    word like <i>arm</i> or <i>sparc</i>. When the type is <code>log</code>,
+    word like <i>arm</i> or <i>sparc</i>. When the type is <code>numeric</code>,
     <code>points.b</code> will be a string containing a floating-point number.
   </dd>
 
