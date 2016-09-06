@@ -30,20 +30,20 @@ class CategoryCollection(Collection):
             cumulative=RawSQL("SUM(proportion) OVER (ORDER BY rank)", []))
 
 
-class LogCollection(Collection):
-    def points(self):
-        return self._points.annotate(
-            cumulative=RawSQL("SUM(proportion) OVER (ORDER BY bucket)", []))
-
-
-class LogPoint(models.Model):
-    collection = models.ForeignKey(LogCollection, related_name="_points")
-    bucket = models.FloatField()
-    proportion = models.FloatField()
-
-
 class CategoryPoint(models.Model):
     collection = models.ForeignKey(CategoryCollection, related_name="_points")
     bucket = models.CharField(max_length=255)
     proportion = models.FloatField()
     rank = models.IntegerField()
+
+
+class NumericCollection(Collection):
+    def points(self):
+        return self._points.annotate(
+            cumulative=RawSQL("SUM(proportion) OVER (ORDER BY bucket)", []))
+
+
+class NumericPoint(models.Model):
+    collection = models.ForeignKey(NumericCollection, related_name="_points")
+    bucket = models.FloatField()
+    proportion = models.FloatField()

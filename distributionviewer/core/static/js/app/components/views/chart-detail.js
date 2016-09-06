@@ -17,7 +17,7 @@ export class ChartDetail extends React.Component {
   render() {
     // Only show the "Show outliers" toggle when it would have an effect
     let outliersToggle = '';
-    if (this.props.item.type === 'log' && this.props.item.points.length >= 100) {
+    if (this.props.item.type === 'numeric' && this.props.item.points.length >= 100) {
       outliersToggle = <label className="show-outliers"><input type="checkbox" defaultChecked={this.state.showOutliers} onChange={this.handleChange} />Show outliers</label>
     }
 

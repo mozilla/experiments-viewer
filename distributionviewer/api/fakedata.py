@@ -882,7 +882,7 @@ FAKE_DISTRIBUTION_DATA = [
      u'metric': u'bookmarksAtMostRecentDay',
      u'numObs': 5321560.0,
      u'pop': u'channel_release',
-     u'type': u'log'},
+     u'type': u'numeric'},
     {u'points': [{u'b': 0, u'c': 0.636166, u'p': 0.636166},
                  {u'b': 0.0100002, u'c': 0.68453, u'p': 0.0483642},
                  {u'b': 0.0200013, u'c': 0.73095, u'p': 0.0464193},
@@ -975,7 +975,7 @@ FAKE_DISTRIBUTION_DATA = [
      u'metric': u'pctDaysWithCrashes',
      u'numObs': 5321560.0,
      u'pop': u'channel_release',
-     u'type': u'log'},
+     u'type': u'numeric'},
     {u'points': [{u'b': 0, u'c': 0.209814, u'p': 0.209814},
                  {u'b': 0.0100002, u'c': 0.222485, u'p': 0.0126705},
                  {u'b': 0.0200013, u'c': 0.237274, u'p': 0.0147887},
@@ -1068,7 +1068,7 @@ FAKE_DISTRIBUTION_DATA = [
      u'metric': u'pctDaysWithSearches',
      u'numObs': 5321560.0,
      u'pop': u'channel_release',
-     u'type': u'log'},
+     u'type': u'numeric'},
     {u'points': [{u'b': 0, u'c': 0.209815, u'p': 0.209815},
                  {u'b': 0.0100002, u'c': 0.219661, u'p': 0.00984599},
                  {u'b': 0.0200013, u'c': 0.230791, u'p': 0.0111308},
@@ -1742,13 +1742,14 @@ FAKE_DISTRIBUTION_DATA = [
      u'metric': u'searchesPerActiveDay',
      u'numObs': 5321560.0,
      u'pop': u'channel_release',
-     u'type': u'log'}
+     u'type': u'numeric'}
 ]
 
 
 def load():
     from distributionviewer.api.models import (
-        CategoryCollection, CategoryPoint, LogCollection, LogPoint, Metric)
+        CategoryCollection, CategoryPoint, NumericCollection, NumericPoint,
+        Metric)
     for coll in FAKE_DISTRIBUTION_DATA:
         m, _ = Metric.objects.get_or_create(
             name=coll['metric'],
@@ -1765,11 +1766,11 @@ def load():
                     proportion=p['p'],
                     rank=p['refRank'])
         else:
-            c, _ = LogCollection.objects.get_or_create(
+            c, _ = NumericCollection.objects.get_or_create(
                 metric=m,
                 num_observations=coll['numObs'],
                 population=coll['pop'])
             for p in coll['points']:
-                LogPoint.objects.create(
+                NumericPoint.objects.create(
                     collection=c, bucket=p['b'],
                     proportion=p['p'])

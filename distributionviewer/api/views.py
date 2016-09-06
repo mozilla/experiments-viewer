@@ -5,10 +5,10 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.renderers import JSONRenderer
 
-from .models import CategoryCollection, LogCollection, Metric
+from .models import CategoryCollection, NumericCollection, Metric
 from .renderers import MetricsJSONRenderer
-from .serializers import (CategoryDistributionSerializer,
-                          LogDistributionSerializer, MetricSerializer)
+from .serializers import (CategoryDistributionSerializer, MetricSerializer,
+                          NumericDistributionSerializer)
 
 
 def render_category(dist):
@@ -16,8 +16,8 @@ def render_category(dist):
     return s.data
 
 
-def render_log(dist):
-    s = LogDistributionSerializer(dist)
+def render_numeric(dist):
+    s = NumericDistributionSerializer(dist)
     return s.data
 
 
@@ -30,8 +30,8 @@ def metric(request, metric_id):
         qc = CategoryCollection.objects.filter(metric=metric)
         data = [render_category(d) for d in qc]
     elif metric.type == 'N':
-        ql = LogCollection.objects.filter(metric=metric)
-        data = [render_log(d) for d in ql]
+        ql = NumericCollection.objects.filter(metric=metric)
+        data = [render_numeric(d) for d in ql]
     return Response(data[0])
 
 

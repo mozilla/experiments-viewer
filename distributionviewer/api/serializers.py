@@ -30,12 +30,12 @@ class CategoryDistributionSerializer(DistributionSerializer):
     _type = 'category'
 
 
-class LogPointSerializer(serializers.Serializer):
+class NumericPointSerializer(serializers.Serializer):
     b = serializers.CharField(source='bucket')
     c = serializers.FloatField(source='cumulative')
     p = serializers.FloatField(source='proportion')
 
 
-class LogDistributionSerializer(DistributionSerializer):
-    points = LogPointSerializer(many=True)
-    _type = 'log'
+class NumericDistributionSerializer(DistributionSerializer):
+    points = NumericPointSerializer(many=True)
+    _type = 'numeric'
