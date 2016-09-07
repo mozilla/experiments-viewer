@@ -1,5 +1,12 @@
-from django.test import TestCase
+import os
+import json
+
+
+from django.test import TestCase, override_settings
 from rest_framework.reverse import reverse
+
+from mock import patch
+from oauth2client import client
 
 from distributionviewer.api.models import (CategoryCollection, CategoryPoint,
                                            NumericCollection, NumericPoint,
@@ -108,3 +115,62 @@ class TestMetrics(TestCase):
             }]
         }
         self.assertEqual(response.json(), expected)
+
+
+def fake_google_verify(token, key):
+    return {'iss': 'accounts.google.com', 'hd': 'mozilla.com',
+            'email': 'user@example.com'}
+
+
+def bad_google_verify(token, key):
+    return {'iss': 'accounts.elgoog.com', 'hd': 'mozilla.com',
+            'email': 'user@example.com'}
+
+
+def wrong_domain_google_verify(token, key):
+    return {'iss': 'accounts.google.com', 'hd': 'gmail.com',
+            'email': 'user@example.com'}
+
+
+class TestLoginHandler(TestCase):
+
+    def setUp(self):
+        super(TestLoginHandler, self).setUp()
+        self.url = reverse('login')
+
+    def post(self, data):
+        return self.client.post(self.url, json.dumps(data),
+                                content_type='application/json')
+
+    @patch.object(os, 'urandom', lambda n: '0' * n)
+    @patch.object(client, 'verify_id_token', fake_google_verify)
+    @override_settings(SECRET_KEY='random words')
+    def test_login(self):
+        res = self.post({'token': 'fake-token'})
+        self.assertEqual(res.status_code, 200)
+        data = json.loads(res.content)
+        self.assertEqual(
+            data['token'],
+            'user@example.com,76564683b0a59576155f6ad1d045c0ac74a63b71d9b9810c'
+            '123eae6b50559096fb23dc42f554f13bed955b531e2369052be912da083dcf066'
+            '6d9945bbad8db8b,00000000')
+
+    @patch.object(client, 'verify_id_token', bad_google_verify)
+    def test_bad_login(self):
+        res = self.post({'token': 'fake-token'})
+        self.assertEqual(res.status_code, 403)
+        data = json.loads(res.content)
+        self.assertEqual(data, {'detail': 'Wrong issuer.'})
+
+    @patch.object(client, 'verify_id_token', wrong_domain_google_verify)
+    def test_wrong_domain_login(self):
+        res = self.post({'token': 'fake-token'})
+        self.assertEqual(res.status_code, 403)
+        data = json.loads(res.content)
+        self.assertEqual(data, {'detail': 'Wrong hosted domain.'})
+
+    def test_login_nodata(self):
+        res = self.post({})
+        self.assertEqual(res.status_code, 400)
+        data = json.loads(res.content)
+        self.assertEqual(data, {'detail': 'Auth token required.'})
