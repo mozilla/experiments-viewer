@@ -1,3 +1,6 @@
+import datetime
+
+
 FAKE_DISTRIBUTION_DATA = [
     {u'points': [{u'b': u'x86', u'c': 0.932504, u'p': 0.932504, u'refRank': 1},
                  {u'b': u'x86-64',
@@ -1746,17 +1749,23 @@ FAKE_DISTRIBUTION_DATA = [
 ]
 
 
-def load():
+def load(date=None):
     from distributionviewer.api.models import (
-        CategoryCollection, CategoryPoint, NumericCollection, NumericPoint,
-        Metric)
+        CategoryCollection, CategoryPoint, DataSet, NumericCollection,
+        NumericPoint, Metric)
+
+    date = date or datetime.date.today()
+    dataset = DataSet.objects.create(date=date)
+
     for coll in FAKE_DISTRIBUTION_DATA:
         m, _ = Metric.objects.get_or_create(
             name=coll['metric'],
+            type='C' if coll['type'] == 'categ' else 'N',
             description=u'Fake data ' + coll['metric'],
             metadata={})
         if coll['type'] == 'categ':
             c, _ = CategoryCollection.objects.get_or_create(
+                dataset=dataset,
                 metric=m,
                 num_observations=coll['numObs'],
                 population=coll['pop'])
@@ -1767,6 +1776,7 @@ def load():
                     rank=p['refRank'])
         else:
             c, _ = NumericCollection.objects.get_or_create(
+                dataset=dataset,
                 metric=m,
                 num_observations=coll['numObs'],
                 population=coll['pop'])

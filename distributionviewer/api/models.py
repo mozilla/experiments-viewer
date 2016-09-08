@@ -3,6 +3,10 @@ from django.db.models.expressions import RawSQL
 from django.db import models
 
 
+class DataSet(models.Model):
+    date = models.DateField()
+
+
 class Metric(models.Model):
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField()
@@ -16,6 +20,7 @@ class Metric(models.Model):
 
 
 class Collection(models.Model):
+    dataset = models.ForeignKey(DataSet)
     metric = models.ForeignKey(Metric)
     num_observations = models.IntegerField()
     population = models.CharField(max_length=255)

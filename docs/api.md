@@ -2,12 +2,11 @@
 
 ## Endpoints
 
-* IDs, names and descriptions of all metrics: /metrics/
-* Data for a specific metric: /metric/[metric-id]/
+### `GET /metrics/`
 
-## Output
+Lists the IDs, name, and descriptions of all metrics.
 
-### /metrics/
+Example output:
 
 ```
 {
@@ -31,10 +30,21 @@
 }
 ```
 
-### /metric/[metric-id]/
+
+### `GET /metric/[metric-id]/`
+
+Returns data for a specific metric.
+
+Query parameters:
+
+* `date` (optional): A date in ISO 8601 format. This date will be used to find
+  the most recent prior data set.
+
+Example output:
 
 ```
 {
+  "dataSet": "2016-01-01",
   "numObs": 5321560,
   "type": "category",
   "metric": "architecture",
@@ -82,6 +92,13 @@
 #### Field descriptions
 
 <dl>
+  <dt>dataSet</dt>
+  <dd>
+    All metrics are connected to a <code>DataSet</code> which is the date the
+    data was created and imported. This allows for historical
+    <code>DataSet</code>s to exist.
+  </dd>
+
   <dt>type</dt>
   <dd>
     One of <code>category</code> or <code>numeric</code>. When the type is
@@ -89,7 +106,6 @@
     word like <i>arm</i> or <i>sparc</i>. When the type is <code>numeric</code>,
     <code>points.b</code> will be a string containing a floating-point number.
   </dd>
-
 
   <dt>points</dt>
   <dd>
