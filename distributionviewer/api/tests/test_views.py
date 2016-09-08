@@ -1,38 +1,36 @@
-import os
+import datetime
 import json
-
+import os
 
 from django.test import TestCase, override_settings
-from rest_framework.reverse import reverse
-
 from mock import patch
 from oauth2client import client
+from rest_framework.reverse import reverse
 
 from distributionviewer.api.models import (CategoryCollection, CategoryPoint,
-                                           NumericCollection, NumericPoint,
-                                           Metric)
+                                           DataSet, Metric, NumericCollection,
+                                           NumericPoint)
 
 
 class TestMetric(TestCase):
 
-    def create_data(self):
-        cat_metric = Metric.objects.create(id=1,
-                                           name='Architecture',
-                                           description='Architecture descr',
-                                           type='C',
-                                           metadata={})
-        num_metric = Metric.objects.create(id=2,
-                                           name='Searches Per Active Day',
-                                           description='Searches descr',
-                                           type='N',
-                                           metadata={})
+    def create_data(self, date=None):
+        cat_metric = Metric.objects.get_or_create(
+            id=1, name='Architecture', description='Architecture descr',
+            type='C', metadata={})[0]
+        num_metric = Metric.objects.get_or_create(
+            id=2, name='Searches Per Active Day', description='Searches descr',
+            type='N', metadata={})[0]
+
+        date = date or datetime.date(2016, 1, 1)
+        dataset = DataSet.objects.create(date=date)
 
         cat_data = [
             ('x86', 0.95, 1),
             ('x86-64', 0.05, 2),
         ]
         cat_collection = CategoryCollection.objects.create(
-            metric=cat_metric, num_observations=len(cat_data),
+            dataset=dataset, metric=cat_metric, num_observations=len(cat_data),
             population='channel_release')
         for bucket, proportion, rank in cat_data:
             CategoryPoint.objects.create(
@@ -46,7 +44,7 @@ class TestMetric(TestCase):
             (10, 0.1),
         ]
         num_collection = NumericCollection.objects.create(
-            metric=num_metric, num_observations=len(num_data),
+            dataset=dataset, metric=num_metric, num_observations=len(num_data),
             population='channel_release')
         for bucket, proportion in num_data:
             NumericPoint.objects.create(
@@ -55,10 +53,12 @@ class TestMetric(TestCase):
 
     def test_basic(self):
         self.create_data()
+        # No `date` query string gets latest data set.
         url = reverse('metric', args=['1'])
         response = self.client.get(url)
         expected = {
             u'numObs': 2,
+            u'dataSet': u'2016-01-01',
             u'metric': u'Architecture',
             u'points': [
                 {u'p': 0.95, u'c': 0.95, u'b': u'x86', u'refRank': 1},
@@ -67,10 +67,13 @@ class TestMetric(TestCase):
             u'type': u'category',
             u'description': u'Architecture descr'
         }
+        self.assertEqual(response.json(), expected)
+
         url = reverse('metric', args=['2'])
         response = self.client.get(url)
         expected = {
             u'numObs': 4,
+            u'dataSet': u'2016-01-01',
             u'metric': u'Searches Per Active Day',
             u'points': [
                 {u'p': 0.1, u'c': 0.1, u'b': u'0.0'},
@@ -83,7 +86,30 @@ class TestMetric(TestCase):
         }
         self.assertEqual(response.json(), expected)
 
-    def test_404(self):
+    def test_specific_date(self):
+        # Testing 20160205 should find the 20160202 dataset.
+        self.create_data()
+        self.create_data(date=datetime.date(2016, 2, 2))
+        response = self.client.get(reverse('metric', args=['1']),
+                                   data={'date': '2016-02-05'})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(DataSet.objects.count(), 2)
+        self.assertEqual(response.json()['dataSet'], u'2016-02-02')
+
+    def test_invalid_date_400(self):
+        self.create_data()
+        response = self.client.get(reverse('metric', args=['1']),
+                                   data={'date': '2000-99-99'})
+        self.assertEqual(response.status_code, 400)
+
+    def test_date_with_no_data_404(self):
+        # Testing 20151231 should find no dataset and return a 404.
+        self.create_data()
+        response = self.client.get(reverse('metric', args=['1']),
+                                   data={'date': '2015-12-31'})
+        self.assertEqual(response.status_code, 404)
+
+    def test_no_metric_404(self):
         url = reverse('metric', args=['1'])
         response = self.client.get(url)
         self.assertEqual(response.status_code, 404)
