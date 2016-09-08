@@ -50,18 +50,20 @@ export class Chart extends React.Component {
       <div className={`chart is-fetching chart-${this.props.chartId}`}>
         <Fetching />
         <table className="chart-rollover-table">
-          <tr>
-            <th>x</th>
-            <td className="value-x" />
-          </tr>
-          <tr>
-            <th>y</th>
-            <td className="value-y" />
-          </tr>
-          <tr>
-            <th>proportion</th>
-            <td className="value-p" />
-          </tr>
+          <tbody>
+            <tr>
+              <th>x</th>
+              <td className="value-x" />
+            </tr>
+            <tr>
+              <th>y</th>
+              <td className="value-y" />
+            </tr>
+            <tr>
+              <th>proportion</th>
+              <td className="value-p" />
+            </tr>
+          </tbody>
         </table>
       </div>
     );
