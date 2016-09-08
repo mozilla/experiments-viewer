@@ -1,13 +1,12 @@
+import datetime
+
 import boto3
 import psycopg2
 import ujson
 from pyspark.sql.functions import cume_dist, row_number
 from pyspark.sql.window import Window
 
-"""
-TODO Migrations:
-    * Add date range table for weekly distributions (issue #62)
-"""
+
 # TODO: Get real parquet data.
 df = sqlContext.read.parquet('s3n://net-mozaws-prod-us-west-2-pipeline-analysis/bcolloran/crossSectionalFrame_20160317.parquet')
 
@@ -27,6 +26,12 @@ conn = psycopg2.connect(host=creds['host'], port=creds['port'],
                         dbname=creds['db_name'])
 cur = conn.cursor()
 
+
+# Create a new dataset for this import.
+cur.execute('INSERT INTO api_dataset (date) VALUES (%s) RETURNING id',
+            [datetime.date.today()])
+conn.commit()
+dataset_id = cur.fetchone()[0]
 
 # Get the metrics we need to gather data for.
 cur.execute('SELECT id, name, description, type, source_name FROM api_metric')
@@ -63,11 +68,11 @@ for metric in metrics:
         # Push data to database.
         sql = """
             INSERT INTO api_categorycollection
-                (num_observations, population, metric_id)
-            VALUES (%s, 'channel_release', %s)
+                (num_observations, population, metric_id, dataset_id)
+            VALUES (%s, 'channel_release', %s, %s)
             RETURNING id
         """
-        cur.execute(sql, [observations, metric_id])
+        cur.execute(sql, [observations, metric_id, dataset_id])
         conn.commit()
         collection_id = cur.fetchone()[0]
 
@@ -134,18 +139,19 @@ for metric in metrics:
 
         # Push data to database.
         sql = """
-            INSERT INTO api_logcollection
-                (num_observations, population, metric_id)
-            VALUES (%s, 'channel_release', %s)
+            INSERT INTO api_numericcollection
+                (num_observations, population, metric_id, dataset_id)
+            VALUES (%s, 'channel_release', %s, %s)
             RETURNING id
         """
-        cur.execute(sql, [total_count, metric_id])
+        cur.execute(sql, [total_count, metric_id, dataset_id])
         conn.commit()
         collection_id = cur.fetchone()[0]
 
         for d in data:
             sql = """
-                INSERT INTO api_logpoint (bucket, proportion, collection_id)
+                INSERT INTO api_numericpoint
+                    (bucket, proportion, collection_id)
                 VALUES (%s, %s, %s)
             """
             cur.execute(sql, [d['bucket'], d['p'], collection_id])
