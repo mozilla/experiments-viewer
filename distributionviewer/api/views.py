@@ -1,18 +1,20 @@
 import datetime
 
 from django.conf import settings
-from django.contrib.auth import get_user_model
+from django.contrib.auth import login, get_user_model
 from django.shortcuts import get_object_or_404
+from django.template.response import SimpleTemplateResponse
+from django.views.decorators.csrf import csrf_exempt
+
 from oauth2client import client, crypt
-from rest_framework.decorators import (api_view, permission_classes,
+from rest_framework.decorators import (api_view, authentication_classes,
+                                       permission_classes,
                                        renderer_classes)
 from rest_framework.exceptions import (AuthenticationFailed, NotFound,
                                        ParseError, ValidationError)
 from rest_framework.permissions import AllowAny
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
-
-from distributionviewer.authentication import commonplace_token
 
 from .models import CategoryCollection, DataSet, Metric, NumericCollection
 from .renderers import MetricsJSONRenderer
@@ -64,9 +66,11 @@ def metrics(request):
     return Response([MetricSerializer(m).data for m in metrics])
 
 
+@csrf_exempt
 @api_view(['POST'])
-@permission_classes([AllowAny])
-def login(request):
+@authentication_classes([])
+@permission_classes([])
+def verify_google_token(request):
     token = request.data.get('token')
     if token is None:
         raise ValidationError({'detail': 'Auth token required.'})
@@ -86,7 +90,13 @@ def login(request):
     }
     user, created = get_user_model().objects.get_or_create(
         username=idinfo['email'], defaults=defaults)
-    return Response({
-        'email': idinfo['email'],
-        'token': commonplace_token(idinfo['email'])
-    })
+    user.backend = 'django.contrib.auth.backends.ModelBackend'
+    login(request, user)
+    return Response({})
+
+
+def login_view(request):
+    return SimpleTemplateResponse(
+        template='distributionviewer/login.html',
+        context={'google_clientid': settings.GOOGLE_AUTH_KEY,
+                 'next': request.GET.get('next')})

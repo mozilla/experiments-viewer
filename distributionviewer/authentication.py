@@ -71,5 +71,5 @@ def commonplace_token(email):
     hm = hmac.new(
         unique_id + settings.SECRET_KEY,
         consumer_id, hashlib.sha512)
-
-    return ','.join((email, hm.hexdigest(), unique_id))
+    return u','.join((email, hm.hexdigest().decode('ascii'),
+                      unique_id.encode('base64').decode('ascii')))
