@@ -24,6 +24,7 @@
     ]
   },
   "1": {
+    "dataSet": "2016-01-01",
     "numObs": 5321560,
     "type": "category",
     "metric": "Architecture",
@@ -73,6 +74,7 @@
     ]
   },
   "2": {
+    "dataSet": "2016-01-01",
     "numObs": 5321560,
     "type": "category",
     "metric": "Number of Bookmarks",
@@ -122,6 +124,7 @@
     ]
   },
   "3": {
+    "dataSet": "2016-01-01",
     "numObs": 5321560,
     "type": "category",
     "metric": "System Memory",
@@ -171,6 +174,7 @@
     ]
   },
   "4": {
+    "dataSet": "2016-01-01",
     "numObs": 5321560,
     "type": "category",
     "metric": "CPU Count",
