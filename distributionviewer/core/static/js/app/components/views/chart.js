@@ -165,7 +165,6 @@ export class Chart extends React.Component {
 
 Chart.propTypes = {
   chartId: React.PropTypes.number.isRequired,
-  chartName: React.PropTypes.string.isRequired,
   isDetail: React.PropTypes.bool.isRequired,
   showOutliers: React.PropTypes.bool.isRequired
 };

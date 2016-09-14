@@ -24,7 +24,7 @@ export class ChartDetail extends React.Component {
     return (
       <div className="chart-detail">
         {outliersToggle}
-        <ChartContainer isDetail={true} chartId={this.props.params.chartId} chartName={this.props.params.metricName} showOutliers={this.state.showOutliers} />
+        <ChartContainer isDetail={true} chartId={parseInt(this.props.params.chartId, 10)} showOutliers={this.state.showOutliers} />
       </div>
     );
   }
