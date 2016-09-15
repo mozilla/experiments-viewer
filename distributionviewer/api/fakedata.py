@@ -1761,8 +1761,7 @@ def load(date=None):
         m, _ = Metric.objects.get_or_create(
             name=coll['metric'],
             type='C' if coll['type'] == 'categ' else 'N',
-            description=u'Fake data ' + coll['metric'],
-            metadata={})
+            description=u'Fake data ' + coll['metric'])
         if coll['type'] == 'categ':
             c, _ = CategoryCollection.objects.get_or_create(
                 dataset=dataset,

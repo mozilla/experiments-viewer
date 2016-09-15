@@ -1,4 +1,3 @@
-from django.contrib.postgres.fields import JSONField
 from django.db.models.expressions import RawSQL
 from django.db import models
 
@@ -16,7 +15,6 @@ class Metric(models.Model):
     source_name = models.CharField(
         max_length=255,
         help_text="The metric's name in the source telemetry data.")
-    metadata = JSONField()
 
 
 class Collection(models.Model):
