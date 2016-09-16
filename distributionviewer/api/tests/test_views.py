@@ -17,10 +17,10 @@ class TestMetric(TestCase):
     def create_data(self, date=None):
         cat_metric = Metric.objects.get_or_create(
             id=1, name='Architecture', description='Architecture descr',
-            type='C', metadata={})[0]
+            type='C')[0]
         num_metric = Metric.objects.get_or_create(
             id=2, name='Searches Per Active Day', description='Searches descr',
-            type='N', metadata={})[0]
+            type='N')[0]
 
         date = date or datetime.date(2016, 1, 1)
         dataset = DataSet.objects.create(date=date)
@@ -122,9 +122,9 @@ class TestMetrics(TestCase):
 
     def create_data(self):
         Metric.objects.create(id=1, name='Architecture',
-                              description='Architecture descr', metadata={})
+                              description='Architecture descr')
         Metric.objects.create(id=2, name='Searches Per Active Day',
-                              description='Searches descr', metadata={})
+                              description='Searches descr')
 
     def test_basic(self):
         self.create_data()
