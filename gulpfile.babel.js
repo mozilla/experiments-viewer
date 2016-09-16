@@ -33,7 +33,7 @@ const bundles = {
 
 gulp.task('build:js', () => {
   return gulp.src(path.resolve(paths.js, 'app/app.js'))
-             .pipe(webpack(require('./webpack.config.js')))
+             .pipe(webpack(require('./webpack.config.babel.js')))
              .pipe(gulp.dest('./'));
 });
 
