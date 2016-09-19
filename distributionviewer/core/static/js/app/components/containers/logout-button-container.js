@@ -12,7 +12,7 @@ export class LogoutButtonContainer extends React.Component {
       localStorage.removeItem('user_token');
 
       console.log('sign out finished...');
-      browserHistory.push('/');
+      window.location.pathname = '/accounts/logout/';
     });
   }
 

@@ -23,6 +23,7 @@ function performSignIn(googleUser) {
         document.querySelector('body').appendChild(new Text(txt))
         var auth2 = gapi.auth2.getAuthInstance();
         auth2.signOut();
+        window.location.pathname = '/accounts/logout/';
       });
     }
   });
