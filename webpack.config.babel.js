@@ -14,7 +14,15 @@ module.exports = {
     sourceMapFilename: './distributionviewer/core/static/js/bundle.map'
   },
   devtool: '#source-map',
-  plugins: [environmentVariables],
+  plugins: [
+    environmentVariables,
+    new webpack.optimize.UglifyJsPlugin({
+      comments: false,
+      compress: {
+        warnings: false
+      }
+    }),
+  ],
   module: {
     loaders: [
       {
