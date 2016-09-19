@@ -2,7 +2,8 @@
   "name": "distributionviewer",
   "scripts": {
     "test": "gulp test",
-    "postinstall": "gulp build"
+    "postinstall": "gulp build",
+    "size": "webpack --json | webpack-bundle-size-analyzer"
   },
   "dependencies": {
     "axios": "^0.14.0",
@@ -29,5 +30,8 @@
     "react-router": "^2.0.0",
     "redux": "^3.5.2",
     "webpack-stream": "^3.1.0"
+  },
+  "devDependencies": {
+    "webpack-bundle-size-analyzer": "^2.0.2"
   }
 }
