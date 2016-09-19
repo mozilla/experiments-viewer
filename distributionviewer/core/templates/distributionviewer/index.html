@@ -3,8 +3,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
+    <meta name="google-signin-client_id" content="{{ settings.GOOGLE_AUTH_KEY }}">
     <title>Firefox Distribution Viewer</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/bundle.css' %}">
+    <script src="https://apis.google.com/js/platform.js"></script>
   </head>
   <body>
     <div id="root"></div>

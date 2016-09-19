@@ -7,19 +7,22 @@ function performSignIn(googleUser) {
   localStorage.setItem('user_name', user.name);
   localStorage.setItem('user_email', user.email);
   localStorage.setItem('user_token', user.token);
+
   var req = new Request('/verify_google_token/', {
     method: 'POST',
     credentials: 'same-origin',
     mode: 'same-origin',
-    body: new URLSearchParams('token=' + user.token)});
-  window.fetch(req).then(function (response) {
+    body: new URLSearchParams('token=' + user.token)
+  });
+
+  window.fetch(req).then(response => {
     if (response.status === 200) {
       window.location.pathname = document.querySelector('html').dataset.logintarget;
     } else {
-      response.text().then(function (txt) {
+      response.text().then(txt => {
         document.querySelector('body').appendChild(new Text(txt))
         var auth2 = gapi.auth2.getAuthInstance();
-        auth2.signOut()
+        auth2.signOut();
       });
     }
   });
