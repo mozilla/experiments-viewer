@@ -1,11 +1,24 @@
 import path from 'path';
 import webpack from 'webpack';
 
-var environmentVariables = new webpack.DefinePlugin({
-  'process.env': {
-    'NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
-  }
-});
+const plugins = [
+  new webpack.DefinePlugin({
+    'process.env': {
+      'NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
+    }
+  })
+];
+
+// Debugging is a bit tricker when the bundle is compressed, so only compress it
+// on production.
+if (process.env.NODE_ENV === 'production') {
+  plugins.push(new webpack.optimize.UglifyJsPlugin({
+    comments: false,
+    compress: {
+      warnings: false
+    }
+  }));
+}
 
 module.exports = {
   entry: './distributionviewer/core/static/js/app/app.js',
@@ -14,15 +27,7 @@ module.exports = {
     sourceMapFilename: './distributionviewer/core/static/js/bundle.map'
   },
   devtool: '#source-map',
-  plugins: [
-    environmentVariables,
-    new webpack.optimize.UglifyJsPlugin({
-      comments: false,
-      compress: {
-        warnings: false
-      }
-    }),
-  ],
+  plugins,
   module: {
     loaders: [
       {
