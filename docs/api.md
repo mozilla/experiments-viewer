@@ -45,6 +45,7 @@ Example output:
 ```
 {
   "dataSet": "2016-01-01",
+  "population": "All",
   "numObs": 5321560,
   "type": "category",
   "metric": "architecture",
@@ -97,6 +98,12 @@ Example output:
     All metrics are connected to a <code>DataSet</code> which is the date the
     data was created and imported. This allows for historical
     <code>DataSet</code>s to exist.
+  </dd>
+
+  <dt>population</dt>
+  <dd>
+    The population this data set applies to. Besides "All", some examples
+    include: "channel:release" or "os:darwin".
   </dd>
 
   <dt>type</dt>

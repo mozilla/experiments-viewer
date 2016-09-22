@@ -5,6 +5,12 @@ from django.db import models
 class DataSet(models.Model):
     date = models.DateField()
 
+    class Meta:
+        get_latest_by = 'date'
+
+    def __unicode__(self):
+        return self.date.strftime('%Y-%m-%d')
+
 
 class Metric(models.Model):
     name = models.CharField(max_length=255, unique=True)
@@ -15,6 +21,9 @@ class Metric(models.Model):
     source_name = models.CharField(
         max_length=255,
         help_text="The metric's name in the source telemetry data.")
+
+    def __unicode__(self):
+        return self.name
 
 
 class Collection(models.Model):
