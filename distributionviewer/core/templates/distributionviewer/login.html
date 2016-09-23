@@ -1,0 +1,28 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en" data-logintarget="{{ next }}">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="{{ google_clientid }}">
+    <title>Firefox Distribution Viewer</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bundle.css' %}">
+  </head>
+  <body id="login">
+    <div id="root">
+      <div id="global-wrapper" class="global-wrapper">
+        <header class="primary-header">
+          <h1>
+            <a class="primary-header-link" href="/">Firefox Distribution Viewer</a>
+          </h1>
+        </header>
+        <main>
+          <p>Please <span class="g-signin2" data-onsuccess="performSignIn">Sign in</span> to continue</p>
+        </main>
+      </div>
+    </div>
+    <script src="https://apis.google.com/js/platform.js" defer></script>
+    <script src="{% static 'js/login.js' %}" defer></script>
+    <script>
+  </body>
+</html>
