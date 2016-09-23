@@ -99,4 +99,4 @@ def login_view(request):
     return SimpleTemplateResponse(
         template='distributionviewer/login.html',
         context={'google_clientid': settings.GOOGLE_AUTH_KEY,
-                 'next': request.GET.get('next')})
+                 'next': request.GET.get('next', '/')})
