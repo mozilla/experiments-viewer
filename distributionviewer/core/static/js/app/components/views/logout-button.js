@@ -3,9 +3,9 @@ import React from 'react';
 
 export default function LogoutButton(props) {
   return (
-    <div className="sign-in-wrapper">
-      <h3>{props.email}</h3>
-      <div className="button button-sign-out" onClick={props.signOut}>Sign Out</div>
+    <div className="sign-out-wrapper">
+      <span>{props.email}</span>
+      <a href="#" onClick={props.signOut}>Sign Out</a>
     </div>
   );
 }
