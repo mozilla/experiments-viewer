@@ -5,7 +5,7 @@ export default function LogoutButton(props) {
   return (
     <div className="sign-out-wrapper">
       <span>{props.email}</span>
-      <a href="#" onClick={props.signOut}>Sign Out</a>
+      <span className="button" onClick={props.signOut}>Sign Out</span>
     </div>
   );
 }
