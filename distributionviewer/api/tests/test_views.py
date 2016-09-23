@@ -14,7 +14,10 @@ from distributionviewer.api.models import (CategoryCollection, CategoryPoint,
 
 class TestMetric(TestCase):
 
-    def create_data(self, date=None):
+    def create_data(self, date=None, population=None):
+        date = date or datetime.date(2016, 1, 1)
+        population = population or 'All'
+
         cat_metric = Metric.objects.get_or_create(
             id=1, name='Architecture', description='Architecture descr',
             type='C')[0]
@@ -22,8 +25,7 @@ class TestMetric(TestCase):
             id=2, name='Searches Per Active Day', description='Searches descr',
             type='N')[0]
 
-        date = date or datetime.date(2016, 1, 1)
-        dataset = DataSet.objects.create(date=date)
+        dataset, _ = DataSet.objects.get_or_create(date=date)
 
         cat_data = [
             ('x86', 0.95, 1),
@@ -31,7 +33,7 @@ class TestMetric(TestCase):
         ]
         cat_collection = CategoryCollection.objects.create(
             dataset=dataset, metric=cat_metric, num_observations=len(cat_data),
-            population='channel_release')
+            population=population)
         for bucket, proportion, rank in cat_data:
             CategoryPoint.objects.create(
                 collection=cat_collection, bucket=bucket,
@@ -45,7 +47,7 @@ class TestMetric(TestCase):
         ]
         num_collection = NumericCollection.objects.create(
             dataset=dataset, metric=num_metric, num_observations=len(num_data),
-            population='channel_release')
+            population=population)
         for bucket, proportion in num_data:
             NumericPoint.objects.create(
                 collection=num_collection, bucket=bucket,
@@ -59,6 +61,7 @@ class TestMetric(TestCase):
         expected = {
             u'numObs': 2,
             u'dataSet': u'2016-01-01',
+            u'population': u'All',
             u'metric': u'Architecture',
             u'points': [
                 {u'p': 0.95, u'c': 0.95, u'b': u'x86', u'refRank': 1},
@@ -74,6 +77,7 @@ class TestMetric(TestCase):
         expected = {
             u'numObs': 4,
             u'dataSet': u'2016-01-01',
+            u'population': u'All',
             u'metric': u'Searches Per Active Day',
             u'points': [
                 {u'p': 0.1, u'c': 0.1, u'b': u'0.0'},
@@ -113,6 +117,14 @@ class TestMetric(TestCase):
         url = reverse('metric', args=['1'])
         response = self.client.get(url)
         self.assertEqual(response.status_code, 404)
+
+    def test_specific_population(self):
+        self.create_data()  # Default to 'All' population.
+        self.create_data(population='channel:beta')
+        response = self.client.get(reverse('metric', args=['1']),
+                                   data={'population': 'channel:beta'})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json()['population'], u'channel:beta')
 
 
 class TestMetrics(TestCase):

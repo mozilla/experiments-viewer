@@ -34,6 +34,9 @@ def render_numeric(dist):
 @permission_classes([AllowAny])
 @renderer_classes([JSONRenderer])
 def metric(request, metric_id):
+    # Get requested population or default to "All".
+    population = request.query_params.get('population', 'All')
+
     # Get requested dataset or most recent prior dataset from date.
     date = request.query_params.get('date',
                                     datetime.date.today().strftime('%Y-%m-%d'))
@@ -48,11 +51,13 @@ def metric(request, metric_id):
 
     metric = get_object_or_404(Metric, id=metric_id)
     if metric.type == 'C':
-        qc = CategoryCollection.objects.filter(dataset=dataset, metric=metric)
+        qc = CategoryCollection.objects.filter(dataset=dataset, metric=metric,
+                                               population=population)
         data = [render_category(d) for d in qc]
     elif metric.type == 'N':
-        ql = NumericCollection.objects.filter(dataset=dataset, metric=metric)
-        data = [render_numeric(d) for d in ql]
+        qn = NumericCollection.objects.filter(dataset=dataset, metric=metric,
+                                              population=population)
+        data = [render_numeric(d) for d in qn]
     return Response(data[0])
 
 
