@@ -3,7 +3,7 @@ import datetime
 from django.conf import settings
 from django.contrib.auth import login, get_user_model
 from django.shortcuts import get_object_or_404
-from django.template.response import SimpleTemplateResponse
+from django.template.response import TemplateResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from oauth2client import client, crypt
@@ -101,7 +101,8 @@ def verify_google_token(request):
 
 
 def login_view(request):
-    return SimpleTemplateResponse(
+    return TemplateResponse(
+        request,
         template='distributionviewer/login.html',
         context={'google_clientid': settings.GOOGLE_AUTH_KEY,
                  'next': request.GET.get('next', '/')})
