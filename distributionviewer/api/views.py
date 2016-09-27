@@ -12,7 +12,6 @@ from rest_framework.decorators import (api_view, authentication_classes,
                                        renderer_classes)
 from rest_framework.exceptions import (AuthenticationFailed, NotFound,
                                        ParseError, ValidationError)
-from rest_framework.permissions import AllowAny
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 
@@ -33,7 +32,6 @@ def render_numeric(dist):
 
 
 @api_view(['GET'])
-@permission_classes([AllowAny])
 @renderer_classes([JSONRenderer])
 def metric(request, metric_id):
     # Get requested population or default to "All".
@@ -64,7 +62,6 @@ def metric(request, metric_id):
 
 
 @api_view(['GET'])
-@permission_classes([AllowAny])
 @renderer_classes([MetricsJSONRenderer])
 def metrics(request):
     metrics = Metric.objects.all().order_by('name')
