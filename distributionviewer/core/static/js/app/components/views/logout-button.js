@@ -12,5 +12,5 @@ export default function LogoutButton(props) {
 
 LogoutButton.propTypes = {
   email: React.PropTypes.string.isRequired,
-  signOut: React.PropTypes.string.isRequired,
+  signOut: React.PropTypes.func.isRequired,
 };
