@@ -9,8 +9,3 @@ export default function LogoutButton(props) {
     </div>
   );
 }
-
-LogoutButton.propTypes = {
-  email: React.PropTypes.string.isRequired,
-  signOut: React.PropTypes.func.isRequired,
-};

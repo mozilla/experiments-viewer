@@ -18,7 +18,3 @@ export class ChartMenu extends React.Component {
     );
   }
 }
-
-ChartMenu.propTypes = {
-  items: React.PropTypes.array.isRequired
-};

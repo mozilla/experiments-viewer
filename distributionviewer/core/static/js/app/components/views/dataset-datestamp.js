@@ -8,7 +8,3 @@ export default function DatasetDatestamp(props) {
     </span>
   );
 }
-
-DatasetDatestamp.propTypes = {
-  isoDate: React.PropTypes.string.isRequired,
-};

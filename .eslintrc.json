@@ -24,6 +24,7 @@
     "quotes": [2, "single"],
     "strict": 2,
 
-    "react/display-name": 0
+    "react/display-name": 0,
+    "react/prop-types": 0
   }
 }

@@ -10,7 +10,3 @@ export class ChartContainer extends React.Component {
     );
   }
 }
-
-ChartContainer.propTypes = {
-  chartId: React.PropTypes.number.isRequired,
-};

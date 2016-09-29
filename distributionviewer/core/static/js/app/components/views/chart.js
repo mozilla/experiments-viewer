@@ -162,9 +162,3 @@ export class Chart extends React.Component {
     /* eslint-enable camelcase */
   }
 }
-
-Chart.propTypes = {
-  chartId: React.PropTypes.number.isRequired,
-  isDetail: React.PropTypes.bool.isRequired,
-  showOutliers: React.PropTypes.bool.isRequired
-};

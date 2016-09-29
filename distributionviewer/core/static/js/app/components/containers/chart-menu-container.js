@@ -12,10 +12,6 @@ class ChartMenuContainer extends React.Component {
   }
 }
 
-ChartMenuContainer.propTypes = {
-  items: React.PropTypes.array.isRequired,
-}
-
 const mapStateToProps = function(store) {
   return {
     isFetching: store.metricState.isFetching,

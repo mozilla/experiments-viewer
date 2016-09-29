@@ -29,8 +29,3 @@ export class ChartDetail extends React.Component {
     );
   }
 }
-
-ChartDetail.propTypes = {
-  item: React.PropTypes.object.isRequired,
-  params: React.PropTypes.object.isRequired
-};

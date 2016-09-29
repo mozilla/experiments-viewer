@@ -23,10 +23,6 @@ export class DatasetDatestampContainer extends React.Component {
   }
 }
 
-DatasetDatestampContainer.propTypes = {
-  item: React.PropTypes.object.isRequired,
-};
-
 const mapStateToProps = function(store) {
   return {
     item: store.metricState.item
