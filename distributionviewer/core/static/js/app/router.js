@@ -7,7 +7,7 @@ import MainLayout from './components/layouts/main-layout';
 // Pages
 import Home from './components/home';
 import ChartDetailContainer from './components/containers/chart-detail-container';
-import { NotFoundContainer } from './components/containers/not-found-container';
+import NotFoundContainer from './components/containers/not-found-container';
 
 export default (
   <Router history={browserHistory}>

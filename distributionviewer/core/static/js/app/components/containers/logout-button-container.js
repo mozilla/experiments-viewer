@@ -3,7 +3,7 @@ import React from 'react';
 import LogoutButton from '../views/logout-button';
 
 
-export class LogoutButtonContainer extends React.Component {
+export default class extends React.Component {
   _doSignOut() {
     window.gapi.auth2.getAuthInstance().signOut().then(() => {
       localStorage.removeItem('user_name');

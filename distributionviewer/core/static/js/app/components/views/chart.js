@@ -12,7 +12,7 @@ import {
 import Fetching from './fetching';
 
 
-export class Chart extends React.Component {
+export default class extends React.Component {
   constructor(props) {
     super(props);
 

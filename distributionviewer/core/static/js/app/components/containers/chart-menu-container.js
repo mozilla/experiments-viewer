@@ -1,15 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { ChartMenu } from '../views/chart-menu';
+import ChartMenu from '../views/chart-menu';
 
 
-class ChartMenuContainer extends React.Component {
-  render() {
-    return (
-      <ChartMenu items={this.props.items} />
-    );
-  }
+function ChartMenuContainer(props) {
+  return (
+    <ChartMenu items={props.items} />
+  );
 }
 
 const mapStateToProps = function(store) {
