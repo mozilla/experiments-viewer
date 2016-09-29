@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-export default function LogoutButton(props) {
+export default function(props) {
   return (
     <div className="sign-out-wrapper">
       <span>{props.email}</span>

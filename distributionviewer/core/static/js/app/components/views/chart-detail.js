@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { ChartContainer } from '../containers/chart-container';
+import ChartContainer from '../containers/chart-container';
 
 
-export class ChartDetail extends React.Component {
+export default class extends React.Component {
   constructor(props) {
     super(props);
     this.state = {showOutliers: false};

@@ -1,15 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { ChartDetail } from '../views/chart-detail';
+import ChartDetail from '../views/chart-detail';
 
 
-class ChartDetailContainer extends React.Component {
-  render() {
-    return (
-      <ChartDetail {...this.props} />
-    );
-  }
+function ChartDetailContainer(props) {
+  return (
+    <ChartDetail {...props} />
+  );
 }
 
 const mapStateToProps = function(store) {
