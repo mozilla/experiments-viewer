@@ -1,13 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-import axios from 'axios';
 import MG from 'metrics-graphics';
-
-import store from '../../store';
-import * as metricApi from '../../api/metric-api';
-import {
-  getMetricSuccess, getMetricFailure
-} from '../../actions/metric-actions';
 
 import Fetching from './fetching';
 
@@ -16,6 +9,8 @@ export default class extends React.Component {
   constructor(props) {
     super(props);
 
+    this.chartLoaded = false;
+
     // Number of x-axis ticks on the chart list page.
     this.numXTicksSmall = 4;
 
@@ -23,31 +18,26 @@ export default class extends React.Component {
     this.xLabelsChopLength = 8;
   }
 
-  componentWillMount() {
-    axios.get(`${metricApi.endpoints.GET_METRIC}${this.props.chartId}/`).then(response => {
-      this.metric = response.data.metric;
-      this.type = response.data.type;
-      this.pointsMeta = this.buildPointsMeta(response.data.points);
-
-      this.injectChart();
-      document.querySelector(`.chart-${this.props.chartId}`).classList.remove('is-fetching');
-
-      store.dispatch(getMetricSuccess(response.data));
-    }).catch(response => {
-      console.error(response);
-      store.dispatch(getMetricFailure(response.status));
-    });
+  componentDidMount() {
+    // On the chart detail page, points are loaded after the component mounts
+    if (this.props.points) {
+      this.loadChart();
+    }
   }
 
-  componentDidUpdate() {
-    if (this.pointsMeta) {
-      this.injectChart();
+  componentWillUpdate(nextProps) {
+    // Load the chart if it can be loaded and hasn't been already. Otherwise,
+    // it just needs to be updated.
+    if (!this.chartLoaded && nextProps.points) {
+      this.loadChart(nextProps);
+    } else if (this.chartLoaded) {
+      this.insertOrUpdateChart();
     }
   }
 
   render() {
     const chart = (
-      <div className={`chart is-fetching chart-${this.props.chartId}`}>
+      <div className={`chart is-fetching chart-${this.props.id}`}>
         <Fetching />
         <table className="chart-rollover-table">
           <tbody>
@@ -69,10 +59,17 @@ export default class extends React.Component {
     );
 
     if (!this.props.isDetail) {
-      return <Link className="chart-link" to={`/chart/${this.props.chartId}/`}>{chart}</Link>;
+      return <Link className="chart-link" to={`/chart/${this.props.id}/`}>{chart}</Link>;
     } else {
       return chart;
     }
+  }
+
+  loadChart(props = this.props) {
+    this.pointsMeta = this.buildPointsMeta(props.points);
+    this.insertOrUpdateChart();
+    document.querySelector(`.chart-${props.id}`).classList.remove('is-fetching');
+    this.chartLoaded = true;
   }
 
   buildPointsMeta(dataPoints) {
@@ -97,9 +94,9 @@ export default class extends React.Component {
     return lbl;
   }
 
-  injectChart() {
+  insertOrUpdateChart() {
     const refLabels = {};
-    const infoElm = document.querySelector(`.chart-${this.props.chartId} .chart-rollover-table`);
+    const infoElm = document.querySelector(`.chart-${this.props.id} .chart-rollover-table`);
     const pointsMetaLength = this.pointsMeta.length;
 
     this.pointsMeta.map(chartItem => {
@@ -108,7 +105,7 @@ export default class extends React.Component {
 
     /* eslint-disable camelcase */
     const graphOptions = {
-      target: '.chart-' + this.props.chartId,
+      target: '.chart-' + this.props.id,
 
       // Data
       data: this.pointsMeta,
@@ -117,7 +114,7 @@ export default class extends React.Component {
       show_rollover_text: false,
 
       // General display
-      title: this.metric,
+      title: this.props.metric,
       full_width: true,
       area: false,
       missing_is_hidden: true,
@@ -139,7 +136,7 @@ export default class extends React.Component {
       yax_units_append: true
     };
 
-    if (this.type === 'category') {
+    if (this.props.type === 'category') {
       graphOptions.xax_format = d => this.getShortLabel(refLabels[d]);
       graphOptions.xax_count = this.props.isDetail ? pointsMetaLength : this.numXTicksSmall;
     }

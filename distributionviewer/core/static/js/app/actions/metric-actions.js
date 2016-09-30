@@ -1,5 +1,24 @@
 import * as types from './action-types';
 
+export function gettingMetricsMetadata() {
+  return {
+    type: types.GETTING_METRICS_METADATA
+  };
+}
+
+export function getMetricsMetadataSuccess(metadata) {
+  return {
+    type: types.GET_METRICS_METADATA_SUCCESS,
+    metadata
+  };
+}
+
+export function getMetricsMetadataFailure(status) {
+  return {
+    type: types.GET_METRICS_METADATA_FAILURE,
+    status
+  };
+}
 
 export function gettingMetrics() {
   return {
@@ -7,10 +26,10 @@ export function gettingMetrics() {
   };
 }
 
-export function getMetricsSuccess(items) {
+export function getMetricsSuccess(metrics) {
   return {
     type: types.GET_METRICS_SUCCESS,
-    items
+    metrics
   };
 }
 
@@ -21,10 +40,16 @@ export function getMetricsFailure(status) {
   };
 }
 
-export function getMetricSuccess(item) {
+export function gettingMetric() {
+  return {
+    type: types.GETTING_METRIC
+  };
+}
+
+export function getMetricSuccess(metric) {
   return {
     type: types.GET_METRIC_SUCCESS,
-    item
+    metric
   };
 }
 

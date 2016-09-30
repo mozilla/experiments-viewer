@@ -19,7 +19,7 @@ class ChartListContainer extends React.Component {
 
 const mapStateToProps = function(store) {
   return {
-    items: store.metricState.items
+    metrics: store.metricsState.metrics
   };
 };
 

@@ -24,6 +24,7 @@
     ]
   },
   "1": {
+    "id": 1,
     "dataSet": "2016-01-01",
     "population": "All",
     "numObs": 5321560,
@@ -75,6 +76,7 @@
     ]
   },
   "2": {
+    "id": 2,
     "dataSet": "2016-01-01",
     "population": "All",
     "numObs": 5321560,
@@ -126,6 +128,7 @@
     ]
   },
   "3": {
+    "id": 3,
     "dataSet": "2016-01-01",
     "population": "All",
     "numObs": 5321560,
@@ -177,6 +180,7 @@
     ]
   },
   "4": {
+    "id": 4,
     "dataSet": "2016-01-01",
     "population": "All",
     "numObs": 5321560,

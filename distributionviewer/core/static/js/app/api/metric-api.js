@@ -1,8 +1,6 @@
 import axios from 'axios';
 import store from '../store';
-import {
-  gettingMetrics, getMetricsSuccess, getMetricsFailure
-} from '../actions/metric-actions';
+import * as metricActions from '../actions/metric-actions';
 
 const prodEndpoints = {
   GET_METRICS: `${location.origin}/metrics/`,
@@ -16,16 +14,41 @@ const mockEndpoints = {
 
 export const endpoints = process.env.NODE_ENV === 'production' ? prodEndpoints : mockEndpoints;
 
-// Fetch list of metrics.
+// Get an array of all metrics
 export function getMetrics() {
-  store.dispatch(gettingMetrics());
+  store.dispatch(metricActions.gettingMetricsMetadata());
 
   return axios.get(endpoints.GET_METRICS).then(response => {
-    store.dispatch(getMetricsSuccess(response.data.metrics));
+    store.dispatch(metricActions.getMetricsMetadataSuccess(response.data.metrics));
+
+    store.dispatch(metricActions.gettingMetrics());
+    axios.all(response.data.metrics.map(metricData => getMetric(metricData.id)))
+      .then(axios.spread(function(...metricData) {
+        store.dispatch(metricActions.getMetricsSuccess(metricData));
+      })).catch(error => {
+        console.error(error);
+        store.dispatch(metricActions.getMetricsFailure(error.response.status));
+        return error;
+      });
+
     return response;
-  }).catch(response => {
-    console.error(response);
-    store.dispatch(getMetricsFailure(response.status));
-    return response;
+  }).catch(error => {
+    console.error(error);
+    store.dispatch(metricActions.getMetricsMetadataFailure(error.response.status));
+    return error;
+  });
+}
+
+// Get a single metric
+export function getMetric(chartId) {
+  store.dispatch(metricActions.gettingMetric());
+
+  return axios.get(`${endpoints.GET_METRIC}${chartId}/`).then(response => {
+    store.dispatch(metricActions.getMetricSuccess(response.data));
+    return response.data;
+  }).catch(error => {
+    console.error(error);
+    store.dispatch(metricActions.getMetricFailure(error.response.status));
+    return error;
   });
 }

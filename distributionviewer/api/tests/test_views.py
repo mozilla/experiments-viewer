@@ -63,6 +63,7 @@ class TestMetric(TestCase):
             u'numObs': 2,
             u'dataSet': u'2016-01-01',
             u'population': u'All',
+            u'id': 1,
             u'metric': u'Architecture',
             u'points': [
                 {u'p': 0.95, u'c': 0.95, u'b': u'x86', u'refRank': 1},
@@ -79,6 +80,7 @@ class TestMetric(TestCase):
             u'numObs': 4,
             u'dataSet': u'2016-01-01',
             u'population': u'All',
+            u'id': 2,
             u'metric': u'Searches Per Active Day',
             u'points': [
                 {u'p': 0.1, u'c': 0.1, u'b': u'0.0'},

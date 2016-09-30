@@ -12,10 +12,10 @@ export class DatasetDatestampContainer extends React.Component {
   }
 
   render() {
-    if (this.props.item.dataSet) {
+    if (this.props.metric.dataSet) {
       this.gotDataset = true;
       return (
-        <DatasetDatestamp isoDate={this.props.item.dataSet} />
+        <DatasetDatestamp isoDate={this.props.metric.dataSet} />
       );
     } else {
       return null;
@@ -25,7 +25,7 @@ export class DatasetDatestampContainer extends React.Component {
 
 const mapStateToProps = function(store) {
   return {
-    item: store.metricState.item
+    metric: store.metricState.metric
   };
 };
 

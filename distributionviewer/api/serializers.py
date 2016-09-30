@@ -15,6 +15,7 @@ class CategoryPointSerializer(serializers.Serializer):
 
 
 class DistributionSerializer(serializers.Serializer):
+    id = serializers.IntegerField(source='metric.id')
     numObs = serializers.IntegerField(source='num_observations')
     dataSet = serializers.DateField(source='dataset.date')
     population = serializers.CharField()

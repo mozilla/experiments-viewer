@@ -44,6 +44,7 @@ Example output:
 
 ```
 {
+  "id": 1,
   "dataSet": "2016-01-01",
   "population": "All",
   "numObs": 5321560,
