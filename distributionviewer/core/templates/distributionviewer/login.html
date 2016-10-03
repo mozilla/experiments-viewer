@@ -17,12 +17,14 @@
           </h1>
         </header>
         <main>
+          {% if request.GET.status == '403' %}
+            <p class="error">Must log in with a mozilla.com email address</p>
+          {% endif %}
           <p>Please <span class="g-signin2" data-onsuccess="performSignIn">Sign in</span> to continue</p>
         </main>
       </div>
     </div>
     <script src="https://apis.google.com/js/platform.js" defer></script>
     <script src="{% static 'js/login.js' %}" defer></script>
-    <script>
   </body>
 </html>

@@ -19,12 +19,9 @@ function performSignIn(googleUser) {
     if (response.status === 200) {
       window.location.pathname = document.querySelector('html').dataset.logintarget;
     } else {
-      response.text().then(txt => {
-        document.querySelector('body').appendChild(new Text(txt))
-        var auth2 = gapi.auth2.getAuthInstance();
-        auth2.signOut();
-        window.location.pathname = '/accounts/logout/';
-      });
+      var auth2 = gapi.auth2.getAuthInstance();
+      auth2.signOut();
+      window.location.pathname = '/accounts/login/?status=' + response.status;
     }
   });
 }
