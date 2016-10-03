@@ -5,10 +5,10 @@ export default function(props) {
   return (
     <nav className="chart-menu">
       <ul>
-        {props.items.map(metric => {
+        {props.metadata.map(metricMetadata => {
           return (
-            <li key={`menu-${metric.id}`}>
-              <a href={`/chart/${metric.id}/`}>{metric.name}</a>
+            <li key={`menu-${metricMetadata.id}`}>
+              <a href={`/chart/${metricMetadata.id}/`}>{metricMetadata.name}</a>
             </li>
           );
         })}

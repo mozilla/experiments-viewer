@@ -17,14 +17,14 @@ export default class extends React.Component {
   render() {
     // Only show the "Show outliers" toggle when it would have an effect
     let outliersToggle = '';
-    if (this.props.item.type === 'numeric' && this.props.item.points.length >= 100) {
+    if (this.props.type === 'numeric' && this.props.points.length >= 100) {
       outliersToggle = <label className="show-outliers"><input type="checkbox" defaultChecked={this.state.showOutliers} onChange={this.handleChange} />Show outliers</label>
     }
 
     return (
       <div className="chart-detail">
         {outliersToggle}
-        <ChartContainer isDetail={true} chartId={parseInt(this.props.params.chartId, 10)} showOutliers={this.state.showOutliers} />
+        <ChartContainer isDetail={true} showOutliers={this.state.showOutliers} {...this.props} />
       </div>
     );
   }

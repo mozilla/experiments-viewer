@@ -6,15 +6,13 @@ import ChartMenu from '../views/chart-menu';
 
 function ChartMenuContainer(props) {
   return (
-    <ChartMenu items={props.items} />
+    <ChartMenu metadata={props.metadata} />
   );
 }
 
 const mapStateToProps = function(store) {
   return {
-    isFetching: store.metricState.isFetching,
-    items: store.metricState.items,
-    status: store.metricState.status
+    metadata: store.metricsMetadataState.metadata,
   };
 }
 
