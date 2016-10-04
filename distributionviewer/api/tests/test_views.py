@@ -1,7 +1,8 @@
 import datetime
 import json
 
-from django.contrib import auth
+from django.contrib.auth import get_user
+from django.contrib.auth.models import User
 from django.test import TestCase
 
 from mock import patch
@@ -14,6 +15,12 @@ from distributionviewer.api.models import (CategoryCollection, CategoryPoint,
 
 
 class TestMetric(TestCase):
+
+    def setUp(self):
+        User.objects.create_user(username='testuser',
+                                 email='example@mozilla.com',
+                                 password='password')
+        self.client.login(username='testuser', password='password')
 
     def create_data(self, date=None, population=None):
         date = date or datetime.date(2016, 1, 1)
@@ -134,6 +141,10 @@ class TestMetrics(TestCase):
 
     def setUp(self):
         self.url = reverse('metrics')
+        User.objects.create_user(username='testuser',
+                                 email='example@mozilla.com',
+                                 password='password')
+        self.client.login(username='testuser', password='password')
 
     def create_data(self):
         Metric.objects.create(id=1, name='Architecture',
@@ -187,25 +198,25 @@ class TestLoginHandler(TestCase):
     def test_login(self):
         res = self.post({'token': 'fake-token'})
         self.assertEqual(res.status_code, 200)
-        user = auth.get_user(self.client)
+        user = get_user(self.client)
         assert user.is_authenticated()
 
     @patch.object(client, 'verify_id_token', bad_google_verify)
     def test_bad_login(self):
         res = self.post({'token': 'fake-token'})
         self.assertEqual(res.status_code, 403)
-        user = auth.get_user(self.client)
+        user = get_user(self.client)
         assert not user.is_authenticated()
 
     @patch.object(client, 'verify_id_token', wrong_domain_google_verify)
     def test_wrong_domain_login(self):
         res = self.post({'token': 'fake-token'})
         self.assertEqual(res.status_code, 403)
-        user = auth.get_user(self.client)
+        user = get_user(self.client)
         assert not user.is_authenticated()
 
     def test_login_nodata(self):
         res = self.post({})
         self.assertEqual(res.status_code, 400)
-        user = auth.get_user(self.client)
+        user = get_user(self.client)
         assert not user.is_authenticated()

@@ -23,6 +23,8 @@ STATIC_ROOT = config('STATIC_ROOT', default=os.path.join(BASE_DIR,
                                                          'staticfiles'))
 STATIC_URL = config('STATIC_URL', '/static/')
 
+LOGIN_URL = '/accounts/login/'
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -113,7 +115,7 @@ REST_FRAMEWORK = {
     ),
 
     'DEFAULT_PERMISSION_CLASSES': (
-        'distributionviewer.authentication.OptionsOrIsAuthenticated',
+        'rest_framework.permissions.IsAuthenticated',
     ),
     'DATETIME_FORMAT': "%Y-%m-%dT%H:%M:%S",
 }
