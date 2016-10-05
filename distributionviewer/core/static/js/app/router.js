@@ -6,6 +6,7 @@ import MainLayout from './components/layouts/main-layout';
 
 // Pages
 import Home from './components/home';
+import ChartConfigContainer from './components/containers/chart-config-container';
 import ChartDetailContainer from './components/containers/chart-detail-container';
 import NotFound from './components/views/not-found';
 
@@ -14,6 +15,7 @@ export default (
     <Route component={MainLayout}>
       <Route path="/" component={Home} />
       <Route path="/chart/:chartId" component={ChartDetailContainer} />
+      <Route path="/configure" component={ChartConfigContainer} />
       <Route path="*" component={NotFound} />
     </Route>
   </Router>

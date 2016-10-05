@@ -6,8 +6,8 @@ import ChartMenuContainer from './containers/chart-menu-container';
 export default function(props) {
   return (
     <main>
-      <ChartMenuContainer />
-      <ChartListContainer />
+      <ChartMenuContainer query={props.location.query} />
+      <ChartListContainer query={props.location.query} />
     </main>
   );
 }
