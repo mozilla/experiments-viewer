@@ -25,11 +25,11 @@ export default class extends React.Component {
     }
   }
 
-  componentWillUpdate(nextProps) {
+  componentDidUpdate() {
     // Load the chart if it can be loaded and hasn't been already. Otherwise,
     // it just needs to be updated.
-    if (!this.chartLoaded && nextProps.points) {
-      this.loadChart(nextProps);
+    if (!this.chartLoaded && this.props.points) {
+      this.loadChart();
     } else if (this.chartLoaded) {
       this.insertOrUpdateChart();
     }
@@ -65,10 +65,10 @@ export default class extends React.Component {
     }
   }
 
-  loadChart(props = this.props) {
-    this.pointsMeta = this.buildPointsMeta(props.points);
+  loadChart() {
+    this.pointsMeta = this.buildPointsMeta(this.props.points);
     this.insertOrUpdateChart();
-    document.querySelector(`.chart-${props.id}`).classList.remove('is-fetching');
+    document.querySelector(`.chart-${this.props.id}`).classList.remove('is-fetching');
     this.chartLoaded = true;
   }
 
