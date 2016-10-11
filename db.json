@@ -4,32 +4,38 @@
       {
         "id": 1,
         "name": "architecture",
-        "description": "Some archy description."
+        "description": "Some archy description.",
+        "tooltip": "{proportion} of users have the {x} architecture"
       },
       {
         "id": 2,
         "name": "bookmarks",
-        "description": "Bookmarks description."
+        "description": "Bookmarks description.",
+        "tooltip": "{y} of users have the ≤ {x} bookmarks"
       },
       {
         "id": 3,
         "name": "sysmem",
-        "description": "A fascinating sysmem description."
+        "description": "A fascinating sysmem description.",
+        "tooltip": "{y} of users have the ≤ {x} bytes of system memory"
       },
       {
         "id": 4,
         "name": "cpucount",
-        "description": "Number of CPUs."
+        "description": "Number of CPUs.",
+        "tooltip": "{y} of users have the ≤ {x} CPUs"
       },
       {
         "id": 5,
         "name": "Prod Architecture",
-        "description": ""
+        "description": "",
+        "tooltip": ""
       },
       {
         "id": 6,
         "name": "Prod Num Addons",
-        "description": ""
+        "description": "",
+        "tooltip": ""
       }
     ]
   },

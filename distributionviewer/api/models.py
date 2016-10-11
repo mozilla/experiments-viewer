@@ -15,6 +15,9 @@ class DataSet(models.Model):
 class Metric(models.Model):
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField()
+    tooltip = models.CharField(
+        max_length=255, blank=True,
+        help_text='The tooltip displayed on hover.')
     type = models.CharField(
         max_length=1, choices=(('C', 'Categorical'), ('N', 'Numerical')),
         default='N')
@@ -39,11 +42,11 @@ class Collection(models.Model):
 class CategoryCollection(Collection):
     def points(self):
         return self._points.annotate(
-            cumulative=RawSQL("SUM(proportion) OVER (ORDER BY rank)", []))
+            cumulative=RawSQL('SUM(proportion) OVER (ORDER BY rank)', []))
 
 
 class CategoryPoint(models.Model):
-    collection = models.ForeignKey(CategoryCollection, related_name="_points")
+    collection = models.ForeignKey(CategoryCollection, related_name='_points')
     bucket = models.CharField(max_length=255)
     proportion = models.FloatField()
     rank = models.IntegerField()
@@ -52,10 +55,10 @@ class CategoryPoint(models.Model):
 class NumericCollection(Collection):
     def points(self):
         return self._points.annotate(
-            cumulative=RawSQL("SUM(proportion) OVER (ORDER BY bucket)", []))
+            cumulative=RawSQL('SUM(proportion) OVER (ORDER BY bucket)', []))
 
 
 class NumericPoint(models.Model):
-    collection = models.ForeignKey(NumericCollection, related_name="_points")
+    collection = models.ForeignKey(NumericCollection, related_name='_points')
     bucket = models.FloatField()
     proportion = models.FloatField()
