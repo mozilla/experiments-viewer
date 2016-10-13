@@ -18,9 +18,12 @@
         </header>
         <main>
           {% if request.GET.status == '403' %}
-            <p class="error">Must log in with a mozilla.com email address</p>
+            <p class="error">Must log in with a mozilla.com Google account</p>
           {% endif %}
-          <p>Please <span class="g-signin2" data-onsuccess="performSignIn">Sign in</span> to continue</p>
+          <p>Please <span class="g-signin2" data-onsuccess="performSignIn">Sign in</span> with your <strong>@mozilla.com</strong> Google account to continue</p>
+          <p class="auth-help">
+            NOTE: If your browser is set to not accept third-party cookies, you will need to allow "https://accounts.google.com" in your list of exceptions to log in.
+          </p>
         </main>
       </div>
     </div>
