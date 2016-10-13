@@ -14,7 +14,7 @@ export default (
   <Router history={browserHistory}>
     <Route component={MainLayout}>
       <Route path="/" component={Home} />
-      <Route path="/chart/:chartId" component={ChartDetailContainer} />
+      <Route path="/chart/:metricId" component={ChartDetailContainer} />
       <Route path="/configure" component={ChartConfigContainer} />
       <Route path="*" component={NotFound} />
     </Route>

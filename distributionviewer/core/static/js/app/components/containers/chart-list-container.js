@@ -7,7 +7,7 @@ import * as metricApi from '../../api/metric-api';
 
 class ChartListContainer extends React.Component {
   componentDidMount() {
-    metricApi.getMetrics(this.props.query);
+    metricApi.getMetricMetadata(this.props.whitelistedMetricIds);
   }
 
   render() {
@@ -19,7 +19,7 @@ class ChartListContainer extends React.Component {
 
 const mapStateToProps = function(store) {
   return {
-    metrics: store.metricsState.metrics
+    metadata: store.metricMetadataState.metadata,
   };
 };
 

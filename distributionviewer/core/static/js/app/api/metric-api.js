@@ -14,57 +14,43 @@ const mockEndpoints = {
 
 export const endpoints = process.env.NODE_ENV === 'production' ? prodEndpoints : mockEndpoints;
 
-// Get metric IDs from query params
-export function getQueryMetrics(query) {
-  var qmetrics = [];
-  if (query && query.metrics) {
-    qmetrics = query.metrics.split(',').map(v => parseInt(v, 10));
+// Given a location object, return an array of all metric IDs specified in the
+// ?metrics query parameter.
+export function getWhitelistedMetricIds(location) {
+  if (location.query && location.query.metrics) {
+    return location.query.metrics.split(',').map(s => parseInt(s, 10));
   }
-  return qmetrics;
 }
 
-// Get an array of all metrics
-export function getMetrics(query) {
-  store.dispatch(metricActions.gettingMetricsMetadata());
+// Return an object of metric metadata indexed by metric ID. If an array of
+// metricIds is passed, only include metadata about those metrics. Otherwise,
+// include metadata about all published metrics.
+export function getMetricMetadata(metricIds) {
+  store.dispatch(metricActions.gettingMetricMetadata());
 
   return axios.get(endpoints.GET_METRICS).then(response => {
-    var qmetrics = getQueryMetrics(query);
-    var metricsMetadata = response.data.metrics;
+    let metricMetadata = response.data.metrics;
 
-    if (qmetrics.length) {
-      metricsMetadata = metricsMetadata.filter(
-        metric => qmetrics.indexOf(metric.id) > -1);
+    if (metricIds) {
+      metricMetadata = metricMetadata.filter(m => metricIds.indexOf(m.id) > -1);
     }
-    store.dispatch(metricActions.getMetricsMetadataSuccess(metricsMetadata));
 
-    store.dispatch(metricActions.gettingMetrics());
-    axios.all(metricsMetadata.map(metricData => getMetric(metricData.id)))
-      .then(axios.spread(function(...metricData) {
-        store.dispatch(metricActions.getMetricsSuccess(metricData));
-      })).catch(error => {
-        console.error(error);
-        store.dispatch(metricActions.getMetricsFailure(error.response.status));
-        return error;
-      });
-
-    return response;
+    store.dispatch(metricActions.getMetricMetadataSuccess(metricMetadata));
+    return metricMetadata;
   }).catch(error => {
     console.error(error);
-    store.dispatch(metricActions.getMetricsMetadataFailure(error.response.status));
+    store.dispatch(metricActions.getMetricMetadataFailure(error.status));
     return error;
   });
 }
 
 // Get a single metric
-export function getMetric(chartId) {
-  store.dispatch(metricActions.gettingMetric());
-
-  return axios.get(`${endpoints.GET_METRIC}${chartId}/`).then(response => {
-    store.dispatch(metricActions.getMetricSuccess(response.data));
+export function getMetric(metricId) {
+  return axios.get(`${endpoints.GET_METRIC}${metricId}/`).then(response => {
+    store.dispatch(metricActions.getMetricSuccess(metricId, response.data));
     return response.data;
   }).catch(error => {
     console.error(error);
-    store.dispatch(metricActions.getMetricFailure(error.response.status));
     return error;
   });
 }

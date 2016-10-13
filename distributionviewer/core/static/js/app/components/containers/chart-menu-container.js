@@ -12,7 +12,7 @@ function ChartMenuContainer(props) {
 
 const mapStateToProps = function(store) {
   return {
-    metadata: store.metricsMetadataState.metadata,
+    metadata: store.metricMetadataState.metadata,
   };
 }
 

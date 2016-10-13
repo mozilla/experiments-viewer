@@ -1,13 +1,11 @@
 import { combineReducers } from 'redux';
 
 // Individual reducers
-import metricsMetadataReducer from './metrics-metadata-reducer';
-import metricsReducer from './metrics-reducer';
+import metricMetadataReducer from './metric-metadata-reducer';
 import metricReducer from './metric-reducer';
 
 var reducers = combineReducers({
-  metricsMetadataState: metricsMetadataReducer,
-  metricsState: metricsReducer,
+  metricMetadataState: metricMetadataReducer,
   metricState: metricReducer,
 });
 

@@ -23,12 +23,13 @@ a {
 }
 
 .primary-header {
+  border-bottom: 1px solid $faded-mild-blue;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  height: $header-height;
-  width: 100%;
   font-size: 14px;
+  height: $header-height;
+  justify-content: space-between;
+  width: 100%;
 
   > * {
     text-align: center;
@@ -74,7 +75,8 @@ main {
 
   .primary-header {
     justify-content: space-between;
-    padding: $med-padding;
+    padding: $med-padding $med-padding $med-padding+$min-padding;
+    margin-bottom: $med-padding;
 
     > * {
       align-self: center;
