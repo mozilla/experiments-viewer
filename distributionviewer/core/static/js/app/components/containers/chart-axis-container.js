@@ -33,6 +33,8 @@ export default class extends React.Component {
   }
 
   _getShortLabel(lbl) {
+    if (!lbl) lbl = '';
+
     if (lbl.length > this.xLabelsChopLength) {
       return `${lbl.substring(0, this.xLabelsChopLength - 1)}…`;
     }

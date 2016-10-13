@@ -20,6 +20,11 @@
         "id": 4,
         "name": "cpucount",
         "description": "Number of CPUs."
+      },
+      {
+        "id": 5,
+        "name": "Prod Architecture",
+        "description": ""
       }
     ]
   },
@@ -230,5 +235,18 @@
         "c": 1
       }
     ]
+  },
+  "5": {
+    "id": 5,
+    "numObs": 807264,
+    "dataSet": "2016-09-08",
+    "population": "All",
+    "metric": "Prod Architecture",
+    "description": "",
+    "points": [
+      {"b":"x86","c":0.93576451,"p":0.93576451,"refRank":1},
+      {"b":"x86-64","c":1.0,"p":0.06423549,"refRank":2}
+    ],
+    "type": "category"
   }
 }
