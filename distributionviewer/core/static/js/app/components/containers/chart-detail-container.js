@@ -10,7 +10,12 @@ class ChartDetailContainer extends React.Component {
   constructor(props) {
     super(props);
     this.metricId = parseInt(props.params.metricId, 10);
-    this.state = {got404: false};
+    this.state = {
+      showOutliers: false,
+      got404: false,
+    };
+
+    this._toggleOutliers = this._toggleOutliers.bind(this);
   }
 
   componentDidMount() {
@@ -21,18 +26,28 @@ class ChartDetailContainer extends React.Component {
     });
   }
 
+  _toggleOutliers(event) {
+    this.setState({showOutliers: event.target.checked});
+  }
+
   render() {
     if (this.state.got404) {
       return <NotFound />;
     } else if (!this.props.metric) {
       return <ChartDetail isFetching={true} metricId={this.metricId} />;
     } else {
+      let offerOutliersToggle = false;
+      if (this.props.metric.type === 'numeric' && this.props.metric.numPoints >= 100) {
+        offerOutliersToggle = true;
+      }
+
       return (
         <ChartDetail
           isFetching={false}
           metricId={this.metricId}
-          type={this.props.metric.type}
-          numPoints={this.props.metric.points.length}
+          offerOutliersToggle={offerOutliersToggle}
+          toggleOutliers={this._toggleOutliers}
+          showOutliers={this.state.showOutliers}
         />
       );
     }
