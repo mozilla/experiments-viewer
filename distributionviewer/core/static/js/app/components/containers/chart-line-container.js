@@ -12,7 +12,7 @@ export default class extends React.Component {
                 .x(d => props.xScale(d.x))
                 .y(d => props.yScale(d.y));
 
-    d3Selection.select(`.chart-${props.id} .line`).datum(props.data).attr('d', line);
+    d3Selection.select(`.chart-${props.metricId} .line`).datum(props.data).attr('d', line);
   }
 
   render() {

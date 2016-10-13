@@ -6,7 +6,7 @@ import { select, mouse } from 'd3-selection';
 export default class extends React.Component {
   componentDidMount() {
     let hoverElm = select(this.refs.rect);
-    this.focusElm = select(`.chart-${this.props.id} .focus`);
+    this.focusElm = select(`.chart-${this.props.metricId} .focus`);
     this.bisector = d3Array.bisector(d => d.x).left;
 
     // Terrible hack to bind an event in a way d3 prefers.
@@ -24,7 +24,7 @@ export default class extends React.Component {
     let d = x0 - d0.x > d1.x - x0 ? d1 : d0;
 
     this.focusElm.attr('transform', `translate(${props.xScale(d.x)}, ${props.yScale(d.y)})`);
-    select(`.chart-${props.id} .tooltip`).text(`x: ${d.x} y: ${d.y}`);
+    select(`.chart-${props.metricId} .tooltip`).text(`x: ${d.x} y: ${d.y}`);
   }
   render() {
     return (

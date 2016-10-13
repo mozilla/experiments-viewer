@@ -1,11 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import * as d3Scale from 'd3-scale';
 import * as d3Array from 'd3-array';
 
 import Chart from '../views/chart';
+import * as metricApi from '../../api/metric-api';
 
 
-export default class extends React.Component {
+class ChartContainer extends React.Component {
   constructor(props) {
     super(props);
 
@@ -23,7 +25,37 @@ export default class extends React.Component {
       transform: `translate(${margin.left}, ${margin.top})`
     };
 
-    this.data = this._getFormattedData(this.props.points);
+    this.hasBeenInitialized = false;
+  }
+
+  componentWillMount() {
+    // If the metric prop already exists, the metric data must have already been
+    // downloaded elsewhere in the app. Initilize the chart now before the
+    // initial render.
+    if (this.props.metric) {
+      this._initialize(this.props);
+    }
+  }
+
+  componentDidMount() {
+    metricApi.getMetric(this.props.metricId);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    // If the metric prop just came through, the metric data must have just been
+    // downloaded. Initialize the chart before another render happens.
+    if (!this.hasBeenInitialized && nextProps.metric) {
+      this._initialize(nextProps);
+    }
+  }
+
+  _initialize(props) {
+    this.data = this._getFormattedData(props.metric.points);
+
+    this.refLabels = [];
+    this.data.map(item => {
+      this.refLabels[item.x] = item.label;
+    });
 
     this.xScale = d3Scale.scaleLinear()
                     .domain([0, d3Array.max(this.data, d => d.x)])
@@ -33,10 +65,7 @@ export default class extends React.Component {
                     .domain([0, d3Array.max(this.data, d => d.y)])
                     .range([this.size.innerHeight, 0]);
 
-    this.refLabels = [];
-    this.data.map(item => {
-      this.refLabels[item.x] = item.label;
-    });
+    this.hasBeenInitialized = true;
   }
 
   // Map metric points to new keys to be used by d3.
@@ -56,15 +85,31 @@ export default class extends React.Component {
   }
 
   render() {
-    return (
-      <Chart
-        id={this.props.id}
-        size={this.size}
-        xScale={this.xScale}
-        yScale={this.yScale}
-        refLabels={this.refLabels}
-        data={this.data}
-      />
-    );
+    if (!this.props.metric) {
+      return <Chart isFetching={true} {...this.props} />;
+    } else {
+      return (
+        <Chart
+          isFetching={false}
+
+          metricId={this.props.metricId}
+          name={this.props.metric.metric}
+          data={this.data}
+          refLabels={this.refLabels}
+
+          size={this.size}
+          xScale={this.xScale}
+          yScale={this.yScale}
+        />
+      );
+    }
   }
 }
+
+const mapStateToProps = function(store, ownProps) {
+  return {
+    metric: store.metricState.metrics[ownProps.metricId],
+  };
+};
+
+export default connect(mapStateToProps)(ChartContainer);

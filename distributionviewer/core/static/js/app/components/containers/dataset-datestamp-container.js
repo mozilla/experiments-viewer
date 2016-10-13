@@ -4,19 +4,23 @@ import { connect } from 'react-redux';
 import DatasetDatestamp from '../views/dataset-datestamp';
 
 
-export class DatasetDatestampContainer extends React.Component {
-  // In chart listings, all charts belong to the same dataset, so there's no
-  // need to re-render this component every time one is retrieved.
+class DatasetDatestampContainer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.gotDataset = false;
+  }
+
   shouldComponentUpdate() {
     return this.gotDataset ? false : true;
   }
 
   render() {
-    if (this.props.metric.dataSet) {
+    // All metrics coming from the API should belong to the same dataset, so we
+    // only need to grab the dataSet property from the first one.
+    const firstMetric = this.props.metrics[Object.keys(this.props.metrics)[0]];
+    if (firstMetric) {
       this.gotDataset = true;
-      return (
-        <DatasetDatestamp isoDate={this.props.metric.dataSet} />
-      );
+      return <DatasetDatestamp isoDate={firstMetric.dataSet} />;
     } else {
       return null;
     }
@@ -25,7 +29,7 @@ export class DatasetDatestampContainer extends React.Component {
 
 const mapStateToProps = function(store) {
   return {
-    metric: store.metricState.metric
+    metrics: store.metricState.metrics,
   };
 };
 

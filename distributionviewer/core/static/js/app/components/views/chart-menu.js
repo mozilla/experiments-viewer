@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 
 export default function(props) {
@@ -8,7 +9,7 @@ export default function(props) {
         {props.metadata.map(metricMetadata => {
           return (
             <li key={`menu-${metricMetadata.id}`}>
-              <a href={`/chart/${metricMetadata.id}/`}>{metricMetadata.name}</a>
+              <Link to={`/chart/${metricMetadata.id}/`}>{metricMetadata.name}</Link>
             </li>
           );
         })}

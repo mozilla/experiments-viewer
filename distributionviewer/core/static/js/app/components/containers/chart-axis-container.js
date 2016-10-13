@@ -17,7 +17,7 @@ export default class extends React.Component {
                 .tickSizeOuter(0)
                 .tickPadding(10);
 
-    let axisElm = d3Selection.select(`.chart-${props.id} .${props.axisType}.axis`);
+    let axisElm = d3Selection.select(`.chart-${props.metricId} .${props.axisType}.axis`);
 
     if (props.axisType === 'x') {
       axis.ticks(3).tickFormat((d, i) => {

@@ -8,11 +8,11 @@ import * as metricApi from '../../api/metric-api';
 class ChartConfigContainer extends React.Component {
   constructor(props) {
     super(props);
-    this.qmetrics = metricApi.getQueryMetrics(props.location.query);
+    this.whitelistedMetricIds = metricApi.getWhitelistedMetricIds(props.location);
   }
 
   componentDidMount() {
-    metricApi.getMetrics();
+    metricApi.getMetricMetadata();
   }
 
   _handleSubmit(e) {
@@ -28,14 +28,14 @@ class ChartConfigContainer extends React.Component {
 
   render() {
     return (
-      <ChartConfig {...this.props} qmetrics={this.qmetrics} handleSubmit={this._handleSubmit} />
+      <ChartConfig {...this.props} whitelistedMetricIds={this.whitelistedMetricIds} handleSubmit={this._handleSubmit} />
     );
   }
 }
 
 const mapStateToProps = function(store) {
   return {
-    metadata: store.metricsMetadataState.metadata
+    metadata: store.metricMetadataState.metadata
   };
 };
 
