@@ -20,11 +20,15 @@ export default class extends React.Component {
     let axisElm = d3Selection.select(`.chart-${props.metricId} .${props.axisType}.axis`);
 
     if (props.axisType === 'x') {
-      axis.ticks(3).tickFormat((d, i) => {
-        if (i > 0) {
-          return this._getShortLabel(props.refLabels[d]) || '';
-        }
-      });
+      if (props.metricType === 'category') {
+        axis.ticks(3).tickFormat((d, i) => {
+          if (i > 0) {
+            return this._getShortLabel(props.refLabels[d]);
+          }
+        });
+      } else {
+        axis.ticks(3);
+      }
       axisElm.attr('transform', `translate(0, ${props.size})`).call(axis);
     } else {
       axis.ticks(6, d3Format.format('.0%'));

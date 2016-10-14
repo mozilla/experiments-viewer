@@ -96,6 +96,7 @@ class ChartContainer extends React.Component {
           name={this.props.metric.metric}
           data={this.data}
           refLabels={this.refLabels}
+          metricType={this.props.metric.type}
 
           size={this.size}
           xScale={this.xScale}

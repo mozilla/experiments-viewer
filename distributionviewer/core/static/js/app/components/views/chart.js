@@ -24,6 +24,7 @@ export default function(props) {
           <g transform={props.size.transform}>
             <ChartAxisContainer
               metricId={props.metricId}
+              metricType={props.metricType}
               scale={props.xScale}
               axisType="x"
               refLabels={props.refLabels}
