@@ -199,7 +199,7 @@ for pop_column, pop_values in populations.items():
             (df.filter("%s = '%s'" % (pop_column, value)), 'channel:%s' % value)
             for value in pop_values
         ]
-    for pop_name, pop_df in pops:
+    for pop_df, pop_name in pops:
         for metric in metrics:
             (metric_id, metric_name, metric_descr, metric_type,
              metric_src) = metric
