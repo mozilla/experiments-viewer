@@ -7,7 +7,7 @@ import * as metricApi from '../api/metric-api';
 
 export default function(props) {
   return (
-    <main>
+    <main className="home">
       <ChartMenuContainer />
       <ChartListContainer whitelistedMetricIds={metricApi.getWhitelistedMetricIds(props.location)} />
     </main>
