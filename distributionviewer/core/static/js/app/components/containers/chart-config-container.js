@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 
 import ChartConfig from '../views/chart-config';
 import * as metricApi from '../../api/metric-api';
@@ -22,7 +23,7 @@ class ChartConfigContainer extends React.Component {
     ).join(',');
 
     if (metrics) {
-      window.location = '/?metrics=' + metrics;
+      browserHistory.push(`/?metrics=${metrics}`);
     }
   }
 
