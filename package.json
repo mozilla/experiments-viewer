@@ -37,6 +37,10 @@
     "webpack-stream": "^3.1.0"
   },
   "devDependencies": {
+    "enzyme": "^2.5.1",
+    "gulp-jest": "^0.5.2",
+    "react-addons-test-utils": "^15.3.2",
+    "sinon": "^1.17.6",
     "webpack-bundle-size-analyzer": "^2.0.2"
   }
 }

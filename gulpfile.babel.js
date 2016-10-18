@@ -9,6 +9,7 @@ import concat from 'gulp-concat';
 import cp from 'child_process';
 import eslint from 'gulp-eslint';
 import filter from 'gulp-filter';
+import jest from 'gulp-jest';
 import nib from 'nib';
 import path from 'path';
 import sourcemaps from 'gulp-sourcemaps';
@@ -74,6 +75,11 @@ gulp.task('lint:js', ['build:js'], () => {
              .pipe(eslint.failAfterError());
 });
 
+gulp.task('jest', ['build:js'], () => {
+  return gulp.src(path.resolve(paths.js, 'app/tests'))
+             .pipe(jest());
+});
+
 gulp.task('build', ['build:js', 'build:css']);
-gulp.task('test', ['lint:js']);
+gulp.task('test', ['lint:js', 'jest']);
 gulp.task('default', ['build']);
