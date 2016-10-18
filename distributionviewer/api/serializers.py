@@ -5,6 +5,7 @@ class MetricSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     name = serializers.CharField()
     description = serializers.CharField()
+    tooltip = serializers.CharField()
 
 
 class CategoryPointSerializer(serializers.Serializer):
