@@ -12,12 +12,12 @@ export default class extends React.Component {
     // Chart line focus circle (.focus element)
     select(evt.target.previousSibling).style('display', 'block');
 
-    // Chart tooltip div (.tooltip element)
-    select(evt.target.parentNode.parentNode.previousSibling).style('display', 'block');
+    // Chart hover tooltip element.
+    select('.secondary-menu-content').style('display', 'flex');
   }
   _handleMouseOut(evt) {
     select(evt.target.previousSibling).style('display', 'none');
-    select(evt.target.parentNode.parentNode.previousSibling).style('display', 'none');
+    select('.secondary-menu-content').style('display', 'none');
   }
   render() {
     return (

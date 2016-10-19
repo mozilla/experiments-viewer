@@ -5,7 +5,6 @@ import ChartAxisContainer from '../containers/chart-axis-container';
 import ChartLineContainer from '../containers/chart-line-container';
 import ChartHoverContainer from '../containers/chart-hover-container';
 import ChartFocus from './chart-focus';
-import ChartTooltip from './chart-tooltip';
 
 
 export default function(props) {
@@ -19,7 +18,6 @@ export default function(props) {
     return (
       <div className={`chart chart-${props.metricId}`}>
         <h2 className="chart-list-name">{props.name}</h2>
-        <ChartTooltip />
         <svg width={props.size.width} height={props.size.height}>
           <g transform={props.size.transform}>
             <ChartAxisContainer
@@ -49,6 +47,9 @@ export default function(props) {
               size={props.size}
               xScale={props.xScale}
               yScale={props.yScale}
+              hoverString={props.hoverString}
+              refLabels={props.refLabels}
+              metricType={props.metricType}
               data={props.data}
             />
           </g>
