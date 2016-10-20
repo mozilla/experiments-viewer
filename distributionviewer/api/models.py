@@ -12,12 +12,19 @@ class DataSet(models.Model):
         return self.date.strftime('%Y-%m-%d')
 
 
+TOOLTIP_HELP = (
+    "The tooltip displayed on hover. Available variables are: "
+    "{x} - the x-axis label (if categorical) or value, "
+    "{y} - the y-axis value which will be the summed proportions, and "
+    "{p} - the individual proportion for the hovered data point.")
+
+
 class Metric(models.Model):
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField()
     tooltip = models.CharField(
         max_length=255, blank=True,
-        help_text='The tooltip displayed on hover.')
+        help_text=TOOLTIP_HELP)
     type = models.CharField(
         max_length=1, choices=(('C', 'Categorical'), ('N', 'Numerical')),
         default='N')
