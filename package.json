@@ -18,6 +18,7 @@
     "d3-scale": "^1.0.3",
     "d3-selection": "^1.0.2",
     "d3-shape": "^1.0.3",
+    "enzyme": "^2.5.1",
     "eslint-plugin-react": "^6.0.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.0",
@@ -25,23 +26,20 @@
     "gulp-concat": "^2.6.0",
     "gulp-eslint": "^3.0.1",
     "gulp-filter": "^4.0.0",
+    "gulp-jest": "^0.5.2",
     "gulp-sourcemaps": "^2.1.1",
     "gulp-stylus": "^2.3.1",
     "json-server": "^0.8.16",
     "nib": "^1.1.0",
     "react": "^15.0.1",
+    "react-addons-test-utils": "^15.3.2",
     "react-dom": "^15.0.1",
     "react-redux": "^4.4.5",
     "react-router": "^2.0.0",
     "redux": "^3.5.2",
-    "string-template": "^1.0.0",
-    "webpack-stream": "^3.1.0"
-  },
-  "devDependencies": {
-    "enzyme": "^2.5.1",
-    "gulp-jest": "^0.5.2",
-    "react-addons-test-utils": "^15.3.2",
     "sinon": "^1.17.6",
-    "webpack-bundle-size-analyzer": "^2.0.2"
+    "string-template": "^1.0.0",
+    "webpack-bundle-size-analyzer": "^2.0.2",
+    "webpack-stream": "^3.1.0"
   }
 }
