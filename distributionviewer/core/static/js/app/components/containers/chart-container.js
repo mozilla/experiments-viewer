@@ -12,8 +12,9 @@ class ChartContainer extends React.Component {
     super(props);
 
     let margin = {top: 20, right: 20, bottom: 30, left: 40};
-    let width = 300;
-    let height = 250;
+
+    let width = props.isDetail ? 1000 : 300;
+    let height = props.isDetail ? 600 : 250;
 
     // width = size of the SVG
     // innerWidth = size of the contents of the SVG
