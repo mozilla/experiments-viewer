@@ -1,6 +1,9 @@
 import React from 'react';
 import * as d3Array from 'd3-array';
+import * as d3Format from 'd3-format';
+
 import { select, mouse } from 'd3-selection';
+import format from 'string-template';
 
 
 export default class extends React.Component {
@@ -20,11 +23,34 @@ export default class extends React.Component {
     let x0 = props.xScale.invert(mouse(this.refs.rect)[0]);
     let i = this.bisector(props.data, x0, 1);
     let d0 = props.data[i - 1];
+
+    // Ternary to fix comparison with array index out of bounds.
     let d1 = props.data[i] ? props.data[i] : props.data[i - 1];
+
+    // 'd' holds the currently hovered data object.
     let d = x0 - d0.x > d1.x - x0 ? d1 : d0;
 
+    // For category charts we have to grab the proportion manually.
+    let proportion = props.metricType === 'category' ? props.data[d.x - 1].p : d.p;
+
+    // Position the focus circle on chart line.
     this.focusElm.attr('transform', `translate(${props.xScale(d.x)}, ${props.yScale(d.y)})`);
-    select(`.chart-${props.metricId} .tooltip`).text(`x: ${d.x} y: ${d.y}`);
+
+    // Set formatted chart hover text.
+    select('.secondary-menu-content .chart-info').text(
+      this._getHoverString(props.metricType, d.x, d.y, d3Format.format('.1')(proportion))
+    );
+  }
+  _getHoverString(metricType, x, y, p) {
+    let result = this.props.hoverString;
+    if (!result) return '';
+
+    if (metricType === 'category') {
+      result = format(result, {x: this.props.refLabels[x], p, y});
+    } else {
+      result = format(result, {x, p, y});
+    }
+    return result;
   }
   render() {
     return (

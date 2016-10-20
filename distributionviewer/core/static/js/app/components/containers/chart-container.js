@@ -57,9 +57,16 @@ class ChartContainer extends React.Component {
       this.refLabels[item.x] = item.label;
     });
 
-    this.xScale = d3Scale.scaleLinear()
-                    .domain([0, d3Array.max(this.data, d => d.x)])
-                    .range([0, this.size.innerWidth]);
+    // Category charts get treated differently since they start at x: 1
+    if (props.metric.type === 'category') {
+      this.xScale = d3Scale.scaleLinear()
+                      .domain([1, d3Array.max(this.data, d => d.x)])
+                      .range([0, this.size.innerWidth]);
+    } else {
+      this.xScale = d3Scale.scaleLinear()
+                      .domain([0, d3Array.max(this.data, d => d.x)])
+                      .range([0, this.size.innerWidth]);
+    }
 
     this.yScale = d3Scale.scaleLinear()
                     .domain([0, d3Array.max(this.data, d => d.y)])
@@ -98,6 +105,7 @@ class ChartContainer extends React.Component {
           refLabels={this.refLabels}
           metricType={this.props.metric.type}
           showOutliers={this.props.showOutliers}
+          hoverString={this.props.metric.tooltip}
 
           size={this.size}
           xScale={this.xScale}

@@ -9,6 +9,7 @@ body {
   color: $normal-text;
   font-family: helvetica, sans-serif;
   margin: 0;
+  padding-bottom: 55px;
 }
 
 a {
@@ -23,16 +24,19 @@ a {
 }
 
 .primary-header {
-  border-bottom: 1px solid $faded-mild-blue;
+  border-bottom: 1px solid $dark-blue;
   display: flex;
   flex-wrap: wrap;
   font-size: 14px;
   height: $header-height;
   justify-content: space-between;
+  margin-bottom: $med-padding;
   width: 100%;
 
   > * {
     text-align: center;
+  }
+  > div:first-child {
     width: 100%;
   }
 }
@@ -42,11 +46,6 @@ h1 {
   font-size: 20px;
   font-weight: 200;
   margin: 0;
-}
-
-img.gear {
-  margin-left: 15px;
-  vertical-align: text-bottom;
 }
 
 .dataset-datestamp {
@@ -62,7 +61,7 @@ img.gear {
 }
 
 main {
-  padding: 0 $med-padding;
+  padding: 0 $min-padding;
 }
 
 .error {
@@ -73,14 +72,15 @@ main {
   .primary-header {
     justify-content: space-between;
     padding: $med-padding $med-padding $med-padding+$min-padding;
-    margin-bottom: $med-padding;
 
     > * {
       align-self: center;
       text-align: left;
       width: auto;
     }
-
+    > div:first-child {
+      width: auto;
+    }
     .sign-in-wrapper {
       width: 100%;
     }
@@ -90,5 +90,8 @@ main {
 @media $base-desktop {
   .primary-header .sign-in-wrapper {
     width: auto;
+  }
+  main {
+    padding: 0 $med-padding;
   }
 }

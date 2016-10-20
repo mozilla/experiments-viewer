@@ -1,0 +1,47 @@
+@import 'lib';
+
+$my-height = 35px;
+
+.secondary-menu {
+  background-image: radial-gradient(40% 728%, $dark-blue, #000000);
+  border-top: 1px solid $dark-blue;
+  display: flex;
+  height: $my-height;
+  justify-content: flex-end;
+  left: 0;
+  padding: 0 30px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 10;
+
+  > * {
+    align-self: center;
+  }
+}
+
+.configure-link, .configure-link img {
+  height: 25px;
+  width: 25px;
+}
+
+.secondary-menu-content {
+  display: none;
+  height: $my-height;
+  justify-content: center;
+  margin: 0 auto;
+  width: 600px;
+
+  .chart-info {
+    align-self: center;
+    font-size: 12px;
+    font-weight: 100;
+    line-height: $my-height;
+  }
+}
+
+@media $base-tablet {
+  .secondary-menu {
+    bottom: 20px;
+  }
+}
