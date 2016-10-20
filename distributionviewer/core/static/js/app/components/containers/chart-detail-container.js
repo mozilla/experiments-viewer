@@ -19,6 +19,10 @@ class ChartDetailContainer extends React.Component {
   }
 
   componentDidMount() {
+    // Fetch metadata if needed for hoverStrings.
+    if (!this.props.isMetaAvailable) {
+      metricApi.getMetricMetadata();
+    }
     metricApi.getMetric(this.metricId).then(result => {
       if (result && result.response && result.response.status === 404) {
         this.setState({got404: true});
@@ -57,6 +61,7 @@ class ChartDetailContainer extends React.Component {
 const mapStateToProps = function(store, ownProps) {
   return {
     metric: store.metricState.metrics[parseInt(ownProps.params.metricId, 10)],
+    isMetaAvailable: !!store.metricMetadataState.metadata.length
   };
 };
 

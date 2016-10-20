@@ -4,17 +4,18 @@
       {
         "id": 4,
         "name": "Architecture",
-        "description": "Hardware architecture"
+        "description": "Hardware architecture",
+        "tooltip": "{p}% of users have the {x} architecture"
       },
       {
         "id": 7,
         "name": "CPUs",
-        "description": "number of CPUs"
+        "description": "number of CPUs",
+        "tooltip": "{p}% of users have ≤ {x} CPUs"
       }
     ]
   },
   "4": {
-    "tooltip": "{p}% of users have the {x} architecture",
     "id": 4,
     "numObs": 12363,
     "dataSet": "2016-10-16",
@@ -29,7 +30,6 @@
     "type": "category"
   },
   "7": {
-    "tooltip": "{y}% of users have ≤{x} CPUs",
     "id": 7,
     "numObs": 12363,
     "dataSet": "2016-10-16",
