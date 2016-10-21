@@ -5,46 +5,39 @@ import * as d3Array from 'd3-array';
 
 import Chart from '../views/chart';
 import * as metricApi from '../../api/metric-api';
+import { debounce } from '../../utils';
 
 
 class ChartContainer extends React.Component {
   constructor(props) {
     super(props);
 
-    let margin = {top: 20, right: 20, bottom: 30, left: 40};
+    this.margin = {top: 20, right: 20, bottom: 30, left: 40};
+    this.height = props.isDetail ? 600 : 250;
 
-    let width = props.isDetail ? 1000 : 300;
-    let height = props.isDetail ? 600 : 250;
+    this.state = {size: {
+      height: this.height,
+      innerHeight: this.height - this.margin.top - this.margin.bottom,
+      transform: `translate(${this.margin.left}, ${this.margin.top})`,
+    }};
 
-    // width = size of the SVG
-    // innerWidth = size of the contents of the SVG
-    this.size = {
-      width,
-      height,
-      innerWidth: width - margin.left - margin.right,
-      innerHeight: height - margin.top - margin.bottom,
-      transform: `translate(${margin.left}, ${margin.top})`
-    };
-
+    this.handleResize = debounce(() => this._setWidth(this.props));
     this.hasBeenInitialized = false;
-  }
 
-  componentWillMount() {
-    // If the metric prop already exists, the metric data must have already been
-    // downloaded elsewhere in the app. Initilize the chart now before the
-    // initial render.
-    if (this.props.metric) {
-      this._initialize(this.props);
-    }
+    this._setWidth = this._setWidth.bind(this);
   }
 
   componentDidMount() {
     metricApi.getMetric(this.props.metricId);
+
+    if (this.props.isDetail) {
+      this.chartDetail = document.getElementById('chart-detail');
+    }
   }
 
   componentWillReceiveProps(nextProps) {
-    // If the metric prop just came through, the metric data must have just been
-    // downloaded. Initialize the chart before another render happens.
+    // If the metric data just came through, initialize the chart before the
+    // next render occuurs.
     if (!this.hasBeenInitialized && nextProps.metric) {
       this._initialize(nextProps);
     }
@@ -58,21 +51,15 @@ class ChartContainer extends React.Component {
       this.refLabels[item.x] = item.label;
     });
 
-    // Category charts get treated differently since they start at x: 1
-    if (props.metric.type === 'category') {
-      this.xScale = d3Scale.scaleLinear()
-                      .domain([1, d3Array.max(this.data, d => d.x)])
-                      .range([0, this.size.innerWidth]);
-    } else {
-      this.xScale = d3Scale.scaleLinear()
-                      .domain([0, d3Array.max(this.data, d => d.x)])
-                      .range([0, this.size.innerWidth]);
-    }
-
     this.yScale = d3Scale.scaleLinear()
                     .domain([0, d3Array.max(this.data, d => d.y)])
-                    .range([this.size.innerHeight, 0])
+                    .range([this.state.size.innerHeight, 0])
                     .nice(); // Y axis should extend to nicely readable 0..100
+
+    this._setWidth(props);
+    if (props.isDetail) {
+      window.addEventListener('resize', this.handleResize);
+    }
 
     this.hasBeenInitialized = true;
   }
@@ -93,8 +80,37 @@ class ChartContainer extends React.Component {
     return formattedPoints;
   }
 
+  _setWidth(props) {
+    // width = size of the SVG
+    let width;
+    if (props.isDetail) {
+      width = parseInt(getComputedStyle(this.chartDetail)['width'], 10);
+    } else {
+      width = 300;
+    }
+
+    // innerWidth = size of the contents of the SVG
+    const innerWidth = width - this.margin.left - this.margin.right;
+
+    // Category charts get treated differently since they start at x: 1
+    let xScale;
+    if (props.metric.type === 'category') {
+      xScale = d3Scale.scaleLinear()
+                 .domain([1, d3Array.max(this.data, d => d.x)])
+                 .range([0, innerWidth]);
+    } else {
+      xScale = d3Scale.scaleLinear()
+                 .domain([0, d3Array.max(this.data, d => d.x)])
+                 .range([0, innerWidth]);
+    }
+
+    const sizeIncludingWidth = Object.assign({}, this.state.size, {width, innerWidth});
+
+    this.setState({xScale, size: sizeIncludingWidth});
+  }
+
   render() {
-    if (!this.props.metric) {
+    if (!this.hasBeenInitialized) {
       return <Chart isFetching={true} {...this.props} />;
     } else {
       return (
@@ -109,12 +125,16 @@ class ChartContainer extends React.Component {
           showOutliers={this.props.showOutliers}
           hoverString={this.props.metric.hoverString}
 
-          size={this.size}
-          xScale={this.xScale}
+          size={this.state.size}
+          xScale={this.state.xScale}
           yScale={this.yScale}
         />
       );
     }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this._handleResize);
   }
 }
 

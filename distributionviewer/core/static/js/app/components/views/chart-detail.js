@@ -10,7 +10,7 @@ export default function(props) {
   }
 
   return (
-    <div className="chart-detail">
+    <div id="chart-detail" className="chart-detail">
       {outliersToggle}
       <ChartContainer isDetail={true} showOutliers={props.showOutliers} metricId={props.metricId} />
     </div>
