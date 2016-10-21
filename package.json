@@ -39,7 +39,9 @@
     "redux": "^3.5.2",
     "sinon": "^1.17.6",
     "string-template": "^1.0.0",
-    "webpack-bundle-size-analyzer": "^2.0.2",
     "webpack-stream": "^3.1.0"
+  },
+  "devDependencies": {
+    "webpack-bundle-size-analyzer": "^2.0.2"
   }
 }
