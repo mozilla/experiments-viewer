@@ -71,7 +71,8 @@ class ChartContainer extends React.Component {
 
     this.yScale = d3Scale.scaleLinear()
                     .domain([0, d3Array.max(this.data, d => d.y)])
-                    .range([this.size.innerHeight, 0]);
+                    .range([this.size.innerHeight, 0])
+                    .nice(); // Y axis should extend to nicely readable 0..100
 
     this.hasBeenInitialized = true;
   }
