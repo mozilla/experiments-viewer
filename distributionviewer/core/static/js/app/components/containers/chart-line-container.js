@@ -6,13 +6,21 @@ import ChartLine from '../views/chart-line';
 
 
 export default class extends React.Component {
-  componentDidMount() {
+  _drawLine() {
     let props = this.props;
     let line = d3Shape.line()
                 .x(d => props.xScale(d.x))
                 .y(d => props.yScale(d.y));
 
     d3Selection.select(`.chart-${props.metricId} .line`).datum(props.data).attr('d', line);
+  }
+
+  componentDidMount() {
+    this._drawLine();
+  }
+
+  componentDidUpdate() {
+    this._drawLine();
   }
 
   render() {

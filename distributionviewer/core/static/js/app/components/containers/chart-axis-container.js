@@ -7,7 +7,7 @@ import ChartAxis from '../views/chart-axis';
 
 
 export default class extends React.Component {
-  componentDidMount() {
+  _drawAxis() {
     let props = this.props;
     let axisGenerator = props.axisType === 'x' ? d3Axis.axisBottom : d3Axis.axisLeft;
     this.xLabelsChopLength = 8;
@@ -43,6 +43,14 @@ export default class extends React.Component {
       return `${lbl.substring(0, this.xLabelsChopLength - 1)}…`;
     }
     return lbl;
+  }
+
+  componentDidMount() {
+    this._drawAxis();
+  }
+
+  componentDidUpdate() {
+    this._drawAxis();
   }
 
   render() {

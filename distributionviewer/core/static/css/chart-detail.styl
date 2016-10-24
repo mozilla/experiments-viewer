@@ -1,16 +1,17 @@
 @import 'lib';
 
 .chart-detail {
+  margin: 0 auto;
+
+  /* Scale the chart to the width of .chart-detail, but never allow the chart to
+     be wider than 1000px. */
+  max-width: 1000px;
+  overflow: hidden; /* Otherwise .chart-detail will always be as wide as the svg's initial width */
   width: 100%;
 
   .chart-list-name {
     margin: 0 auto;
     text-align: center;
     font-weight: 100;
-  }
-
-  svg {
-    display: block;
-    margin: 0 auto;
   }
 }
