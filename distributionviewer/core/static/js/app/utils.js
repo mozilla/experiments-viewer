@@ -6,4 +6,4 @@ export function debounce(fn, wait = 250) {
     clearTimeout(timeout);
     timeout = setTimeout(() => fn.apply(this, args), wait);
   };
-};
+}
