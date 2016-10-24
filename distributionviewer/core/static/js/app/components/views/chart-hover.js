@@ -38,17 +38,28 @@ export default class extends React.Component {
 
     // Set formatted chart hover text.
     select('.secondary-menu-content .chart-info').text(
-      this._getHoverString(props.metricType, d.x, d.y, d3Format.format('.1')(proportion))
+      this._getHoverString(props.metricType, d.x, d.y, proportion)
     );
+  }
+  _getFormattedVal(val) {
+    return d3Format.format('.1%')(val).replace('%', '');
   }
   _getHoverString(metricType, x, y, p) {
     let result = this.props.hoverString;
     if (!result) return '';
 
     if (metricType === 'category') {
-      result = format(result, {x: this.props.refLabels[x], p, y});
+      result = format(result, {
+        x: this.props.refLabels[x],
+        p: this._getFormattedVal(p),
+        y: this._getFormattedVal(y)
+      });
     } else {
-      result = format(result, {x, p, y});
+      result = format(result, {
+        x,
+        p: this._getFormattedVal(p),
+        y: this._getFormattedVal(y)
+      });
     }
     return result;
   }

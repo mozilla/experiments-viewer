@@ -1,4 +1,5 @@
 import * as types from '../actions/action-types';
+import store from '../store';
 
 
 const initialState = {
@@ -8,7 +9,10 @@ const initialState = {
 const metricReducer = function(state = initialState, action) {
   switch(action.type) {
     case types.GET_METRIC_SUCCESS: {
-      const newMetrics = Object.assign({}, state.metrics, {[action.metricId]: action.metric});
+      let metric = action.metric;
+      metric.hoverString = store.getState().metricMetadataState.hoverStrings['id-' + action.metricId];
+
+      const newMetrics = Object.assign({}, state.metrics, {[action.metricId]: metric});
       return Object.assign({}, state, {metrics: newMetrics});
     }
   }
