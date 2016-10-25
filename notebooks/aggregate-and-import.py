@@ -3,8 +3,12 @@ import datetime
 import boto3
 import psycopg2
 import ujson
+from pyspark.sql import SparkSession
 from pyspark.sql.functions import cume_dist, row_number
 from pyspark.sql.window import Window
+
+
+sparkSession = SparkSession.builder.appName('distribution-viewer').getOrCreate()
 
 
 # TODO: Real data.
@@ -165,7 +169,7 @@ def collect_numeric_metric(df, population):
         conn.commit()
 
 
-df = sqlContext.read.parquet(PARQUET_PATH)
+df = sparkSession.read.parquet(PARQUET_PATH)
 
 # Set up database connection to distribution viewer.
 conn, cursor = get_database_connection()
