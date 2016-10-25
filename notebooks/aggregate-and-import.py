@@ -1,4 +1,5 @@
 import datetime
+from os import environ
 
 import boto3
 import psycopg2
@@ -11,9 +12,7 @@ from pyspark.sql.window import Window
 sparkSession = SparkSession.builder.appName('distribution-viewer').getOrCreate()
 
 
-# TODO: Real data.
-PARQUET_PATH = ('s3n://net-mozaws-prod-us-west-2-pipeline-analysis/'
-                'bcolloran/crossSectionalFrame_20160317.parquet')
+PARQUET_PATH = 's3://telemetry-parquet/cross_sectional/v%s' % environ['date']
 DEBUG_SQL = False  # If True, prints the SQL instead of executing it.
 
 
