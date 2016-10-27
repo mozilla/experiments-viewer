@@ -43,16 +43,30 @@ class ChartContainer extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.showOutliers !== prevProps.showOutliers && this.props.metric.type === 'numeric') {
+      this.activeData = this.props.showOutliers ? this.allData : this.dataExcludingOutliers;
+      this.setState({xScale: this._getXScale(this.props, this.state.size.innerWidth)});
+    }
+  }
+
   _initialize(props) {
-    this.data = this._getFormattedData(props.metric.points);
+    this.allData = this._getFormattedData(props.metric.points);
+
+    if (props.metric.type === 'numeric' && props.metric.points.length > 100) {
+      this.dataExcludingOutliers = this._removeOutliers(this.allData);
+      this.activeData = props.showOutliers ? this.allData : this.dataExcludingOutliers;
+    } else {
+      this.activeData = this.allData;
+    }
 
     this.refLabels = [];
-    this.data.map(item => {
+    this.activeData.map(item => {
       this.refLabels[item.x] = item.label;
     });
 
     this.yScale = d3Scale.scaleLinear()
-                    .domain([0, d3Array.max(this.data, d => d.y)])
+                    .domain([0, d3Array.max(this.activeData, d => d.y)])
                     .range([this.state.size.innerHeight, 0])
                     .nice(); // Y axis should extend to nicely readable 0..100
 
@@ -80,6 +94,34 @@ class ChartContainer extends React.Component {
     return formattedPoints;
   }
 
+  // Return an array with only the central 99% of elements included. Assumes
+  // allData is sorted.
+  _removeOutliers(allData) {
+    // The indices of the first and last element to be included in the result
+    const indexFirst = Math.round(allData.length * 0.005) - 1;
+    const indexLast = Math.round(allData.length * 0.995) - 1;
+
+    // Add 1 to indexLast because the second paramater to Array.slice is not
+    // inclusive
+    return allData.slice(indexFirst, indexLast + 1);
+  }
+
+  _getXScale(props, innerWidth) {
+    // Category charts get treated differently since they start at x: 1
+    let xScale;
+    if (props.metric.type === 'category') {
+      xScale = d3Scale.scaleLinear()
+                 .domain([1, d3Array.max(this.activeData, d => d.x)])
+                 .range([0, innerWidth]);
+    } else {
+      xScale = d3Scale.scaleLinear()
+                 .domain([0, d3Array.max(this.activeData, d => d.x)])
+                 .range([0, innerWidth]);
+    }
+
+    return xScale;
+  }
+
   _setWidth(props) {
     // width = size of the SVG
     let width;
@@ -91,21 +133,8 @@ class ChartContainer extends React.Component {
 
     // innerWidth = size of the contents of the SVG
     const innerWidth = width - this.margin.left - this.margin.right;
-
-    // Category charts get treated differently since they start at x: 1
-    let xScale;
-    if (props.metric.type === 'category') {
-      xScale = d3Scale.scaleLinear()
-                 .domain([1, d3Array.max(this.data, d => d.x)])
-                 .range([0, innerWidth]);
-    } else {
-      xScale = d3Scale.scaleLinear()
-                 .domain([0, d3Array.max(this.data, d => d.x)])
-                 .range([0, innerWidth]);
-    }
-
+    const xScale = this._getXScale(props, innerWidth);
     const sizeIncludingWidth = Object.assign({}, this.state.size, {width, innerWidth});
-
     this.setState({xScale, size: sizeIncludingWidth});
   }
 
@@ -119,7 +148,7 @@ class ChartContainer extends React.Component {
 
           metricId={this.props.metricId}
           name={this.props.metric.metric}
-          data={this.data}
+          data={this.activeData}
           refLabels={this.refLabels}
           metricType={this.props.metric.type}
           showOutliers={this.props.showOutliers}
