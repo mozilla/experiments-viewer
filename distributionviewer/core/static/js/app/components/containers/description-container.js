@@ -11,6 +11,6 @@ export default class extends React.Component {
       this.safeDescriptionWithLinebreaks = nl2br(striptags(this.props.rawDescription));
     }
 
-    return <Description safeDescription={this.safeDescriptionWithLinebreaks} />;
+    return <Description safeDescription={this.safeDescriptionWithLinebreaks} asTooltip={this.props.asTooltip} />;
   }
 }

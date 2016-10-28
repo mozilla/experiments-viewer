@@ -1,0 +1,59 @@
+/* Based on: https://jsfiddle.net/greypants/zgCb7/ */
+
+$tooltip-margin-bottom = 15px;
+$tooltip-background-color = rgba(255, 255, 255, .6);
+
+.tooltip-wrapper {
+  position: relative;
+
+  .tooltip {
+    background: $tooltip-background-color;
+    box-sizing: border-box; /* Because we want to give it padding but we also want it to have exactly the same width as the hover box */
+    color: #000;
+    left: 0px;
+    padding: 10px;
+    pointer-events: none;
+    bottom: 100%; /* Place the tooltip above the top edge of the hover box */
+    margin-bottom: $tooltip-margin-bottom; /* Space it out from the hover box */
+    position: absolute;
+    width: 100%;
+    text-align: center;
+
+    /* Behavior */
+    transition: all .25s ease-out;
+    transform: translateY(10px); /* Makes the tooltip "slide up" when appearing */
+    opacity: 0;
+
+    /* This bridges the gap so you can mouse into the tooltip without it
+       disappearing */
+    &:before {
+      bottom: -($tooltip-margin-bottom + 5px);
+      content: " ";
+      display: block;
+      height: -(@bottom);
+      left: 0;
+      position: absolute;
+      width: 100%;
+    }
+
+    /* Triangle */
+    &:after {
+      border-left: solid transparent 10px;
+      border-right: solid transparent 10px;
+      border-top: solid $tooltip-background-color 10px;
+      bottom: -10px;
+      content: " ";
+      height: 0;
+      left: 50%;
+      margin-left: -13px;
+      position: absolute;
+      width: 0;
+    }
+  }
+}
+
+.tooltip-hover-target:hover + .tooltip {
+  pointer-events: auto;
+  transform: translateY(0);
+  opacity: 1;
+}

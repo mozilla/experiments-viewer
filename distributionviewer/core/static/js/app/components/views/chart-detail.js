@@ -14,7 +14,7 @@ export default function(props) {
     <div id="chart-detail" className="chart-detail">
       {outliersToggle}
       <ChartContainer isDetail={true} showOutliers={props.showOutliers} metricId={props.metricId} />
-      <DescriptionContainer rawDescription={props.rawDescription} />
+      <DescriptionContainer rawDescription={props.rawDescription} asTooltip={false} />
     </div>
   );
 }
