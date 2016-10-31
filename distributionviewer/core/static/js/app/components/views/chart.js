@@ -16,9 +16,11 @@ export default function(props) {
     );
   } else {
     return (
-      <div className={`chart chart-${props.metricId} ${props.tooltip ? 'tooltip-wrapper' : ''}`}>
-        <h2 className={`chart-list-name ${props.tooltip ? 'tooltip-hover-target' : ''}`}>{props.name}</h2>
-        {props.tooltip}
+      <div className={`chart chart-${props.metricId}`}>
+        <div className={props.tooltip ? 'tooltip-wrapper' : ''}>
+          <h2 className={`chart-list-name ${props.tooltip ? 'tooltip-hover-target' : ''}`}>{props.name}</h2>
+          {props.tooltip}
+        </div>
         <svg width={props.size.width} height={props.size.height}>
           <g transform={props.size.transform}>
             <ChartAxisContainer
