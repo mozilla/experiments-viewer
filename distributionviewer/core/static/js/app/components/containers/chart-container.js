@@ -153,6 +153,7 @@ class ChartContainer extends React.Component {
           metricType={this.props.metric.type}
           showOutliers={this.props.showOutliers}
           hoverString={this.props.metric.hoverString}
+          tooltip={this.props.tooltip}
 
           size={this.state.size}
           xScale={this.state.xScale}

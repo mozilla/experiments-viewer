@@ -1,5 +1,7 @@
 @import 'lib';
 
+$y-axis-width = 10px;
+
 .chart-list {
   display: flex;
   flex-wrap: wrap;
@@ -18,11 +20,15 @@
     font-size: 15px;
     text-align: center;
     font-weight: 100;
-    margin: 5px 0 5px 10px; // Adjustment for SVG margins.
+    padding: 10px 0 10px $y-axis-width; // Adjustment for SVG margins and enough padding to make it a decent-sized tooltip target
+    margin: 0;
   }
   .chart-link, .chart-link:hover {
     text-decoration: none;
     color: inherit;
+  }
+  .tooltip {
+    margin-left: $y-axis-width;
   }
 }
 

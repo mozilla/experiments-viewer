@@ -31,6 +31,7 @@
     "gulp-stylus": "^2.3.1",
     "json-server": "^0.8.16",
     "nib": "^1.1.0",
+    "nl2br": "0.0.3",
     "react": "^15.0.1",
     "react-addons-test-utils": "^15.3.2",
     "react-dom": "^15.0.1",
@@ -39,6 +40,7 @@
     "redux": "^3.5.2",
     "sinon": "^1.17.6",
     "string-template": "^1.0.0",
+    "striptags": "^2.1.1",
     "webpack-stream": "^3.1.0"
   },
   "devDependencies": {
