@@ -1,7 +1,7 @@
 {
   "name": "distributionviewer",
   "scripts": {
-    "test": "gulp test",
+    "test": "gulp --require ./node_modules/babel-register test",
     "postinstall": "gulp build",
     "size": "webpack --json | webpack-bundle-size-analyzer"
   },
