@@ -4,3 +4,7 @@ machine:
         DEBUG: False
         DJANGO_SETTINGS_MODULE: distributionviewer.settings
 
+test:
+    override:
+        - tox -v
+        - npm test
