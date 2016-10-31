@@ -41,7 +41,7 @@ class ChartDetailContainer extends React.Component {
       return <ChartDetail isFetching={true} metricId={this.metricId} />;
     } else {
       let offerOutliersToggle = false;
-      if (this.props.metric.type === 'numeric' && this.props.metric.numPoints >= 100) {
+      if (this.props.metric.type === 'numeric' && this.props.metric.points.length >= 100) {
         offerOutliersToggle = true;
       }
 
