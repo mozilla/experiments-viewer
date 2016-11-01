@@ -1,0 +1,14 @@
+*.pyc
+*.sw?
+.DS_Store
+.editorconfig
+.env/*
+.eslintrc.json
+.git/*
+.gitignore
+.tox/*
+circle.yml
+docs/*
+LICENSE
+node_modules/*
+README.md

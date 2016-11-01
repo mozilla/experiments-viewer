@@ -20,3 +20,10 @@ simplejson==3.8.2
 six==1.10.0
 uritemplate==0.6
 whitenoise==3.0
+
+# For lint testing via flake8 and its dependencies.
+configparser==3.5.0
+flake8==3.0.4
+mccabe==0.5.2
+pycodestyle==2.0.0
+pyflakes==1.2.3
