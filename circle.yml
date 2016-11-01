@@ -8,3 +8,9 @@ test:
     override:
         - tox -v
         - npm test
+
+deployment:
+    production:
+        branch: master
+        heroku:
+            appname: moz-distribution-viewer
