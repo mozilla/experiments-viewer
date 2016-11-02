@@ -2,17 +2,10 @@ import axios from 'axios';
 import store from '../store';
 import * as metricActions from '../actions/metric-actions';
 
-const prodEndpoints = {
+export const endpoints = {
   GET_METRICS: `${location.origin}/metrics/`,
   GET_METRIC: `${location.origin}/metric/`
 };
-
-const mockEndpoints = {
-  GET_METRICS: 'http://localhost:3009/metrics',
-  GET_METRIC: 'http://localhost:3009/'
-};
-
-export const endpoints = process.env.NODE_ENV === 'production' ? prodEndpoints : mockEndpoints;
 
 // Given a location object, return an array of all metric IDs specified in the
 // ?metrics query parameter.
