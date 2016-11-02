@@ -62,12 +62,6 @@ gulp.task('watch', ['build'], () => {
   gulp.watch(bundles.css.main, ['build:css']);
 });
 
-// Fake API
-gulp.task('serve:api', done => {
-  cp.exec('json-server --watch db.json --port 3009', {stdio: 'inherit'})
-    .on('close', done);
-});
-
 gulp.task('lint:js', ['build:js'], () => {
   return gulp.src([path.resolve(paths.js, '**/*.js'), '!' + path.resolve(paths.js, 'bundle.js')])
              .pipe(eslint('.eslintrc.json'))

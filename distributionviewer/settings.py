@@ -19,6 +19,7 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = ['*']
 
+SITE_URL = config('SITE_URL', default='http://localhost:8000')
 STATIC_ROOT = config('STATIC_ROOT', default=os.path.join(BASE_DIR,
                                                          'staticfiles'))
 STATIC_URL = config('STATIC_URL', '/static/')
@@ -99,8 +100,6 @@ USE_I18N = False
 USE_L10N = False
 
 USE_TZ = True
-
-STATIC_URL = '/static/'
 
 SECURE_SSL_REDIRECT = config('SSL_REDIRECT', default=False, cast=bool)
 SECURE_HSTS_SECONDS = (60 * 60 * 24 * 365)
