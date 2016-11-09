@@ -4,6 +4,9 @@ from django.db import models
 
 class DataSet(models.Model):
     date = models.DateField()
+    display = models.BooleanField(default=False)
+    import_start = models.DateTimeField(null=True)
+    import_stop = models.DateTimeField(null=True)
 
     class Meta:
         get_latest_by = 'date'
