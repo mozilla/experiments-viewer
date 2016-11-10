@@ -33,7 +33,7 @@ class TestMetric(TestCase):
             id=2, name='Searches Per Active Day', description='Searches descr',
             type='N')[0]
 
-        dataset, _ = DataSet.objects.get_or_create(date=date)
+        dataset, _ = DataSet.objects.get_or_create(date=date, display=True)
 
         cat_data = [
             ('x86', 0.95, 1),
@@ -109,6 +109,16 @@ class TestMetric(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(DataSet.objects.count(), 2)
         self.assertEqual(response.json()['dataSet'], u'2016-02-02')
+
+    def test_display_dataset(self):
+        # Test that a newer dataset with display=False isn't returned in
+        # the API.
+        self.create_data()
+        DataSet.objects.create(date=datetime.date(2016, 2, 2), display=False)
+        response = self.client.get(reverse('metric', args=['1']),
+                                   data={'date': '2016-02-05'})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json()['dataSet'], u'2016-01-01')
 
     def test_invalid_date_400(self):
         self.create_data()

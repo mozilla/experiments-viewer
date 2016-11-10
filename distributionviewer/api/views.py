@@ -45,7 +45,8 @@ def metric(request, metric_id):
     except ValueError:
         raise ParseError('Date provided not valid.')
 
-    dataset = DataSet.objects.filter(date__lte=date).order_by('-date').first()
+    dataset = DataSet.objects.filter(
+        date__lte=date, display=True).order_by('-date').first()
     if not dataset:
         raise NotFound('No data set with given date found.')
 
