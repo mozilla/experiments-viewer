@@ -213,7 +213,7 @@ for pop_df, pop_name in populations:
     calculate_population(metrics, pop_df, pop_name)
 
 # Now that we're done update the api_dataset table to display this data.
-sql = "UPDATE api_dataset SET display=%s, import_end=%s WHERE id=%s"
+sql = "UPDATE api_dataset SET display=%s, import_stop=%s WHERE id=%s"
 params = [True, datetime.datetime.now(), dataset_id]
 if DEBUG_SQL:
     print sql, params
