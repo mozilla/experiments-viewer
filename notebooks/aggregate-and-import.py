@@ -9,10 +9,6 @@ from pyspark.sql.functions import cume_dist, row_number
 from pyspark.sql.window import Window
 
 
-sparkSession = SparkSession.builder.appName('distribution-viewer').getOrCreate()
-
-
-PARQUET_PATH = 's3://telemetry-parquet/cross_sectional/v%s' % environ['date']
 DEBUG_SQL = False  # If True, prints the SQL instead of executing it.
 
 
@@ -172,7 +168,16 @@ def calculate_population(metrics, df, name):
             collect_numeric_metric(metric, df, name)
 
 
-df = sparkSession.read.parquet(PARQUET_PATH)
+sparkSession = SparkSession.builder.appName('distribution-viewer').getOrCreate()
+
+# Make sure date is provided and is in expected format.
+process_date = datetime.datetime.strptime(environ.get('date'), '%Y%m%d').date()
+
+parquet_path = ('s3://telemetry-parquet/cross_sectional/v{0}'
+                .format(process_date.strftime('%Y%m%d')))
+
+df = sparkSession.read.parquet(parquet_path)
+columns = df.columns
 
 # Set up database connection to distribution viewer.
 conn, cursor = get_database_connection()
@@ -180,7 +185,7 @@ conn, cursor = get_database_connection()
 # Create a new dataset for this import.
 sql = ("INSERT INTO api_dataset (date, display, import_start) "
        "VALUES (%s, %s, %s) RETURNING id")
-params = [datetime.date.today(), False, datetime.datetime.now()]
+params = [process_date, False, datetime.datetime.now()]
 if DEBUG_SQL:
     dataset_id = 0
     print sql, params
@@ -192,6 +197,8 @@ else:
 # Get the metrics we need to gather data for.
 cursor.execute('SELECT id, type, source_name FROM api_metric')
 metrics = cursor.fetchall()
+# Filter out any metrics in the database that don't exist in the source.
+metrics = filter(lambda m: m[2] in columns, metrics)
 
 # Define the populations we are filtering by.
 # Cache the channel filtered datasets to not recompute each time.
