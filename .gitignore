@@ -1,7 +1,6 @@
 *.pyc
 .env
 staticfiles/
-.tox
 env/
 
 node_modules/

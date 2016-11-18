@@ -21,4 +21,7 @@ if you see an error about a missing or out-of-date dependency:
 Testing
 =======
 
-Run `gulp test` to run the frontend tests.
+Run `gulp test` to run the frontend tests from your host machine.
+
+If you'd like to run the frontend tests inside the docker container, run
+`docker-compose run server test frontend`.

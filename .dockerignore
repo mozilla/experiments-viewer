@@ -3,10 +3,8 @@
 .DS_Store
 .editorconfig
 .env/*
-.eslintrc.json
 .git/*
 .gitignore
-.tox/*
 circle.yml
 docs/*
 LICENSE

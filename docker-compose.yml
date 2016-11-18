@@ -10,8 +10,7 @@ server:
   user: app
   volumes:
     - .:/app
-  command:
-    ./bin/run-dev.sh
+  command: dev
   links:
     - db
   environment:

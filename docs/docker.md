@@ -32,17 +32,15 @@ Syntax & unit tests must pass for Pull Requests to be accepted on GitHub.
 
     * To run server tests:
 
-      `docker exec distributionviewer_server_1 ./manage.py test`
+      `docker-compose run server test backend`
 
-    * To run server linting:
-
-      `docker exec distributionviewer_server_1 flake8 distributionviewer`
+This will run both the Django tests and the linting tests.
 
 
 Tips & Tricks
 =============
 
-* To shell into one of the containers:
+* To shell into the server container:
 
   `docker exec -ti distributionviewer_server_1 bash`
 
