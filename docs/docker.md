@@ -42,7 +42,7 @@ Tips & Tricks
 
 * To shell into the server container:
 
-  `docker exec -ti distributionviewer_server_1 bash`
+  `docker exec -ti distributionviewer_server_1 sh`
 
   This is necessary for running Django commands, among other things.
 

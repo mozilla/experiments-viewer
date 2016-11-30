@@ -1,7 +1,8 @@
 [
     {
         "fields": {
-            "date": "2016-10-23"
+            "date": "2016-10-23",
+            "display": true
         },
         "model": "api.dataset",
         "pk": 7
