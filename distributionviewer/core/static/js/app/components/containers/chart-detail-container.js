@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import * as d3Array from 'd3-array';
 
 import ChartDetail from '../views/chart-detail';
 import NotFound from '../views/not-found';
@@ -13,9 +14,11 @@ class ChartDetailContainer extends React.Component {
     this.state = {
       showOutliers: false,
       got404: false,
+      selectedScale: 'linear',
     };
 
     this._toggleOutliers = this._toggleOutliers.bind(this);
+    this._selectScale = this._selectScale.bind(this);
   }
 
   componentDidMount() {
@@ -34,15 +37,30 @@ class ChartDetailContainer extends React.Component {
     this.setState({showOutliers: event.target.checked});
   }
 
+  _selectScale(event) {
+    this.setState({selectedScale: event.target.value});
+  }
+
   render() {
     if (this.state.got404) {
       return <NotFound />;
     } else if (!this.props.metric || !this.props.isMetaAvailable) {
       return <ChartDetail isFetching={true} metricId={this.metricId} />;
     } else {
+      let offerScaleOption = false;
       let offerOutliersToggle = false;
-      if (this.props.metric.type === 'numeric' && this.props.metric.points.length >= 100) {
-        offerOutliersToggle = true;
+
+      if (this.props.metric.type === 'numeric') {
+
+        // The log of numbers <= 0 is undefined, so don't offer a logarithmic
+        // scale option for datasets that include x-values <= 0.
+        if (d3Array.min(this.props.metric.points, d => d.b) > 0) {
+          offerScaleOption = true;
+        }
+
+        if (this.props.metric.points.length >= 100) {
+          offerOutliersToggle = true;
+        }
       }
 
       const rawDescription = this.props.metadata.find(e => e.id === this.metricId).description;
@@ -51,10 +69,15 @@ class ChartDetailContainer extends React.Component {
         <ChartDetail
           isFetching={false}
           metricId={this.metricId}
+          rawDescription={rawDescription}
+
           offerOutliersToggle={offerOutliersToggle}
           toggleOutliers={this._toggleOutliers}
           showOutliers={this.state.showOutliers}
-          rawDescription={rawDescription}
+
+          offerScaleOption={offerScaleOption}
+          selectScale={this._selectScale}
+          selectedScale={this.state.selectedScale}
         />
       );
     }
