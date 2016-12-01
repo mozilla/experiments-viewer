@@ -1,9 +1,15 @@
+# Misc
+.ash_history
+
+# Python and Django
 *.pyc
 .env
 staticfiles/
 env/
 
+# Node
 node_modules/
 npm-debug.log
 
+# Front-end
 distributionviewer/core/static/**/bundle.*
