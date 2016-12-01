@@ -44,16 +44,34 @@ class ChartContainer extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.showOutliers !== prevProps.showOutliers && this.props.metric.type === 'numeric') {
-      this.activeData = this.props.showOutliers ? this.allData : this.dataExcludingOutliers;
+    const showOutliers = this.props.showOutliers;
+    const outliersSettingChanged = showOutliers !== prevProps.showOutliers;
+    const selectedScaleChanged = this.props.selectedScale !== prevProps.selectedScale;
+
+    // If the outliers setting changed, update the active data accordingly.
+    // Check against false explicitly because props are sometimes undefined.
+    if (outliersSettingChanged) {
+      if (showOutliers) {
+        this.activeData = this.allData;
+      } else if (showOutliers === false) {
+        this.activeData = this.dataExcludingOutliers;
+      }
+    }
+
+    // If either the outliers setting or the selected scale has changed, the
+    // x-axis will need to show different ticks and thus needs to be
+    // regenerated.
+    if (outliersSettingChanged || selectedScaleChanged) {
       this.setState({xScale: this._getXScale(this.props, this.state.size.innerWidth)});
     }
   }
 
   _initialize(props) {
+    const outlierThreshold = 100;
+
     this.allData = this._getFormattedData(props.metric.points);
 
-    if (props.metric.type === 'numeric' && props.metric.points.length > 100) {
+    if (props.metric.type === 'numeric' && props.metric.points.length > outlierThreshold) {
       this.dataExcludingOutliers = this._removeOutliers(this.allData);
       this.activeData = props.showOutliers ? this.allData : this.dataExcludingOutliers;
     } else {
@@ -114,8 +132,22 @@ class ChartContainer extends React.Component {
                  .domain([1, d3Array.max(this.activeData, d => d.x)])
                  .range([0, innerWidth]);
     } else {
-      xScale = d3Scale.scaleLinear()
-                 .domain([0, d3Array.max(this.activeData, d => d.x)])
+      let scaleType;
+
+      switch(props.selectedScale) {
+        case 'linear':
+          scaleType = d3Scale.scaleLinear();
+          break;
+        case 'log':
+          scaleType = d3Scale.scaleLog();
+          break;
+        default:
+          scaleType = d3Scale.scaleLinear();
+          break;
+      }
+
+      xScale = scaleType
+                 .domain(d3Array.extent(this.activeData, d => d.x))
                  .range([0, innerWidth]);
     }
 
