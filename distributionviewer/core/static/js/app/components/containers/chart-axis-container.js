@@ -22,7 +22,7 @@ export default class extends React.Component {
     if (props.axisType === 'x') {
       if (props.metricType === 'category') {
         axis.ticks(3).tickFormat((d, i) => {
-          if (i > 0) {
+          if (i >= 0) {
             return this._getShortLabel(props.refLabels[d]);
           }
         });
