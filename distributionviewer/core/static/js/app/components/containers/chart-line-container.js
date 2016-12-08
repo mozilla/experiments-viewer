@@ -10,7 +10,8 @@ export default class extends React.Component {
     let props = this.props;
     let line = d3Shape.line()
                 .x(d => props.xScale(d.x))
-                .y(d => props.yScale(d.y));
+                .y(d => props.yScale(d.y))
+                .curve(d3Shape.curveStepAfter);
 
     d3Selection.select(`.chart-${props.metricId} .line`).datum(props.data).attr('d', line);
   }
