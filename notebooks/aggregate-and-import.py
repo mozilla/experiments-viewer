@@ -206,11 +206,20 @@ release_df = df.filter("normalized_channel = 'release'").cache()
 beta_df = df.filter("normalized_channel = 'beta'").cache()
 aurora_df = df.filter("normalized_channel = 'aurora'").cache()
 nightly_df = df.filter("normalized_channel = 'nightly'").cache()
+# Cache the OS filtered datasets.
+windows_df = df.filter("os_name_mode = 'Windows_NT'").cache()
+linux_df = df.filter("os_name_mode = 'Linux'").cache()
+darwin_df = df.filter("os_name_mode = 'Darwin'").cache()
 
-populations = [(release_df, 'channel:release'),
-               (beta_df, 'channel:beta'),
-               (aurora_df, 'channel:aurora'),
-               (nightly_df, 'channel:nightly')]
+populations = [
+    (release_df, 'channel:release'),
+    (beta_df, 'channel:beta'),
+    (aurora_df, 'channel:aurora'),
+    (nightly_df, 'channel:nightly'),
+    (windows_df, 'os:windows'),
+    (linux_df, 'os:linux'),
+    (darwin_df, 'os:darwin'),
+]
 
 # Calculation 'All' metric first.
 calculate_population(metrics, df, 'All')
