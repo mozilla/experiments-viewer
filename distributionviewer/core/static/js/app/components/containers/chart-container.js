@@ -69,9 +69,9 @@ class ChartContainer extends React.Component {
   _initialize(props) {
     const outlierThreshold = 100;
 
-    this.allData = this._getFormattedData(props.metric.points);
+    this.allData = this._getFormattedData(props.metric.populations[0].points);
 
-    if (props.metric.type === 'numeric' && props.metric.points.length > outlierThreshold) {
+    if (props.metric.type === 'numeric' && this.allData.length > outlierThreshold) {
       this.dataExcludingOutliers = this._removeOutliers(this.allData);
       this.activeData = props.showOutliers ? this.allData : this.dataExcludingOutliers;
     } else {
