@@ -1,11 +1,45 @@
 from rest_framework import serializers
 
+from .models import CategoryCollection, NumericCollection
+
 
 class MetricSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     name = serializers.CharField()
     description = serializers.CharField()
     tooltip = serializers.CharField()
+
+
+class DistributionSerializer(serializers.Serializer):
+    id = serializers.IntegerField(source='metric.id')
+    dataSet = serializers.DateField(source='dataset.date')
+    metric = serializers.CharField(source='metric.name')
+    description = serializers.CharField(source='metric.description')
+    populations = serializers.SerializerMethodField()
+
+    def __init__(self, *args, **kwargs):
+        self.populations = kwargs.pop('populations', None)
+        super(DistributionSerializer, self).__init__(*args, **kwargs)
+
+    def to_representation(self, obj):
+        data = serializers.Serializer.to_representation(self, obj)
+        data['type'] = self._type
+        return data
+
+    def get_populations(self, obj):
+        populations = []
+        for pop in self._collection_model.objects.filter(
+                dataset=obj.dataset, metric=obj.metric,
+                population__in=self.populations):
+            data = {
+                'population': pop.population,
+                'numObs': pop.num_observations,
+            }
+            data['points'] = self._point_serializer(pop.points(),
+                                                    many=True).data
+            populations.append(data)
+
+        return populations
 
 
 class CategoryPointSerializer(serializers.Serializer):
@@ -15,23 +49,10 @@ class CategoryPointSerializer(serializers.Serializer):
     refRank = serializers.IntegerField(source='rank')
 
 
-class DistributionSerializer(serializers.Serializer):
-    id = serializers.IntegerField(source='metric.id')
-    numObs = serializers.IntegerField(source='num_observations')
-    dataSet = serializers.DateField(source='dataset.date')
-    population = serializers.CharField()
-    metric = serializers.CharField(source='metric.name')
-    description = serializers.CharField(source='metric.description')
-
-    def to_representation(self, obj):
-        data = serializers.Serializer.to_representation(self, obj)
-        data['type'] = self._type
-        return data
-
-
 class CategoryDistributionSerializer(DistributionSerializer):
-    points = CategoryPointSerializer(many=True)
     _type = 'category'
+    _point_serializer = CategoryPointSerializer
+    _collection_model = CategoryCollection
 
 
 class NumericPointSerializer(serializers.Serializer):
@@ -41,5 +62,6 @@ class NumericPointSerializer(serializers.Serializer):
 
 
 class NumericDistributionSerializer(DistributionSerializer):
-    points = NumericPointSerializer(many=True)
     _type = 'numeric'
+    _point_serializer = NumericPointSerializer
+    _collection_model = NumericCollection

@@ -33,12 +33,14 @@ Example output:
 
 ### `GET /metric/[metric-id]/`
 
-Returns data for a specific metric.
+Returns data for a specific metric, grouped by the population, if provided.
 
 Query parameters:
 
 * `date` (optional): A date in ISO 8601 format. This date will be used to find
   the most recent prior data set.
+* `pop` (optional): A comma separated list of populations. If none provided,
+  this will default to "All".
 
 Example output:
 
@@ -46,46 +48,50 @@ Example output:
 {
   "id": 1,
   "dataSet": "2016-01-01",
-  "population": "All",
-  "numObs": 5321560,
   "type": "category",
   "metric": "architecture",
-  "points": [
+  "populations": [
     {
-      "p": 0.932504,
-      "refRank": 1,
-      "b": "x86",
-      "c": 0.932504
-    },
-    {
-      "p": 0.0672972,
-      "refRank": 2,
-      "b": "x86-64",
-      "c": 0.999801
-    },
-    {
-      "p": 0.00015503,
-      "refRank": 3,
-      "b": "missing",
-      "c": 0.999956
-    },
-    {
-      "p": 0.0000362676,
-      "refRank": 4,
-      "b": "arm",
-      "c": 0.999992
-    },
-    {
-      "p": 0.00000357038,
-      "refRank": 5,
-      "b": "sparc",
-      "c": 0.999996
-    },
-    {
-      "p": 0.00000432204,
-      "refRank": 6,
-      "b": "ppc",
-      "c": 1
+      "population": "All",
+      "numObs": 5321560,
+      "points": [
+        {
+          "p": 0.932504,
+          "refRank": 1,
+          "b": "x86",
+          "c": 0.932504
+        },
+        {
+          "p": 0.0672972,
+          "refRank": 2,
+          "b": "x86-64",
+          "c": 0.999801
+        },
+        {
+          "p": 0.00015503,
+          "refRank": 3,
+          "b": "missing",
+          "c": 0.999956
+        },
+        {
+          "p": 0.0000362676,
+          "refRank": 4,
+          "b": "arm",
+          "c": 0.999992
+        },
+        {
+          "p": 0.00000357038,
+          "refRank": 5,
+          "b": "sparc",
+          "c": 0.999996
+        },
+        {
+          "p": 0.00000432204,
+          "refRank": 6,
+          "b": "ppc",
+          "c": 1
+        }
+      ]
     }
   ]
 }
