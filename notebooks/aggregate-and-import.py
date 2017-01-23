@@ -177,6 +177,9 @@ parquet_path = ('s3://telemetry-parquet/cross_sectional/v{0}'
                 .format(process_date.strftime('%Y%m%d')))
 
 df = sparkSession.read.parquet(parquet_path)
+# Only get records where application name is "Firefox".
+df = df.filter("application_name_mode='Firefox'")
+
 columns = df.columns
 
 # Set up database connection to distribution viewer.
