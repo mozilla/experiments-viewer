@@ -62,41 +62,52 @@ class TestMetric(TestCase):
                 proportion=proportion)
 
     def test_basic(self):
+        """
+        Test both a numeric and categorical metric for JSON format and data.
+        """
         self.create_data()
         # No `date` query string gets latest data set.
         url = reverse('metric', args=['1'])
         response = self.client.get(url)
         expected = {
-            u'numObs': 2,
-            u'dataSet': u'2016-01-01',
-            u'population': u'All',
-            u'id': 1,
             u'metric': u'Architecture',
-            u'points': [
-                {u'p': 0.95, u'c': 0.95, u'b': u'x86', u'refRank': 1},
-                {u'p': 0.05, u'c': 1.0, u'b': u'x86-64', u'refRank': 2}
-            ],
+            u'id': 1,
             u'type': u'category',
-            u'description': u'Architecture descr'
+            u'description': u'Architecture descr',
+            u'dataSet': u'2016-01-01',
+            u'populations': [
+                {
+                    u'population': u'All',
+                    u'numObs': 2,
+                    u'points': [
+                        {u'p': 0.95, u'c': 0.95, u'b': u'x86', u'refRank': 1},
+                        {u'p': 0.05, u'c': 1.0, u'b': u'x86-64', u'refRank': 2}
+                    ],
+                }
+            ]
         }
         self.assertEqual(response.json(), expected)
 
         url = reverse('metric', args=['2'])
         response = self.client.get(url)
         expected = {
-            u'numObs': 4,
-            u'dataSet': u'2016-01-01',
-            u'population': u'All',
-            u'id': 2,
             u'metric': u'Searches Per Active Day',
-            u'points': [
-                {u'p': 0.1, u'c': 0.1, u'b': u'0.0'},
-                {u'p': 0.4, u'c': 0.5, u'b': u'1.0'},
-                {u'p': 0.3, u'c': 0.8, u'b': u'5.0'},
-                {u'p': 0.1, u'c': 0.9, u'b': u'10.0'}
-            ],
+            u'id': 2,
             u'type': u'numeric',
-            u'description': u'Searches descr'
+            u'description': u'Searches descr',
+            u'dataSet': u'2016-01-01',
+            u'populations': [
+                {
+                    u'numObs': 4,
+                    u'population': u'All',
+                    u'points': [
+                        {u'p': 0.1, u'c': 0.1, u'b': u'0.0'},
+                        {u'p': 0.4, u'c': 0.5, u'b': u'1.0'},
+                        {u'p': 0.3, u'c': 0.8, u'b': u'5.0'},
+                        {u'p': 0.1, u'c': 0.9, u'b': u'10.0'}
+                    ],
+                }
+            ]
         }
         self.assertEqual(response.json(), expected)
 
@@ -142,9 +153,10 @@ class TestMetric(TestCase):
         self.create_data()  # Default to 'All' population.
         self.create_data(population='channel:beta')
         response = self.client.get(reverse('metric', args=['1']),
-                                   data={'population': 'channel:beta'})
+                                   data={'pop': 'channel:beta'})
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json()['population'], u'channel:beta')
+        self.assertEqual(response.json()['populations'][0]['population'],
+                         u'channel:beta')
 
 
 class TestMetrics(TestCase):

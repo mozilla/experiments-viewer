@@ -54,11 +54,11 @@ class ChartDetailContainer extends React.Component {
 
         // The log of numbers <= 0 is undefined, so don't offer a logarithmic
         // scale option for datasets that include x-values <= 0.
-        if (d3Array.min(this.props.metric.points, d => d.b) > 0) {
+        if (d3Array.min(this.props.metric.populations[0].points, d => d.b) > 0) {
           offerScaleOption = true;
         }
 
-        if (this.props.metric.points.length >= 100) {
+        if (this.props.metric.populations[0].points.length >= 100) {
           offerOutliersToggle = true;
         }
       }

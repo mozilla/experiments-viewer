@@ -21,21 +21,12 @@ from .serializers import (CategoryDistributionSerializer, MetricSerializer,
                           NumericDistributionSerializer)
 
 
-def render_category(dist):
-    s = CategoryDistributionSerializer(dist)
-    return s.data
-
-
-def render_numeric(dist):
-    s = NumericDistributionSerializer(dist)
-    return s.data
-
-
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
 def metric(request, metric_id):
     # Get requested population or default to "All".
-    population = request.query_params.get('population', 'All')
+    pop = request.query_params.get('pop', 'All')
+    pops = pop.split(',')
 
     # Get requested dataset or most recent prior dataset from date.
     date = request.query_params.get('date',
@@ -51,15 +42,22 @@ def metric(request, metric_id):
         raise NotFound('No data set with given date found.')
 
     metric = get_object_or_404(Metric, id=metric_id)
+
+    # Note: We filter by `population='All'` here to get a single record. We
+    # collect the requested populations later in the serializer.
     if metric.type == 'C':
-        qc = CategoryCollection.objects.filter(dataset=dataset, metric=metric,
-                                               population=population)
-        data = [render_category(d) for d in qc]
+        qs = (CategoryCollection.objects.select_related('dataset', 'metric')
+                                        .get(dataset=dataset, metric=metric,
+                                             population='All'))
+        serializer = CategoryDistributionSerializer(qs, populations=pops)
+        return Response(serializer.data)
+
     elif metric.type == 'N':
-        qn = NumericCollection.objects.filter(dataset=dataset, metric=metric,
-                                              population=population)
-        data = [render_numeric(d) for d in qn]
-    return Response(data[0])
+        qs = (NumericCollection.objects.select_related('dataset', 'metric')
+                                       .get(dataset=dataset, metric=metric,
+                                            population='All'))
+        serializer = NumericDistributionSerializer(qs, populations=pops)
+        return Response(serializer.data)
 
 
 @api_view(['GET'])
