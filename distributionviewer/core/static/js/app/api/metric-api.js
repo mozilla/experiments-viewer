@@ -15,6 +15,18 @@ export function getWhitelistedMetricIds(location) {
   }
 }
 
+// Given a location object, return an array of all populations specified in the
+// ?pop query parameter.
+export function getWhitelistedPopulations(location) {
+  if (location.query && location.query.pop) {
+    if (location.query.pop === 'All') {
+      return [];
+    } else {
+      return location.query.pop.split(',');
+    }
+  }
+}
+
 // Return an object of metric metadata indexed by metric ID. If an array of
 // metricIds is passed, only include metadata about those metrics. Otherwise,
 // include metadata about all published metrics.
