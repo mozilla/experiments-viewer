@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import CategoryCollection, NumericCollection
+from .models import METRIC_TYPES, CategoryCollection, NumericCollection
 
 
 class MetricSerializer(serializers.Serializer):
@@ -8,6 +8,7 @@ class MetricSerializer(serializers.Serializer):
     name = serializers.CharField()
     description = serializers.CharField()
     tooltip = serializers.CharField()
+    type = serializers.CharField(source='type_to_text')
 
 
 class DistributionSerializer(serializers.Serializer):
@@ -50,7 +51,7 @@ class CategoryPointSerializer(serializers.Serializer):
 
 
 class CategoryDistributionSerializer(DistributionSerializer):
-    _type = 'category'
+    _type = METRIC_TYPES['C'].lower()
     _point_serializer = CategoryPointSerializer
     _collection_model = CategoryCollection
 
@@ -62,6 +63,6 @@ class NumericPointSerializer(serializers.Serializer):
 
 
 class NumericDistributionSerializer(DistributionSerializer):
-    _type = 'numeric'
+    _type = METRIC_TYPES['N'].lower()
     _point_serializer = NumericPointSerializer
     _collection_model = NumericCollection

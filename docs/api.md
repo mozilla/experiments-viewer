@@ -15,17 +15,17 @@ Example output:
       "id": 1,
       "name": "Example",
       "description": "Example metric"
+      "tooltip": "{y}% of all records have {x} things.",
+      "type": "numeric"
     },
     {
       "id": 2,
       "name": "Another Example",
       "description": "Another example meteric"
+      "tooltip": "{p}% of all records {x}.",
+      "type": "category"
     },
-    {
-      "id": 3,
-      "name": "Yet Another Example",
-      "description": "Yet another example metric"
-    }
+    ...
   ]
 }
 ```
