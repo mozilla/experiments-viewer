@@ -171,10 +171,12 @@ class TestMetrics(TestCase):
     def create_data(self):
         Metric.objects.create(id=1, name='Architecture',
                               description='Architecture descr',
-                              tooltip='{proportion} of users have {x} arch')
+                              tooltip='{proportion} of users have {x} arch',
+                              type='C')
         Metric.objects.create(id=2, name='Searches Per Active Day',
                               description='Searches descr',
-                              tooltip='{verb} and ye shall {verb}')
+                              tooltip='{verb} and ye shall {verb}',
+                              type='N')
 
     def test_basic(self):
         self.create_data()
@@ -185,11 +187,13 @@ class TestMetrics(TestCase):
                 u'name': u'Architecture',
                 u'description': u'Architecture descr',
                 u'tooltip': u'{proportion} of users have {x} arch',
+                u'type': u'category',
             }, {
                 u'id': 2,
                 u'name': u'Searches Per Active Day',
                 u'description': u'Searches descr',
                 u'tooltip': u'{verb} and ye shall {verb}',
+                u'type': u'numeric',
             }]
         }
         self.assertEqual(response.json(), expected)

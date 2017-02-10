@@ -22,6 +22,12 @@ TOOLTIP_HELP = (
     "{p} - the individual proportion for the hovered data point.")
 
 
+METRIC_TYPES = {
+    'C': 'Category',
+    'N': 'Numeric',
+}
+
+
 class Metric(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
@@ -29,7 +35,7 @@ class Metric(models.Model):
         max_length=255, blank=True,
         help_text=TOOLTIP_HELP)
     type = models.CharField(
-        max_length=1, choices=(('C', 'Categorical'), ('N', 'Numerical')),
+        max_length=1, choices=tuple((k, v) for k, v in METRIC_TYPES.items()),
         default='N')
     source_name = models.CharField(
         max_length=255,
@@ -37,6 +43,9 @@ class Metric(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    def type_to_text(self):
+        return METRIC_TYPES.get(self.type, '').lower()
 
 
 class Collection(models.Model):
