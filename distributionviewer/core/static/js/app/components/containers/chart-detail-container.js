@@ -26,7 +26,7 @@ class ChartDetailContainer extends React.Component {
     if (!this.props.isMetaAvailable) {
       metricApi.getMetricMetadata();
     }
-    metricApi.getMetric(this.metricId).then(result => {
+    metricApi.getMetric(this.metricId, this.props.whitelistedPopulations).then(result => {
       if (result && result.response && result.response.status === 404) {
         this.setState({got404: true});
       }
@@ -45,7 +45,14 @@ class ChartDetailContainer extends React.Component {
     if (this.state.got404) {
       return <NotFound />;
     } else if (!this.props.metric || !this.props.isMetaAvailable) {
-      return <ChartDetail isFetching={true} metricId={this.metricId} />;
+      return (
+        <ChartDetail
+          isFetching={true}
+          metricId={this.metricId}
+          showOutliers={this.state.showOutliers}
+          whitelistedPopulations={this.props.whitelistedPopulations}
+        />
+      );
     } else {
       let offerScaleOption = false;
       let offerOutliersToggle = false;
@@ -70,6 +77,7 @@ class ChartDetailContainer extends React.Component {
           isFetching={false}
           metricId={this.metricId}
           rawDescription={rawDescription}
+          whitelistedPopulations={this.props.whitelistedPopulations}
 
           offerOutliersToggle={offerOutliersToggle}
           toggleOutliers={this._toggleOutliers}

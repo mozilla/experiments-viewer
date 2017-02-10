@@ -19,11 +19,7 @@ export function getWhitelistedMetricIds(location) {
 // ?pop query parameter.
 export function getWhitelistedPopulations(location) {
   if (location.query && location.query.pop) {
-    if (location.query.pop === 'All') {
-      return [];
-    } else {
-      return location.query.pop.split(',');
-    }
+    return location.query.pop.split(',');
   }
 }
 
@@ -49,9 +45,15 @@ export function getMetricMetadata(metricIds) {
   });
 }
 
-// Get a single metric
-export function getMetric(metricId) {
-  return axios.get(`${endpoints.GET_METRIC}${metricId}/`).then(response => {
+/**
+ * Get a single metric
+ *
+ * @param metricId
+ * @param {Array} populations Populations that should be fetched. For example:
+ *                            ['os:release', 'os:nightly']
+ */
+export function getMetric(metricId, populations) {
+  return axios.get(`${endpoints.GET_METRIC}${metricId}/?pop=${populations.join(',')}`).then(response => {
     store.dispatch(metricActions.getMetricSuccess(metricId, response.data));
     return response.data;
   }).catch(error => {

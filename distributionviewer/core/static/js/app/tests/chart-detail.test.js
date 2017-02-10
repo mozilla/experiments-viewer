@@ -8,7 +8,13 @@ describe('ChartDetail', () => {
   it('The toggleOutliers function should be called every time the "Show outliers" checkbox is changed', () => {
     const numChanges = 3;
     const toggleOutliersSpy = sinon.spy();
-    const cd = shallow(<ChartDetail offerOutliersToggle={true} toggleOutliers={toggleOutliersSpy} />);
+    const cd = shallow(
+      <ChartDetail
+        offerOutliersToggle={true}
+        whitelistedPopulations={['All']}
+        toggleOutliers={toggleOutliersSpy}
+      />
+    );
     const showOutliersCheckbox = cd.find('.show-outliers input[type="checkbox"]');
 
     for (let i = 0; i < numChanges; i++) {
