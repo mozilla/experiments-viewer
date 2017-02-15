@@ -48,6 +48,7 @@ export default class extends React.Component {
         </div>
       );
     } else {
+      var all, pdExcludingAll, pdOnlyAll;
       if (this.props.populationData['All']) {
 
         // ES6!
@@ -56,11 +57,11 @@ export default class extends React.Component {
         // const all = this.props.populdationData['All'];
         // const pdExcludingAll = this.props.populdationData[... everything else ...];
         // const pdOnlyAll = { 'All': all };
-        var {'All': all, ...pdExcludingAll} = this.props.populationData;
-        var pdOnlyAll = { 'All': all }
+        ({'All': all, ...pdExcludingAll} = this.props.populationData);
+        pdOnlyAll = { 'All': all }
 
       } else {
-        var pdExcludingAll = this.props.populationData;
+        pdExcludingAll = this.props.populationData;
       }
 
       const markup = (
