@@ -1,8 +1,7 @@
 #!/bin/sh
 
 run_back_end_tests() {
-  ./manage.py test
-  flake8 distributionviewer
+  flake8 distributionviewer && ./manage.py test
 }
 
 run_front_end_tests() {
@@ -29,11 +28,11 @@ elif [ $1 == "test" ]; then
     shift
     if [[ $1 == "backend" ]]; then
         shift
-        run_back_end_tests $@
+        run_back_end_tests
     elif [[ $1 == "frontend" ]]; then
         run_front_end_tests
     else
-        run_back_end_tests $@
+        run_back_end_tests
         backend_rc=$?
         run_front_end_tests
         frontend_rc=$?
