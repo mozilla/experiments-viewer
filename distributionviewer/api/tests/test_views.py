@@ -77,7 +77,7 @@ class TestMetric(TestCase):
             u'dataSet': u'2016-01-01',
             u'populations': [
                 {
-                    u'population': u'All',
+                    u'name': u'All',
                     u'numObs': 2,
                     u'points': [
                         {u'p': 0.95, u'c': 0.95, u'b': u'x86', u'refRank': 1},
@@ -99,7 +99,7 @@ class TestMetric(TestCase):
             u'populations': [
                 {
                     u'numObs': 4,
-                    u'population': u'All',
+                    u'name': u'All',
                     u'points': [
                         {u'p': 0.1, u'c': 0.1, u'b': u'0.0'},
                         {u'p': 0.4, u'c': 0.5, u'b': u'1.0'},
@@ -155,7 +155,7 @@ class TestMetric(TestCase):
         response = self.client.get(reverse('metric', args=['1']),
                                    data={'pop': 'channel:beta'})
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json()['populations'][0]['population'],
+        self.assertEqual(response.json()['populations'][0]['name'],
                          u'channel:beta')
 
 
