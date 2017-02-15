@@ -33,7 +33,7 @@ class DistributionSerializer(serializers.Serializer):
                 dataset=obj.dataset, metric=obj.metric,
                 population__in=self.populations):
             data = {
-                'population': pop.population,
+                'name': pop.population,
                 'numObs': pop.num_observations,
             }
             data['points'] = self._point_serializer(pop.points(),

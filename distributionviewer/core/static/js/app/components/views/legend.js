@@ -8,8 +8,7 @@ export default function(props) {
   // the last data line shown in charts.
   let all;
   const popAllLast = props.metric.populations.filter(population => {
-    // population.population = the name of this population
-    if (population.population === 'All') {
+    if (population.name === 'All') {
       all = population;
       return false;
     }
@@ -27,7 +26,7 @@ export default function(props) {
                 <line x1="0" y1="5" x2="50" y2="5" strokeWidth="5" />
               </svg>
               <span className="name">
-                {population.population}
+                {population.name}
               </span>
             </li>
           );
