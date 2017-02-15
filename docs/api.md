@@ -52,7 +52,7 @@ Example output:
   "metric": "architecture",
   "populations": [
     {
-      "population": "All",
+      "name": "All",
       "numObs": 5321560,
       "points": [
         {
@@ -107,7 +107,7 @@ Example output:
     <code>DataSet</code>s to exist.
   </dd>
 
-  <dt>population</dt>
+  <dt>populations.name</dt>
   <dd>
     The population this data set applies to. Besides "All", some examples
     include: "channel:release" or "os:darwin".
