@@ -14,7 +14,10 @@ export default function(props) {
     }
     return true;
   });
-  popAllLast.push(all);
+
+  if (all) {
+    popAllLast.push(all);
+  }
 
   return (
     <section className="legend">

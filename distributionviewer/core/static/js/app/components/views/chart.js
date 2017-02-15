@@ -48,14 +48,20 @@ export default class extends React.Component {
         </div>
       );
     } else {
-      // ES6!
-      //
-      // This is equivalent the following:
-      // const all = this.props.populdationData['All'];
-      // const pdExcludingAll = this.props.populdationData[... everything else ...];
-      // const pdOnlyAll = { 'All': all };
-      const {'All': all, ...pdExcludingAll} = this.props.populationData;
-      const pdOnlyAll = { 'All': all }
+      if (this.props.populationData['All']) {
+
+        // ES6!
+        //
+        // This is equivalent the following:
+        // const all = this.props.populdationData['All'];
+        // const pdExcludingAll = this.props.populdationData[... everything else ...];
+        // const pdOnlyAll = { 'All': all };
+        var {'All': all, ...pdExcludingAll} = this.props.populationData;
+        var pdOnlyAll = { 'All': all }
+
+      } else {
+        var pdExcludingAll = this.props.populationData;
+      }
 
       const markup = (
         <div className={`chart chart-${this.props.metricId}`}>
@@ -87,7 +93,7 @@ export default class extends React.Component {
                 other populations when they overlap, so we need to render it last.
                 */}
                 {this.renderPopulations(this.props, pdExcludingAll)}
-                {this.renderPopulations(this.props, pdOnlyAll)}
+                {pdOnlyAll && this.renderPopulations(this.props, pdOnlyAll)}
               </g>
               <ChartHoverContainer
                 metricId={this.props.metricId}
