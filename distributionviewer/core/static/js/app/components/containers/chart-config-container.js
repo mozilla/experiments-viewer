@@ -16,7 +16,7 @@ class ChartConfigContainer extends React.Component {
       {key: 'channel:aurora', name: 'Aurora update channel'},
       {key: 'channel:nightly', name: 'Nightly update channel'},
       {key: 'os:windows', name: 'Windows operating system'},
-      {key: 'os:mac', name: 'Mac OS X operating system'},
+      {key: 'os:darwin', name: 'Mac OS X operating system'},
       {key: 'os:linux', name: 'Linux operating system'});
   }
 
