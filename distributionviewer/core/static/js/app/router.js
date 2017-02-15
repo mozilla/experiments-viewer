@@ -1,5 +1,6 @@
 import React from 'react';
 import { Router, Route, browserHistory } from 'react-router';
+import ReactGA from 'react-ga';
 
 // Layouts
 import MainLayout from './components/layouts/main-layout';
@@ -13,6 +14,14 @@ import NotFound from './components/views/not-found';
 import PermissionDenied from './components/views/permission-denied';
 
 
+// Copied from:
+// https://github.com/react-ga/react-ga#with-npm
+ReactGA.initialize(process.env.TRACKING_ID);
+function logPageView() {
+  ReactGA.set({ page: window.location.pathname });
+  ReactGA.pageview(window.location.pathname);
+}
+
 /**
  * If the path that's about to be loaded doesn't include a ?pop query parameter,
  * add ?pop=All.
@@ -24,7 +33,7 @@ function addPopAll(nextState, replace) {
 }
 
 export default (
-  <Router history={browserHistory}>
+  <Router history={browserHistory} onUpdate={logPageView}>
     <Route component={AppContainer}>
       <Route component={MainLayout}>
 
