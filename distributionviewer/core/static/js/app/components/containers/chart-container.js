@@ -14,6 +14,8 @@ class ChartContainer extends React.Component {
 
     this.margin = {top: 20, right: 20, bottom: 30, left: 40};
     this.height = props.isDetail ? 600 : 250;
+    this.allDatasetName = 'all';
+    this.excludingOutliersDatasetName = 'excludingOutliers';
 
     this.state = {size: {
       height: this.height,
@@ -22,13 +24,13 @@ class ChartContainer extends React.Component {
     }};
 
     this.handleResize = debounce(() => this._setWidth(this.props));
-    this.hasBeenInitialized = false;
+    this.outlierThreshold = 100;
 
     this._setWidth = this._setWidth.bind(this);
   }
 
   componentDidMount() {
-    metricApi.getMetric(this.props.metricId);
+    metricApi.getMetric(this.props.metricId, this.props.whitelistedPopulations);
 
     if (this.props.isDetail) {
       this.chartDetail = document.getElementById('chart-detail');
@@ -36,64 +38,93 @@ class ChartContainer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // If the metric data just came through, initialize the chart before the
-    // next render occuurs.
-    if (!this.hasBeenInitialized && nextProps.metric) {
-      this._initialize(nextProps);
+    // If the metric data changed or just came through for the first time, set
+    // the chart up before the next render occurs.
+    if (this.props.metric !== nextProps.metric) {
+      this._setup(nextProps);
+    }
+  }
+
+  componentWillUpdate(nextProps) {
+    // If the outliers setting changed, update the active dataset accordingly.
+    // Check against false explicitly because props are sometimes undefined.
+    if (nextProps.showOutliers !== this.props.showOutliers) {
+      if (nextProps.showOutliers) {
+        this.activeDatasetName = this.allDatasetName;
+      } else if (nextProps.showOutliers === false) {
+        this.activeDatasetName = this.excludingOutliersDatasetName;
+      }
     }
   }
 
   componentDidUpdate(prevProps) {
-    const showOutliers = this.props.showOutliers;
-    const outliersSettingChanged = showOutliers !== prevProps.showOutliers;
+    const outliersSettingChanged = this.props.showOutliers !== prevProps.showOutliers;
     const selectedScaleChanged = this.props.selectedScale !== prevProps.selectedScale;
-
-    // If the outliers setting changed, update the active data accordingly.
-    // Check against false explicitly because props are sometimes undefined.
-    if (outliersSettingChanged) {
-      if (showOutliers) {
-        this.activeData = this.allData;
-      } else if (showOutliers === false) {
-        this.activeData = this.dataExcludingOutliers;
-      }
-    }
 
     // If either the outliers setting or the selected scale has changed, the
     // x-axis will need to show different ticks and thus needs to be
     // regenerated.
     if (outliersSettingChanged || selectedScaleChanged) {
+      this.biggestDatasetToShow = this.populationData[this.biggestPopulation.population][this.activeDatasetName];
       this.setState({xScale: this._getXScale(this.props, this.state.size.innerWidth)});
     }
   }
 
-  _initialize(props) {
-    const outlierThreshold = 100;
+  _setup(props) {
+    this.populationData = {};
+    for (let i = 0; i < props.metric.populations.length; i++) {
+      const population = props.metric.populations[i];
+      const fmtData = this._getFormattedData(population.points);
 
-    this.allData = this._getFormattedData(props.metric.populations[0].points);
+      // Check against false explicitly because props are sometimes undefined
+      let fmtDataExcludingOutliers;
+      if (props.showOutliers === false) {
+        fmtDataExcludingOutliers = this._removeOutliers(fmtData);
+      }
 
-    if (props.metric.type === 'numeric' && this.allData.length > outlierThreshold) {
-      this.dataExcludingOutliers = this._removeOutliers(this.allData);
-      this.activeData = props.showOutliers ? this.allData : this.dataExcludingOutliers;
-    } else {
-      this.activeData = this.allData;
+      // If this population has the most data points so far, it's the biggest
+      // population. We'll need to know which population is biggest when we set
+      // the scales later.
+      if (!this.biggestPopulation || population.points.length > this.biggestPopulation.points.length) {
+        this.biggestPopulation = population;
+      }
+
+      // population.population = the name of this population
+      this.populationData[population.population] = {};
+      this.populationData[population.population][this.allDatasetName] = fmtData;
+      if (fmtDataExcludingOutliers) {
+        this.populationData[population.population][this.excludingOutliersDatasetName] = fmtDataExcludingOutliers;
+      }
     }
 
+    if (props.showOutliers === false && this.biggestPopulation.points.length > this.outlierThreshold) {
+      this.activeDatasetName = this.excludingOutliersDatasetName;
+    } else {
+      this.activeDatasetName = this.allDatasetName;
+    }
+
+    // Make a copy of the biggest dataset we can show right now. That is, the
+    // dataset from the biggest population after it is optionally trimmed of
+    // outliers.
+    //
+    // We'll need this when setting the scales.
+    this.biggestDatasetToShow = this.populationData[this.biggestPopulation.population][this.activeDatasetName];
+
     this.refLabels = [];
-    this.activeData.map(item => {
+    this.biggestDatasetToShow.map(item => {
       this.refLabels[item.x] = item.label;
     });
 
     this.yScale = d3Scale.scaleLinear()
-                    .domain([0, d3Array.max(this.activeData, d => d.y)])
+                    .domain([0, d3Array.max(this.biggestDatasetToShow, d => d.y)])
                     .range([this.state.size.innerHeight, 0])
                     .nice(); // Y axis should extend to nicely readable 0..100
 
     this._setWidth(props);
+
     if (props.isDetail) {
       window.addEventListener('resize', this.handleResize);
     }
-
-    this.hasBeenInitialized = true;
   }
 
   // Map metric points to new keys to be used by d3.
@@ -113,15 +144,17 @@ class ChartContainer extends React.Component {
   }
 
   // Return an array with only the central 99% of elements included. Assumes
-  // allData is sorted.
-  _removeOutliers(allData) {
+  // data is sorted.
+  _removeOutliers(data) {
+    if (data.length <= this.outliersThreshold) return data;
+
     // The indices of the first and last element to be included in the result
-    const indexFirst = Math.round(allData.length * 0.005) - 1;
-    const indexLast = Math.round(allData.length * 0.995) - 1;
+    const indexFirst = Math.round(data.length * 0.005) - 1;
+    const indexLast = Math.round(data.length * 0.995) - 1;
 
     // Add 1 to indexLast because the second paramater to Array.slice is not
     // inclusive
-    return allData.slice(indexFirst, indexLast + 1);
+    return data.slice(indexFirst, indexLast + 1);
   }
 
   _getXScale(props, innerWidth) {
@@ -129,7 +162,7 @@ class ChartContainer extends React.Component {
     let xScale;
     if (props.metric.type === 'category') {
       xScale = d3Scale.scaleLinear()
-                 .domain([1, d3Array.max(this.activeData, d => d.x)])
+                 .domain([1, d3Array.max(this.biggestDatasetToShow, d => d.x)])
                  .range([0, innerWidth]);
     } else {
       let scaleType;
@@ -147,7 +180,7 @@ class ChartContainer extends React.Component {
       }
 
       xScale = scaleType
-                 .domain(d3Array.extent(this.activeData, d => d.x))
+                 .domain(d3Array.extent(this.biggestDatasetToShow, d => d.x))
                  .range([0, innerWidth]);
     }
 
@@ -171,7 +204,7 @@ class ChartContainer extends React.Component {
   }
 
   render() {
-    if (!this.hasBeenInitialized) {
+    if (!this.populationData) {
       return <Chart isFetching={true} {...this.props} />;
     } else {
       return (
@@ -180,10 +213,10 @@ class ChartContainer extends React.Component {
 
           metricId={this.props.metricId}
           name={this.props.metric.metric}
-          data={this.activeData}
+          populationData={this.populationData}
           refLabels={this.refLabels}
           metricType={this.props.metric.type}
-          showOutliers={this.props.showOutliers}
+          activeDatasetName={this.activeDatasetName}
           hoverString={this.props.metric.hoverString}
           tooltip={this.props.tooltip}
 

@@ -12,7 +12,7 @@
             "description": "The total number of bookmarks recorded.",
             "name": "Number of bookmarks",
             "source_name": "bookmarks_avg",
-            "tooltip": "{y}% of all records have {x} bookmarks",
+            "tooltip": "{y}% of {pop} records have {x} bookmarks",
             "type": "N"
         },
         "model": "api.metric",
@@ -23,7 +23,7 @@
             "description": "The total number of add-ons per profile, both active and inactive.",
             "name": "Number of add-ons",
             "source_name": "addon_count_avg",
-            "tooltip": "{y}% of all records have {x} add-ons",
+            "tooltip": "{y}% of {pop} records have {x} add-ons",
             "type": "N"
         },
         "model": "api.metric",
@@ -34,7 +34,7 @@
             "description": "This is the distribution of operating system usage.\r\n\r\nCategorical variables are sorted by the prevalence in the population of all records, from most common to least.",
             "name": "Operating system",
             "source_name": "os_name_mode",
-            "tooltip": "{p}% of all records are {x}",
+            "tooltip": "{p}% of {pop} records are {x}",
             "type": "C"
         },
         "model": "api.metric",
@@ -45,7 +45,7 @@
             "description": "CPU architecture. This value may not be accurately reported on all OSes.\r\n\r\nCategorical variables are sorted by the prevalence in the population of all records, from most common to least.",
             "name": "CPU Architecture",
             "source_name": "architecture_mode",
-            "tooltip": "{p}% of all records have {x} architecture",
+            "tooltip": "{p}% of {pop} records have {x} architecture",
             "type": "C"
         },
         "model": "api.metric",
@@ -56,7 +56,7 @@
             "description": "This panel depicts the distribution of the number of plugins per client.",
             "name": "Number of plugins",
             "source_name": "plugins_count_avg",
-            "tooltip": "{y}% of all records have {x} plugins",
+            "tooltip": "{y}% of {pop} records have {x} plugins",
             "type": "N"
         },
         "model": "api.metric",
@@ -67,7 +67,7 @@
             "description": "This graph depicts the distribution of the total number of searches recorded in the entire history of each client.",
             "name": "Total searches",
             "source_name": "search_counts_total",
-            "tooltip": "{y}% of all records have {x} searches",
+            "tooltip": "{y}% of {pop} records have {x} searches",
             "type": "N"
         },
         "model": "api.metric",
@@ -78,7 +78,7 @@
             "description": "The number of CPUs available on the client machine.",
             "name": "CPU Count",
             "source_name": "cpu_count_mode",
-            "tooltip": "{y}% of all records have {x} CPUs",
+            "tooltip": "{y}% of {pop} records have {x} CPUs",
             "type": "N"
         },
         "model": "api.metric",
@@ -89,7 +89,7 @@
             "description": "The amount of memory available on the client machine, measured in MB.",
             "name": "Memory",
             "source_name": "memory_avg",
-            "tooltip": "{y}% of all records have {x} MB of memory",
+            "tooltip": "{y}% of {pop} records have {x} MB of memory",
             "type": "N"
         },
         "model": "api.metric",

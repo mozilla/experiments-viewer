@@ -2,7 +2,7 @@ import React from 'react';
 import * as d3Array from 'd3-array';
 import * as d3Format from 'd3-format';
 
-import { select, mouse } from 'd3-selection';
+import { select, selectAll, mouse } from 'd3-selection';
 import format from 'string-template';
 
 
@@ -21,30 +21,46 @@ export default class extends React.Component {
   _handleMouseMove() {
     let props = this.props;
     let x0 = props.xScale.invert(mouse(this.refs.rect)[0]);
-    let i = this.bisector(props.data, x0, 1);
-    let d0 = props.data[i - 1];
 
-    // Ternary to fix comparison with array index out of bounds.
-    let d1 = props.data[i] ? props.data[i] : props.data[i - 1];
+    let popNumber = 0;
+    for (let populationName in props.populations) {
+      if (props.populations.hasOwnProperty(populationName)) {
 
-    // 'd' holds the currently hovered data object.
-    let d = x0 - d0.x > d1.x - x0 ? d1 : d0;
+        const currentData = props.populations[populationName][props.activeDatasetName];
+        popNumber++;
 
-    // For category charts we have to grab the proportion manually.
-    let proportion = props.metricType === 'category' ? props.data[d.x - 1].p : d.p;
+        let i = this.bisector(currentData, x0, 1);
+        let d0 = currentData[i - 1];
 
-    // Position the focus circle on chart line.
-    this.focusElm.attr('transform', `translate(${props.xScale(d.x)}, ${props.yScale(d.y)})`);
+        this.focusElm = selectAll(`.chart-${props.metricId} .population-${popNumber} .focus`);
 
-    // Set formatted chart hover text.
-    select('.secondary-menu-content .chart-info').text(
-      this._getHoverString(props.metricType, d.x, d.y, proportion)
-    );
+        // Ternary to fix comparison with array index out of bounds.
+        let d1 = currentData[i] ? currentData[i] : currentData[i - 1];
+
+        // 'd' holds the currently hovered data object.
+        let d = x0 - d0.x > d1.x - x0 ? d1 : d0;
+
+        // For category charts we have to grab the proportion manually.
+        let proportion = props.metricType === 'category' ? currentData[d.x - 1].p : d.p;
+
+        // Position the focus circle on chart line.
+        this.focusElm.attr('transform', `translate(${props.xScale(d.x)}, ${props.yScale(d.y)})`);
+
+        // Set hover text for this population, creating the paragraph element in
+        // the process if necessary
+        let hoverSummary = select('.secondary-menu-content .chart-info .hover-summary-' + popNumber);
+        if (hoverSummary.empty()) {
+          select('.secondary-menu-content .chart-info').append('p').classed('hover-summary hover-summary-' + popNumber, true);
+        }
+        hoverSummary.text(this._getHoverString(props.metricType, d.x, d.y, proportion, populationName));
+      }
+    }
   }
+
   _getFormattedVal(val) {
     return d3Format.format('.1%')(val).replace('%', '');
   }
-  _getHoverString(metricType, x, y, p) {
+  _getHoverString(metricType, x, y, p, pop) {
     let result = this.props.hoverString;
     if (!result) return '';
 
@@ -52,13 +68,15 @@ export default class extends React.Component {
       result = format(result, {
         x: this.props.refLabels[x],
         p: this._getFormattedVal(p),
-        y: this._getFormattedVal(y)
+        y: this._getFormattedVal(y),
+        pop: pop.toLowerCase(),
       });
     } else {
       result = format(result, {
         x,
         p: this._getFormattedVal(p),
-        y: this._getFormattedVal(y)
+        y: this._getFormattedVal(y),
+        pop: pop.toLowerCase(),
       });
     }
     return result;

@@ -9,7 +9,15 @@ import * as metricApi from '../../api/metric-api';
 class ChartConfigContainer extends React.Component {
   constructor(props) {
     super(props);
-    this.whitelistedMetricIds = metricApi.getWhitelistedMetricIds(props.location);
+    this.populationList = Array(
+      {key: 'All', name: 'All records'},
+      {key: 'channel:release', name: 'Release update channel'},
+      {key: 'channel:beta', name: 'Beta update channel'},
+      {key: 'channel:aurora', name: 'Aurora update channel'},
+      {key: 'channel:nightly', name: 'Nightly update channel'},
+      {key: 'os:windows', name: 'Windows operating system'},
+      {key: 'os:mac', name: 'Mac OS X operating system'},
+      {key: 'os:linux', name: 'Linux operating system'});
   }
 
   componentDidMount() {
@@ -18,18 +26,35 @@ class ChartConfigContainer extends React.Component {
 
   _handleSubmit(e) {
     var metrics = Array.from(
-      document.querySelectorAll('input[type="checkbox"]:checked'),
+      document.querySelectorAll('input.cb-metrics:checked'),
       input => input.value
     ).join(',');
 
+    var pops = Array.from(
+      document.querySelectorAll('input.cb-pops:checked'),
+      input => input.value
+    ).join(',');
+
+    var qs = [];
     if (metrics) {
-      browserHistory.push(`/?metrics=${metrics}`);
+      qs.push(`metrics=${metrics}`);
+    }
+    if (pops) {
+      qs.push(`pop=${pops}`);
+    }
+
+    if (qs.length) {
+      browserHistory.push('/?' + qs.join('&'));
+    } else {
+      browserHistory.push('/');
     }
   }
 
   render() {
     return (
-      <ChartConfig {...this.props} whitelistedMetricIds={this.whitelistedMetricIds} handleSubmit={this._handleSubmit} />
+      <ChartConfig {...this.props}
+        populationList={this.populationList}
+        handleSubmit={this._handleSubmit} />
     );
   }
 }

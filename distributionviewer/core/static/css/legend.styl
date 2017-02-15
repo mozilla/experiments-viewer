@@ -1,0 +1,42 @@
+@import 'lib';
+
+$li-margin-bottom = $med-padding;
+
+.legend {
+  margin: $lrg-padding 0;
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    /* Compensate for the margin-bottom of the last row of li elements */
+    margin-bottom: -($li-margin-bottom);
+  }
+
+  li {
+    float: left;
+    padding: 0 $med-padding;
+    margin-bottom: $li-margin-bottom;
+
+    /* Vertically-center lines and names */
+    display: flex;
+    align-items: center;
+  }
+
+  /* Color the lines */
+  for $i in (1..$max-populations) {
+    .population-{$i} {
+      line {
+        stroke: lookup('$pop-' + $i + '-color')
+      }
+    }
+  }
+}
+
+.example-line {
+  margin-right: $min-padding;
+}

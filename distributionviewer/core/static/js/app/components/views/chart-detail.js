@@ -2,6 +2,7 @@ import React from 'react';
 
 import ChartContainer from '../containers/chart-container';
 import DescriptionContainer from '../containers/description-container';
+import LegendContainer from '../containers/legend-container';
 
 
 export default function(props) {
@@ -21,14 +22,34 @@ export default function(props) {
     );
   }
 
+  let maybeLegendContainer;
+  if (props.whitelistedPopulations.length > 1) {
+    maybeLegendContainer = (
+      <LegendContainer
+        metricId={props.metricId}
+        whitelistedPopulations={props.whitelistedPopulations}
+      />
+    );
+  }
+
   return (
     <div id="chart-detail" className="chart-detail">
       <div className="options">
         {outliersToggle}
         {scaleOption}
       </div>
-      <ChartContainer isDetail={true} showOutliers={props.showOutliers} selectedScale={props.selectedScale} metricId={props.metricId} />
-      <DescriptionContainer rawDescription={props.rawDescription} asTooltip={false} />
+      {maybeLegendContainer}
+      <ChartContainer
+        isDetail={true}
+        showOutliers={props.showOutliers}
+        selectedScale={props.selectedScale}
+        metricId={props.metricId}
+        whitelistedPopulations={props.whitelistedPopulations}
+      />
+      <DescriptionContainer
+        rawDescription={props.rawDescription}
+        asTooltip={false}
+      />
     </div>
   );
 }
