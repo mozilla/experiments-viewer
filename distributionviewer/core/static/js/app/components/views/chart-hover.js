@@ -40,8 +40,8 @@ export default class extends React.Component {
         // 'd' holds the currently hovered data object.
         let d = x0 - d0.x > d1.x - x0 ? d1 : d0;
 
-        // For category charts we have to grab the proportion manually.
-        let proportion = props.metricType === 'category' ? currentData[d.x - 1].p : d.p;
+        // For categorical charts we have to grab the proportion manually.
+        let proportion = props.metricType === 'categorical' ? currentData[d.x - 1].p : d.p;
 
         // Position the focus circle on chart line.
         this.focusElm.attr('transform', `translate(${props.xScale(d.x)}, ${props.yScale(d.y)})`);
@@ -64,7 +64,7 @@ export default class extends React.Component {
     let result = this.props.hoverString;
     if (!result) return '';
 
-    if (metricType === 'category') {
+    if (metricType === 'categorical') {
       result = format(result, {
         x: this.props.refLabels[x],
         p: this._getFormattedVal(p),

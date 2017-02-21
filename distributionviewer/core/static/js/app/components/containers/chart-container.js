@@ -157,9 +157,9 @@ class ChartContainer extends React.Component {
   }
 
   _getXScale(props, innerWidth) {
-    // Category charts get treated differently since they start at x: 1
+    // Categorical charts get treated differently since they start at x: 1
     let xScale;
-    if (props.metric.type === 'category') {
+    if (props.metric.type === 'categorical') {
       xScale = d3Scale.scaleLinear()
                  .domain([1, d3Array.max(this.biggestDatasetToShow, d => d.x)])
                  .range([0, innerWidth]);
