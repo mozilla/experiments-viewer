@@ -70,7 +70,7 @@ class TestMetric(TestCase):
         url = reverse('metric', args=['1'])
         response = self.client.get(url)
         expected = {
-            u'metric': u'Architecture',
+            u'name': u'Architecture',
             u'id': 1,
             u'type': u'categorical',
             u'description': u'Architecture descr',
@@ -91,7 +91,7 @@ class TestMetric(TestCase):
         url = reverse('metric', args=['2'])
         response = self.client.get(url)
         expected = {
-            u'metric': u'Searches Per Active Day',
+            u'name': u'Searches Per Active Day',
             u'id': 2,
             u'type': u'numerical',
             u'description': u'Searches descr',

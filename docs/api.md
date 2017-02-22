@@ -49,7 +49,7 @@ Example output:
   "id": 1,
   "dataSet": "2016-01-01",
   "type": "categorical",
-  "metric": "CPU Architecture",
+  "name": "CPU Architecture",
   "populations": [
     {
       "name": "All",

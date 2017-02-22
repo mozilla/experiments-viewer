@@ -211,7 +211,7 @@ class ChartContainer extends React.Component {
           isFetching={false}
 
           metricId={this.props.metricId}
-          name={this.props.metric.metric}
+          name={this.props.metric.name}
           populationData={this.populationData}
           refLabels={this.refLabels}
           metricType={this.props.metric.type}
