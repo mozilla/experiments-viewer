@@ -8,7 +8,6 @@ import cleanCSS from 'gulp-clean-css';
 import concat from 'gulp-concat';
 import cp from 'child_process';
 import eslint from 'gulp-eslint';
-import filter from 'gulp-filter';
 import jest from 'gulp-jest';
 import nib from 'nib';
 import path from 'path';
@@ -27,7 +26,6 @@ const bundles = {
   css: {
     main: [
       path.resolve(paths.css, '**/*.styl'),
-      path.resolve(paths.root, 'node_modules/metrics-graphics/dist/metricsgraphics.css'),
     ],
   },
 };
@@ -39,16 +37,9 @@ gulp.task('build:js', () => {
 });
 
 gulp.task('build:css', () => {
-  const stylusFilter = filter(['**/*.styl'], {restore: true});
-
   gulp.src(bundles.css.main)
       .pipe(sourcemaps.init())
-
-      // Compile Stylus files only
-      .pipe(stylusFilter)
       .pipe(stylus({use: [nib()]}))
-      .pipe(stylusFilter.restore)
-
       .pipe(autoprefixer())
       .pipe(concat('bundle.css'))
       .pipe(cleanCSS())
