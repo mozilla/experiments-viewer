@@ -63,7 +63,7 @@ class TestMetric(TestCase):
 
     def test_basic(self):
         """
-        Test both a numeric and categorical metric for JSON format and data.
+        Test both a numerical and categorical metric for JSON format and data.
         """
         self.create_data()
         # No `date` query string gets latest data set.
@@ -72,7 +72,7 @@ class TestMetric(TestCase):
         expected = {
             u'metric': u'Architecture',
             u'id': 1,
-            u'type': u'category',
+            u'type': u'categorical',
             u'description': u'Architecture descr',
             u'dataSet': u'2016-01-01',
             u'populations': [
@@ -93,7 +93,7 @@ class TestMetric(TestCase):
         expected = {
             u'metric': u'Searches Per Active Day',
             u'id': 2,
-            u'type': u'numeric',
+            u'type': u'numerical',
             u'description': u'Searches descr',
             u'dataSet': u'2016-01-01',
             u'populations': [
@@ -187,13 +187,13 @@ class TestMetrics(TestCase):
                 u'name': u'Architecture',
                 u'description': u'Architecture descr',
                 u'tooltip': u'{proportion} of users have {x} arch',
-                u'type': u'category',
+                u'type': u'categorical',
             }, {
                 u'id': 2,
                 u'name': u'Searches Per Active Day',
                 u'description': u'Searches descr',
                 u'tooltip': u'{verb} and ye shall {verb}',
-                u'type': u'numeric',
+                u'type': u'numerical',
             }]
         }
         self.assertEqual(response.json(), expected)

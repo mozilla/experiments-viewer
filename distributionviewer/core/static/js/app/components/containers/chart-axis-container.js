@@ -20,7 +20,7 @@ export default class extends React.Component {
     let axisElm = d3Selection.select(`.chart-${props.metricId} .${props.axisType}.axis`);
 
     if (props.axisType === 'x') {
-      if (props.metricType === 'category') {
+      if (props.metricType === 'categorical') {
         axis.ticks(3).tickFormat((d, i) => {
           if (i >= 0) {
             return this._getShortLabel(props.refLabels[d]);

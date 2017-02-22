@@ -57,7 +57,7 @@ class ChartDetailContainer extends React.Component {
       let offerScaleOption = false;
       let offerOutliersToggle = false;
 
-      if (this.props.metric.type === 'numeric') {
+      if (this.props.metric.type === 'numerical') {
 
         // The log of numbers <= 0 is undefined, so don't offer a logarithmic
         // scale option for datasets that include x-values <= 0.

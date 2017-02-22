@@ -23,8 +23,8 @@ TOOLTIP_HELP = (
 
 
 METRIC_TYPES = {
-    'C': 'Category',
-    'N': 'Numeric',
+    'C': 'Categorical',
+    'N': 'Numerical',
 }
 
 

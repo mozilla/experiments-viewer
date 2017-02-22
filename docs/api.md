@@ -16,14 +16,14 @@ Example output:
       "name": "Example",
       "description": "Example metric"
       "tooltip": "{y}% of all records have {x} things.",
-      "type": "numeric"
+      "type": "numerical"
     },
     {
       "id": 2,
       "name": "Another Example",
       "description": "Another example meteric"
       "tooltip": "{p}% of all records {x}.",
-      "type": "category"
+      "type": "categorical"
     },
     ...
   ]
@@ -48,7 +48,7 @@ Example output:
 {
   "id": 1,
   "dataSet": "2016-01-01",
-  "type": "category",
+  "type": "categorical",
   "metric": "architecture",
   "populations": [
     {
@@ -115,10 +115,11 @@ Example output:
 
   <dt>type</dt>
   <dd>
-    One of <code>category</code> or <code>numeric</code>. When the type is
-    <code>category</code>, <code>points.b</code> will be a string containing a
-    word like <i>arm</i> or <i>sparc</i>. When the type is <code>numeric</code>,
-    <code>points.b</code> will be a string containing a floating-point number.
+    One of <code>categorical</code> or <code>numerical</code>. When the type is
+    <code>categorical</code>, <code>points.b</code> will be a string containing
+    a word like <i>arm</i> or <i>sparc</i>. When the type is
+    <code>numerical</code>, <code>points.b</code> will be a string containing a
+    floating-point number.
   </dd>
 
   <dt>points</dt>
@@ -153,5 +154,5 @@ Example output:
 #### Other notes
 
 * Data points are gauranteed to be in order, such that the `c` and the `b` (when
-  the data is numeric) of an object are always higher than those of the object
+  the data is numerical) of an object are always higher than those of the object
   before it.

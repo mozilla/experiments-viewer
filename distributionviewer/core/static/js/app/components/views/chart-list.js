@@ -13,12 +13,12 @@ export default function(props) {
   props.metadata.map(metricMeta => {
     if (firstMetricId === undefined) firstMetricId = metricMeta.id;
 
-    // Always show outliers in category charts. Outlying categories don't make
+    // Always show outliers in categorical charts. Outlying categories don't make
     // charts unreadable in the same way that outlying data points do.
     //
     // For all other chart types, we want outliers to be hidden in chart
     // listings by default.
-    const showOutliers = metricMeta.type === 'category';
+    const showOutliers = metricMeta.type === 'categorical';
 
     const tooltip = <DescriptionContainer rawDescription={metricMeta.description} asTooltip={true} />;
     chartLinks.push(
