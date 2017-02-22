@@ -13,17 +13,17 @@ Example output:
   "metrics": [
     {
       "id": 1,
-      "name": "Example",
-      "description": "Example metric"
-      "tooltip": "{y}% of all records have {x} things.",
-      "type": "numerical"
+      "name": "CPU Architecture",
+      "description": "The architecture of the client machine"
+      "tooltip": "{y}% of all {pop} records have {x} architecture",
+      "type": "categorical"
     },
     {
       "id": 2,
-      "name": "Another Example",
-      "description": "Another example meteric"
-      "tooltip": "{p}% of all records {x}.",
-      "type": "categorical"
+      "name": "CPU Count",
+      "description": "The number of CPUs available"
+      "tooltip": "{p}% of all {pop} records have {x} or more CPUs",
+      "type": "numerical"
     },
     ...
   ]
@@ -49,7 +49,7 @@ Example output:
   "id": 1,
   "dataSet": "2016-01-01",
   "type": "categorical",
-  "metric": "architecture",
+  "metric": "CPU Architecture",
   "populations": [
     {
       "name": "All",
@@ -153,6 +153,6 @@ Example output:
 
 #### Other notes
 
-* Data points are gauranteed to be in order, such that the `c` and the `b` (when
+* Data points are guaranteed to be in order, such that the `c` and the `b` (when
   the data is numerical) of an object are always higher than those of the object
   before it.
