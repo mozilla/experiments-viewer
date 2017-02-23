@@ -14,7 +14,7 @@ class MetricSerializer(serializers.Serializer):
 class DistributionSerializer(serializers.Serializer):
     id = serializers.IntegerField(source='metric.id')
     dataSet = serializers.DateField(source='dataset.date')
-    metric = serializers.CharField(source='metric.name')
+    name = serializers.CharField(source='metric.name')
     description = serializers.CharField(source='metric.description')
     populations = serializers.SerializerMethodField()
 
