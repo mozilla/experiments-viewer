@@ -1,11 +1,41 @@
 @import 'lib';
 
+$tick-opacity = 0.2;
+$line-width = 2px;
+
+.no-data {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .chart-detail & {
+    height: 65vh;
+  }
+
+  /* Fake axes and tick lines */
+  border-left: $line-width solid $mild-blue;
+  border-bottom: $line-width solid $mild-blue;
+  background-size: 40px 40px;
+  background-image: linear-gradient(to left, alpha($mild-blue, $tick-opacity) 1px, transparent 1px),
+                    linear-gradient(to top, alpha($mild-blue, $tick-opacity) 1px, transparent 1px);
+
+  span {
+    display: block;
+    margin-bottom: $min-padding;
+
+    &.warning {
+      font-weight: bold;
+    }
+  }
+}
+
 .axis {
   path,
   line {
     fill: none;
     stroke: $mild-blue;
-    stroke-width: 2px;
+    stroke-width: $line-width;
   }
 }
 
@@ -29,7 +59,7 @@ for $i in (1..$max-populations) {
     font-weight: 100;
   }
   line {
-    opacity: 0.2;
+    opacity: $tick-opacity;
   }
 }
 
