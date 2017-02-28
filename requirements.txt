@@ -1,6 +1,6 @@
 contextlib2==0.5.4
 dj-database-url==0.4.2
-Django==1.9.12
+Django==1.10.5
 djangorestframework==3.5.4
 google-api-python-client==1.6.2
 gunicorn==19.6.0
