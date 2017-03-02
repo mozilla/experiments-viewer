@@ -50,7 +50,7 @@ export default class extends React.Component {
         if (hoverSummary.empty()) {
           select('.secondary-menu-content .chart-info').append('p').classed('hover-summary', true).attr('data-population', populationName);
         }
-        hoverSummary.text(this._getHoverString(props.metricType, d.x, d.y, proportion, populationName));
+        hoverSummary.html(this._getHoverString(props.metricType, d.x, d.y, proportion, populationName));
       }
     }
   }
@@ -67,14 +67,14 @@ export default class extends React.Component {
         x: this.props.refLabels[x],
         p: this._getFormattedVal(p),
         y: this._getFormattedVal(y),
-        pop: pop.toLowerCase(),
+        pop: '<span class="population-name">' + pop.toLowerCase() + '</span>',
       });
     } else {
       result = format(result, {
         x,
         p: this._getFormattedVal(p),
         y: this._getFormattedVal(y),
-        pop: pop.toLowerCase(),
+        pop: '<span class="population-name">' + pop.toLowerCase() + '</span>',
       });
     }
     return result;
