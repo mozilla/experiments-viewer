@@ -14,14 +14,6 @@
   stroke-width: 1.5px;
 }
 
-for $i in (1..$max-populations) {
-  .population-{$i} {
-    .line, .focus {
-      stroke: lookup('$pop-' + $i + '-color')
-    }
-  }
-}
-
 .tick {
   text {
     fill: $chart-gray;

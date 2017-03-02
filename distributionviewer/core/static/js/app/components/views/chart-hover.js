@@ -22,17 +22,15 @@ export default class extends React.Component {
     let props = this.props;
     let x0 = props.xScale.invert(mouse(this.refs.rect)[0]);
 
-    let popNumber = 0;
     for (let populationName in props.populations) {
       if (props.populations.hasOwnProperty(populationName)) {
 
         const currentData = props.populations[populationName][props.activeDatasetName];
-        popNumber++;
 
         let i = this.bisector(currentData, x0, 1);
         let d0 = currentData[i - 1];
 
-        this.focusElm = selectAll(`.chart-${props.metricId} .population-${popNumber} .focus`);
+        this.focusElm = selectAll(`.chart-${props.metricId} .population[data-population="${populationName}"] .focus`);
 
         // Ternary to fix comparison with array index out of bounds.
         let d1 = currentData[i] ? currentData[i] : currentData[i - 1];
@@ -48,9 +46,9 @@ export default class extends React.Component {
 
         // Set hover text for this population, creating the paragraph element in
         // the process if necessary
-        let hoverSummary = select('.secondary-menu-content .chart-info .hover-summary-' + popNumber);
+        let hoverSummary = select(`.secondary-menu-content .chart-info .hover-summary[data-population="${populationName}"]`);
         if (hoverSummary.empty()) {
-          select('.secondary-menu-content .chart-info').append('p').classed('hover-summary hover-summary-' + popNumber, true);
+          select('.secondary-menu-content .chart-info').append('p').classed('hover-summary', true).attr('data-population', populationName);
         }
         hoverSummary.text(this._getHoverString(props.metricType, d.x, d.y, proportion, populationName));
       }

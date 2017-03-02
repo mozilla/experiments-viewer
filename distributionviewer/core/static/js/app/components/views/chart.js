@@ -10,7 +10,6 @@ import ChartFocus from './chart-focus';
 export default class extends React.Component {
   constructor(props) {
     super(props);
-    this.populationNumber = 0;
   }
 
   renderPopulations(props, populationData) {
@@ -20,12 +19,11 @@ export default class extends React.Component {
       if (populationData.hasOwnProperty(populationName)) {
 
         const currentPopulation = populationData[populationName];
-        this.populationNumber += 1;
 
         renderings.push(
-          <g key={this.populationNumber} className={`population population-${this.populationNumber}`}>
+          <g key={props.metricId + populationName} className="population" data-population={populationName}>
             <ChartLineContainer
-              popNumber={this.populationNumber}
+              populationName={populationName}
               metricId={props.metricId}
               xScale={props.xScale}
               yScale={props.yScale}
@@ -64,7 +62,7 @@ export default class extends React.Component {
         pdExcludingAll = this.props.populationData;
       }
 
-      const markup = (
+      return (
         <div className={`chart chart-${this.props.metricId}`}>
           <div className={this.props.tooltip ? 'tooltip-wrapper' : ''}>
             <h2 className={`chart-list-name ${this.props.tooltip ? 'tooltip-hover-target' : ''}`}>{this.props.name}</h2>
@@ -111,12 +109,6 @@ export default class extends React.Component {
           </svg>
         </div>
       );
-
-      // Reset the population number so that we start from 0 again if this is
-      // re-rendered.
-      this.populationNumber = 0;
-
-      return markup;
     }
   }
 }

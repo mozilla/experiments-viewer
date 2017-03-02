@@ -4,20 +4,14 @@ import { browserHistory } from 'react-router';
 
 import ChartConfig from '../views/chart-config';
 import * as metricApi from '../../api/metric-api';
+import Populations from '../../populations';
 
 
 class ChartConfigContainer extends React.Component {
   constructor(props) {
     super(props);
-    this.populationList = Array(
-      {key: 'All', name: 'All records'},
-      {key: 'channel:release', name: 'Release update channel'},
-      {key: 'channel:beta', name: 'Beta update channel'},
-      {key: 'channel:aurora', name: 'Aurora update channel'},
-      {key: 'channel:nightly', name: 'Nightly update channel'},
-      {key: 'os:windows', name: 'Windows operating system'},
-      {key: 'os:darwin', name: 'Mac OS X operating system'},
-      {key: 'os:linux', name: 'Linux operating system'});
+    const populations = new Populations();
+    this.populationList = populations.getPopulations();
   }
 
   componentDidMount() {
