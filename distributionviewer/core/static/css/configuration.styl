@@ -1,0 +1,87 @@
+@import 'lib';
+
+.configuration {
+  margin-bottom: $med-padding;
+  max-height: 200px;
+  overflow-y: auto;
+  padding: $min-padding;
+
+  &[open] {
+    margin-bottom: $lrg-padding;
+  }
+
+  /* Show a visible border when the details widget is open. Have an invisible
+     border present when it's not open so that the <summary> text doesn't jump
+     around when the widget is opened and closed. */
+  border-width: 1px;
+  border-style: solid;
+  &:not([open]) {
+    border-color: transparent;
+  }
+  &[open] {
+    border-color: $normal-text;
+  }
+
+  &[open] form {
+    animation-name: slideDown;
+    animation-duration: 0.25s;
+  }
+
+  fieldset {
+    border: 1px solid $normal-text;
+    margin: $min-padding 0;
+    padding: $min-padding;
+  }
+
+  legend {
+    font-weight: bold;
+  }
+
+  .checkbox-list label, fieldset div {
+    margin: 10px 10px 10px 0;
+    padding: 5px 0;
+
+    &:first-of-type {
+      margin-top: 0;
+    }
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+
+  .checkbox-list label {
+    display: block;
+  }
+
+  .radio-list {
+    span:after {
+      content: ': ';
+    }
+
+    span, label {
+      margin-right: $min-padding;
+    }
+  }
+
+  /* Otherwise the checkboxes won't line up with the legend */
+  input[type="checkbox"] {
+    margin-left: 0;
+  }
+
+  input[type="radio"] {
+    margin-left: 0;
+  }
+}
+
+@keyframes slideDown {
+  0% {
+    opacity: 0;
+    transform: translateY($med-padding * -1);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

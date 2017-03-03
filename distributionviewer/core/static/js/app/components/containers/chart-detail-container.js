@@ -12,13 +12,8 @@ class ChartDetailContainer extends React.Component {
     super(props);
     this.metricId = parseInt(props.params.metricId, 10);
     this.state = {
-      showOutliers: false,
       got404: false,
-      selectedScale: 'linear',
     };
-
-    this._toggleOutliers = this._toggleOutliers.bind(this);
-    this._selectScale = this._selectScale.bind(this);
   }
 
   componentDidMount() {
@@ -33,14 +28,6 @@ class ChartDetailContainer extends React.Component {
     });
   }
 
-  _toggleOutliers(event) {
-    this.setState({showOutliers: event.target.checked});
-  }
-
-  _selectScale(event) {
-    this.setState({selectedScale: event.target.value});
-  }
-
   render() {
     if (this.state.got404) {
       return <NotFound />;
@@ -49,43 +36,42 @@ class ChartDetailContainer extends React.Component {
         <ChartDetail
           isFetching={true}
           metricId={this.metricId}
-          showOutliers={this.state.showOutliers}
           whitelistedPopulations={this.props.whitelistedPopulations}
+          location={this.props.location}
         />
       );
     } else {
-      let offerScaleOption = false;
-      let offerOutliersToggle = false;
+      let configurableOutliers = false;
+      let configurableScale = false;
 
       if (this.props.metric.type === 'numerical') {
+        if (this.props.metric.populations[0].points.length >= 100) {
+          configurableOutliers = true;
+        }
 
         // The log of numbers <= 0 is undefined, so don't offer a logarithmic
         // scale option for datasets that include x-values <= 0.
         if (d3Array.min(this.props.metric.populations[0].points, d => d.b) > 0) {
-          offerScaleOption = true;
-        }
-
-        if (this.props.metric.populations[0].points.length >= 100) {
-          offerOutliersToggle = true;
+          configurableScale = true;
         }
       }
 
-      const rawDescription = this.props.metadata.find(e => e.id === this.metricId).description;
+      const rawDescription = this.props.metadata[this.metricId].description;
 
       return (
         <ChartDetail
           isFetching={false}
           metricId={this.metricId}
           rawDescription={rawDescription}
+
+          configurableOutliers={configurableOutliers}
+          configurableScale={configurableScale}
+
           whitelistedPopulations={this.props.whitelistedPopulations}
+          showOutliers={this.props.showOutliers}
+          scale={this.props.scale}
 
-          offerOutliersToggle={offerOutliersToggle}
-          toggleOutliers={this._toggleOutliers}
-          showOutliers={this.state.showOutliers}
-
-          offerScaleOption={offerScaleOption}
-          selectScale={this._selectScale}
-          selectedScale={this.state.selectedScale}
+          location={this.props.location}
         />
       );
     }
@@ -95,7 +81,7 @@ class ChartDetailContainer extends React.Component {
 const mapStateToProps = function(store, ownProps) {
   return {
     metric: store.metricState.metrics[parseInt(ownProps.params.metricId, 10)],
-    isMetaAvailable: !!store.metricMetadataState.metadata.length,
+    isMetaAvailable: !!Object.keys(store.metricMetadataState.metadata).length,
     metadata: store.metricMetadataState.metadata,
   };
 };

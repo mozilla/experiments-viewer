@@ -55,11 +55,17 @@ class ChartContainer extends React.Component {
         this.activeDatasetName = this.excludingOutliersDatasetName;
       }
     }
+
+    // If the list of whitelisted populations changed, fetch chart data with the
+    // next whitelisted populations
+    if (nextProps.whitelistedPopulations !== this.props.whitelistedPopulations) {
+      metricApi.getMetric(this.props.metricId, nextProps.whitelistedPopulations);
+    }
   }
 
   componentDidUpdate(prevProps) {
     const outliersSettingChanged = this.props.showOutliers !== prevProps.showOutliers;
-    const selectedScaleChanged = this.props.selectedScale !== prevProps.selectedScale;
+    const selectedScaleChanged = this.props.scale !== prevProps.scale;
 
     // If either the outliers setting or the selected scale has changed, the
     // x-axis will need to show different ticks and thus needs to be
@@ -166,7 +172,7 @@ class ChartContainer extends React.Component {
     } else {
       let scaleType;
 
-      switch(props.selectedScale) {
+      switch(props.scale) {
         case 'linear':
           scaleType = d3Scale.scaleLinear();
           break;

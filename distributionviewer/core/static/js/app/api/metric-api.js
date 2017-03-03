@@ -25,6 +25,8 @@ export function getWhitelistedMetricIds(location) {
 export function getWhitelistedPopulations(location) {
   if (location.query && location.query.pop) {
     return location.query.pop.split(',').filter(e => populations.isPopulation(e));
+  } else {
+    return [];
   }
 }
 
@@ -36,12 +38,17 @@ export function getMetricMetadata(metricIds) {
 
   return axios.get(endpoints.GET_METRICS).then(response => {
     let metricMetadata = response.data.metrics;
+    const metricMetadataObject = {};
 
     if (metricIds) {
       metricMetadata = metricMetadata.filter(m => metricIds.indexOf(m.id) > -1);
     }
 
-    store.dispatch(metricActions.getMetricMetadataSuccess(metricMetadata));
+    metricMetadata.forEach(mm => {
+      metricMetadataObject[mm.id] = mm;
+    });
+
+    store.dispatch(metricActions.getMetricMetadataSuccess(metricMetadataObject));
     return metricMetadata;
   }).catch(error => {
     console.error(error);
