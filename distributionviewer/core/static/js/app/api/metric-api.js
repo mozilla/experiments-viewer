@@ -1,6 +1,11 @@
 import axios from 'axios';
+
 import store from '../store';
+import Populations from '../populations';
 import * as metricActions from '../actions/metric-actions';
+
+
+const populations = new Populations();
 
 export const endpoints = {
   GET_METRICS: `${location.origin}/metrics/`,
@@ -15,11 +20,11 @@ export function getWhitelistedMetricIds(location) {
   }
 }
 
-// Given a location object, return an array of all populations specified in the
-// ?pop query parameter.
+// Given a location object, return an array of all valid populations specified
+// in the ?pop query parameter.
 export function getWhitelistedPopulations(location) {
   if (location.query && location.query.pop) {
-    return location.query.pop.split(',');
+    return location.query.pop.split(',').filter(e => populations.isPopulation(e));
   }
 }
 

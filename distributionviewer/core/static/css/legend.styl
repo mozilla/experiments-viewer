@@ -26,15 +26,6 @@ $li-margin-bottom = $med-padding;
     display: flex;
     align-items: center;
   }
-
-  /* Color the lines */
-  for $i in (1..$max-populations) {
-    .population-{$i} {
-      line {
-        stroke: lookup('$pop-' + $i + '-color')
-      }
-    }
-  }
 }
 
 .example-line {
