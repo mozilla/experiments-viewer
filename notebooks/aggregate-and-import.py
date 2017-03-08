@@ -1,4 +1,5 @@
 import datetime
+import sys
 from os import environ
 
 import boto3
@@ -168,10 +169,26 @@ def calculate_population(metrics, df, name):
             collect_numeric_metric(metric, df, name)
 
 
-sparkSession = SparkSession.builder.appName('distribution-viewer').getOrCreate()
+# Set up database connection to distribution viewer.
+conn, cursor = get_database_connection()
 
 # Make sure date is provided and is in expected format.
 process_date = datetime.datetime.strptime(environ.get('date'), '%Y%m%d').date()
+
+# Ensure we haven't already imported a dataset for this process_date.
+sql = "SELECT 1 FROM api_dataset WHERE date=%s"
+params = [process_date]
+if DEBUG_SQL:
+    print sql, params
+else:
+    cursor.execute(sql, params)
+    if cursor.rowcount > 0:
+        # We already have data, bail.
+        print('Dataset found for process date "{}". Exiting.'.format(process_date))
+        sys.exit()
+
+
+sparkSession = SparkSession.builder.appName('distribution-viewer').getOrCreate()
 
 parquet_path = ('s3://telemetry-parquet/cross_sectional/v{0}'
                 .format(process_date.strftime('%Y%m%d')))
@@ -181,9 +198,6 @@ df = sparkSession.read.parquet(parquet_path)
 df = df.filter("application_name_mode='Firefox'")
 
 columns = df.columns
-
-# Set up database connection to distribution viewer.
-conn, cursor = get_database_connection()
 
 # Create a new dataset for this import.
 sql = ("INSERT INTO api_dataset (date, display, import_start) "
