@@ -6,7 +6,11 @@ import ChartMenu from '../views/chart-menu';
 
 function ChartMenuContainer(props) {
   return (
-    <ChartMenu metadata={props.metadata} />
+    <ChartMenu
+      whitelistedMetricIds={props.whitelistedMetricIds}
+      intentionallySelectedNoMetrics={props.intentionallySelectedNoMetrics}
+      metadata={props.metadata}
+    />
   );
 }
 

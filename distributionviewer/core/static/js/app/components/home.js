@@ -7,7 +7,7 @@ import ChartMenuContainer from './containers/chart-menu-container';
 export default function(props) {
   return (
     <main className="home">
-      <ChartMenuContainer />
+      <ChartMenuContainer {...props} />
       <ChartListContainer {...props} />
     </main>
   );

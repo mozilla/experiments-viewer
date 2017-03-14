@@ -2,31 +2,15 @@ import React from 'react';
 
 import ChartContainer from '../containers/chart-container';
 import DescriptionContainer from '../containers/description-container';
-import LegendContainer from '../containers/legend-container';
+import ConfigurationContainer from '../containers/configuration-container';
+import Legend from '../views/legend';
 
 
 export default function(props) {
-  let outliersToggle = '';
-  let scaleOption = '';
-
-  if (props.offerOutliersToggle) {
-    outliersToggle = <label className="show-outliers"><input type="checkbox" defaultChecked={props.showOutliers} onChange={props.toggleOutliers} />Show outliers</label>;
-  }
-
-  if (props.offerScaleOption) {
-    scaleOption = (
-      <div className="scale">
-        <label><input type="radio" name="scale" value="linear" checked={props.selectedScale === 'linear'} onChange={props.selectScale} />Linear</label>
-        <label><input type="radio" name="scale" value="log" checked={props.selectedScale === 'log'} onChange={props.selectScale} />Log</label>
-      </div>
-    );
-  }
-
-  let maybeLegendContainer;
+  let maybeLegend;
   if (props.whitelistedPopulations.length > 1) {
-    maybeLegendContainer = (
-      <LegendContainer
-        metricId={props.metricId}
+    maybeLegend = (
+      <Legend
         whitelistedPopulations={props.whitelistedPopulations}
       />
     );
@@ -34,17 +18,26 @@ export default function(props) {
 
   return (
     <div id="chart-detail" className="chart-detail">
-      <div className="options">
-        {outliersToggle}
-        {scaleOption}
-      </div>
-      {maybeLegendContainer}
-      <ChartContainer
-        isDetail={true}
-        showOutliers={props.showOutliers}
-        selectedScale={props.selectedScale}
-        metricId={props.metricId}
+      <ConfigurationContainer
+        configurePopulations={true}
+        configureOutliers={props.configurableOutliers}
+        configureScale={props.configurableScale}
+
         whitelistedPopulations={props.whitelistedPopulations}
+
+        showOutliers={props.showOutliers}
+        scale={props.scale}
+
+        location={props.location}
+      />
+      {maybeLegend}
+      <ChartContainer
+        metricId={props.metricId}
+        isDetail={true}
+
+        whitelistedPopulations={props.whitelistedPopulations}
+        showOutliers={props.showOutliers}
+        scale={props.scale}
       />
       <DescriptionContainer
         rawDescription={props.rawDescription}

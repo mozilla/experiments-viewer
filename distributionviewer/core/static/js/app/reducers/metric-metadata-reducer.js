@@ -3,7 +3,7 @@ import * as types from '../actions/action-types';
 
 const initialState = {
   isFetching: false,
-  metadata: [],
+  metadata: {},
   hoverStrings: {},
   status: 200
 };
@@ -11,9 +11,11 @@ const initialState = {
 const getHoverStrings = (metadata) => {
   let strings = {};
 
-  metadata.map(metric => {
-    strings['id-' + metric.id] = metric.tooltip;
-  });
+  for (const id in metadata) {
+    if (metadata.hasOwnProperty(id)) {
+      strings['id-' + id] = metadata[id].tooltip;
+    }
+  }
 
   return strings;
 }
@@ -22,13 +24,15 @@ const metricMetadataReducer = function(state = initialState, action) {
   switch(action.type) {
     case types.GETTING_METRIC_METADATA:
       return Object.assign({}, state, {isFetching: true});
-    case types.GET_METRIC_METADATA_SUCCESS:
+    case types.GET_METRIC_METADATA_SUCCESS: {
+      const newMetadata = Object.assign({}, state.metadata, action.metadata);
       return Object.assign({}, state, {
         isFetching: false,
-        metadata: action.metadata,
-        hoverStrings: getHoverStrings(action.metadata),
+        metadata: newMetadata,
+        hoverStrings: getHoverStrings(newMetadata),
         status: 200
       });
+    }
     case types.GET_METRIC_METADATA_FAILURE:
       return Object.assign({}, state, {isFetching: false, status: action.status});
   }
