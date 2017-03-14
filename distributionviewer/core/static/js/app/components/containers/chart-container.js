@@ -41,7 +41,11 @@ class ChartContainer extends React.Component {
     // If the metric data changed or just came through for the first time, set
     // the chart up before the next render occurs.
     if (this.props.metric !== nextProps.metric) {
-      this._setup(nextProps);
+      if (nextProps.metric.populations.length === 0) {
+        this.noData = true;
+      } else {
+        this._setup(nextProps);
+      }
     }
   }
 
@@ -209,8 +213,17 @@ class ChartContainer extends React.Component {
   }
 
   render() {
-    if (!this.populationData) {
+    // Data was loaded from the API, but there was no data to show for this
+    // chart
+    if (this.noData) {
+      return <Chart noData={true} {...this.props} />;
+
+    // Data has not yet been loaded from the API
+    } else if (!this.populationData) {
       return <Chart isFetching={true} {...this.props} />;
+
+    // Data has been loaded from the API and there is data to show for this
+    // chart
     } else {
       return (
         <Chart

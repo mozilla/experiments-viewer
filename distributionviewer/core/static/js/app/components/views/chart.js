@@ -39,7 +39,14 @@ export default class extends React.Component {
   }
 
   render() {
-    if (this.props.isFetching) {
+    if (this.props.noData) {
+      return (
+        <div className={`chart chart-${this.props.metricId} no-data`}>
+          <span className="warning">No data</span>
+          <span>(try selecting different populations)</span>
+        </div>
+      );
+    } else if (this.props.isFetching) {
       return (
         <div className={`chart is-fetching chart-${this.props.metricId}`}>
           <Fetching />
