@@ -27,7 +27,7 @@ export default class extends React.Component {
           }
         });
       } else {
-        axis.ticks(3, ',d');
+        axis.ticks(3, ',.2r');
       }
       axisElm.attr('transform', `translate(0, ${props.size})`).call(axis);
     } else {
