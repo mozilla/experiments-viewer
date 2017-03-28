@@ -9,7 +9,7 @@ body {
   color: $normal-text;
   font-family: helvetica, sans-serif;
   margin: 0;
-  padding-bottom: 55px;
+  padding: 0 $min-padding 55px;
 }
 
 a {
@@ -60,10 +60,6 @@ h1 {
   }
 }
 
-main {
-  padding: 0 $min-padding;
-}
-
 .error {
   color: #ff7f7f;
 }
@@ -95,7 +91,8 @@ summary {
   .primary-header .sign-in-wrapper {
     width: auto;
   }
-  main {
-    padding: 0 $med-padding;
+  body {
+    padding-left: $med-padding;
+    padding-right: @padding-left;
   }
 }
