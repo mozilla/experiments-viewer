@@ -3,6 +3,7 @@ from django.db import models
 
 
 class DataSet(models.Model):
+    name = models.CharField(max_length=50, unique=True)
     date = models.DateField()
     display = models.BooleanField(default=False)
     import_start = models.DateTimeField(null=True)

@@ -176,8 +176,8 @@ conn, cursor = get_database_connection()
 process_date = datetime.datetime.strptime(environ.get('date'), '%Y%m%d').date()
 
 # Ensure we haven't already imported a dataset for this process_date.
-sql = "SELECT 1 FROM api_dataset WHERE date=%s"
-params = [process_date]
+sql = "SELECT 1 FROM api_dataset WHERE name=%s"
+params = [process_date.isoformat()]
 if DEBUG_SQL:
     print sql, params
 else:
@@ -200,9 +200,9 @@ df = df.filter("application_name_mode='Firefox'")
 columns = df.columns
 
 # Create a new dataset for this import.
-sql = ("INSERT INTO api_dataset (date, display, import_start) "
-       "VALUES (%s, %s, %s) RETURNING id")
-params = [process_date, False, datetime.datetime.now()]
+sql = ("INSERT INTO api_dataset (name, date, display, import_start) "
+       "VALUES (%s, %s, %s, %s) RETURNING id")
+params = [process_date.isoformat(), process_date, False, datetime.datetime.now()]
 if DEBUG_SQL:
     dataset_id = 0
     print sql, params
