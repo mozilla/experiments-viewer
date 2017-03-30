@@ -33,7 +33,8 @@ class TestMetric(TestCase):
             id=2, name='Searches Per Active Day', description='Searches descr',
             type='N')[0]
 
-        dataset, _ = DataSet.objects.get_or_create(date=date, display=True)
+        dataset, _ = DataSet.objects.get_or_create(name=date.isoformat(),
+                                                   date=date, display=True)
 
         cat_data = [
             ('x86', 0.95, 1),
@@ -125,7 +126,9 @@ class TestMetric(TestCase):
         # Test that a newer dataset with display=False isn't returned in
         # the API.
         self.create_data()
-        DataSet.objects.create(date=datetime.date(2016, 2, 2), display=False)
+        newdate = datetime.date(2016, 2, 2)
+        DataSet.objects.create(name=newdate.isoformat(), date=newdate,
+                               display=False)
         response = self.client.get(reverse('metric', args=['1']),
                                    data={'date': '2016-02-05'})
         self.assertEqual(response.status_code, 200)
