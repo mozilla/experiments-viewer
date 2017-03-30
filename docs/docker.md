@@ -23,7 +23,7 @@ already. See the [Docker documentation][docker-docs] for help.
 
 * To populate the database with sample data:
 
-  `docker exec viewer_server_1 ./manage.py loaddata fixtures/sample.json`
+  `docker-compose run server python manage.py loaddata fixtures/sample.json`
 
 Testing
 =======
@@ -42,7 +42,7 @@ Tips & Tricks
 
 * To shell into the server container:
 
-  `docker exec -ti viewer_server_1 sh`
+  `docker-compose server run sh`
 
   This is necessary for running Django commands, among other things.
 
@@ -52,5 +52,4 @@ Tips & Tricks
 
 * Sometimes the database container hasn't fully started when the Django container wants to connect to it. If this happens:
 
-  * `docker ps` to get the name of the Django container (something like `viewer_server_1`)
-  * `docker restart viewer_server_1` to restart the Django container
+  `docker-compose restart server` to restart the Django container
