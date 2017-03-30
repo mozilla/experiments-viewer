@@ -36,8 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.staticfiles',
     'rest_framework',
-    'distributionviewer.api',
-    'distributionviewer.core',
+    'viewer.api',
+    'viewer.core',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -47,10 +47,10 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'distributionviewer.middleware.CORSMiddleware',
+    'viewer.middleware.CORSMiddleware',
 ]
 
-ROOT_URLCONF = 'distributionviewer.urls'
+ROOT_URLCONF = 'viewer.urls'
 
 TEMPLATES = [
     {
@@ -68,13 +68,13 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.messages.context_processors.messages',
 
-                'distributionviewer.core.context_processors.global_settings',
+                'viewer.core.context_processors.global_settings',
             ],
         }
     }
 ]
 
-WSGI_APPLICATION = 'distributionviewer.wsgi.application'
+WSGI_APPLICATION = 'viewer.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases

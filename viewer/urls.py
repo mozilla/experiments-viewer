@@ -25,5 +25,5 @@ urlpatterns = [
 
     # The catch-all.
     url(r'.*', login_required(TemplateView.as_view(
-        template_name='distributionviewer/index.html')), name='index'),
+        template_name='viewer/index.html')), name='index'),
 ]

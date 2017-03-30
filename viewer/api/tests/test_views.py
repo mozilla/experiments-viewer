@@ -9,9 +9,8 @@ from mock import patch
 from oauth2client import client
 from rest_framework.reverse import reverse
 
-from distributionviewer.api.models import (CategoryCollection, CategoryPoint,
-                                           DataSet, Metric, NumericCollection,
-                                           NumericPoint)
+from viewer.api.models import (CategoryCollection, CategoryPoint, DataSet,
+                               Metric, NumericCollection, NumericPoint)
 
 
 class TestMetric(TestCase):

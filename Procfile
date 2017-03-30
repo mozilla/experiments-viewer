@@ -1,1 +1,1 @@
-web: gunicorn distributionviewer.wsgi --log-file -
+web: gunicorn viewer.wsgi --log-file -

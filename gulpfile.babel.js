@@ -18,8 +18,8 @@ import webpack from 'webpack-stream';
 
 const paths = {
   root: './',
-  js: './distributionviewer/core/static/js',
-  css: './distributionviewer/core/static/css',
+  js: './viewer/core/static/js',
+  css: './viewer/core/static/css',
 };
 
 const bundles = {

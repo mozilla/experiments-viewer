@@ -12,4 +12,4 @@ node_modules/
 npm-debug.log
 
 # Front-end
-distributionviewer/core/static/**/bundle.*
+viewer/core/static/**/bundle.*

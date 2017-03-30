@@ -1,7 +1,7 @@
 #!/bin/sh
 
 run_back_end_tests() {
-  flake8 distributionviewer && ./manage.py test
+  flake8 viewer && ./manage.py test
 }
 
 run_front_end_tests() {
@@ -21,7 +21,7 @@ if [ $1 == "dev" ]; then
 
 elif [ $1 == "prod" ]; then
     ./manage.py migrate --noinput
-    exec gunicorn distributionviewer.wsgi:application -b 0.0.0.0:${PORT:-8000} --log-file -
+    exec gunicorn viewer.wsgi:application -b 0.0.0.0:${PORT:-8000} --log-file -
 
 elif [ $1 == "test" ]; then
     printenv  # Informational only.
