@@ -8,9 +8,9 @@ run_front_end_tests() {
   ./node_modules/gulp/bin/gulp.js test
 }
 
-if [ $1 == "dev" ]; then
+case $1 in
+  dev)
     # Wait for database to get started.
-    /bin/sleep 5
     ./manage.py migrate --noinput
     # Try running this in a loop, so that the whole container
     # doesn't exit when runserver reloads and hits an error.
@@ -18,12 +18,12 @@ if [ $1 == "dev" ]; then
         ./manage.py runserver 0.0.0.0:8000
         sleep 1
     done
-
-elif [ $1 == "prod" ]; then
+    ;;
+  prod)
     ./manage.py migrate --noinput
     exec gunicorn viewer.wsgi:application -b 0.0.0.0:${PORT:-8000} --log-file -
-
-elif [ $1 == "test" ]; then
+    ;;
+  test)
     printenv  # Informational only.
     shift
     if [[ $1 == "backend" ]]; then
@@ -46,8 +46,8 @@ elif [ $1 == "test" ]; then
             exit 1
         fi
     fi
-
-else
-   echo "unknown mode: $1"
-   exit 1
-fi
+    ;;
+  *)
+    exec "$@"
+    ;;
+esac
