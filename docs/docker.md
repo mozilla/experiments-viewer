@@ -42,7 +42,7 @@ Tips & Tricks
 
 * To shell into the server container:
 
-  `docker-compose server run sh`
+  `docker-compose run server sh`
 
   This is necessary for running Django commands, among other things.
 
