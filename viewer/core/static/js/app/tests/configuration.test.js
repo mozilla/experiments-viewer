@@ -4,39 +4,43 @@ import { shallow } from 'enzyme';
 
 import Configuration from '../components/views/configuration';
 
+
+let outliersSpy, scaleSpy, configurationMock;
+
 describe('Configuration', () => {
-  it('The handleModifyOutliers function should be called every time the "Show outliers" checkbox is changed', () => {
-    const numChanges = 10;
-    const handleModifyOutliers = sinon.spy();
-    const c = shallow(
+  beforeAll(() => {
+    outliersSpy = sinon.spy();
+    scaleSpy = sinon.spy();
+
+    configurationMock = shallow(
       <Configuration
-        configureOutliers={true}
         whitelistedPopulations={['All']}
-        handleModifyOutliers={handleModifyOutliers}
+
+        configureOutliers={true}
+        configureScale={true}
+
+        handleModifyOutliers={outliersSpy}
+        handleModifyScale={scaleSpy}
       />
     );
-    const showOutliersCheckbox = c.find('.configure-outliers input[type="checkbox"]');
+  });
+
+  it('The handleModifyOutliers function should be called every time the "Show outliers" checkbox is changed', () => {
+    const numChanges = 10;
+    const showOutliersCheckbox = configurationMock.find('.configure-outliers input[type="checkbox"]');
 
     for (let i = 0; i < numChanges; i++) {
       showOutliersCheckbox.simulate('change');
     }
 
-    expect(handleModifyOutliers.callCount).toBe(numChanges);
+    expect(outliersSpy.callCount).toBe(numChanges);
   });
 
   it('The handleModifyScale function should be called every time a scale radio button is selected', () => {
     const numChanges = 10;
-    const handleModifyScale = sinon.spy();
-    const c = shallow(
-      <Configuration
-        configureScale={true}
-        whitelistedPopulations={['All']}
-        handleModifyScale={handleModifyScale}
-      />
-    );
 
-    const linearRadioButton = c.find('.configure-scale .linear');
-    const logRadioButton = c.find('.configure-scale .log');
+    const linearRadioButton = configurationMock.find('.configure-scale .linear');
+    const logRadioButton = configurationMock.find('.configure-scale .log');
 
     for (let i = 0; i < numChanges; i++) {
       const even = i % 2 === 0;
@@ -48,6 +52,6 @@ describe('Configuration', () => {
       }
     }
 
-    expect(handleModifyScale.callCount).toBe(numChanges);
+    expect(scaleSpy.callCount).toBe(numChanges);
   });
 });
