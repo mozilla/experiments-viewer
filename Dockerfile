@@ -8,7 +8,14 @@ WORKDIR /app
 RUN addgroup -g 10001 app && \
     adduser -D -u 10001 -G app -h /app -s /sbin/nologin app
 
-RUN apk --no-cache add postgresql-dev build-base libffi-dev py-cffi openssl-dev nodejs
+RUN apk --no-cache add \
+    build-base \
+    openssl-dev \
+    libffi-dev \
+    py-cffi \
+    bash \
+    postgresql-dev \
+    nodejs
 
 COPY requirements.txt /app/requirements.txt
 RUN pip install -U pip && \

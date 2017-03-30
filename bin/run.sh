@@ -11,14 +11,17 @@ run_front_end_tests() {
 case $1 in
   dev)
     # Wait for database to get started.
-    /bin/sleep 5
-    ./manage.py migrate --noinput
-    # Try running this in a loop, so that the whole container
-    # doesn't exit when runserver reloads and hits an error.
-    while [ 1 ]; do
-        ./manage.py runserver 0.0.0.0:8000
-        sleep 1
-    done
+    ./bin/wait-for-it.sh db:5432 --timeout=0 --strict
+    if [ $? -eq 0 ]
+    then
+        ./manage.py migrate --noinput
+        # Try running this in a loop, so that the whole container
+        # doesn't exit when runserver reloads and hits an error.
+        while [ 1 ]; do
+            ./manage.py runserver 0.0.0.0:8000
+            sleep 1
+        done
+    fi
     ;;
   prod)
     ./manage.py migrate --noinput
