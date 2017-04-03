@@ -32,7 +32,7 @@ Syntax & unit tests must pass for Pull Requests to be accepted on GitHub.
 
     * To run server tests:
 
-      `docker-compose run server test backend`
+    `docker-compose run server test backend`
 
 This will run both the Django tests and the linting tests.
 
