@@ -23,7 +23,7 @@ class TestMetric(TestCase):
 
     def create_data(self, date=None, population=None):
         date = date or datetime.date(2016, 1, 1)
-        population = population or 'All'
+        population = population or 'control'
 
         cat_metric = Metric.objects.get_or_create(
             id=1, name='Architecture', description='Architecture descr',
@@ -66,7 +66,7 @@ class TestMetric(TestCase):
         Test both a numerical and categorical metric for JSON format and data.
         """
         self.create_data()
-        # No `date` query string gets latest data set.
+        # No `exp` query string gets latest data set.
         url = reverse('metric', args=['1'])
         response = self.client.get(url)
         expected = {
@@ -77,7 +77,7 @@ class TestMetric(TestCase):
             u'dataSet': u'2016-01-01',
             u'populations': [
                 {
-                    u'name': u'All',
+                    u'name': u'control',
                     u'numObs': 2,
                     u'points': [
                         {u'p': 0.95, u'c': 0.95, u'b': u'x86', u'refRank': 1},
@@ -99,7 +99,7 @@ class TestMetric(TestCase):
             u'populations': [
                 {
                     u'numObs': 4,
-                    u'name': u'All',
+                    u'name': u'control',
                     u'points': [
                         {u'p': 0.1, u'c': 0.1, u'b': u'0.0'},
                         {u'p': 0.4, u'c': 0.5, u'b': u'1.0'},
@@ -111,12 +111,13 @@ class TestMetric(TestCase):
         }
         self.assertEqual(response.json(), expected)
 
-    def test_specific_date(self):
-        # Testing 20160205 should find the 20160202 dataset.
+    def test_specific_experiment(self):
+        # Test that passing ?exp= works.
         self.create_data()
-        self.create_data(date=datetime.date(2016, 2, 2))
+        new_date = datetime.date(2016, 2, 2)
+        self.create_data(date=new_date)
         response = self.client.get(reverse('metric', args=['1']),
-                                   data={'date': '2016-02-05'})
+                                   data={'exp': new_date.isoformat()})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(DataSet.objects.count(), 2)
         self.assertEqual(response.json()['dataSet'], u'2016-02-02')
@@ -125,25 +126,22 @@ class TestMetric(TestCase):
         # Test that a newer dataset with display=False isn't returned in
         # the API.
         self.create_data()
-        newdate = datetime.date(2016, 2, 2)
-        DataSet.objects.create(name=newdate.isoformat(), date=newdate,
-                               display=False)
-        response = self.client.get(reverse('metric', args=['1']),
-                                   data={'date': '2016-02-05'})
+        new_date = datetime.date(2016, 2, 2)
+        self.create_data(date=new_date)
+
+        dataset = DataSet.objects.get(date=new_date)
+        dataset.display = False
+        dataset.save()
+
+        response = self.client.get(reverse('metric', args=['1']))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['dataSet'], u'2016-01-01')
 
-    def test_invalid_date_400(self):
-        self.create_data()
-        response = self.client.get(reverse('metric', args=['1']),
-                                   data={'date': '2000-99-99'})
-        self.assertEqual(response.status_code, 400)
-
     def test_date_with_no_data_404(self):
-        # Testing 20151231 should find no dataset and return a 404.
+        # Testing 2015-12-31 should find no dataset and return a 404.
         self.create_data()
         response = self.client.get(reverse('metric', args=['1']),
-                                   data={'date': '2015-12-31'})
+                                   data={'exp': '2015-12-31'})
         self.assertEqual(response.status_code, 404)
 
     def test_no_metric_404(self):
@@ -153,12 +151,12 @@ class TestMetric(TestCase):
 
     def test_specific_population(self):
         self.create_data()  # Default to 'All' population.
-        self.create_data(population='channel:beta')
+        self.create_data(population='group-a')
         response = self.client.get(reverse('metric', args=['1']),
-                                   data={'pop': 'channel:beta'})
+                                   data={'pop': 'group-a'})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['populations'][0]['name'],
-                         u'channel:beta')
+                         u'group-a')
 
 
 class TestMetrics(TestCase):
