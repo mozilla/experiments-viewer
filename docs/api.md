@@ -37,8 +37,8 @@ Returns data for a specific metric, grouped by the population, if provided.
 
 Query parameters:
 
-* `date` (optional): A date in ISO 8601 format. This date will be used to find
-  the most recent prior data set.
+* `exp` (optional): This string will be used to find the experiment. If none
+  provided this will default to the most recently added experiment.
 * `pop` (optional): A comma separated list of populations. If none provided,
   this will default to "All".
 
@@ -47,7 +47,7 @@ Example output:
 ```
 {
   "id": 1,
-  "dataSet": "2016-01-01",
+  "dataSet": "Experiment A",
   "type": "categorical",
   "name": "CPU Architecture",
   "populations": [
@@ -102,15 +102,14 @@ Example output:
 <dl>
   <dt>dataSet</dt>
   <dd>
-    All metrics are connected to a <code>DataSet</code> which is the date the
-    data was created and imported. This allows for historical
-    <code>DataSet</code>s to exist.
+    All metrics are connected to a <code>DataSet</code> which is the experiment
+    from which the data was created and imported.
   </dd>
 
   <dt>populations.name</dt>
   <dd>
     The population this data set applies to. Besides "All", some examples
-    include: "channel:release" or "os:darwin".
+    include: "control" or "group-a".
   </dd>
 
   <dt>type</dt>
