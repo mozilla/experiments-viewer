@@ -1,5 +1,6 @@
 # Misc
-.ash_history
+.bash_history
+.psql_history
 
 # Python and Django
 *.pyc
