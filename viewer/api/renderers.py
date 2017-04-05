@@ -10,5 +10,9 @@ class NamespaceJSONRenderer(JSONRenderer):
         return super(NamespaceJSONRenderer, self).render(data, *args, **kwargs)
 
 
+class DataSetJSONRenderer(NamespaceJSONRenderer):
+    namespace = 'datasets'
+
+
 class MetricsJSONRenderer(NamespaceJSONRenderer):
     namespace = 'metrics'

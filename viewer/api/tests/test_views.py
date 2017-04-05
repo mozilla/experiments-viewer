@@ -13,6 +13,42 @@ from viewer.api.models import (CategoryCollection, CategoryPoint, DataSet,
                                Metric, NumericCollection, NumericPoint)
 
 
+class TestDataSet(TestCase):
+
+    def setUp(self):
+        User.objects.create_user(username='testuser',
+                                 email='example@mozilla.com',
+                                 password='password')
+        self.client.login(username='testuser', password='password')
+
+    def create_data(self):
+        DataSet.objects.create(id=1, name='Experiment 1', display=True,
+                               date=datetime.date.today())
+        DataSet.objects.create(id=2, name='Experiment 2', display=True,
+                               date=datetime.date.today() + datetime.timedelta(days=7))
+        DataSet.objects.create(id=3, name='Experiment 3',
+                               date=datetime.date.today() + datetime.timedelta(days=14))
+
+    def test_basic(self):
+        # Test datasets, including ordering and display=False.
+        self.create_data()
+        url = reverse('datasets')
+        response = self.client.get(url)
+        expected = {
+            'datasets': [
+                {
+                    'id': 2,
+                    'name': 'Experiment 2',
+                },
+                {
+                    'id': 1,
+                    'name': 'Experiment 1',
+                },
+            ]
+        }
+        self.assertEqual(response.json(), expected)
+
+
 class TestMetric(TestCase):
 
     def setUp(self):

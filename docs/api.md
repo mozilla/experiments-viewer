@@ -2,6 +2,29 @@
 
 ## Endpoints
 
+
+### `GET /datasets/`
+
+Lists the ID and name of all datasets.
+
+Example output:
+
+```
+{
+  "datasets": [
+    {
+      "id": 1,
+      "name": "Experiment 1"
+    },
+    {
+      "id": 2,
+      "name": "Experiment 2"
+    }
+  ]
+}
+```
+
+
 ### `GET /metrics/`
 
 Lists the IDs, name, and descriptions of all metrics.
