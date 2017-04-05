@@ -102,7 +102,7 @@ class TestMetric(TestCase):
         Test both a numerical and categorical metric for JSON format and data.
         """
         self.create_data()
-        # No `exp` query string gets latest data set.
+        # No `ds` query string gets latest data set.
         url = reverse('metric', args=['1'])
         response = self.client.get(url)
         expected = {
@@ -148,14 +148,15 @@ class TestMetric(TestCase):
         self.assertEqual(response.json(), expected)
 
     def test_specific_experiment(self):
-        # Test that passing ?exp= works.
+        # Test that passing ?ds= works.
         self.create_data()
         new_date = datetime.date(2016, 2, 2)
         self.create_data(date=new_date)
+        datasets = DataSet.objects.all().order_by('-date')
         response = self.client.get(reverse('metric', args=['1']),
-                                   data={'exp': new_date.isoformat()})
+                                   data={'ds': datasets[0].id})
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(DataSet.objects.count(), 2)
+        self.assertEqual(len(datasets), 2)
         self.assertEqual(response.json()['dataSet'], u'2016-02-02')
 
     def test_display_dataset(self):
@@ -174,10 +175,10 @@ class TestMetric(TestCase):
         self.assertEqual(response.json()['dataSet'], u'2016-01-01')
 
     def test_date_with_no_data_404(self):
-        # Testing 2015-12-31 should find no dataset and return a 404.
+        # Testing dataset id=999 should find no dataset and return a 404.
         self.create_data()
         response = self.client.get(reverse('metric', args=['1']),
-                                   data={'exp': '2015-12-31'})
+                                   data={'ds': '999'})
         self.assertEqual(response.status_code, 404)
 
     def test_no_metric_404(self):

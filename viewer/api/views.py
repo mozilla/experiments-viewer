@@ -7,7 +7,7 @@ from oauth2client import client, crypt
 from rest_framework.decorators import (api_view, authentication_classes,
                                        permission_classes, renderer_classes)
 from rest_framework.exceptions import (AuthenticationFailed, NotFound,
-                                       ValidationError)
+                                       ParseError, ValidationError)
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 
@@ -39,10 +39,13 @@ def metric(request, metric_id):
     pops = pop.split(',')
 
     # Get requested dataset or most recent prior dataset from date.
-    exp = request.query_params.get('exp')
-
-    if exp:
-        dataset = DataSet.objects.filter(display=True, name=exp).first()
+    ds = request.query_params.get('ds')
+    if ds:
+        try:
+            ds = int(ds)
+        except ValueError:
+            raise ParseError('DataSet ID provided is not an integer.')
+        dataset = DataSet.objects.filter(display=True, id=ds).first()
     else:
         dataset = DataSet.objects.filter(display=True).order_by('-date').first()
 
