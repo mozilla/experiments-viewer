@@ -2,6 +2,29 @@
 
 ## Endpoints
 
+
+### `GET /datasets/`
+
+Lists the ID and name of all datasets.
+
+Example output:
+
+```
+{
+  "datasets": [
+    {
+      "id": 1,
+      "name": "Experiment 1"
+    },
+    {
+      "id": 2,
+      "name": "Experiment 2"
+    }
+  ]
+}
+```
+
+
 ### `GET /metrics/`
 
 Lists the IDs, name, and descriptions of all metrics.
@@ -37,8 +60,9 @@ Returns data for a specific metric, grouped by the population, if provided.
 
 Query parameters:
 
-* `exp` (optional): This string will be used to find the experiment. If none
-  provided this will default to the most recently added experiment.
+* `ds` (optional): This string, representing the dataset ID, will be used to
+  find the `DataSet` (aka experiment). If none provided this will default to
+  the most recently added experiment.
 * `pop` (optional): A comma separated list of populations. If none provided,
   this will default to "All".
 

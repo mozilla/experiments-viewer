@@ -3,6 +3,11 @@ from rest_framework import serializers
 from .models import METRIC_TYPES, CategoryCollection, NumericCollection
 
 
+class DataSetSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    name = serializers.CharField()
+
+
 class MetricSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     name = serializers.CharField()

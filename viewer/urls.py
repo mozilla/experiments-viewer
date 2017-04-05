@@ -1,14 +1,15 @@
 from django.conf.urls import include, url
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth import views as auth_views
+from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView
 
 from . import views
 from .admin import admin_site
-from .api.views import login_view, metric, metrics, verify_google_token
-
+from .api.views import (datasets, login_view, metric, metrics,
+                        verify_google_token)
 
 urlpatterns = [
+    url(r'^datasets/$', datasets, name='datasets'),
     url(r'^metrics/$', metrics, name='metrics'),
     url(r'^metric/(?P<metric_id>\d+)/$', metric, name='metric'),
     url(r'^admin/login/$', login_view),

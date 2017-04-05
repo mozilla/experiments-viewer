@@ -3,20 +3,32 @@ from django.contrib.auth import get_user_model, login
 from django.shortcuts import get_object_or_404
 from django.template.response import TemplateResponse
 from django.views.decorators.csrf import csrf_exempt
-
 from oauth2client import client, crypt
 from rest_framework.decorators import (api_view, authentication_classes,
-                                       permission_classes,
-                                       renderer_classes)
+                                       permission_classes, renderer_classes)
 from rest_framework.exceptions import (AuthenticationFailed, NotFound,
-                                       ValidationError)
+                                       ParseError, ValidationError)
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 
 from .models import CategoryCollection, DataSet, Metric, NumericCollection
-from .renderers import MetricsJSONRenderer
-from .serializers import (CategoryDistributionSerializer, MetricSerializer,
-                          NumericDistributionSerializer)
+from .renderers import DataSetJSONRenderer, MetricsJSONRenderer
+from .serializers import (CategoryDistributionSerializer, DataSetSerializer,
+                          MetricSerializer, NumericDistributionSerializer)
+
+
+@api_view(['GET'])
+@renderer_classes([DataSetJSONRenderer])
+def datasets(request):
+    datasets = DataSet.objects.filter(display=True).order_by('-date')
+    return Response([DataSetSerializer(d).data for d in datasets])
+
+
+@api_view(['GET'])
+@renderer_classes([MetricsJSONRenderer])
+def metrics(request):
+    metrics = Metric.objects.all().order_by('name')
+    return Response([MetricSerializer(m).data for m in metrics])
 
 
 @api_view(['GET'])
@@ -27,10 +39,13 @@ def metric(request, metric_id):
     pops = pop.split(',')
 
     # Get requested dataset or most recent prior dataset from date.
-    exp = request.query_params.get('exp')
-
-    if exp:
-        dataset = DataSet.objects.filter(display=True, name=exp).first()
+    ds = request.query_params.get('ds')
+    if ds:
+        try:
+            ds = int(ds)
+        except ValueError:
+            raise ParseError('DataSet ID provided is not an integer.')
+        dataset = DataSet.objects.filter(display=True, id=ds).first()
     else:
         dataset = DataSet.objects.filter(display=True).order_by('-date').first()
 
@@ -54,13 +69,6 @@ def metric(request, metric_id):
                                             population='control'))
         serializer = NumericDistributionSerializer(qs, populations=pops)
         return Response(serializer.data)
-
-
-@api_view(['GET'])
-@renderer_classes([MetricsJSONRenderer])
-def metrics(request):
-    metrics = Metric.objects.all().order_by('name')
-    return Response([MetricSerializer(m).data for m in metrics])
 
 
 @csrf_exempt
