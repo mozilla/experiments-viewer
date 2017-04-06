@@ -11,7 +11,7 @@ export default function(props) {
       <header className="primary-header">
         <div>
           <h1>
-            <Link className="primary-header-link" to={`/?pop=${props.whitelistedPopulations}&showOutliers=${props.showOutliers}`}>Firefox Distribution Viewer</Link>
+            <Link className="primary-header-link" to={`/?pop=${props.whitelistedPopulations}&showOutliers=${props.showOutliers}`}>Firefox <em>Experiments</em> Viewer</Link>
           </h1>
         </div>
         <DatasetDatestampContainer />
