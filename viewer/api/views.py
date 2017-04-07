@@ -20,7 +20,7 @@ from .serializers import (CategoryDistributionSerializer, DataSetSerializer,
 @api_view(['GET'])
 @renderer_classes([DataSetJSONRenderer])
 def datasets(request):
-    datasets = DataSet.objects.filter(display=True).order_by('-date')
+    datasets = DataSet.objects.visible().order_by('-date')
     return Response([DataSetSerializer(d).data for d in datasets])
 
 
@@ -45,9 +45,9 @@ def metric(request, metric_id):
             ds = int(ds)
         except ValueError:
             raise ParseError('DataSet ID provided is not an integer.')
-        dataset = DataSet.objects.filter(display=True, id=ds).first()
+        dataset = DataSet.objects.visible().filter(id=ds).first()
     else:
-        dataset = DataSet.objects.filter(display=True).order_by('-date').first()
+        dataset = DataSet.objects.visible().order_by('-date').first()
 
     if not dataset:
         raise NotFound('No data set with given name found.')

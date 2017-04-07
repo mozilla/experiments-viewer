@@ -2,12 +2,20 @@ from django.db.models.expressions import RawSQL
 from django.db import models
 
 
+class DataSetQuerySet(models.QuerySet):
+
+    def visible(self):
+        return self.filter(display=True)
+
+
 class DataSet(models.Model):
     name = models.CharField(max_length=50, unique=True)
     date = models.DateField()
     display = models.BooleanField(default=False)
     import_start = models.DateTimeField(null=True)
     import_stop = models.DateTimeField(null=True)
+
+    objects = DataSetQuerySet.as_manager()
 
     class Meta:
         get_latest_by = 'date'
