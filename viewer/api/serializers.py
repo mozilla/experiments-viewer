@@ -6,6 +6,10 @@ from .models import METRIC_TYPES, CategoryCollection, NumericCollection
 class DataSetSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     name = serializers.CharField()
+    populations = serializers.SerializerMethodField()
+
+    def get_populations(self, obj):
+        return obj.get_populations()
 
 
 class MetricSerializer(serializers.Serializer):

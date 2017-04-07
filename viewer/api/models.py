@@ -2,6 +2,12 @@ from django.db.models.expressions import RawSQL
 from django.db import models
 
 
+class DataSetQuerySet(models.QuerySet):
+
+    def visible(self):
+        return self.filter(display=True)
+
+
 class DataSet(models.Model):
     name = models.CharField(max_length=50, unique=True)
     date = models.DateField()
@@ -9,11 +15,21 @@ class DataSet(models.Model):
     import_start = models.DateTimeField(null=True)
     import_stop = models.DateTimeField(null=True)
 
+    objects = DataSetQuerySet.as_manager()
+
     class Meta:
         get_latest_by = 'date'
 
     def __unicode__(self):
         return self.date.strftime('%Y-%m-%d')
+
+    def get_populations(self):
+        populations = set()
+        for collection in CategoryCollection.objects.filter(dataset=self):
+            populations.add(collection.population)
+        for collection in NumericCollection.objects.filter(dataset=self):
+            populations.add(collection.population)
+        return list(populations)
 
 
 TOOLTIP_HELP = (
