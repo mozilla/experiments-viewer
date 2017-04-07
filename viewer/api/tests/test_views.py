@@ -1,4 +1,3 @@
-import datetime
 import json
 
 from django.contrib.auth import get_user
@@ -9,11 +8,58 @@ from mock import patch
 from oauth2client import client
 from rest_framework.reverse import reverse
 
-from viewer.api.models import (CategoryCollection, CategoryPoint, DataSet,
-                               Metric, NumericCollection, NumericPoint)
+from viewer.api import factories
+from viewer.api.models import CategoryCollection, DataSet
 
 
-class TestDataSet(TestCase):
+class DataTestCase(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        # This will create 3 datasets (1 of which being hidden) with 2
+        # populations of 1 metric each.
+
+        def create_collections(dataset, population, cat_metric, num_metric):
+            kwargs = {'dataset': dataset}
+            if population:
+                kwargs['population'] = population
+
+            cat_collection = factories.CategoryCollectionFactory(
+                metric=cat_metric, **kwargs)
+            factories.CategoryPointFactory.create_batch(
+                3, collection=cat_collection)
+
+            num_collection = factories.NumericCollectionFactory(
+                metric=num_metric, **kwargs)
+            factories.NumericPointFactory.create_batch(
+                3, collection=num_collection)
+
+        cat_metric = factories.CategoryMetricFactory()
+        num_metric = factories.NumericMetricFactory()
+
+        # Create 2 viewable datasets.
+        dataset_older = factories.DataSetFactory()
+        create_collections(dataset_older, 'control', cat_metric, num_metric)
+        create_collections(dataset_older, None, cat_metric, num_metric)
+
+        dataset = factories.DataSetFactory()
+        create_collections(dataset, 'control', cat_metric, num_metric)
+        create_collections(dataset, None, cat_metric, num_metric)
+
+        # Create 1 non-viewable dataset.
+        dataset_hidden = factories.DataSetFactory(display=False)
+        create_collections(dataset_hidden, 'control', cat_metric, num_metric)
+        create_collections(dataset_hidden, None, cat_metric, num_metric)
+
+        # Save these for use in tests.
+        cls.dataset = dataset
+        cls.dataset_older = dataset_older
+        cls.dataset_hidden = dataset_hidden
+        cls.cat_metric = cat_metric
+        cls.num_metric = num_metric
+
+
+class TestDataSet(DataTestCase):
 
     def setUp(self):
         User.objects.create_user(username='testuser',
@@ -21,35 +67,25 @@ class TestDataSet(TestCase):
                                  password='password')
         self.client.login(username='testuser', password='password')
 
-    def create_data(self):
-        DataSet.objects.create(id=1, name='Experiment 1', display=True,
-                               date=datetime.date.today())
-        DataSet.objects.create(id=2, name='Experiment 2', display=True,
-                               date=datetime.date.today() + datetime.timedelta(days=7))
-        DataSet.objects.create(id=3, name='Experiment 3',
-                               date=datetime.date.today() + datetime.timedelta(days=14))
-
     def test_basic(self):
-        # Test datasets, including ordering and display=False.
-        self.create_data()
         url = reverse('datasets')
         response = self.client.get(url)
         expected = {
             'datasets': [
                 {
-                    'id': 2,
-                    'name': 'Experiment 2',
+                    'id': self.dataset.id,
+                    'name': self.dataset.name,
                 },
                 {
-                    'id': 1,
-                    'name': 'Experiment 1',
+                    'id': self.dataset_older.id,
+                    'name': self.dataset_older.name,
                 },
             ]
         }
         self.assertEqual(response.json(), expected)
 
 
-class TestMetric(TestCase):
+class TestMetric(DataTestCase):
 
     def setUp(self):
         User.objects.create_user(username='testuser',
@@ -57,90 +93,49 @@ class TestMetric(TestCase):
                                  password='password')
         self.client.login(username='testuser', password='password')
 
-    def create_data(self, date=None, population=None):
-        date = date or datetime.date(2016, 1, 1)
-        population = population or 'control'
-
-        cat_metric = Metric.objects.get_or_create(
-            id=1, name='Architecture', description='Architecture descr',
-            type='C')[0]
-        num_metric = Metric.objects.get_or_create(
-            id=2, name='Searches Per Active Day', description='Searches descr',
-            type='N')[0]
-
-        dataset, _ = DataSet.objects.get_or_create(name=date.isoformat(),
-                                                   date=date, display=True)
-
-        cat_data = [
-            ('x86', 0.95, 1),
-            ('x86-64', 0.05, 2),
-        ]
-        cat_collection = CategoryCollection.objects.create(
-            dataset=dataset, metric=cat_metric, num_observations=len(cat_data),
-            population=population)
-        for bucket, proportion, rank in cat_data:
-            CategoryPoint.objects.create(
-                collection=cat_collection, bucket=bucket,
-                proportion=proportion, rank=rank)
-
-        num_data = [
-            (0, 0.1),
-            (1, 0.4),
-            (5, 0.3),
-            (10, 0.1),
-        ]
-        num_collection = NumericCollection.objects.create(
-            dataset=dataset, metric=num_metric, num_observations=len(num_data),
-            population=population)
-        for bucket, proportion in num_data:
-            NumericPoint.objects.create(
-                collection=num_collection, bucket=bucket,
-                proportion=proportion)
-
     def test_basic(self):
         """
         Test both a numerical and categorical metric for JSON format and data.
         """
-        self.create_data()
         # No `ds` query string gets latest data set.
-        url = reverse('metric', args=['1'])
+        url = reverse('metric', args=[self.cat_metric.id])
         response = self.client.get(url)
         expected = {
-            u'name': u'Architecture',
-            u'id': 1,
+            u'name': self.cat_metric.name,
+            u'id': self.cat_metric.id,
             u'type': u'categorical',
-            u'description': u'Architecture descr',
-            u'dataSet': u'2016-01-01',
+            u'description': self.cat_metric.description,
+            u'dataSet': self.dataset.name,
             u'populations': [
                 {
                     u'name': u'control',
-                    u'numObs': 2,
+                    u'numObs': 12345,
                     u'points': [
-                        {u'p': 0.95, u'c': 0.95, u'b': u'x86', u'refRank': 1},
-                        {u'p': 0.05, u'c': 1.0, u'b': u'x86-64', u'refRank': 2}
+                        {u'p': 0.9, u'c': 0.9, u'b': u'x86', u'refRank': 1},
+                        {u'p': 0.07, u'c': 0.97, u'b': u'arm', u'refRank': 2},
+                        {u'p': 0.03, u'c': 1.0, u'b': u'ppc', u'refRank': 3}
                     ],
                 }
             ]
         }
         self.assertEqual(response.json(), expected)
 
-        url = reverse('metric', args=['2'])
+        url = reverse('metric', args=[self.num_metric.id])
         response = self.client.get(url)
         expected = {
-            u'name': u'Searches Per Active Day',
-            u'id': 2,
+            u'name': self.num_metric.name,
+            u'id': self.num_metric.id,
             u'type': u'numerical',
-            u'description': u'Searches descr',
-            u'dataSet': u'2016-01-01',
+            u'description': self.num_metric.description,
+            u'dataSet': self.dataset.name,
             u'populations': [
                 {
-                    u'numObs': 4,
+                    u'numObs': 12345,
                     u'name': u'control',
                     u'points': [
-                        {u'p': 0.1, u'c': 0.1, u'b': u'0.0'},
-                        {u'p': 0.4, u'c': 0.5, u'b': u'1.0'},
-                        {u'p': 0.3, u'c': 0.8, u'b': u'5.0'},
-                        {u'p': 0.1, u'c': 0.9, u'b': u'10.0'}
+                        {u'p': 0.9, u'c': 0.9, u'b': u'1.0'},
+                        {u'p': 0.07, u'c': 0.97, u'b': u'10.0'},
+                        {u'p': 0.03, u'c': 1.0, u'b': u'100.0'}
                     ],
                 }
             ]
@@ -149,54 +144,63 @@ class TestMetric(TestCase):
 
     def test_specific_experiment(self):
         # Test that passing ?ds= works.
-        self.create_data()
-        new_date = datetime.date(2016, 2, 2)
-        self.create_data(date=new_date)
-        datasets = DataSet.objects.all().order_by('-date')
-        response = self.client.get(reverse('metric', args=['1']),
-                                   data={'ds': datasets[0].id})
+        response = self.client.get(
+            reverse('metric', args=[self.cat_metric.id]),
+            data={'ds': self.dataset_older.id})
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(datasets), 2)
-        self.assertEqual(response.json()['dataSet'], u'2016-02-02')
+        self.assertEqual(DataSet.objects.visible().count(), 2)
+        self.assertEqual(response.json()['dataSet'], self.dataset_older.name)
 
     def test_display_dataset(self):
-        # Test that a newer dataset with display=False isn't returned in
-        # the API.
-        self.create_data()
-        new_date = datetime.date(2016, 2, 2)
-        self.create_data(date=new_date)
+        # Test that a newer dataset with display=False isn't returned.
+        factories.DataSetFactory(display=False)
 
-        dataset = DataSet.objects.get(date=new_date)
-        dataset.display = False
-        dataset.save()
-
-        response = self.client.get(reverse('metric', args=['1']))
+        response = self.client.get(
+            reverse('metric', args=[self.cat_metric.id]))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json()['dataSet'], u'2016-01-01')
+        self.assertEqual(response.json()['dataSet'], self.dataset.name)
 
     def test_date_with_no_data_404(self):
         # Testing dataset id=999 should find no dataset and return a 404.
-        self.create_data()
-        response = self.client.get(reverse('metric', args=['1']),
-                                   data={'ds': '999'})
+        response = self.client.get(
+            reverse('metric', args=[self.cat_metric.id]),
+            data={'ds': '999'})
         self.assertEqual(response.status_code, 404)
 
     def test_no_metric_404(self):
-        url = reverse('metric', args=['1'])
+        url = reverse('metric', args=['999'])
         response = self.client.get(url)
         self.assertEqual(response.status_code, 404)
 
     def test_specific_population(self):
-        self.create_data()  # Default to 'All' population.
-        self.create_data(population='group-a')
-        response = self.client.get(reverse('metric', args=['1']),
-                                   data={'pop': 'group-a'})
+        # Test if we specify a population we only get that population.
+        collection = (
+            CategoryCollection.objects.filter(dataset=self.dataset)
+                                      .exclude(population='control').first())
+        response = self.client.get(
+            reverse('metric', args=[self.num_metric.id]),
+            data={'pop': collection.population})
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json()['populations'][0]['name'],
-                         u'group-a')
+        data = response.json()
+        assert len(data['populations']) == 1
+        self.assertEqual(data['populations'][0]['name'], collection.population)
+
+    def test_multiple_populations(self):
+        # Test if we specify a population we only get that population.
+        collection = (
+            CategoryCollection.objects.filter(dataset=self.dataset)
+                                      .exclude(population='control').first())
+        response = self.client.get(
+            reverse('metric', args=[self.num_metric.id]),
+            data={'pop': ','.join([collection.population, 'control'])})
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        assert len(data['populations']) == 2
+        self.assertItemsEqual([p['name'] for p in data['populations']],
+                              [collection.population, 'control'])
 
 
-class TestMetrics(TestCase):
+class TestMetrics(DataTestCase):
 
     def setUp(self):
         self.url = reverse('metrics')
@@ -205,31 +209,20 @@ class TestMetrics(TestCase):
                                  password='password')
         self.client.login(username='testuser', password='password')
 
-    def create_data(self):
-        Metric.objects.create(id=1, name='Architecture',
-                              description='Architecture descr',
-                              tooltip='{proportion} of users have {x} arch',
-                              type='C')
-        Metric.objects.create(id=2, name='Searches Per Active Day',
-                              description='Searches descr',
-                              tooltip='{verb} and ye shall {verb}',
-                              type='N')
-
     def test_basic(self):
-        self.create_data()
         response = self.client.get(self.url)
         expected = {
             u'metrics': [{
-                u'id': 1,
-                u'name': u'Architecture',
-                u'description': u'Architecture descr',
-                u'tooltip': u'{proportion} of users have {x} arch',
+                u'id': self.cat_metric.id,
+                u'name': self.cat_metric.name,
+                u'description': self.cat_metric.description,
+                u'tooltip': self.cat_metric.tooltip,
                 u'type': u'categorical',
             }, {
-                u'id': 2,
-                u'name': u'Searches Per Active Day',
-                u'description': u'Searches descr',
-                u'tooltip': u'{verb} and ye shall {verb}',
+                u'id': self.num_metric.id,
+                u'name': self.num_metric.name,
+                u'description': self.num_metric.description,
+                u'tooltip': self.num_metric.tooltip,
                 u'type': u'numerical',
             }]
         }
