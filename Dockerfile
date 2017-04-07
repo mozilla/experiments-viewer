@@ -15,6 +15,7 @@ RUN apk --no-cache add \
     py-cffi \
     bash \
     postgresql-dev \
+    postgresql-client \
     nodejs
 
 COPY requirements.txt /app/requirements.txt
