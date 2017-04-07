@@ -5,7 +5,7 @@
 
 ### `GET /datasets/`
 
-Lists the ID and name of all datasets.
+Lists the ID and name of all datasets, and associated populations for each.
 
 Example output:
 
@@ -14,11 +14,13 @@ Example output:
   "datasets": [
     {
       "id": 1,
-      "name": "Experiment 1"
+      "name": "Experiment 1",
+      "populations": ["control", "group A"]
     },
     {
       "id": 2,
-      "name": "Experiment 2"
+      "name": "Experiment 2",
+      "populations": ["control", "group A"]
     }
   ]
 }

@@ -75,10 +75,12 @@ class TestDataSet(DataTestCase):
                 {
                     'id': self.dataset.id,
                     'name': self.dataset.name,
+                    'populations': self.dataset.get_populations(),
                 },
                 {
                     'id': self.dataset_older.id,
                     'name': self.dataset_older.name,
+                    'populations': self.dataset_older.get_populations(),
                 },
             ]
         }

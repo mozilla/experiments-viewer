@@ -23,6 +23,14 @@ class DataSet(models.Model):
     def __unicode__(self):
         return self.date.strftime('%Y-%m-%d')
 
+    def get_populations(self):
+        populations = set()
+        for collection in CategoryCollection.objects.filter(dataset=self):
+            populations.add(collection.population)
+        for collection in NumericCollection.objects.filter(dataset=self):
+            populations.add(collection.population)
+        return list(populations)
+
 
 TOOLTIP_HELP = (
     "The tooltip displayed on hover. Available variables are: "
