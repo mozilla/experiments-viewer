@@ -10,23 +10,24 @@ pretty well with our colorscheme.
 - openjck
 */
 $colors = {
-  'All': $mild-blue,
-  'channel:release': #9b4be2,
-  'channel:beta': #e24b91,
-  'channel:aurora': #f3d6b4,
-  'channel:nightly': #dde24b,
-  'os:windows': #4be29b,
-  'os:darwin': #de8f35,
-  'os:linux': #de3b35,
+  'control': $mild-blue,
+  'group A': #9b4be2,
+  // Below, some suitable colors for future subgroups:
+  // 'TBD': #e24b91,
+  // 'TBD': #f3d6b4,
+  // 'TBD': #dde24b,
+  // 'TBD': #4be29b,
+  // 'TBD': #de8f35,
+  // 'TBD': #de3b35,
 };
 
-for $population, $color in $colors {
-  [data-population={'"' + $population + '"'}] {
+for $subgroup, $color in $colors {
+  [data-subgroup={'"' + $subgroup + '"'}] {
     line, .line, .focus {
       stroke: $color;
     }
 
-    .population-name {
+    .subgroup-name {
       color: $color;
     }
   }

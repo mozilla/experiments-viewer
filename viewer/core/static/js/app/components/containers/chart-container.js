@@ -30,7 +30,7 @@ class ChartContainer extends React.Component {
   }
 
   componentDidMount() {
-    metricApi.getMetric(this.props.metricId, this.props.whitelistedPopulations);
+    metricApi.getMetric(this.props.metricId, this.props.whitelistedSubgroups);
 
     if (this.props.isDetail) {
       this.chartDetail = document.getElementById('chart-detail');
@@ -60,10 +60,10 @@ class ChartContainer extends React.Component {
       }
     }
 
-    // If the list of whitelisted populations changed, fetch chart data with the
-    // next whitelisted populations
-    if (nextProps.whitelistedPopulations !== this.props.whitelistedPopulations) {
-      metricApi.getMetric(this.props.metricId, nextProps.whitelistedPopulations);
+    // If the list of whitelisted subgroups changed, fetch chart data with the
+    // next whitelisted subgroups
+    if (nextProps.whitelistedSubgroups !== this.props.whitelistedSubgroups) {
+      metricApi.getMetric(this.props.metricId, nextProps.whitelistedSubgroups);
     }
   }
 
@@ -75,16 +75,16 @@ class ChartContainer extends React.Component {
     // x-axis will need to show different ticks and thus needs to be
     // regenerated.
     if (outliersSettingChanged || selectedScaleChanged) {
-      this.biggestDatasetToShow = this.populationData[this.biggestPopulation.name][this.activeDatasetName];
+      this.biggestDatasetToShow = this.subgroupData[this.biggestSubgroup.name][this.activeDatasetName];
       this.setState({xScale: this._getXScale(this.props, this.state.size.innerWidth)});
     }
   }
 
   _setup(props) {
-    this.populationData = {};
+    this.subgroupData = {};
     for (let i = 0; i < props.metric.populations.length; i++) {
-      const population = props.metric.populations[i];
-      const fmtData = this._getFormattedData(population.points);
+      const subgroup = props.metric.populations[i];
+      const fmtData = this._getFormattedData(subgroup.points);
 
       // Check against false explicitly because props are sometimes undefined
       let fmtDataExcludingOutliers;
@@ -92,32 +92,32 @@ class ChartContainer extends React.Component {
         fmtDataExcludingOutliers = this._removeOutliers(fmtData);
       }
 
-      // If this population has the most data points so far, it's the biggest
-      // population. We'll need to know which population is biggest when we set
+      // If this subgroup has the most data points so far, it's the biggest
+      // subgroup. We'll need to know which subgroup is biggest when we set
       // the scales later.
-      if (!this.biggestPopulation || population.points.length > this.biggestPopulation.points.length) {
-        this.biggestPopulation = population;
+      if (!this.biggestSubgroup || subgroup.points.length > this.biggestSubgroup.points.length) {
+        this.biggestSubgroup = subgroup;
       }
 
-      this.populationData[population.name] = {};
-      this.populationData[population.name][this.allDatasetName] = fmtData;
+      this.subgroupData[subgroup.name] = {};
+      this.subgroupData[subgroup.name][this.allDatasetName] = fmtData;
       if (fmtDataExcludingOutliers) {
-        this.populationData[population.name][this.excludingOutliersDatasetName] = fmtDataExcludingOutliers;
+        this.subgroupData[subgroup.name][this.excludingOutliersDatasetName] = fmtDataExcludingOutliers;
       }
     }
 
-    if (props.showOutliers === false && this.biggestPopulation.points.length > this.outlierThreshold) {
+    if (props.showOutliers === false && this.biggestSubgroup.points.length > this.outlierThreshold) {
       this.activeDatasetName = this.excludingOutliersDatasetName;
     } else {
       this.activeDatasetName = this.allDatasetName;
     }
 
     // Make a copy of the biggest dataset we can show right now. That is, the
-    // dataset from the biggest population after it is optionally trimmed of
+    // dataset from the biggest subgroup after it is optionally trimmed of
     // outliers.
     //
     // We'll need this when setting the scales.
-    this.biggestDatasetToShow = this.populationData[this.biggestPopulation.name][this.activeDatasetName];
+    this.biggestDatasetToShow = this.subgroupData[this.biggestSubgroup.name][this.activeDatasetName];
 
     this.refLabels = [];
     this.biggestDatasetToShow.map(item => {
@@ -205,8 +205,7 @@ class ChartContainer extends React.Component {
       width = 300;
     }
 
-    // innerWidth = size of the contents of the SVG
-    const innerWidth = width - this.margin.left - this.margin.right;
+    // innerWidth = size of the contents of the SVG const innerWidth = width - this.margin.left - this.margin.right;
     const xScale = this._getXScale(props, innerWidth);
     const sizeIncludingWidth = Object.assign({}, this.state.size, {width, innerWidth});
     this.setState({xScale, size: sizeIncludingWidth});
@@ -219,8 +218,8 @@ class ChartContainer extends React.Component {
       return <Chart noData={true} {...this.props} />;
 
     // Data has not yet been loaded from the API
-    } else if (!this.populationData) {
-      return <Chart isFetching={true} {...this.props} />;
+    } else if (!this.subgroupData) {
+      return <Chart {...this.props} isFetching={true} />;
 
     // Data has been loaded from the API and there is data to show for this
     // chart
@@ -229,18 +228,18 @@ class ChartContainer extends React.Component {
         <Chart
           isFetching={false}
 
-          metricId={this.props.metricId}
           name={this.props.metric.name}
-          populationData={this.populationData}
+          subgroupData={this.subgroupData}
           refLabels={this.refLabels}
           metricType={this.props.metric.type}
           activeDatasetName={this.activeDatasetName}
           hoverString={this.props.metric.hoverString}
-          tooltip={this.props.tooltip}
 
           size={this.state.size}
           xScale={this.state.xScale}
           yScale={this.yScale}
+
+          {...this.props}
         />
       );
     }

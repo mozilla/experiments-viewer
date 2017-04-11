@@ -21,7 +21,7 @@ class ChartDetailContainer extends React.Component {
     if (!this.props.isMetaAvailable) {
       metricApi.getMetricMetadata();
     }
-    metricApi.getMetric(this.metricId, this.props.whitelistedPopulations).then(result => {
+    metricApi.getMetric(this.metricId, this.props.whitelistedSubgroups).then(result => {
       if (result && result.response && result.response.status === 404) {
         this.setState({got404: true});
       }
@@ -36,8 +36,8 @@ class ChartDetailContainer extends React.Component {
         <ChartDetail
           isFetching={true}
           metricId={this.metricId}
-          whitelistedPopulations={this.props.whitelistedPopulations}
-          location={this.props.location}
+
+          {...this.props}
         />
       );
     } else {
@@ -60,18 +60,14 @@ class ChartDetailContainer extends React.Component {
 
       return (
         <ChartDetail
+          {...this.props}
+
           isFetching={false}
           metricId={this.metricId}
           rawDescription={rawDescription}
 
           configurableOutliers={configurableOutliers}
           configurableScale={configurableScale}
-
-          whitelistedPopulations={this.props.whitelistedPopulations}
-          showOutliers={this.props.showOutliers}
-          scale={this.props.scale}
-
-          location={this.props.location}
         />
       );
     }

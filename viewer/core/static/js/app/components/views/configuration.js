@@ -2,7 +2,7 @@ import React from 'react';
 
 
 export default function(props) {
-  let maybeDataFieldset, maybePopulationsFieldset, maybeChartsFieldset;
+  let maybeDataFieldset, maybeSubgroupsFieldset, maybeChartsFieldset;
 
   if (props.configureOutliers || props.configureScale) {
     maybeDataFieldset = (
@@ -30,16 +30,16 @@ export default function(props) {
     );
   }
 
-  if (props.configurePopulations) {
-    maybePopulationsFieldset = (
-      <fieldset className={`${props.configurePopulationsClass} checkbox-list`} onChange={props.handleModifyPopulations}>
-        <legend>Populations</legend>
-        {props.populationObjects.map(p => {
-          const checked = props.whitelistedPopulations && props.whitelistedPopulations.indexOf(p.key) > -1;
+  if (props.configureSubgroups) {
+    maybeSubgroupsFieldset = (
+      <fieldset className={`${props.configureSubgroupsClass} checkbox-list`} onChange={props.handleModifySubgroups}>
+        <legend>Cohorts</legend>
+        {props.subgroups.map(sg => {
+          const checked = props.whitelistedSubgroups && props.whitelistedSubgroups.indexOf(sg) > -1;
           return (
-            <label key={p.key}>
-              <input type="checkbox" className="cb-pops" defaultChecked={checked} name="pops" value={p.key} />
-              {p.name}
+            <label key={sg}>
+              <input type="checkbox" className="cb-subgroups" defaultChecked={checked} name="subgroups" value={sg} />
+              {sg}
             </label>
           );
         })}
@@ -90,7 +90,7 @@ export default function(props) {
       <summary>Configuration</summary>
       <form>
         {maybeDataFieldset}
-        {maybePopulationsFieldset}
+        {maybeSubgroupsFieldset}
         {maybeChartsFieldset}
       </form>
     </details>

@@ -4,25 +4,18 @@ import { browserHistory } from 'react-router';
 
 import * as metricApi from '../../api/metric-api';
 import Configuration from '../views/configuration';
-import Populations from '../../populations';
 
 
 class ConfigurationContainer extends React.Component {
   constructor(props) {
     super(props);
 
-    this.configurePopulationsClass = 'configure-populations';
+    this.configureSubgroupsClass = 'configure-subgroups';
     this.configureChartsClass = 'configure-charts';
 
-    if (props.configurePopulations) {
-      const populations = new Populations();
-      this.populationObjects = populations.getPopulations();
-    }
-
     this._updateQueryParameter = this._updateQueryParameter.bind(this);
-    this._handleModifyOutliers = this._handleModifyOutliers.bind(this);
-    this._handleModifyScale = this._handleModifyScale.bind(this);
-    this._handleModifyPopulations = this._handleModifyPopulations.bind(this);
+    this._handleModifyOutliers = this._handleModifyOutliers.bind(this); this._handleModifyScale = this._handleModifyScale.bind(this);
+    this._handleModifySubgroups = this._handleModifySubgroups.bind(this);
     this._handleModifyCharts = this._handleModifyCharts.bind(this);
   }
 
@@ -55,9 +48,9 @@ class ConfigurationContainer extends React.Component {
     this._updateQueryParameter('scale', event.target.value)
   }
 
-  _handleModifyPopulations(event) {
-    const csvSelectedPopulations = this._csvSelectedCheckboxValues(this.configurePopulationsClass);
-    this._updateQueryParameter('pop', csvSelectedPopulations);
+  _handleModifySubgroups(event) {
+    const csvSelectedSubgroups = this._csvSelectedCheckboxValues(this.configureSubgroupsClass);
+    this._updateQueryParameter('sg', csvSelectedSubgroups);
   }
 
   _handleModifyCharts(event) {
@@ -68,16 +61,15 @@ class ConfigurationContainer extends React.Component {
   render() {
     return (
       <Configuration
-        populationObjects={this.populationObjects}
         metricMetadata={this.props.metricMetadata}
 
         handleModifyOutliers={this._handleModifyOutliers}
         handleModifyScale={this._handleModifyScale}
-        handleModifyPopulations={this._handleModifyPopulations}
+        handleModifySubgroups={this._handleModifySubgroups}
         handleModifyCharts={this._handleModifyCharts}
 
         configureChartsClass={this.configureChartsClass}
-        configurePopulationsClass={this.configurePopulationsClass}
+        configureSubgroupsClass={this.configureSubgroupsClass}
 
         {...this.props}
       />

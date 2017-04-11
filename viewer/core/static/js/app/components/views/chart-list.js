@@ -38,7 +38,7 @@ export default function(props) {
 
     const tooltip = <DescriptionContainer rawDescription={metricMeta.description} asTooltip={true} />;
     chartLinks.push(
-      <Link key={id} className="chart-link" to={`/chart/${id}/?pop=${props.whitelistedPopulations.join(',')}&showOutliers=${props.showOutliers}`}>
+      <Link key={id} className="chart-link" to={`/chart/${id}/?sg=${props.whitelistedSubgroups.join(',')}&showOutliers=${props.showOutliers}`}>
         <div>
           <ChartContainer
             metricId={id}
@@ -46,7 +46,7 @@ export default function(props) {
             showOutliers={showOutliers}
             scale={props.scale}
             tooltip={tooltip}
-            whitelistedPopulations={props.whitelistedPopulations}
+            whitelistedSubgroups={props.whitelistedSubgroups}
           />
         </div>
       </Link>
@@ -54,29 +54,20 @@ export default function(props) {
   });
 
   let maybeLegend;
-  if (props.whitelistedPopulations.length > 1) {
+  if (props.whitelistedSubgroups.length > 1) {
     maybeLegend = (
-      <Legend
-        whitelistedPopulations={props.whitelistedPopulations}
-      />
+      <Legend {...props} />
     );
   }
 
   return (
     <article id="chart-list">
       <ConfigurationContainer
+        {...props}
+
         configureOutliers={true}
-        configurePopulations={true}
+        configureSubgroups={true}
         configureCharts={true}
-
-        showOutliers={props.showOutliers}
-        scale={props.scale}
-
-        whitelistedMetricIds={props.whitelistedMetricIds}
-        whitelistedPopulations={props.whitelistedPopulations}
-        intentionallySelectedNoMetrics={props.intentionallySelectedNoMetrics}
-
-        location={props.location}
       />
       {maybeLegend}
       <section className="charts">

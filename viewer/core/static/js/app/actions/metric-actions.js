@@ -1,5 +1,26 @@
 import * as types from './action-types';
 
+
+export function gettingSubgroups() {
+  return {
+    type: types.GETTING_SUBGROUPS,
+  };
+}
+
+export function getSubgroupsSuccess(subgroups) {
+  return {
+    type: types.GET_SUBGROUPS_SUCCESS,
+    subgroups,
+  };
+}
+
+export function getSubgroupsFailure(status) {
+  return {
+    type: types.GET_SUBGROUPS_FAILURE,
+    status,
+  };
+}
+
 export function gettingMetricMetadata() {
   return {
     type: types.GETTING_METRIC_METADATA

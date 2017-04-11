@@ -13,7 +13,7 @@ export default class extends React.Component {
                 .y(d => props.yScale(d.y))
                 .curve(d3Shape.curveStepAfter);
 
-    d3Selection.select(`.chart-${props.metricId} .population[data-population="${props.populationName}"] .line`).datum(props.data).attr('d', line);
+    d3Selection.select(`.chart-${props.metricId} .subgroup[data-subgroup="${props.subgroupName}"] .line`).datum(props.data).attr('d', line);
   }
 
   componentDidMount() {

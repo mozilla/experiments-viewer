@@ -14,8 +14,6 @@ describe('Configuration', () => {
 
     configurationMock = shallow(
       <Configuration
-        whitelistedPopulations={['All']}
-
         configureOutliers={true}
         configureScale={true}
 
