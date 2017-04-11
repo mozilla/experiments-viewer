@@ -18,7 +18,7 @@ import PermissionDenied from './components/views/permission-denied';
  */
 function addDefaultChartQPs(nextState, replace) {
   const defaultChartQPs = {
-    ds: 'Experiment 1',
+    ds: 1,
     sg: 'control',
     showOutliers: false,
     scale: 'linear',

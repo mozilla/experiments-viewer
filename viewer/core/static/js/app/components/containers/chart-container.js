@@ -30,7 +30,7 @@ class ChartContainer extends React.Component {
   }
 
   componentDidMount() {
-    metricApi.getMetric(this.props.metricId, this.props.whitelistedSubgroups);
+    metricApi.getMetric(this.props.datasetId, this.props.metricId, this.props.whitelistedSubgroups);
 
     if (this.props.isDetail) {
       this.chartDetail = document.getElementById('chart-detail');
@@ -63,7 +63,7 @@ class ChartContainer extends React.Component {
     // If the list of whitelisted subgroups changed, fetch chart data with the
     // next whitelisted subgroups
     if (nextProps.whitelistedSubgroups !== this.props.whitelistedSubgroups) {
-      metricApi.getMetric(this.props.metricId, nextProps.whitelistedSubgroups);
+      metricApi.getMetric(this.props.datasetId, this.props.metricId, nextProps.whitelistedSubgroups);
     }
   }
 

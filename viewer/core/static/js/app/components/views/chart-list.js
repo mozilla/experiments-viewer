@@ -41,12 +41,12 @@ export default function(props) {
       <Link key={id} className="chart-link" to={`/chart/${id}/?sg=${props.whitelistedSubgroups.join(',')}&showOutliers=${props.showOutliers}`}>
         <div>
           <ChartContainer
+            {...props}
+
             metricId={id}
             isDetail={false}
             showOutliers={showOutliers}
-            scale={props.scale}
             tooltip={tooltip}
-            whitelistedSubgroups={props.whitelistedSubgroups}
           />
         </div>
       </Link>

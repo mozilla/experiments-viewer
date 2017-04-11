@@ -21,7 +21,7 @@ class ChartDetailContainer extends React.Component {
     if (!this.props.isMetaAvailable) {
       metricApi.getMetricMetadata();
     }
-    metricApi.getMetric(this.metricId, this.props.whitelistedSubgroups).then(result => {
+    metricApi.getMetric(this.props.datasetId, this.metricId, this.props.whitelistedSubgroups).then(result => {
       if (result && result.response && result.response.status === 404) {
         this.setState({got404: true});
       }

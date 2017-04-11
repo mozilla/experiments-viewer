@@ -13,8 +13,8 @@ class AppContainer extends React.Component {
     super(props);
     this._processProps(props);
 
-    this.dataset = metricApi.getDataset(props.location);
-    metricApi.getSubgroups(this.dataset);
+    this.datasetId = metricApi.getDatasetId(props.location);
+    metricApi.getSubgroups(this.datasetId);
   }
 
   componentWillUpdate(nextProps) {
@@ -57,7 +57,7 @@ class AppContainer extends React.Component {
     return React.cloneElement(this.props.children, {
       whitelistedMetricIds: this.whitelistedMetricIds,
       whitelistedSubgroups: this.whitelistedSubgroups,
-      dataset: this.dataset,
+      datasetId: this.datasetId,
       subgroups: this.subgroups,
       intentionallySelectedNoMetrics: this.intentionallySelectedNoMetrics,
       scale: this.scale,

@@ -10,10 +10,10 @@ export const endpoints = {
   GET_METRIC: `${location.origin}/metric/`,
 };
 
-// Given a location object, return the value of the ?ds query parameter.
-export function getDataset(location) {
+// Given a location object, return the specified dataset ID.
+export function getDatasetId(location) {
   if (location.query && location.query.ds) {
-    return location.query.ds;
+    return parseInt(location.query.ds, 10);
   }
 }
 
@@ -37,11 +37,11 @@ export function getWhitelistedSubgroups(location) {
 
 // Return an array of valid subgroups for the given dataset. For example:
 // ['control', 'variation1', 'variation2']
-export function getSubgroups(dataset) {
+export function getSubgroups(datasetId) {
   store.dispatch(metricActions.gettingSubgroups());
   return axios.get(endpoints.GET_SUBGROUPS).then(response => {
     const activeDatasetMeta = response.data.datasets.find(ds => {
-      return ds.name === dataset;
+      return ds.id === datasetId;
     });
 
     const subgroups = activeDatasetMeta.populations;
@@ -88,8 +88,8 @@ export function getMetricMetadata(metricIds) {
  * @param {Array} subgroups Subgroups that should be fetched. For example:
  *                          ['control', 'variation1', 'variation2']
  */
-export function getMetric(metricId, subgroups) {
-  return axios.get(`${endpoints.GET_METRIC}${metricId}/?pop=${subgroups.join(',')}`).then(response => {
+export function getMetric(datasetId = '', metricId, subgroups) {
+  return axios.get(`${endpoints.GET_METRIC}${metricId}/?ds=${datasetId}&pop=${subgroups.join(',')}`).then(response => {
     store.dispatch(metricActions.getMetricSuccess(metricId, response.data));
     return response.data;
   }).catch(error => {
