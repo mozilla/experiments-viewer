@@ -5,6 +5,7 @@ import ChartContainer from '../containers/chart-container';
 import DescriptionContainer from '../containers/description-container';
 import ConfigurationContainer from '../containers/configuration-container';
 import Legend from '../views/legend';
+import DatasetControlContainer from '../containers/dataset-control-container';
 
 
 export default function(props) {
@@ -62,13 +63,16 @@ export default function(props) {
 
   return (
     <article id="chart-list">
-      <ConfigurationContainer
-        {...props}
+      <section className="chart-config">
+        <DatasetControlContainer />
+        <ConfigurationContainer
+          {...props}
 
-        configureOutliers={true}
-        configureSubgroups={true}
-        configureCharts={true}
-      />
+          configureOutliers={true}
+          configureSubgroups={true}
+          configureCharts={true}
+        />
+      </section>
       {maybeLegend}
       <section className="charts">
         {chartLinks}
