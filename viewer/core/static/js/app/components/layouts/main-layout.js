@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-import DatasetDatestampContainer from '../containers/dataset-datestamp-container';
+import DatasetLabelContainer from '../containers/dataset-label-container';
 import LogoutButtonContainer from '../containers/logout-button-container';
 
 
@@ -11,10 +11,10 @@ export default function(props) {
       <header className="primary-header">
         <div>
           <h1>
-            <Link className="primary-header-link" to={`/?pop=${props.whitelistedPopulations}&showOutliers=${props.showOutliers}`}>Firefox <em>Experiments</em> Viewer</Link>
+            <Link className="primary-header-link" to={`/?sg=${props.whitelistedSubgroups}&showOutliers=${props.showOutliers}`}>Firefox <em>Experiments</em> Viewer</Link>
           </h1>
         </div>
-        <DatasetDatestampContainer />
+        <DatasetLabelContainer />
         <LogoutButtonContainer />
       </header>
       <div className="secondary-menu">

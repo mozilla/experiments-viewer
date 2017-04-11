@@ -1,16 +1,21 @@
 import axios from 'axios';
 
 import store from '../store';
-import Populations from '../populations';
 import * as metricActions from '../actions/metric-actions';
 
 
-const populations = new Populations();
-
 export const endpoints = {
+  GET_SUBGROUPS: `${location.origin}/datasets/`,
   GET_METRICS: `${location.origin}/metrics/`,
-  GET_METRIC: `${location.origin}/metric/`
+  GET_METRIC: `${location.origin}/metric/`,
 };
+
+// Given a location object, return the value of the ?ds query parameter.
+export function getDataset(location) {
+  if (location.query && location.query.ds) {
+    return location.query.ds;
+  }
+}
 
 // Given a location object, return an array of all metric IDs specified in the
 // ?metrics query parameter.
@@ -20,14 +25,33 @@ export function getWhitelistedMetricIds(location) {
   }
 }
 
-// Given a location object, return an array of all valid populations specified
-// in the ?pop query parameter.
-export function getWhitelistedPopulations(location) {
-  if (location.query && location.query.pop) {
-    return location.query.pop.split(',').filter(e => populations.isPopulation(e));
+// Given a location object, return an array of all subgroups specified in the
+// ?sg query parameter.
+export function getWhitelistedSubgroups(location) {
+  if (location.query && location.query.sg) {
+    return location.query.sg.split(',');
   } else {
     return [];
   }
+}
+
+// Return an array of valid subgroups for the given dataset. For example:
+// ['control', 'variation1', 'variation2']
+export function getSubgroups(dataset) {
+  store.dispatch(metricActions.gettingSubgroups());
+  return axios.get(endpoints.GET_SUBGROUPS).then(response => {
+    const activeDatasetMeta = response.data.datasets.find(ds => {
+      return ds.name === dataset;
+    });
+
+    const subgroups = activeDatasetMeta.populations;
+    store.dispatch(metricActions.getSubgroupsSuccess(subgroups));
+    return subgroups;
+  }).catch(error => {
+    console.error(error);
+    store.dispatch(metricActions.getSubgroupsFailure(error.status));
+    return error;
+  });
 }
 
 // Return an object of metric metadata indexed by metric ID. If an array of
@@ -61,11 +85,11 @@ export function getMetricMetadata(metricIds) {
  * Get a single metric
  *
  * @param metricId
- * @param {Array} populations Populations that should be fetched. For example:
- *                            ['os:release', 'os:nightly']
+ * @param {Array} subgroups Subgroups that should be fetched. For example:
+ *                          ['control', 'variation1', 'variation2']
  */
-export function getMetric(metricId, populations) {
-  return axios.get(`${endpoints.GET_METRIC}${metricId}/?pop=${populations.join(',')}`).then(response => {
+export function getMetric(metricId, subgroups) {
+  return axios.get(`${endpoints.GET_METRIC}${metricId}/?pop=${subgroups.join(',')}`).then(response => {
     store.dispatch(metricActions.getMetricSuccess(metricId, response.data));
     return response.data;
   }).catch(error => {

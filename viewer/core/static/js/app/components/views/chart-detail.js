@@ -8,41 +8,24 @@ import Legend from '../views/legend';
 
 export default function(props) {
   let maybeLegend;
-  if (props.whitelistedPopulations.length > 1) {
+  if (props.whitelistedSubgroups.length > 1) {
     maybeLegend = (
-      <Legend
-        whitelistedPopulations={props.whitelistedPopulations}
-      />
+      <Legend {...props} />
     );
   }
 
   return (
     <div id="chart-detail" className="chart-detail">
       <ConfigurationContainer
-        configurePopulations={true}
+        configureSubgroups={true}
         configureOutliers={props.configurableOutliers}
         configureScale={props.configurableScale}
 
-        whitelistedPopulations={props.whitelistedPopulations}
-
-        showOutliers={props.showOutliers}
-        scale={props.scale}
-
-        location={props.location}
+        {...props}
       />
       {maybeLegend}
-      <ChartContainer
-        metricId={props.metricId}
-        isDetail={true}
-
-        whitelistedPopulations={props.whitelistedPopulations}
-        showOutliers={props.showOutliers}
-        scale={props.scale}
-      />
-      <DescriptionContainer
-        rawDescription={props.rawDescription}
-        asTooltip={false}
-      />
+      <ChartContainer isDetail={true} {...props} />
+      <DescriptionContainer asTooltip={false} {...props} />
     </div>
   );
 }

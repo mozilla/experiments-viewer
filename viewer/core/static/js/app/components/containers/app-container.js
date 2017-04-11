@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import * as metricApi from '../../api/metric-api';
 
@@ -7,10 +8,13 @@ import * as metricApi from '../../api/metric-api';
  * A container that does groundwork needed by several other components, like
  * processing URL parameters.
  */
-export default class extends React.Component {
+class AppContainer extends React.Component {
   constructor(props) {
     super(props);
     this._processProps(props);
+
+    this.dataset = metricApi.getDataset(props.location);
+    metricApi.getSubgroups(this.dataset);
   }
 
   componentWillUpdate(nextProps) {
@@ -19,7 +23,9 @@ export default class extends React.Component {
 
   _processProps(props) {
     this.whitelistedMetricIds = metricApi.getWhitelistedMetricIds(props.location);
-    this.whitelistedPopulations = metricApi.getWhitelistedPopulations(props.location);
+    this.whitelistedSubgroups = metricApi.getWhitelistedSubgroups(props.location);
+
+    this.subgroups = props.subgroups;
 
     // If the ?metrics query parameter is present but empty, the user must have
     // intentionally chosen that no metrics be shown.
@@ -50,10 +56,20 @@ export default class extends React.Component {
     // Pass some props to the child component
     return React.cloneElement(this.props.children, {
       whitelistedMetricIds: this.whitelistedMetricIds,
-      whitelistedPopulations: this.whitelistedPopulations,
+      whitelistedSubgroups: this.whitelistedSubgroups,
+      dataset: this.dataset,
+      subgroups: this.subgroups,
       intentionallySelectedNoMetrics: this.intentionallySelectedNoMetrics,
       scale: this.scale,
       showOutliers: this.showOutliers,
     });
   }
 }
+
+const mapStateToProps = function(store, ownProps) {
+  return {
+    subgroups: store.subgroupsState.subgroups,
+  };
+};
+
+export default connect(mapStateToProps)(AppContainer);

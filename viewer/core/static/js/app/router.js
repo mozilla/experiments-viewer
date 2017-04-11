@@ -18,7 +18,8 @@ import PermissionDenied from './components/views/permission-denied';
  */
 function addDefaultChartQPs(nextState, replace) {
   const defaultChartQPs = {
-    pop: 'All',
+    ds: 'Experiment 1',
+    sg: 'control',
     showOutliers: false,
     scale: 'linear',
   };
@@ -29,7 +30,7 @@ function addDefaultChartQPs(nextState, replace) {
 
       // If a required query parameter key is missing, we'll need to add it with
       // its default value further down. Note that this allows keys with empty
-      // values. For example, if ?pop is present but has no value, there will
+      // values. For example, if ?sg is present but has no value, there will
       // simply be nothing to show in the chart.
       //
       // For some reason nextState.location.query doesn't have Object.prototype

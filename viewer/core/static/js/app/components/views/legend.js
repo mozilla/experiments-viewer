@@ -5,14 +5,14 @@ export default function(props) {
   return (
     <section className="legend">
       <ul>
-        {props.whitelistedPopulations.map(populationKey => {
+        {props.whitelistedSubgroups.map(subgroupKey => {
           return (
-            <li key={populationKey}>
-              <svg className="example-line" data-population={populationKey} width="50" height="5">
+            <li key={subgroupKey}>
+              <svg className="example-line" data-subgroup={subgroupKey} width="50" height="5">
                 <line x1="0" y1="5" x2="50" y2="5" strokeWidth="5" />
               </svg>
               <span className="name">
-                {populationKey}
+                {subgroupKey}
               </span>
             </li>
           );

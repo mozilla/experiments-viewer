@@ -12,22 +12,22 @@ export default class extends React.Component {
     super(props);
   }
 
-  renderPopulations(props, populationData) {
+  renderSubgroups(props, subgroupData) {
     let renderings = [];
 
-    for (let populationName in populationData) {
-      if (populationData.hasOwnProperty(populationName)) {
+    for (let subgroupName in subgroupData) {
+      if (subgroupData.hasOwnProperty(subgroupName)) {
 
-        const currentPopulation = populationData[populationName];
+        const currentSubgroup = subgroupData[subgroupName];
 
         renderings.push(
-          <g key={props.metricId + populationName} className="population" data-population={populationName}>
+          <g key={props.metricId + subgroupName} className="subgroup" data-subgroup={subgroupName}>
             <ChartLineContainer
-              populationName={populationName}
+              subgroupName={subgroupName}
               metricId={props.metricId}
               xScale={props.xScale}
               yScale={props.yScale}
-              data={currentPopulation[props.activeDatasetName]}
+              data={currentSubgroup[props.activeDatasetName]}
             />
             <ChartFocus />
           </g>
@@ -40,10 +40,11 @@ export default class extends React.Component {
 
   render() {
     if (this.props.noData) {
+      console.log(1);
       return (
         <div className={`chart chart-${this.props.metricId} no-data`}>
           <span className="warning">No data</span>
-          <span>(try selecting different populations)</span>
+          <span>(try selecting different cohorts)</span>
         </div>
       );
     } else if (this.props.isFetching) {
@@ -53,20 +54,20 @@ export default class extends React.Component {
         </div>
       );
     } else {
-      var all, pdExcludingAll, pdOnlyAll;
-      if (this.props.populationData['All']) {
+      var control, sdExcludingControl, sdOnlyControl;
+      if (this.props.subgroupData['control']) {
 
         // ES6!
         //
         // This is equivalent the following:
-        // const all = this.props.populdationData['All'];
-        // const pdExcludingAll = this.props.populdationData[... everything else ...];
-        // const pdOnlyAll = { 'All': all };
-        ({'All': all, ...pdExcludingAll} = this.props.populationData);
-        pdOnlyAll = { 'All': all }
+        // const control = this.props.populdationData['control'];
+        // const sdExcludingControl = this.props.populdationData[... everything else ...];
+        // const sdOnlyControl = { 'control': control };
+        ({'control': control, ...sdExcludingControl} = this.props.subgroupData);
+        sdOnlyControl = { 'control': control }
 
       } else {
-        pdExcludingAll = this.props.populationData;
+        sdExcludingControl = this.props.subgroupData;
       }
 
       return (
@@ -92,21 +93,22 @@ export default class extends React.Component {
                 refLabels={this.props.refLabels}
                 size={this.props.size.innerWidth}
               />
-              <g className="populations">
+              <g className="subgroups">
                 {/*
                 In SVG, the elemenet that appears last in the markup has the
-                greatest "z-index". We want the "All" population to appear above
-                other populations when they overlap, so we need to render it last.
+                greatest "z-index". We want the "control" subgroup to appear
+                above other subgroups when they overlap, so we need to render
+                it last.
                 */}
-                {this.renderPopulations(this.props, pdExcludingAll)}
-                {pdOnlyAll && this.renderPopulations(this.props, pdOnlyAll)}
+                {this.renderSubgroups(this.props, sdExcludingControl)}
+                {sdOnlyControl && this.renderSubgroups(this.props, sdOnlyControl)}
               </g>
               <ChartHoverContainer
                 metricId={this.props.metricId}
                 size={this.props.size}
                 xScale={this.props.xScale}
                 yScale={this.props.yScale}
-                populations={this.props.populationData}
+                subgroups={this.props.subgroupData}
                 activeDatasetName={this.props.activeDatasetName}
                 hoverString={this.props.hoverString}
                 refLabels={this.props.refLabels}

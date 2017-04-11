@@ -1,26 +1,26 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import DatasetDatestamp from '../views/dataset-datestamp';
+import DatasetLabel from '../views/dataset-label';
 
 
-class DatasetDatestampContainer extends React.Component {
+class DatasetLabelContainer extends React.Component {
   constructor(props) {
     super(props);
-    this.gotDataset = false;
+    this.gotDatasetName = false;
   }
 
   shouldComponentUpdate() {
-    return this.gotDataset ? false : true;
+    return this.gotDatasetName ? false : true;
   }
 
   render() {
     // All metrics coming from the API should belong to the same dataset, so we
-    // only need to grab the dataSet property from the first one.
+    // only need to grab the dataset name of the first one.
     const firstMetric = this.props.metrics[Object.keys(this.props.metrics)[0]];
     if (firstMetric) {
-      this.gotDataset = true;
-      return <DatasetDatestamp isoDate={firstMetric.dataSet} />;
+      this.gotDatasetName = true;
+      return <DatasetLabel datasetName={firstMetric.dataSet} />;
     } else {
       return null;
     }
@@ -33,4 +33,4 @@ const mapStateToProps = function(store) {
   };
 };
 
-export default connect(mapStateToProps)(DatasetDatestampContainer);
+export default connect(mapStateToProps)(DatasetLabelContainer);
