@@ -143,7 +143,7 @@ class ChartContainer extends React.Component {
     for (let i = 0; i < dataPoints.length; i++) {
       formattedPoints.push({
         x: dataPoints[i]['refRank'] || parseFloat(dataPoints[i]['b']),
-        y: dataPoints[i]['c'],
+        y: dataPoints[i]['p'],
         p: dataPoints[i]['p'],
         label: dataPoints[i]['b']
       });
