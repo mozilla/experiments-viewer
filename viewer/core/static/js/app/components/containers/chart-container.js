@@ -81,6 +81,8 @@ class ChartContainer extends React.Component {
   }
 
   _setup(props) {
+    this.biggestSubgroup = props.metric.populations[0]; // To start... we'll bubble up the actual biggest population later
+
     this.subgroupData = {};
     for (let i = 0; i < props.metric.populations.length; i++) {
       const subgroup = props.metric.populations[i];
@@ -95,7 +97,7 @@ class ChartContainer extends React.Component {
       // If this subgroup has the most data points so far, it's the biggest
       // subgroup. We'll need to know which subgroup is biggest when we set
       // the scales later.
-      if (!this.biggestSubgroup || subgroup.points.length > this.biggestSubgroup.points.length) {
+      if (subgroup.points.length > this.biggestSubgroup.points.length) {
         this.biggestSubgroup = subgroup;
       }
 
