@@ -40,7 +40,6 @@ export default class extends React.Component {
 
   render() {
     if (this.props.noData) {
-      console.log(1);
       return (
         <div className={`chart chart-${this.props.metricId} no-data`}>
           <span className="warning">No data</span>
