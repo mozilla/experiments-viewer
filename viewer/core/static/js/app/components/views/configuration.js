@@ -89,8 +89,8 @@ export default function(props) {
     <details className="configuration">
       <summary>Configuration</summary>
       <form>
-        {maybeDataFieldset}
         {maybeSubgroupsFieldset}
+        {maybeDataFieldset}
         {maybeChartsFieldset}
       </form>
     </details>
