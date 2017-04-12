@@ -54,13 +54,6 @@ export default function(props) {
     );
   });
 
-  let maybeLegend;
-  if (props.whitelistedSubgroups.length > 1) {
-    maybeLegend = (
-      <Legend {...props} />
-    );
-  }
-
   return (
     <article id="chart-list">
       <section className="chart-config">
@@ -73,7 +66,7 @@ export default function(props) {
           configureCharts={true}
         />
       </section>
-      {maybeLegend}
+      <Legend {...props} />
       <section className="charts">
         {chartLinks}
       </section>

@@ -7,13 +7,6 @@ import Legend from '../views/legend';
 
 
 export default function(props) {
-  let maybeLegend;
-  if (props.whitelistedSubgroups.length > 1) {
-    maybeLegend = (
-      <Legend {...props} />
-    );
-  }
-
   return (
     <div id="chart-detail" className="chart-detail">
       <ConfigurationContainer
@@ -23,7 +16,7 @@ export default function(props) {
 
         {...props}
       />
-      {maybeLegend}
+      <Legend {...props} />
       <ChartContainer isDetail={true} {...props} />
       <DescriptionContainer asTooltip={false} {...props} />
     </div>
