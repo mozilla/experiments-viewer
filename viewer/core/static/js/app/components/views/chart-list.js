@@ -37,7 +37,11 @@ export default function(props) {
       showOutliers = true;
     }
 
-    const tooltip = <DescriptionContainer rawDescription={metricMeta.description} asTooltip={true} />;
+    let maybeTooltip;
+    if (metricMeta.description) {
+      maybeTooltip = <DescriptionContainer rawDescription={metricMeta.description} asTooltip={true} />;
+    }
+
     chartLinks.push(
       <Link key={id} className="chart-link" to={`/chart/${id}/?sg=${props.whitelistedSubgroups.join(',')}&showOutliers=${props.showOutliers}`}>
         <div>
@@ -47,7 +51,7 @@ export default function(props) {
             metricId={id}
             isDetail={false}
             showOutliers={showOutliers}
-            tooltip={tooltip}
+            tooltip={maybeTooltip}
           />
         </div>
       </Link>

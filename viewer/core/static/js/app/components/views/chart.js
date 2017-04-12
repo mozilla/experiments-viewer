@@ -73,7 +73,7 @@ export default class extends React.Component {
         <div className={`chart chart-${this.props.metricId}`}>
           <div className={this.props.tooltip ? 'tooltip-wrapper' : ''}>
             <h2 className={`chart-list-name ${this.props.tooltip ? 'tooltip-hover-target' : ''}`}>{this.props.name}</h2>
-            {this.props.tooltip}
+            {this.props.tooltip ? this.props.tooltip : ''}
           </div>
           <svg width={this.props.size.width} height={this.props.size.height}>
             <g transform={this.props.size.transform}>
