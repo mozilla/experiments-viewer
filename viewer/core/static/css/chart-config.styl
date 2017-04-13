@@ -1,10 +1,6 @@
 .chart-config {
   display: flex;
   min-height: 40px;
-  //background-image: linear-gradient(0, #001021 0%, #00224A 100%);
-  //background-image: linear-gradient(180deg, #7ED321 0%, #000000 100%);
-  //background-color: rgba(65, 117, 5, 0.3);
-  //background-color: rgba(126, 211, 33, 0.5);
   background-image: radial-gradient(40% 728%, rgba(126, 211, 33, 0.3), #000000);
   margin: -20px 0 20px;
   padding: 10px 15px;
@@ -16,11 +12,25 @@
 }
 
 .dataset-config-content {
-  width: 300px;
+  width: 600px;
   display: flex;
   justify-content: space-between;
+  margin-left: -15px;
+  background-color: rgba(126, 211, 33, 0.3);
+  border-radius: 4px;
+  height: 40px;
+  padding: 0 15px;
 
   > * {
     align-self: center;
+  }
+}
+
+.dataset-cohorts {
+  display: flex;
+  width: 100%;
+
+  > * {
+    margin: 0 8px;
   }
 }

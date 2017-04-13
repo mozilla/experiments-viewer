@@ -1,24 +1,27 @@
 import React from 'react';
 
+import Switch from './switch';
+
 
 export default function(props) {
   return (
     <div className="dataset-config-content">
       <select className="dataset-selection">
-        <option key="1" value="1">Experiment 1</option>
-        <option key="2" value="2">Experiment 2</option>
+        {props.datasets.map(dataset => {
+          return (
+            <option key={dataset.id} value={dataset.id}>{dataset.name}</option>
+          );
+        })}
       </select>
-      <button className="button btn-small apply-config">apply</button>
+      <div className="dataset-cohorts">
+        {props.currentDataset.populations.map(cohort => {
+          return (
+            <Switch key={cohort} label={cohort} />
+          );
+        })}
+        <Switch label={'bogus'} active={true} />
+      </div>
+      <button className="button btn-small apply-config" onClick={props.handleDatasetChange}>apply</button>
     </div>
   );
 }
-
-/*
-<div className="dataset-cohorts">
-  {props.datasets.populations.map(dataset => {
-    return (
-      <span>{dataset.name}</span>
-    );
-  })}
-</div>
-*/

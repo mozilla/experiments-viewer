@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-import DatasetLabelContainer from '../containers/dataset-label-container';
+import DatasetTitleContainer from '../containers/dataset-title-container';
 import LogoutButtonContainer from '../containers/logout-button-container';
 
 
@@ -14,7 +14,7 @@ export default function(props) {
             <Link className="primary-header-link" to={`/?sg=${props.whitelistedSubgroups}&showOutliers=${props.showOutliers}`}>Firefox <em>Experiments</em> Viewer</Link>
           </h1>
         </div>
-        <DatasetLabelContainer />
+        <DatasetTitleContainer />
         <LogoutButtonContainer />
       </header>
       <div className="secondary-menu">
