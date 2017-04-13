@@ -38,6 +38,7 @@
     "react-dom": "^15.0.1",
     "react-redux": "^5.0.2",
     "react-router": "^3.0.0",
+    "react-test-renderer": "^15.5.4",
     "redux": "^3.5.2",
     "sinon": "^2.1.0",
     "string-template": "^1.0.0",
