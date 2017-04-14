@@ -25,7 +25,7 @@ class DatasetControlContainer extends React.Component {
     let currentDataset = {};
 
     for (let i = 0; i < this.props.datasets.length; i++) {
-      if (this.props.datasets[i].id == evt.target.parentNode.querySelector('.dataset-selection').value) {
+      if (this.props.datasets[i].id === evt.target.parentNode.querySelector('.dataset-selection').value) {
         currentDataset = this.props.datasets[i];
         //console.log('changing to dataset:', this.props.datasets[i]);
       }

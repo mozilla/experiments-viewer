@@ -1,7 +1,6 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
 
-import * as metricApi from '../../api/metric-api';
 import Configuration from '../views/configuration';
 
 
