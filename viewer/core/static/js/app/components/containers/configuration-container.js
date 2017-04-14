@@ -1,12 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
 
-import * as metricApi from '../../api/metric-api';
 import Configuration from '../views/configuration';
 
 
-class ConfigurationContainer extends React.Component {
+export default class extends React.Component {
   constructor(props) {
     super(props);
 
@@ -17,12 +15,6 @@ class ConfigurationContainer extends React.Component {
     this._handleModifyOutliers = this._handleModifyOutliers.bind(this); this._handleModifyScale = this._handleModifyScale.bind(this);
     this._handleModifySubgroups = this._handleModifySubgroups.bind(this);
     this._handleModifyCharts = this._handleModifyCharts.bind(this);
-  }
-
-  componentDidMount() {
-    if (this.props.configureCharts) {
-      metricApi.getMetricMetadata();
-    }
   }
 
   _csvSelectedCheckboxValues(fieldsetClass) {
@@ -61,7 +53,7 @@ class ConfigurationContainer extends React.Component {
   render() {
     return (
       <Configuration
-        metricMetadata={this.props.metricMetadata}
+        {...this.props}
 
         handleModifyOutliers={this._handleModifyOutliers}
         handleModifyScale={this._handleModifyScale}
@@ -70,17 +62,7 @@ class ConfigurationContainer extends React.Component {
 
         configureChartsClass={this.configureChartsClass}
         configureSubgroupsClass={this.configureSubgroupsClass}
-
-        {...this.props}
       />
     );
   }
 }
-
-const mapStateToProps = function(store) {
-  return {
-    metricMetadata: store.metricMetadataState.metadata
-  };
-};
-
-export default connect(mapStateToProps)(ConfigurationContainer);

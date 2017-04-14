@@ -34,8 +34,8 @@ export default function(props) {
     maybeSubgroupsFieldset = (
       <fieldset className={`${props.configureSubgroupsClass} checkbox-list`} onChange={props.handleModifySubgroups}>
         <legend>Cohorts</legend>
-        {props.subgroups.map(sg => {
-          const checked = props.whitelistedSubgroups && props.whitelistedSubgroups.indexOf(sg) > -1;
+        {props.allSubgroups.map(sg => {
+          const checked = props.subgroupsToShow && props.subgroupsToShow.indexOf(sg) > -1;
           return (
             <label key={sg}>
               <input type="checkbox" className="cb-subgroups" defaultChecked={checked} name="subgroups" value={sg} />
@@ -52,27 +52,9 @@ export default function(props) {
       <fieldset className={`${props.configureChartsClass} checkbox-list`} onChange={props.handleModifyCharts}>
         <legend>Charts</legend>
 
-        {Object.keys(props.metricMetadata).map(id => {
+        {props.allMetricIds.map(id => {
           const metricMeta = props.metricMetadata[id];
-
-          let checkedByDefault = false;
-
-          // When the ?metrics query parameter is empty but not present, we know
-          // that the user intentionally chose to show no metrics. Don't check
-          // any checkboxes as checked to illustrate this.
-          if (props.intentionallySelectedNoMetrics) {
-            checkedByDefault = false;
-
-          // When the ?metrics query parameter is not present, all charts are
-          // shown. Show all chart checkboxes as checked to illustrate this.
-          } else if (!props.whitelistedMetricIds) {
-            checkedByDefault = true;
-
-          // Otherwise, only show a checkbox as checked if the corresponding
-          // metric ID *is* whitelisted in the ?metrics query parameter
-          } else if (props.whitelistedMetricIds.indexOf(Number(id)) > -1) {
-            checkedByDefault = true;
-          }
+          const checkedByDefault = props.metricIdsToShow.indexOf(parseInt(id, 10)) > -1;
 
           return (
             <label key={id}>

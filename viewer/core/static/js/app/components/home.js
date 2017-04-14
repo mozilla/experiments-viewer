@@ -1,13 +1,13 @@
 import React from 'react';
 
-import ChartListContainer from './containers/chart-list-container';
+import ChartList from './views/chart-list';
 
 
 export default function(props) {
   return (
     <div className="home">
       <main>
-        <ChartListContainer {...props} />
+        <ChartList {...props} />
       </main>
     </div>
   );
