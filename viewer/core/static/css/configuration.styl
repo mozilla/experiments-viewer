@@ -1,84 +1,102 @@
 @import 'lib';
 
 .configuration {
-  max-height: 200px;
-  overflow-y: auto;
-  padding: $min-padding;
-  font-size: 12px;
-  width: 40%;
+  background-color: rgba(0,0,0,0.9);
+  position: absolute;
+  max-height: calc(100% - 120px);
+  width: calc(100% - 120px);
+  top: 100px;
+  left: 60px;
+  border-radius: 6px;
+  font-weight: 100;
+  font-size: 14px;
 
-  /* Show a visible border when the details widget is open. Have an invisible
-     border present when it's not open so that the <summary> text doesn't jump
-     around when the widget is opened and closed. */
-  border-width: 1px;
-  border-style: solid;
-  &:not([open]) {
-    border-color: transparent;
-  }
-  &[open] {
-    border-color: $normal-text;
-  }
-
-  &[open] form {
-    animation-name: slideDown;
-    animation-duration: 0.25s;
-  }
-
-  fieldset {
-    border: 1px solid $normal-text;
-    margin: $min-padding 0;
-    padding: $min-padding;
-  }
-
-  legend {
-    font-weight: bold;
-  }
-
-  .checkbox-list label, fieldset div {
-    margin: 10px 10px 10px 0;
-    padding: 5px 0;
-
-    &:first-of-type {
-      margin-top: 0;
-    }
-
-    &:last-of-type {
-      margin-bottom: 0;
-    }
-  }
-
-  .checkbox-list label {
-    display: block;
-  }
-
-  .radio-list {
-    span:after {
-      content: ': ';
-    }
-
-    span, label {
-      margin-right: $min-padding;
-    }
-  }
-
-  /* Otherwise the checkboxes won't line up with the legend */
-  input[type="checkbox"] {
-    margin-left: 0;
-  }
-
-  input[type="radio"] {
-    margin-left: 0;
+  h3 {
+    font-weight: 100;
+    font-size: 16px;
+    background-image: linear-gradient(270deg, #001021 0%, #00224A 100%);
+    margin-top: 0;
+    border-radius: 6px 6px 0 0;
+    line-height: 40px;
+    padding: 0 15px;
   }
 }
 
-@keyframes slideDown {
-  0% {
-    opacity: 0;
-    transform: translateY($med-padding * -1);
-  }
+.configuration-mask {
+  display: none;
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  z-index: 50;
+  background-color: rgba(0,34,74,0.9);
+  top: 0;
+  left: 0;
 
-  100% {
-    opacity: 1;
-    transform: translateY(0);
+  .configuration-open & {
+    display: block;
   }
+}
+
+.configuration-open {
+  overflow: hidden;
+}
+
+.configure-data {
+  border: 0;
+  position: absolute;
+  top: 7px;
+  right: 10px;
+}
+
+.checkbox-list {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-bottom: 10px;
+
+  h4 {
+    font-weight: 100;
+    width: 100%;
+    border-bottom: 1px solid $dark-blue;
+    text-align: center;
+    line-height: 40px;
+    font-size: 15px;
+    margin-top: -10px;
+  }
+  > label {
+    width: 25%;
+    line-height: 40px;
+    padding: 0 10px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $dark-blue;
+
+      &::after {
+        display: block;
+      }
+    }
+    &::after {
+      position: fixed;
+      bottom: 50px;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      content: attr(data-description);
+      line-height: 20px;
+      display: none;
+      font-size: 12px;
+      color: $xtreme-green;
+    }
+  }
+}
+
+.configuration-link {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  background-size: contain;
+  border-radius: 15px;
+  position: relative;
+  top: -4px;
 }

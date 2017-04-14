@@ -1,5 +1,7 @@
 import React from 'react';
 
+import * as utils from '../../utils';
+
 
 export default function(props) {
   let maybeDataFieldset, maybeSubgroupsFieldset, maybeChartsFieldset;
@@ -7,7 +9,6 @@ export default function(props) {
   if (props.configureOutliers || props.configureScale) {
     maybeDataFieldset = (
       <fieldset className="configure-data">
-        <legend>Data</legend>
 
         {props.configureOutliers &&
           <div className="configure-outliers">
@@ -30,51 +31,40 @@ export default function(props) {
     );
   }
 
-  if (props.configureSubgroups) {
-    maybeSubgroupsFieldset = (
-      <fieldset className={`${props.configureSubgroupsClass} checkbox-list`} onChange={props.handleModifySubgroups}>
-        <legend>Cohorts</legend>
-        {props.allSubgroups.map(sg => {
-          const checked = props.subgroupsToShow && props.subgroupsToShow.indexOf(sg) > -1;
-          return (
-            <label key={sg}>
-              <input type="checkbox" className="cb-subgroups" defaultChecked={checked} name="subgroups" value={sg} />
-              {sg}
-            </label>
-          );
-        })}
-      </fieldset>
-    );
-  }
-
   if (props.configureCharts) {
     maybeChartsFieldset = (
-      <fieldset className={`${props.configureChartsClass} checkbox-list`} onChange={props.handleModifyCharts}>
-        <legend>Charts</legend>
+      <div className={`${props.configureChartsClass} checkbox-list`} onChange={props.handleModifyCharts}>
+        <h4>Charts</h4>
 
         {props.allMetricIds.map(id => {
           const metricMeta = props.metricMetadata[id];
           const checkedByDefault = props.metricIdsToShow.indexOf(parseInt(id, 10)) > -1;
 
           return (
-            <label key={id}>
-              <input type="checkbox" className="cb-metrics" defaultChecked={checkedByDefault} name="metrics" value={id} />
-              {metricMeta.name}{metricMeta.description ? `: ${metricMeta.description}` : ''}
+            <label key={id} data-description={metricMeta.description}>
+              <input type="checkbox"
+                     className="cb-metrics"
+                     defaultChecked={checkedByDefault}
+                     name="metrics"
+                     value={id} />
+              {metricMeta.name}
             </label>
           );
         })}
-      </fieldset>
+      </div>
     );
   }
 
   return (
-    <details className="configuration">
-      <summary>Configuration</summary>
-      <form>
-        {maybeSubgroupsFieldset}
-        {maybeDataFieldset}
-        {maybeChartsFieldset}
-      </form>
-    </details>
+    <div className="configuration-mask" onClick={utils.toggleConfigurationModal}>
+      <div className="configuration">
+        <h3>Configuration</h3>
+        <form>
+          {maybeSubgroupsFieldset}
+          {maybeDataFieldset}
+          {maybeChartsFieldset}
+        </form>
+      </div>
+    </div>
   );
 }

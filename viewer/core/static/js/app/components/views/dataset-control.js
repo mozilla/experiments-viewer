@@ -19,7 +19,6 @@ export default function(props) {
             <Switch key={cohort} label={cohort} />
           );
         })}
-        <Switch label={'bogus'} active={true} />
       </div>
       <button className="button btn-small apply-config" onClick={props.handleDatasetChange}>apply</button>
     </div>

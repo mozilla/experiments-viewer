@@ -2,6 +2,7 @@ import React from 'react';
 import { browserHistory } from 'react-router';
 
 import Configuration from '../views/configuration';
+import * as utils from '../../utils';
 
 
 export default class extends React.Component {
@@ -12,9 +13,18 @@ export default class extends React.Component {
     this.configureChartsClass = 'configure-charts';
 
     this._updateQueryParameter = this._updateQueryParameter.bind(this);
-    this._handleModifyOutliers = this._handleModifyOutliers.bind(this); this._handleModifyScale = this._handleModifyScale.bind(this);
-    this._handleModifySubgroups = this._handleModifySubgroups.bind(this);
+    this._handleModifyOutliers = this._handleModifyOutliers.bind(this);
+    this._handleModifyScale = this._handleModifyScale.bind(this);
     this._handleModifyCharts = this._handleModifyCharts.bind(this);
+  }
+
+  componentDidMount() {
+    // Press 'h' to show the config menu - for ease of access.
+    document.body.addEventListener('keyup', (evt) => {
+      if (evt.keyCode === 72) {
+        utils.toggleConfigurationModal();
+      }
+    }, false);
   }
 
   _csvSelectedCheckboxValues(fieldsetClass) {
@@ -40,11 +50,6 @@ export default class extends React.Component {
     this._updateQueryParameter('scale', event.target.value)
   }
 
-  _handleModifySubgroups(event) {
-    const csvSelectedSubgroups = this._csvSelectedCheckboxValues(this.configureSubgroupsClass);
-    this._updateQueryParameter('sg', csvSelectedSubgroups);
-  }
-
   _handleModifyCharts(event) {
     const csvSelectedMetricIds = this._csvSelectedCheckboxValues(this.configureChartsClass);
     this._updateQueryParameter('metrics', csvSelectedMetricIds);
@@ -57,7 +62,6 @@ export default class extends React.Component {
 
         handleModifyOutliers={this._handleModifyOutliers}
         handleModifyScale={this._handleModifyScale}
-        handleModifySubgroups={this._handleModifySubgroups}
         handleModifyCharts={this._handleModifyCharts}
 
         configureChartsClass={this.configureChartsClass}
