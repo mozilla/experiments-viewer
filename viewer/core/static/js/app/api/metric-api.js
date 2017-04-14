@@ -19,7 +19,7 @@ export function getDatasetId(location) {
 
 // Given a location object, return an array of all metric IDs specified in the
 // ?metrics query parameter.
-export function getWhitelistedMetricIds(location) {
+export function getSpecifiedMetricIds(location) {
   if (location.query && location.query.metrics) {
     return location.query.metrics.split(',').map(s => parseInt(s, 10));
   }
@@ -27,7 +27,7 @@ export function getWhitelistedMetricIds(location) {
 
 // Given a location object, return an array of all subgroups specified in the
 // ?sg query parameter.
-export function getWhitelistedSubgroups(location) {
+export function getSpecifiedSubgroups(location) {
   if (location.query && location.query.sg) {
     return location.query.sg.split(',');
   } else {
@@ -85,11 +85,34 @@ export function getMetricMetadata(metricIds) {
  * Get a single metric
  *
  * @param metricId
- * @param {Array} subgroups Subgroups that should be fetched. For example:
- *                          ['control', 'variation1', 'variation2']
+ * @param {Array} [subgroups] Optionally, an array of subgroups that should be
+ *                            fetched. For example:
+ *                            ['control', 'variation1', 'variation2']
+ *                            If ommitted, all subgroups will be fetched.
  */
-export function getMetric(datasetId = '', metricId, subgroups) {
-  return axios.get(`${endpoints.GET_METRIC}${metricId}/?ds=${datasetId}&pop=${subgroups.join(',')}`).then(response => {
+export function getMetric(datasetId, metricId, subgroups) {
+  const qp = {};
+  qp['ds'] = datasetId;
+
+  // If subgroups were not defined, don't included the pop query parameter. When
+  // the pop query parameter is absent, all subgroups are fetched.
+  if (subgroups) {
+    qp['pop'] = subgroups.join(',');
+  }
+
+  let queryString = '';
+  let i = 0;
+  for (let key in qp) {
+    if (qp.hasOwnProperty(key)) {
+      if (i > 0) {
+        queryString += '&';
+      }
+      queryString += `${key}=${qp[key]}`;
+      i++;
+    }
+  }
+
+  return axios.get(`${endpoints.GET_METRIC}${metricId}/?${queryString}`).then(response => {
     store.dispatch(metricActions.getMetricSuccess(metricId, response.data));
     return response.data;
   }).catch(error => {

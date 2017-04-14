@@ -17,11 +17,7 @@ class ChartDetailContainer extends React.Component {
   }
 
   componentDidMount() {
-    // Fetch metadata if needed for hoverStrings and descriptions
-    if (!this.props.isMetaAvailable) {
-      metricApi.getMetricMetadata();
-    }
-    metricApi.getMetric(this.props.datasetId, this.metricId, this.props.whitelistedSubgroups).then(result => {
+    metricApi.getMetric(this.props.datasetId, this.metricId, this.props.subgroupsToShow).then(result => {
       if (result && result.response && result.response.status === 404) {
         this.setState({got404: true});
       }
@@ -56,7 +52,7 @@ class ChartDetailContainer extends React.Component {
         }
       }
 
-      const rawDescription = this.props.metadata[this.metricId].description;
+      const rawDescription = this.props.metricMetadata[this.metricId].description;
 
       return (
         <ChartDetail
@@ -77,8 +73,6 @@ class ChartDetailContainer extends React.Component {
 const mapStateToProps = function(store, ownProps) {
   return {
     metric: store.metricState.metrics[parseInt(ownProps.params.metricId, 10)],
-    isMetaAvailable: !!Object.keys(store.metricMetadataState.metadata).length,
-    metadata: store.metricMetadataState.metadata,
   };
 };
 

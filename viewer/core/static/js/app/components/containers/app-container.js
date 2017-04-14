@@ -13,7 +13,54 @@ class AppContainer extends React.Component {
     super(props);
     this._processProps(props);
 
+    // Defaults
+    this.metricIdsToShow = this.allSubgroups = [];
+  }
+
+  _isALL(qpKey) {
+    return qpKey && qpKey === 'ALL';
+  }
+
+  _processProps(props) {
     this.datasetId = metricApi.getDatasetId(props.location);
+
+    const showAllMetrics = this._isALL(props.location.query.metrics);
+    const showAllSubgroups = this._isALL(props.location.query.sg);
+
+    this.allMetricIds = Object.keys(props.metricMetadata);
+    if (showAllMetrics) {
+      this.metricIdsToShow = this.allMetricIds;
+    } else {
+      this.metricIdsToShow = metricApi.getSpecifiedMetricIds(props.location);
+    }
+    this.metricIdsToShow = this.metricIdsToShow.map(id => parseInt(id, 10));
+
+    this.allSubgroups = props.subgroups;
+    if (showAllSubgroups) {
+      this.subgroupsToShow = this.allSubgroups;
+    } else {
+      this.subgroupsToShow = metricApi.getSpecifiedSubgroups(props.location);
+    }
+
+    // Validate input
+    switch(props.location.query.scale) {
+      case 'linear':
+      case 'log':
+        this.scale = props.location.query.scale;
+    }
+
+    // Validate input and convert to boolean
+    //
+    // If the URL contains...  |  this.showOutliers is...
+    // --------------------------------------------------
+    // showOutliers=true       |  true
+    // showOutliers=false      |  false
+    // Anything else           |  false
+    this.showOutliers = props.location.query.showOutliers === 'true';
+  }
+
+  componentDidMount() {
+    metricApi.getMetricMetadata();
     metricApi.getSubgroups(this.datasetId);
   }
 
@@ -21,47 +68,25 @@ class AppContainer extends React.Component {
     this._processProps(nextProps);
   }
 
-  _processProps(props) {
-    this.whitelistedMetricIds = metricApi.getWhitelistedMetricIds(props.location);
-    this.whitelistedSubgroups = metricApi.getWhitelistedSubgroups(props.location);
-
-    this.subgroups = props.subgroups;
-
-    // If the ?metrics query parameter is present but empty, the user must have
-    // intentionally chosen that no metrics be shown.
-    //
-    // It's going to be pretty rare that a user will intentionally deselect all
-    // metrics, but we need to honor that choice because the alternative
-    // (showing all metrics when they deselect everything) is even more jarring.
-    this.intentionallySelectedNoMetrics = false;
-    if (Object.prototype.hasOwnProperty.call(props.location.query, 'metrics') && props.location.query.metrics === '') {
-      this.intentionallySelectedNoMetrics = true;
-    }
-
-    switch(props.location.query.scale) {
-      case 'linear':
-      case 'log':
-        this.scale = props.location.query.scale;
-    }
-
-    // Below, '=== "true"' is used to quickly validate the input.
-    //
-    // If the URL contains ?showOutliers=true, this.showOutliers will be true
-    // If the URL contains ?showOutliers=false, this.showOutliers will be false
-    // If the URL doesn't contain either of the above, this.showOutliers will be false
-    this.showOutliers = props.location.query.showOutliers === 'true';
-  }
-
   render() {
+    // If we don't have the names of all subgroups yet, we can't render any
+    // charts. We could in theory temporarily show the "No data" message until
+    // the subgroup names come through, but that would look odd.
+    if (this.props.subgroups.length === 0) return null;
+
     // Pass some props to the child component
     return React.cloneElement(this.props.children, {
-      whitelistedMetricIds: this.whitelistedMetricIds,
-      whitelistedSubgroups: this.whitelistedSubgroups,
       datasetId: this.datasetId,
-      subgroups: this.subgroups,
-      intentionallySelectedNoMetrics: this.intentionallySelectedNoMetrics,
       scale: this.scale,
       showOutliers: this.showOutliers,
+
+      metricMetadata: this.props.metricMetadata,
+
+      metricIdsToShow: this.metricIdsToShow,
+      subgroupsToShow: this.subgroupsToShow,
+
+      allMetricIds: this.allMetricIds,
+      allSubgroups: this.allSubgroups,
     });
   }
 }
@@ -69,6 +94,7 @@ class AppContainer extends React.Component {
 const mapStateToProps = function(store, ownProps) {
   return {
     subgroups: store.subgroupsState.subgroups,
+    metricMetadata: store.metricMetadataState.metadata,
   };
 };
 
