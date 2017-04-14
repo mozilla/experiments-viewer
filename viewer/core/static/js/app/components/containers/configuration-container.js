@@ -2,6 +2,7 @@ import React from 'react';
 import { browserHistory } from 'react-router';
 
 import Configuration from '../views/configuration';
+import * as utils from '../../utils';
 
 
 export default class extends React.Component {
@@ -15,6 +16,15 @@ export default class extends React.Component {
     this._handleModifyOutliers = this._handleModifyOutliers.bind(this);
     this._handleModifyScale = this._handleModifyScale.bind(this);
     this._handleModifyCharts = this._handleModifyCharts.bind(this);
+  }
+
+  componentDidMount() {
+    // Press 'h' to show the config menu - for ease of access.
+    document.body.addEventListener('keyup', (evt) => {
+      if (evt.keyCode === 72) {
+        utils.toggleConfigurationModal();
+      }
+    }, false);
   }
 
   _csvSelectedCheckboxValues(fieldsetClass) {
