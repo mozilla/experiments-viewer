@@ -38,7 +38,7 @@ export default function(props) {
 
         {props.allMetricIds.map(id => {
           const metricMeta = props.metricMetadata[id];
-          const checkedByDefault = props.metricIdsToShow.indexOf(parseInt(id, 10)) > -1;
+          const checkedByDefault = props.metricIdsToShow.indexOf(id) > -1;
 
           return (
             <label key={id} data-description={metricMeta.description}>

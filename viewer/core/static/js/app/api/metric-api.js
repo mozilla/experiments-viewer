@@ -22,6 +22,8 @@ export function getDatasetId(location) {
 export function getSpecifiedMetricIds(location) {
   if (location.query && location.query.metrics) {
     return location.query.metrics.split(',').map(s => parseInt(s, 10));
+  } else {
+    return [];
   }
 }
 

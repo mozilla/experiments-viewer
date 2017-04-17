@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import * as metricApi from '../../api/metric-api';
+import * as urlApi from '../../api/url-api';
 
 
 /**
@@ -11,10 +12,17 @@ import * as metricApi from '../../api/metric-api';
 class AppContainer extends React.Component {
   constructor(props) {
     super(props);
+
     this._processProps(props);
 
-    // Defaults
-    this.metricIdsToShow = this.allSubgroups = [];
+    if (this.datasetId) {
+      metricApi.getSubgroups(this.datasetId);
+    }
+  }
+
+  componentWillMount() {
+    urlApi.addMissingQueryParameters(this.props.location.query);
+    metricApi.getMetricMetadata();
   }
 
   _isALL(qpKey) {
@@ -33,7 +41,6 @@ class AppContainer extends React.Component {
     } else {
       this.metricIdsToShow = metricApi.getSpecifiedMetricIds(props.location);
     }
-    this.metricIdsToShow = this.metricIdsToShow.map(id => parseInt(id, 10));
 
     this.allSubgroups = props.subgroups;
     if (showAllSubgroups) {
@@ -43,7 +50,7 @@ class AppContainer extends React.Component {
     }
 
     // Validate input
-    switch(props.location.query.scale) {
+    switch (props.location.query.scale) {
       case 'linear':
       case 'log':
         this.scale = props.location.query.scale;
@@ -56,16 +63,18 @@ class AppContainer extends React.Component {
     // showOutliers=true       |  true
     // showOutliers=false      |  false
     // Anything else           |  false
-    this.showOutliers = props.location.query.showOutliers === 'true';
-  }
-
-  componentDidMount() {
-    metricApi.getMetricMetadata();
-    metricApi.getSubgroups(this.datasetId);
+    if (props.location.query && props.location.query.showOutliers) {
+      this.showOutliers = props.location.query.showOutliers === 'true';
+    }
   }
 
   componentWillUpdate(nextProps) {
+    const oldDatasetId = this.datasetId;
     this._processProps(nextProps);
+
+    if (this.datasetId !== oldDatasetId) {
+      metricApi.getSubgroups(this.datasetId);
+    }
   }
 
   render() {

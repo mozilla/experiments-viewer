@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ChartList from './views/chart-list';
+import ChartList from './chart-list';
 
 
 export default function(props) {
