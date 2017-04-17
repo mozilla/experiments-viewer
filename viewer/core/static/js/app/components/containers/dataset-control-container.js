@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import DatasetControl from '../views/dataset-control';
+import * as urlApi from '../../api/url-api';
 import * as datasetApi from '../../api/dataset-api';
 import * as datasetActions from '../../actions/dataset-actions';
 import store from '../../store';
@@ -23,14 +24,7 @@ class DatasetControlContainer extends React.Component {
 
   handleDatasetChange(evt) {
     let currentDataset = {};
-
-    for (let i = 0; i < this.props.datasets.length; i++) {
-      if (this.props.datasets[i].id === evt.target.parentNode.querySelector('.dataset-selection').value) {
-        currentDataset = this.props.datasets[i];
-        break;
-      }
-    }
-    store.dispatch(datasetActions.changeDataset(currentDataset));
+    urlApi.updateQueryParameter('ds', evt.target.parentNode.querySelector('.dataset-selection').value);
   }
 }
 
