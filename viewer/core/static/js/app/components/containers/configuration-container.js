@@ -20,6 +20,8 @@ export default class extends React.Component {
     document.body.addEventListener('keyup', (evt) => {
       if (evt.keyCode === 72) {
         utils.toggleConfigurationModal();
+      } else if (evt.keyCode === 27) { // ESC key
+        utils.toggleConfigurationModal(true);
       }
     }, false);
   }

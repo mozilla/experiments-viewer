@@ -8,11 +8,10 @@ export function debounce(fn, wait = 250) {
   };
 }
 
-export function toggleConfigurationModal(evt) {
-  /*
-  if (evt.target.classList.contains('configuration-mask')) {
+export function toggleConfigurationModal(forceClose) {
+  if (document.body.classList.contains('configuration-open') || forceClose) {
     document.body.classList.remove('configuration-open');
+  } else {
+    document.body.classList.add('configuration-open');
   }
-  */
-  document.body.classList.toggle('configuration-open');
 }

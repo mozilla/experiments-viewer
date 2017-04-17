@@ -30,7 +30,7 @@ class DatasetControlContainer extends React.Component {
     urlApi.updateQueryParameter('ds', selectedDatasetId);
 
     const selectedSubgroups = Array.from(
-        evt.target.parentNode.querySelectorAll('.dataset-cohorts .switch.active')
+        document.body.querySelectorAll('.dataset-cohorts .switch.active')
     ).map(ss => ss.parentNode.textContent);
     urlApi.updateQueryParameter('sg', selectedSubgroups.join(','));
   }
