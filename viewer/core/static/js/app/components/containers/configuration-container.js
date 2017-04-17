@@ -11,6 +11,8 @@ export default class extends React.Component {
 
     this.configureSubgroupsClass = 'configure-subgroups';
     this.configureChartsClass = 'configure-charts';
+
+    this._handleModifyCharts = this._handleModifyCharts.bind(this);
   }
 
   componentDidMount() {

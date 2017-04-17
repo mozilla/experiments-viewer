@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 
 import * as metricApi from '../../api/metric-api';
 import * as urlApi from '../../api/url-api';
+import * as datasetApi from '../../api/dataset-api';
+import * as datasetActions from '../../actions/dataset-actions';
+import store from '../../store';
 
 
 /**
@@ -23,10 +26,16 @@ class AppContainer extends React.Component {
   componentWillMount() {
     urlApi.addMissingQueryParameters(this.props.location.query);
     metricApi.getMetricMetadata();
+    datasetApi.getDatasets();
   }
 
   _isALL(qpKey) {
     return qpKey && qpKey === 'ALL';
+  }
+
+  _setCurrentDataset(datasets, activeId) {
+    let currentDataset = datasets.find(ds => ds.id === activeId) || {};
+    store.dispatch(datasetActions.changeDataset(currentDataset));
   }
 
   _processProps(props) {
@@ -77,6 +86,12 @@ class AppContainer extends React.Component {
     }
   }
 
+  componentDidUpdate() {
+    if (this.datasetId && this.props.datasets.length > 0) {
+      this.currentDataset = this._setCurrentDataset(this.props.datasets, this.datasetId);
+    }
+  }
+
   render() {
     // If we don't have the names of all subgroups yet, we can't render any
     // charts. We could in theory temporarily show the "No data" message until
@@ -102,8 +117,9 @@ class AppContainer extends React.Component {
 
 const mapStateToProps = function(store, ownProps) {
   return {
-    subgroups: store.subgroupsState.subgroups,
+    datasets: store.datasetState.datasets,
     metricMetadata: store.metricMetadataState.metadata,
+    subgroups: store.subgroupsState.subgroups,
   };
 };
 
