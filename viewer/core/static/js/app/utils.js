@@ -9,7 +9,7 @@ export function debounce(fn, wait = 250) {
 }
 
 export function toggleConfigurationModal(forceClose) {
-  if (document.body.classList.contains('configuration-open') || forceClose) {
+  if (document.body.classList.contains('configuration-open') || (typeof forceClose === 'boolean' && forceClose)) {
     document.body.classList.remove('configuration-open');
   } else {
     document.body.classList.add('configuration-open');
