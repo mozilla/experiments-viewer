@@ -22,9 +22,3 @@ test:
             -e DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE
             app:build
             test
-
-deployment:
-    production:
-        branch: master
-        heroku:
-            appname: moz-experiments-viewer
