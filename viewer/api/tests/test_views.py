@@ -9,7 +9,7 @@ from oauth2client import client
 from rest_framework.reverse import reverse
 
 from viewer.api import factories
-from viewer.api.models import CategoryCollection, DataSet
+from viewer.api.models import Collection, DataSet
 
 
 class DataTestCase(TestCase):
@@ -24,18 +24,16 @@ class DataTestCase(TestCase):
             if population:
                 kwargs['population'] = population
 
-            cat_collection = factories.CategoryCollectionFactory(
+            cat_collection = factories.CollectionFactory(
                 metric=cat_metric, **kwargs)
-            factories.CategoryPointFactory.create_batch(
-                3, collection=cat_collection)
+            factories.PointFactory.create_batch(3, collection=cat_collection)
 
-            num_collection = factories.NumericCollectionFactory(
+            num_collection = factories.CollectionFactory(
                 metric=num_metric, **kwargs)
-            factories.NumericPointFactory.create_batch(
-                3, collection=num_collection)
+            factories.PointFactory.create_batch(3, collection=num_collection)
 
-        cat_metric = factories.CategoryMetricFactory()
-        num_metric = factories.NumericMetricFactory()
+        cat_metric = factories.MetricFactory(type='C')
+        num_metric = factories.MetricFactory(type='N')
 
         # Create 2 viewable datasets.
         dataset_older = factories.DataSetFactory()
@@ -94,6 +92,7 @@ class TestMetric(DataTestCase):
                                  email='example@mozilla.com',
                                  password='password')
         self.client.login(username='testuser', password='password')
+        self.maxDiff = None
 
     def test_basic(self):
         """
@@ -132,12 +131,12 @@ class TestMetric(DataTestCase):
             u'dataSet': self.dataset.name,
             u'populations': [
                 {
-                    u'numObs': 12345,
                     u'name': u'control',
+                    u'numObs': 12345,
                     u'points': [
-                        {u'p': 0.9, u'c': 0.9, u'b': u'1.0'},
-                        {u'p': 0.07, u'c': 0.97, u'b': u'10.0'},
-                        {u'p': 0.03, u'c': 1.0, u'b': u'100.0'}
+                        {u'p': 0.9, u'c': 0.9, u'b': u'x86', u'refRank': 1},
+                        {u'p': 0.07, u'c': 0.97, u'b': u'arm', u'refRank': 2},
+                        {u'p': 0.03, u'c': 1.0, u'b': u'ppc', u'refRank': 3}
                     ],
                 }
             ]
@@ -177,8 +176,9 @@ class TestMetric(DataTestCase):
     def test_specific_population(self):
         # Test if we specify a population we only get that population.
         collection = (
-            CategoryCollection.objects.filter(dataset=self.dataset)
-                                      .exclude(population='control').first())
+            Collection.objects.filter(dataset=self.dataset,
+                                      metric=self.num_metric)
+                              .exclude(population='control').first())
         response = self.client.get(
             reverse('metric', args=[self.num_metric.id]),
             data={'pop': collection.population})
@@ -190,8 +190,9 @@ class TestMetric(DataTestCase):
     def test_multiple_populations(self):
         # Test if we specify a population we only get that population.
         collection = (
-            CategoryCollection.objects.filter(dataset=self.dataset)
-                                      .exclude(population='control').first())
+            Collection.objects.filter(dataset=self.dataset,
+                                      metric=self.num_metric)
+                              .exclude(population='control').first())
         response = self.client.get(
             reverse('metric', args=[self.num_metric.id]),
             data={'pop': ','.join([collection.population, 'control'])})
