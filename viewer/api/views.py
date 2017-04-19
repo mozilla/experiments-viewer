@@ -11,10 +11,10 @@ from rest_framework.exceptions import (AuthenticationFailed, NotFound,
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 
-from .models import CategoryCollection, DataSet, Metric, NumericCollection
+from .models import Collection, DataSet, Metric
 from .renderers import DataSetJSONRenderer, MetricsJSONRenderer
-from .serializers import (CategoryDistributionSerializer, DataSetSerializer,
-                          MetricSerializer, NumericDistributionSerializer)
+from .serializers import (DataSetSerializer, DistributionSerializer,
+                          MetricSerializer)
 
 
 @api_view(['GET'])
@@ -56,19 +56,11 @@ def metric(request, metric_id):
 
     # Note: We filter by `population='control'` here to get a single record.
     # We collect the requested populations later in the serializer.
-    if metric.type == 'C':
-        qs = (CategoryCollection.objects.select_related('dataset', 'metric')
-                                        .get(dataset=dataset, metric=metric,
-                                             population='control'))
-        serializer = CategoryDistributionSerializer(qs, populations=pops)
-        return Response(serializer.data)
-
-    elif metric.type == 'N':
-        qs = (NumericCollection.objects.select_related('dataset', 'metric')
-                                       .get(dataset=dataset, metric=metric,
-                                            population='control'))
-        serializer = NumericDistributionSerializer(qs, populations=pops)
-        return Response(serializer.data)
+    qs = (Collection.objects.select_related('dataset', 'metric')
+                            .get(dataset=dataset, metric=metric,
+                                 population='control'))
+    serializer = DistributionSerializer(qs, populations=pops)
+    return Response(serializer.data)
 
 
 @csrf_exempt

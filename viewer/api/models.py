@@ -25,9 +25,7 @@ class DataSet(models.Model):
 
     def get_populations(self):
         populations = set()
-        for collection in CategoryCollection.objects.filter(dataset=self):
-            populations.add(collection.population)
-        for collection in NumericCollection.objects.filter(dataset=self):
+        for collection in Collection.objects.filter(dataset=self):
             populations.add(collection.population)
         return list(populations)
 
@@ -71,30 +69,14 @@ class Collection(models.Model):
     num_observations = models.IntegerField()
     population = models.CharField(max_length=255)
 
-    class Meta:
-        abstract = True
-
-
-class CategoryCollection(Collection):
     def points(self):
         return self._points.annotate(
             cumulative=RawSQL('SUM(proportion) OVER (ORDER BY rank)', []))
 
 
-class CategoryPoint(models.Model):
-    collection = models.ForeignKey(CategoryCollection, related_name='_points')
+class Point(models.Model):
+    collection = models.ForeignKey(Collection, related_name='_points')
     bucket = models.CharField(max_length=255)
     proportion = models.FloatField()
-    rank = models.IntegerField()
-
-
-class NumericCollection(Collection):
-    def points(self):
-        return self._points.annotate(
-            cumulative=RawSQL('SUM(proportion) OVER (ORDER BY bucket)', []))
-
-
-class NumericPoint(models.Model):
-    collection = models.ForeignKey(NumericCollection, related_name='_points')
-    bucket = models.FloatField()
-    proportion = models.FloatField()
+    count = models.IntegerField(null=True)
+    rank = models.IntegerField(null=True)

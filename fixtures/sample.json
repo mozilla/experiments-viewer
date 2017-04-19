@@ -112,7 +112,7 @@
             "num_observations": 10000,
             "population": "control"
         },
-        "model": "api.numericcollection",
+        "model": "api.collection",
         "pk": 105
     },
     {
@@ -121,7 +121,7 @@
             "collection": 105,
             "proportion": 0.1
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10501
     },
     {
@@ -130,7 +130,7 @@
             "collection": 105,
             "proportion": 0.2
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10502
     },
     {
@@ -139,7 +139,7 @@
             "collection": 105,
             "proportion": 0.25
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10503
     },
     {
@@ -148,7 +148,7 @@
             "collection": 105,
             "proportion": 0.25
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10504
     },
     {
@@ -157,7 +157,7 @@
             "collection": 105,
             "proportion": 0.1
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10505
     },
     {
@@ -166,7 +166,7 @@
             "collection": 105,
             "proportion": 0.09
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10506
     },
     {
@@ -175,7 +175,7 @@
             "collection": 105,
             "proportion": 0.008
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10507
     },
     {
@@ -184,7 +184,7 @@
             "collection": 105,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10508
     },
     {
@@ -193,7 +193,7 @@
             "collection": 105,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10509
     },
     {
@@ -202,7 +202,7 @@
             "collection": 105,
             "proportion": 0.0
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10510
     },
     {
@@ -212,7 +212,7 @@
             "num_observations": 11000,
             "population": "control"
         },
-        "model": "api.numericcollection",
+        "model": "api.collection",
         "pk": 104
     },
     {
@@ -221,7 +221,7 @@
             "collection": 104,
             "proportion": 0.1
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10401
     },
     {
@@ -230,7 +230,7 @@
             "collection": 104,
             "proportion": 0.2
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10402
     },
     {
@@ -239,7 +239,7 @@
             "collection": 104,
             "proportion": 0.25
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10403
     },
     {
@@ -248,7 +248,7 @@
             "collection": 104,
             "proportion": 0.25
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10404
     },
     {
@@ -257,7 +257,7 @@
             "collection": 104,
             "proportion": 0.1
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10405
     },
     {
@@ -266,7 +266,7 @@
             "collection": 104,
             "proportion": 0.09
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10406
     },
     {
@@ -275,7 +275,7 @@
             "collection": 104,
             "proportion": 0.008
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10407
     },
     {
@@ -284,7 +284,7 @@
             "collection": 104,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10408
     },
     {
@@ -293,7 +293,7 @@
             "collection": 104,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10409
     },
     {
@@ -302,7 +302,7 @@
             "collection": 104,
             "proportion": 0.0
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10410
     },
     {
@@ -312,7 +312,7 @@
             "num_observations": 12000,
             "population": "control"
         },
-        "model": "api.numericcollection",
+        "model": "api.collection",
         "pk": 103
     },
     {
@@ -321,7 +321,7 @@
             "collection": 103,
             "proportion": 0.1
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10301
     },
     {
@@ -330,7 +330,7 @@
             "collection": 103,
             "proportion": 0.2
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10302
     },
     {
@@ -339,7 +339,7 @@
             "collection": 103,
             "proportion": 0.25
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10303
     },
     {
@@ -348,7 +348,7 @@
             "collection": 103,
             "proportion": 0.25
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10304
     },
     {
@@ -357,7 +357,7 @@
             "collection": 103,
             "proportion": 0.1
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10305
     },
     {
@@ -366,7 +366,7 @@
             "collection": 103,
             "proportion": 0.09
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10306
     },
     {
@@ -375,7 +375,7 @@
             "collection": 103,
             "proportion": 0.008
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10307
     },
     {
@@ -384,7 +384,7 @@
             "collection": 103,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10308
     },
     {
@@ -393,7 +393,7 @@
             "collection": 103,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10309
     },
     {
@@ -402,7 +402,7 @@
             "collection": 103,
             "proportion": 0.0
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10310
     },
     {
@@ -412,7 +412,7 @@
             "num_observations": 16000,
             "population": "control"
         },
-        "model": "api.numericcollection",
+        "model": "api.collection",
         "pk": 102
     },
     {
@@ -421,7 +421,7 @@
             "collection": 102,
             "proportion": 0.0
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10201
     },
     {
@@ -430,7 +430,7 @@
             "collection": 102,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10202
     },
     {
@@ -439,7 +439,7 @@
             "collection": 102,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10203
     },
     {
@@ -448,7 +448,7 @@
             "collection": 102,
             "proportion": 0.008
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10204
     },
     {
@@ -457,7 +457,7 @@
             "collection": 102,
             "proportion": 0.09
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10205
     },
     {
@@ -466,7 +466,7 @@
             "collection": 102,
             "proportion": 0.25
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10206
     },
     {
@@ -475,7 +475,7 @@
             "collection": 102,
             "proportion": 0.25
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10207
     },
     {
@@ -484,7 +484,7 @@
             "collection": 102,
             "proportion": 0.2
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10208
     },
     {
@@ -493,7 +493,7 @@
             "collection": 102,
             "proportion": 0.1
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10209
     },
     {
@@ -502,7 +502,7 @@
             "collection": 102,
             "proportion": 0.1
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10210
     },
     {
@@ -512,7 +512,7 @@
             "num_observations": 13000,
             "population": "control"
         },
-        "model": "api.numericcollection",
+        "model": "api.collection",
         "pk": 101
     },
     {
@@ -521,7 +521,7 @@
             "collection": 101,
             "proportion": 0.1
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10101
     },
     {
@@ -530,7 +530,7 @@
             "collection": 101,
             "proportion": 0.2
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10102
     },
     {
@@ -539,7 +539,7 @@
             "collection": 101,
             "proportion": 0.25
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10103
     },
     {
@@ -548,7 +548,7 @@
             "collection": 101,
             "proportion": 0.25
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10104
     },
     {
@@ -557,7 +557,7 @@
             "collection": 101,
             "proportion": 0.1
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10105
     },
     {
@@ -566,7 +566,7 @@
             "collection": 101,
             "proportion": 0.09
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10106
     },
     {
@@ -575,7 +575,7 @@
             "collection": 101,
             "proportion": 0.008
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10107
     },
     {
@@ -584,7 +584,7 @@
             "collection": 101,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10108
     },
     {
@@ -593,7 +593,7 @@
             "collection": 101,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10109
     },
     {
@@ -602,7 +602,7 @@
             "collection": 101,
             "proportion": 0.0
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10110
     },
     {
@@ -612,7 +612,7 @@
             "num_observations": 15000,
             "population": "control"
         },
-        "model": "api.numericcollection",
+        "model": "api.collection",
         "pk": 100
     },
     {
@@ -621,7 +621,7 @@
             "collection": 100,
             "proportion": 0.1
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10001
     },
     {
@@ -630,7 +630,7 @@
             "collection": 100,
             "proportion": 0.2
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10002
     },
     {
@@ -639,7 +639,7 @@
             "collection": 100,
             "proportion": 0.25
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10003
     },
     {
@@ -648,7 +648,7 @@
             "collection": 100,
             "proportion": 0.25
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10004
     },
     {
@@ -657,7 +657,7 @@
             "collection": 100,
             "proportion": 0.1
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10005
     },
     {
@@ -666,7 +666,7 @@
             "collection": 100,
             "proportion": 0.09
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10006
     },
     {
@@ -675,7 +675,7 @@
             "collection": 100,
             "proportion": 0.008
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10007
     },
     {
@@ -684,7 +684,7 @@
             "collection": 100,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10008
     },
     {
@@ -693,7 +693,7 @@
             "collection": 100,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10009
     },
     {
@@ -702,7 +702,7 @@
             "collection": 100,
             "proportion": 0.0
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 10010
     },
     {
@@ -712,7 +712,7 @@
             "num_observations": 12363,
             "population": "control"
         },
-        "model": "api.categorycollection",
+        "model": "api.collection",
         "pk": 32
     },
     {
@@ -722,7 +722,7 @@
             "proportion": 0.85,
             "rank": 1
         },
-        "model": "api.categorypoint",
+        "model": "api.point",
         "pk": 85
     },
     {
@@ -732,7 +732,7 @@
             "proportion": 0.10,
             "rank": 2
         },
-        "model": "api.categorypoint",
+        "model": "api.point",
         "pk": 86
     },
     {
@@ -742,7 +742,7 @@
             "proportion": 0.04,
             "rank": 3
         },
-        "model": "api.categorypoint",
+        "model": "api.point",
         "pk": 87
     },
     {
@@ -752,7 +752,7 @@
             "proportion": 0.01,
             "rank": 4
         },
-        "model": "api.categorypoint",
+        "model": "api.point",
         "pk": 88
     },
     {
@@ -762,7 +762,7 @@
             "num_observations": 12363,
             "population": "control"
         },
-        "model": "api.categorycollection",
+        "model": "api.collection",
         "pk": 31
     },
     {
@@ -772,7 +772,7 @@
             "proportion": 0.85,
             "rank": 1
         },
-        "model": "api.categorypoint",
+        "model": "api.point",
         "pk": 82
     },
     {
@@ -782,7 +782,7 @@
             "proportion": 0.14,
             "rank": 2
         },
-        "model": "api.categorypoint",
+        "model": "api.point",
         "pk": 83
     },
     {
@@ -792,7 +792,7 @@
             "proportion": 0.01,
             "rank": 3
         },
-        "model": "api.categorypoint",
+        "model": "api.point",
         "pk": 84
     },
     {
@@ -802,7 +802,7 @@
             "num_observations": 1000,
             "population": "group A"
         },
-        "model": "api.numericcollection",
+        "model": "api.collection",
         "pk": 115
     },
     {
@@ -811,7 +811,7 @@
             "collection": 115,
             "proportion": 0.09
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11501
     },
     {
@@ -820,7 +820,7 @@
             "collection": 115,
             "proportion": 0.21
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11502
     },
     {
@@ -829,7 +829,7 @@
             "collection": 115,
             "proportion": 0.25
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11503
     },
     {
@@ -838,7 +838,7 @@
             "collection": 115,
             "proportion": 0.25
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11504
     },
     {
@@ -847,7 +847,7 @@
             "collection": 115,
             "proportion": 0.1
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11505
     },
     {
@@ -856,7 +856,7 @@
             "collection": 115,
             "proportion": 0.09
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11506
     },
     {
@@ -865,7 +865,7 @@
             "collection": 115,
             "proportion": 0.008
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11507
     },
     {
@@ -874,7 +874,7 @@
             "collection": 115,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11508
     },
     {
@@ -883,7 +883,7 @@
             "collection": 115,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11509
     },
     {
@@ -892,7 +892,7 @@
             "collection": 115,
             "proportion": 0.0
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11510
     },
     {
@@ -902,7 +902,7 @@
             "num_observations": 1100,
             "population": "group A"
         },
-        "model": "api.numericcollection",
+        "model": "api.collection",
         "pk": 114
     },
     {
@@ -911,7 +911,7 @@
             "collection": 114,
             "proportion": 0.1
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11401
     },
     {
@@ -920,7 +920,7 @@
             "collection": 114,
             "proportion": 0.21
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11402
     },
     {
@@ -929,7 +929,7 @@
             "collection": 114,
             "proportion": 0.24
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11403
     },
     {
@@ -938,7 +938,7 @@
             "collection": 114,
             "proportion": 0.26
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11404
     },
     {
@@ -947,7 +947,7 @@
             "collection": 114,
             "proportion": 0.11
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11405
     },
     {
@@ -956,7 +956,7 @@
             "collection": 114,
             "proportion": 0.09
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11406
     },
     {
@@ -965,7 +965,7 @@
             "collection": 114,
             "proportion": 0.008
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11407
     },
     {
@@ -974,7 +974,7 @@
             "collection": 114,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11408
     },
     {
@@ -983,7 +983,7 @@
             "collection": 114,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11409
     },
     {
@@ -992,7 +992,7 @@
             "collection": 114,
             "proportion": 0.0
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11410
     },
     {
@@ -1002,7 +1002,7 @@
             "num_observations": 12000,
             "population": "group A"
         },
-        "model": "api.numericcollection",
+        "model": "api.collection",
         "pk": 113
     },
     {
@@ -1011,7 +1011,7 @@
             "collection": 113,
             "proportion": 0.1
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11301
     },
     {
@@ -1020,7 +1020,7 @@
             "collection": 113,
             "proportion": 0.2
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11302
     },
     {
@@ -1029,7 +1029,7 @@
             "collection": 113,
             "proportion": 0.26
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11303
     },
     {
@@ -1038,7 +1038,7 @@
             "collection": 113,
             "proportion": 0.24
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11304
     },
     {
@@ -1047,7 +1047,7 @@
             "collection": 113,
             "proportion": 0.11
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11305
     },
     {
@@ -1056,7 +1056,7 @@
             "collection": 113,
             "proportion": 0.08
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11306
     },
     {
@@ -1065,7 +1065,7 @@
             "collection": 113,
             "proportion": 0.008
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11307
     },
     {
@@ -1074,7 +1074,7 @@
             "collection": 113,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11308
     },
     {
@@ -1083,7 +1083,7 @@
             "collection": 113,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11309
     },
     {
@@ -1092,7 +1092,7 @@
             "collection": 113,
             "proportion": 0.0
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11310
     },
     {
@@ -1102,7 +1102,7 @@
             "num_observations": 1600,
             "population": "group A"
         },
-        "model": "api.numericcollection",
+        "model": "api.collection",
         "pk": 112
     },
     {
@@ -1111,7 +1111,7 @@
             "collection": 112,
             "proportion": 0.0
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11201
     },
     {
@@ -1120,7 +1120,7 @@
             "collection": 112,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11202
     },
     {
@@ -1129,7 +1129,7 @@
             "collection": 112,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11203
     },
     {
@@ -1138,7 +1138,7 @@
             "collection": 112,
             "proportion": 0.008
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11204
     },
     {
@@ -1147,7 +1147,7 @@
             "collection": 112,
             "proportion": 0.08
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11205
     },
     {
@@ -1156,7 +1156,7 @@
             "collection": 112,
             "proportion": 0.26
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11206
     },
     {
@@ -1165,7 +1165,7 @@
             "collection": 112,
             "proportion": 0.26
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11207
     },
     {
@@ -1174,7 +1174,7 @@
             "collection": 112,
             "proportion": 0.19
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11208
     },
     {
@@ -1183,7 +1183,7 @@
             "collection": 112,
             "proportion": 0.1
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11209
     },
     {
@@ -1192,7 +1192,7 @@
             "collection": 112,
             "proportion": 0.1
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11210
     },
     {
@@ -1202,7 +1202,7 @@
             "num_observations": 1300,
             "population": "group A"
         },
-        "model": "api.numericcollection",
+        "model": "api.collection",
         "pk": 111
     },
     {
@@ -1211,7 +1211,7 @@
             "collection": 111,
             "proportion": 0.11
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11101
     },
     {
@@ -1220,7 +1220,7 @@
             "collection": 111,
             "proportion": 0.21
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11102
     },
     {
@@ -1229,7 +1229,7 @@
             "collection": 111,
             "proportion": 0.24
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11103
     },
     {
@@ -1238,7 +1238,7 @@
             "collection": 111,
             "proportion": 0.24
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11104
     },
     {
@@ -1247,7 +1247,7 @@
             "collection": 111,
             "proportion": 0.1
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11105
     },
     {
@@ -1256,7 +1256,7 @@
             "collection": 111,
             "proportion": 0.09
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11106
     },
     {
@@ -1265,7 +1265,7 @@
             "collection": 111,
             "proportion": 0.008
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11107
     },
     {
@@ -1274,7 +1274,7 @@
             "collection": 111,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11108
     },
     {
@@ -1283,7 +1283,7 @@
             "collection": 111,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11109
     },
     {
@@ -1292,7 +1292,7 @@
             "collection": 111,
             "proportion": 0.0
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11110
     },
     {
@@ -1302,7 +1302,7 @@
             "num_observations": 1500,
             "population": "group A"
         },
-        "model": "api.numericcollection",
+        "model": "api.collection",
         "pk": 110
     },
     {
@@ -1311,7 +1311,7 @@
             "collection": 110,
             "proportion": 0.11
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11001
     },
     {
@@ -1320,7 +1320,7 @@
             "collection": 110,
             "proportion": 0.21
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11002
     },
     {
@@ -1329,7 +1329,7 @@
             "collection": 110,
             "proportion": 0.24
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11003
     },
     {
@@ -1338,7 +1338,7 @@
             "collection": 110,
             "proportion": 0.25
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11004
     },
     {
@@ -1347,7 +1347,7 @@
             "collection": 110,
             "proportion": 0.09
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11005
     },
     {
@@ -1356,7 +1356,7 @@
             "collection": 110,
             "proportion": 0.09
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11006
     },
     {
@@ -1365,7 +1365,7 @@
             "collection": 110,
             "proportion": 0.008
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11007
     },
     {
@@ -1374,7 +1374,7 @@
             "collection": 110,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11008
     },
     {
@@ -1383,7 +1383,7 @@
             "collection": 110,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11009
     },
     {
@@ -1392,7 +1392,7 @@
             "collection": 110,
             "proportion": 0.0
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 11010
     },
     {
@@ -1402,7 +1402,7 @@
             "num_observations": 12363,
             "population": "group A"
         },
-        "model": "api.categorycollection",
+        "model": "api.collection",
         "pk": 321
     },
     {
@@ -1412,7 +1412,7 @@
             "proportion": 0.84,
             "rank": 1
         },
-        "model": "api.categorypoint",
+        "model": "api.point",
         "pk": 851
     },
     {
@@ -1422,7 +1422,7 @@
             "proportion": 0.09,
             "rank": 2
         },
-        "model": "api.categorypoint",
+        "model": "api.point",
         "pk": 861
     },
     {
@@ -1432,7 +1432,7 @@
             "proportion": 0.06,
             "rank": 3
         },
-        "model": "api.categorypoint",
+        "model": "api.point",
         "pk": 871
     },
     {
@@ -1442,7 +1442,7 @@
             "proportion": 0.01,
             "rank": 4
         },
-        "model": "api.categorypoint",
+        "model": "api.point",
         "pk": 881
     },
     {
@@ -1452,7 +1452,7 @@
             "num_observations": 12363,
             "population": "group A"
         },
-        "model": "api.categorycollection",
+        "model": "api.collection",
         "pk": 311
     },
     {
@@ -1462,7 +1462,7 @@
             "proportion": 0.85,
             "rank": 1
         },
-        "model": "api.categorypoint",
+        "model": "api.point",
         "pk": 821
     },
     {
@@ -1472,7 +1472,7 @@
             "proportion": 0.14,
             "rank": 2
         },
-        "model": "api.categorypoint",
+        "model": "api.point",
         "pk": 831
     },
     {
@@ -1482,7 +1482,7 @@
             "proportion": 0.01,
             "rank": 3
         },
-        "model": "api.categorypoint",
+        "model": "api.point",
         "pk": 841
     },
     {
@@ -1492,7 +1492,7 @@
             "num_observations": 10000,
             "population": "control"
         },
-        "model": "api.numericcollection",
+        "model": "api.collection",
         "pk": 1105
     },
     {
@@ -1501,7 +1501,7 @@
             "collection": 1105,
             "proportion": 0.1
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110501
     },
     {
@@ -1510,7 +1510,7 @@
             "collection": 1105,
             "proportion": 0.2
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110502
     },
     {
@@ -1519,7 +1519,7 @@
             "collection": 1105,
             "proportion": 0.25
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110503
     },
     {
@@ -1528,7 +1528,7 @@
             "collection": 1105,
             "proportion": 0.25
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110504
     },
     {
@@ -1537,7 +1537,7 @@
             "collection": 1105,
             "proportion": 0.1
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110505
     },
     {
@@ -1546,7 +1546,7 @@
             "collection": 1105,
             "proportion": 0.09
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110506
     },
     {
@@ -1555,7 +1555,7 @@
             "collection": 1105,
             "proportion": 0.008
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110507
     },
     {
@@ -1564,7 +1564,7 @@
             "collection": 1105,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110508
     },
     {
@@ -1573,7 +1573,7 @@
             "collection": 1105,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110509
     },
     {
@@ -1582,7 +1582,7 @@
             "collection": 1105,
             "proportion": 0.0
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110510
     },
     {
@@ -1592,7 +1592,7 @@
             "num_observations": 11000,
             "population": "control"
         },
-        "model": "api.numericcollection",
+        "model": "api.collection",
         "pk": 1104
     },
     {
@@ -1601,7 +1601,7 @@
             "collection": 1104,
             "proportion": 0.1
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110401
     },
     {
@@ -1610,7 +1610,7 @@
             "collection": 1104,
             "proportion": 0.2
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110402
     },
     {
@@ -1619,7 +1619,7 @@
             "collection": 1104,
             "proportion": 0.25
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110403
     },
     {
@@ -1628,7 +1628,7 @@
             "collection": 1104,
             "proportion": 0.25
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110404
     },
     {
@@ -1637,7 +1637,7 @@
             "collection": 1104,
             "proportion": 0.1
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110405
     },
     {
@@ -1646,7 +1646,7 @@
             "collection": 1104,
             "proportion": 0.09
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110406
     },
     {
@@ -1655,7 +1655,7 @@
             "collection": 1104,
             "proportion": 0.008
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110407
     },
     {
@@ -1664,7 +1664,7 @@
             "collection": 1104,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110408
     },
     {
@@ -1673,7 +1673,7 @@
             "collection": 1104,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110409
     },
     {
@@ -1682,7 +1682,7 @@
             "collection": 1104,
             "proportion": 0.0
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110410
     },
     {
@@ -1692,7 +1692,7 @@
             "num_observations": 12000,
             "population": "control"
         },
-        "model": "api.numericcollection",
+        "model": "api.collection",
         "pk": 1103
     },
     {
@@ -1701,7 +1701,7 @@
             "collection": 1103,
             "proportion": 0.1
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110301
     },
     {
@@ -1710,7 +1710,7 @@
             "collection": 1103,
             "proportion": 0.2
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110302
     },
     {
@@ -1719,7 +1719,7 @@
             "collection": 1103,
             "proportion": 0.25
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110303
     },
     {
@@ -1728,7 +1728,7 @@
             "collection": 1103,
             "proportion": 0.25
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110304
     },
     {
@@ -1737,7 +1737,7 @@
             "collection": 1103,
             "proportion": 0.1
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110305
     },
     {
@@ -1746,7 +1746,7 @@
             "collection": 1103,
             "proportion": 0.09
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110306
     },
     {
@@ -1755,7 +1755,7 @@
             "collection": 1103,
             "proportion": 0.008
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110307
     },
     {
@@ -1764,7 +1764,7 @@
             "collection": 1103,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110308
     },
     {
@@ -1773,7 +1773,7 @@
             "collection": 1103,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110309
     },
     {
@@ -1782,7 +1782,7 @@
             "collection": 1103,
             "proportion": 0.0
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110310
     },
     {
@@ -1792,7 +1792,7 @@
             "num_observations": 16000,
             "population": "control"
         },
-        "model": "api.numericcollection",
+        "model": "api.collection",
         "pk": 1102
     },
     {
@@ -1801,7 +1801,7 @@
             "collection": 1102,
             "proportion": 0.0
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110201
     },
     {
@@ -1810,7 +1810,7 @@
             "collection": 1102,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110202
     },
     {
@@ -1819,7 +1819,7 @@
             "collection": 1102,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110203
     },
     {
@@ -1828,7 +1828,7 @@
             "collection": 1102,
             "proportion": 0.008
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110204
     },
     {
@@ -1837,7 +1837,7 @@
             "collection": 1102,
             "proportion": 0.09
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110205
     },
     {
@@ -1846,7 +1846,7 @@
             "collection": 1102,
             "proportion": 0.25
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110206
     },
     {
@@ -1855,7 +1855,7 @@
             "collection": 1102,
             "proportion": 0.25
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110207
     },
     {
@@ -1864,7 +1864,7 @@
             "collection": 1102,
             "proportion": 0.2
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110208
     },
     {
@@ -1873,7 +1873,7 @@
             "collection": 1102,
             "proportion": 0.1
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110209
     },
     {
@@ -1882,7 +1882,7 @@
             "collection": 1102,
             "proportion": 0.1
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110210
     },
     {
@@ -1892,7 +1892,7 @@
             "num_observations": 13000,
             "population": "control"
         },
-        "model": "api.numericcollection",
+        "model": "api.collection",
         "pk": 1101
     },
     {
@@ -1901,7 +1901,7 @@
             "collection": 1101,
             "proportion": 0.1
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110101
     },
     {
@@ -1910,7 +1910,7 @@
             "collection": 1101,
             "proportion": 0.2
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110102
     },
     {
@@ -1919,7 +1919,7 @@
             "collection": 1101,
             "proportion": 0.25
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110103
     },
     {
@@ -1928,7 +1928,7 @@
             "collection": 1101,
             "proportion": 0.25
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110104
     },
     {
@@ -1937,7 +1937,7 @@
             "collection": 1101,
             "proportion": 0.1
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110105
     },
     {
@@ -1946,7 +1946,7 @@
             "collection": 1101,
             "proportion": 0.09
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110106
     },
     {
@@ -1955,7 +1955,7 @@
             "collection": 1101,
             "proportion": 0.008
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110107
     },
     {
@@ -1964,7 +1964,7 @@
             "collection": 1101,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110108
     },
     {
@@ -1973,7 +1973,7 @@
             "collection": 1101,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110109
     },
     {
@@ -1982,7 +1982,7 @@
             "collection": 1101,
             "proportion": 0.0
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110110
     },
     {
@@ -1992,7 +1992,7 @@
             "num_observations": 15000,
             "population": "control"
         },
-        "model": "api.numericcollection",
+        "model": "api.collection",
         "pk": 1100
     },
     {
@@ -2001,7 +2001,7 @@
             "collection": 1100,
             "proportion": 0.1
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110001
     },
     {
@@ -2010,7 +2010,7 @@
             "collection": 1100,
             "proportion": 0.2
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110002
     },
     {
@@ -2019,7 +2019,7 @@
             "collection": 1100,
             "proportion": 0.25
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110003
     },
     {
@@ -2028,7 +2028,7 @@
             "collection": 1100,
             "proportion": 0.25
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110004
     },
     {
@@ -2037,7 +2037,7 @@
             "collection": 1100,
             "proportion": 0.1
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110005
     },
     {
@@ -2046,7 +2046,7 @@
             "collection": 1100,
             "proportion": 0.09
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110006
     },
     {
@@ -2055,7 +2055,7 @@
             "collection": 1100,
             "proportion": 0.008
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110007
     },
     {
@@ -2064,7 +2064,7 @@
             "collection": 1100,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110008
     },
     {
@@ -2073,7 +2073,7 @@
             "collection": 1100,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110009
     },
     {
@@ -2082,7 +2082,7 @@
             "collection": 1100,
             "proportion": 0.0
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 110010
     },
     {
@@ -2092,7 +2092,7 @@
             "num_observations": 12363,
             "population": "control"
         },
-        "model": "api.categorycollection",
+        "model": "api.collection",
         "pk": 132
     },
     {
@@ -2102,7 +2102,7 @@
             "proportion": 0.01,
             "rank": 1
         },
-        "model": "api.categorypoint",
+        "model": "api.point",
         "pk": 185
     },
     {
@@ -2112,7 +2112,7 @@
             "proportion": 0.04,
             "rank": 2
         },
-        "model": "api.categorypoint",
+        "model": "api.point",
         "pk": 186
     },
     {
@@ -2122,7 +2122,7 @@
             "proportion": 0.10,
             "rank": 3
         },
-        "model": "api.categorypoint",
+        "model": "api.point",
         "pk": 187
     },
     {
@@ -2132,7 +2132,7 @@
             "proportion": 0.85,
             "rank": 4
         },
-        "model": "api.categorypoint",
+        "model": "api.point",
         "pk": 188
     },
     {
@@ -2142,7 +2142,7 @@
             "num_observations": 12363,
             "population": "control"
         },
-        "model": "api.categorycollection",
+        "model": "api.collection",
         "pk": 131
     },
     {
@@ -2152,7 +2152,7 @@
             "proportion": 0.01,
             "rank": 1
         },
-        "model": "api.categorypoint",
+        "model": "api.point",
         "pk": 182
     },
     {
@@ -2162,7 +2162,7 @@
             "proportion": 0.14,
             "rank": 2
         },
-        "model": "api.categorypoint",
+        "model": "api.point",
         "pk": 183
     },
     {
@@ -2172,7 +2172,7 @@
             "proportion": 0.85,
             "rank": 3
         },
-        "model": "api.categorypoint",
+        "model": "api.point",
         "pk": 184
     },
     {
@@ -2182,7 +2182,7 @@
             "num_observations": 1000,
             "population": "group B"
         },
-        "model": "api.numericcollection",
+        "model": "api.collection",
         "pk": 1115
     },
     {
@@ -2191,7 +2191,7 @@
             "collection": 1115,
             "proportion": 0.09
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111501
     },
     {
@@ -2200,7 +2200,7 @@
             "collection": 1115,
             "proportion": 0.21
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111502
     },
     {
@@ -2209,7 +2209,7 @@
             "collection": 1115,
             "proportion": 0.25
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111503
     },
     {
@@ -2218,7 +2218,7 @@
             "collection": 1115,
             "proportion": 0.25
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111504
     },
     {
@@ -2227,7 +2227,7 @@
             "collection": 1115,
             "proportion": 0.1
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111505
     },
     {
@@ -2236,7 +2236,7 @@
             "collection": 1115,
             "proportion": 0.09
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111506
     },
     {
@@ -2245,7 +2245,7 @@
             "collection": 1115,
             "proportion": 0.008
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111507
     },
     {
@@ -2254,7 +2254,7 @@
             "collection": 1115,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111508
     },
     {
@@ -2263,7 +2263,7 @@
             "collection": 1115,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111509
     },
     {
@@ -2272,7 +2272,7 @@
             "collection": 1115,
             "proportion": 0.0
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111510
     },
     {
@@ -2282,7 +2282,7 @@
             "num_observations": 1100,
             "population": "group B"
         },
-        "model": "api.numericcollection",
+        "model": "api.collection",
         "pk": 1114
     },
     {
@@ -2291,7 +2291,7 @@
             "collection": 1114,
             "proportion": 0.1
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111401
     },
     {
@@ -2300,7 +2300,7 @@
             "collection": 1114,
             "proportion": 0.21
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111402
     },
     {
@@ -2309,7 +2309,7 @@
             "collection": 1114,
             "proportion": 0.24
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111403
     },
     {
@@ -2318,7 +2318,7 @@
             "collection": 1114,
             "proportion": 0.26
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111404
     },
     {
@@ -2327,7 +2327,7 @@
             "collection": 1114,
             "proportion": 0.11
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111405
     },
     {
@@ -2336,7 +2336,7 @@
             "collection": 1114,
             "proportion": 0.09
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111406
     },
     {
@@ -2345,7 +2345,7 @@
             "collection": 1114,
             "proportion": 0.008
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111407
     },
     {
@@ -2354,7 +2354,7 @@
             "collection": 1114,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111408
     },
     {
@@ -2363,7 +2363,7 @@
             "collection": 1114,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111409
     },
     {
@@ -2372,7 +2372,7 @@
             "collection": 1114,
             "proportion": 0.0
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111410
     },
     {
@@ -2382,7 +2382,7 @@
             "num_observations": 12000,
             "population": "group B"
         },
-        "model": "api.numericcollection",
+        "model": "api.collection",
         "pk": 1113
     },
     {
@@ -2391,7 +2391,7 @@
             "collection": 1113,
             "proportion": 0.1
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111301
     },
     {
@@ -2400,7 +2400,7 @@
             "collection": 1113,
             "proportion": 0.2
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111302
     },
     {
@@ -2409,7 +2409,7 @@
             "collection": 1113,
             "proportion": 0.26
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111303
     },
     {
@@ -2418,7 +2418,7 @@
             "collection": 1113,
             "proportion": 0.24
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111304
     },
     {
@@ -2427,7 +2427,7 @@
             "collection": 1113,
             "proportion": 0.11
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111305
     },
     {
@@ -2436,7 +2436,7 @@
             "collection": 1113,
             "proportion": 0.08
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111306
     },
     {
@@ -2445,7 +2445,7 @@
             "collection": 1113,
             "proportion": 0.008
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111307
     },
     {
@@ -2454,7 +2454,7 @@
             "collection": 1113,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111308
     },
     {
@@ -2463,7 +2463,7 @@
             "collection": 1113,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111309
     },
     {
@@ -2472,7 +2472,7 @@
             "collection": 1113,
             "proportion": 0.0
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111310
     },
     {
@@ -2482,7 +2482,7 @@
             "num_observations": 1600,
             "population": "group B"
         },
-        "model": "api.numericcollection",
+        "model": "api.collection",
         "pk": 1112
     },
     {
@@ -2491,7 +2491,7 @@
             "collection": 1112,
             "proportion": 0.0
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111201
     },
     {
@@ -2500,7 +2500,7 @@
             "collection": 1112,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111202
     },
     {
@@ -2509,7 +2509,7 @@
             "collection": 1112,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111203
     },
     {
@@ -2518,7 +2518,7 @@
             "collection": 1112,
             "proportion": 0.008
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111204
     },
     {
@@ -2527,7 +2527,7 @@
             "collection": 1112,
             "proportion": 0.08
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111205
     },
     {
@@ -2536,7 +2536,7 @@
             "collection": 1112,
             "proportion": 0.26
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111206
     },
     {
@@ -2545,7 +2545,7 @@
             "collection": 1112,
             "proportion": 0.26
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111207
     },
     {
@@ -2554,7 +2554,7 @@
             "collection": 1112,
             "proportion": 0.19
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111208
     },
     {
@@ -2563,7 +2563,7 @@
             "collection": 1112,
             "proportion": 0.1
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111209
     },
     {
@@ -2572,7 +2572,7 @@
             "collection": 1112,
             "proportion": 0.1
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111210
     },
     {
@@ -2582,7 +2582,7 @@
             "num_observations": 1300,
             "population": "group B"
         },
-        "model": "api.numericcollection",
+        "model": "api.collection",
         "pk": 1111
     },
     {
@@ -2591,7 +2591,7 @@
             "collection": 1111,
             "proportion": 0.11
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111101
     },
     {
@@ -2600,7 +2600,7 @@
             "collection": 1111,
             "proportion": 0.21
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111102
     },
     {
@@ -2609,7 +2609,7 @@
             "collection": 1111,
             "proportion": 0.24
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111103
     },
     {
@@ -2618,7 +2618,7 @@
             "collection": 1111,
             "proportion": 0.24
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111104
     },
     {
@@ -2627,7 +2627,7 @@
             "collection": 1111,
             "proportion": 0.1
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111105
     },
     {
@@ -2636,7 +2636,7 @@
             "collection": 1111,
             "proportion": 0.09
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111106
     },
     {
@@ -2645,7 +2645,7 @@
             "collection": 1111,
             "proportion": 0.008
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111107
     },
     {
@@ -2654,7 +2654,7 @@
             "collection": 1111,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111108
     },
     {
@@ -2663,7 +2663,7 @@
             "collection": 1111,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111109
     },
     {
@@ -2672,7 +2672,7 @@
             "collection": 1111,
             "proportion": 0.0
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111110
     },
     {
@@ -2682,7 +2682,7 @@
             "num_observations": 1500,
             "population": "group B"
         },
-        "model": "api.numericcollection",
+        "model": "api.collection",
         "pk": 1110
     },
     {
@@ -2691,7 +2691,7 @@
             "collection": 1110,
             "proportion": 0.11
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111001
     },
     {
@@ -2700,7 +2700,7 @@
             "collection": 1110,
             "proportion": 0.21
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111002
     },
     {
@@ -2709,7 +2709,7 @@
             "collection": 1110,
             "proportion": 0.24
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111003
     },
     {
@@ -2718,7 +2718,7 @@
             "collection": 1110,
             "proportion": 0.25
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111004
     },
     {
@@ -2727,7 +2727,7 @@
             "collection": 1110,
             "proportion": 0.09
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111005
     },
     {
@@ -2736,7 +2736,7 @@
             "collection": 1110,
             "proportion": 0.09
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111006
     },
     {
@@ -2745,7 +2745,7 @@
             "collection": 1110,
             "proportion": 0.008
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111007
     },
     {
@@ -2754,7 +2754,7 @@
             "collection": 1110,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111008
     },
     {
@@ -2763,7 +2763,7 @@
             "collection": 1110,
             "proportion": 0.001
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111009
     },
     {
@@ -2772,7 +2772,7 @@
             "collection": 1110,
             "proportion": 0.0
         },
-        "model": "api.numericpoint",
+        "model": "api.point",
         "pk": 111010
     },
     {
@@ -2782,7 +2782,7 @@
             "num_observations": 12363,
             "population": "group B"
         },
-        "model": "api.categorycollection",
+        "model": "api.collection",
         "pk": 1321
     },
     {
@@ -2792,7 +2792,7 @@
             "proportion": 0.06,
             "rank": 1
         },
-        "model": "api.categorypoint",
+        "model": "api.point",
         "pk": 1851
     },
     {
@@ -2802,7 +2802,7 @@
             "proportion": 0.09,
             "rank": 2
         },
-        "model": "api.categorypoint",
+        "model": "api.point",
         "pk": 1861
     },
     {
@@ -2812,7 +2812,7 @@
             "proportion": 0.84,
             "rank": 3
         },
-        "model": "api.categorypoint",
+        "model": "api.point",
         "pk": 1871
     },
     {
@@ -2822,7 +2822,7 @@
             "proportion": 0.01,
             "rank": 4
         },
-        "model": "api.categorypoint",
+        "model": "api.point",
         "pk": 1881
     },
     {
@@ -2832,7 +2832,7 @@
             "num_observations": 12363,
             "population": "group B"
         },
-        "model": "api.categorycollection",
+        "model": "api.collection",
         "pk": 1311
     },
     {
@@ -2842,7 +2842,7 @@
             "proportion": 0.01,
             "rank": 1
         },
-        "model": "api.categorypoint",
+        "model": "api.point",
         "pk": 1821
     },
     {
@@ -2852,7 +2852,7 @@
             "proportion": 0.14,
             "rank": 2
         },
-        "model": "api.categorypoint",
+        "model": "api.point",
         "pk": 1831
     },
     {
@@ -2862,7 +2862,7 @@
             "proportion": 0.85,
             "rank": 3
         },
-        "model": "api.categorypoint",
+        "model": "api.point",
         "pk": 1841
     }
 ]
