@@ -20,7 +20,7 @@ export default function(props) {
         {props.currentDataset.populations.map(cohort => {
           const isActive = props.subgroupsToShow.includes(cohort);
           return (
-            <Switch key={cohort} label={cohort} active={isActive} />
+            <Switch key={cohort} label={cohort} onClick={props.handleCohortSwitch} active={isActive} />
           );
         })}
       </div>

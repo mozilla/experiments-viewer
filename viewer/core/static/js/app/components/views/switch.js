@@ -1,21 +1,37 @@
 import React from 'react';
 
 
-function toggleSwitch(evt) {
-  if (evt.target.classList.contains('switch')) {
-    evt.target.classList.toggle('active');
-  } else {
-    evt.target.parentNode.classList.toggle('active');
-  }
-}
+export default class extends React.Component {
+  constructor(props) {
+    super(props);
 
-export default function(props) {
-  return (
-    <div className="switch-wrapper" onClick={toggleSwitch}>
-      <span className={props.active ? 'switch active' : 'switch'}>
-        <b className="handle" />
-      </span>
-      {props.label ? props.label : ''}
-    </div>
-  );
+    this.toggleSwitch = this.toggleSwitch.bind(this);
+  }
+
+  toggleSwitch(evt) {
+    function getWrapper(elm) {
+      if (elm.classList.contains('switch-wrapper')) {
+        return elm;
+      }
+      return getWrapper(elm.parentNode);
+    }
+
+    let switchWrapper = getWrapper(evt.target);
+    switchWrapper.querySelector('.switch').classList.toggle('active');
+
+    // React components can only have 1 event listener (of a type) so
+    // handle the passed onClick as well.
+    this.props.onClick(switchWrapper);
+  }
+
+  render() {
+    return (
+      <div className="switch-wrapper" onClick={this.toggleSwitch}>
+        <span className={this.props.active ? 'switch active' : 'switch'}>
+          <b className="handle" />
+        </span>
+        {this.props.label ? this.props.label : ''}
+      </div>
+    );
+  }
 }
