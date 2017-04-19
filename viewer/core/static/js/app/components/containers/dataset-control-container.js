@@ -28,9 +28,14 @@ class DatasetControlContainer extends React.Component {
   _handleApplyButton(evt) {
     const selectedDatasetId = parseInt(evt.target.parentNode.querySelector('.dataset-selection').value, 10);
     urlApi.updateQueryParameter('ds', selectedDatasetId);
+    urlApi.updateQueryParameter('sg', 'ALL');
+  }
 
+  // elm = switch parent element = '.switch-wrapper'
+  // available but curently unused.
+  _handleCohortSwitch(elm) {
     const selectedSubgroups = Array.from(
-        document.body.querySelectorAll('.dataset-cohorts .switch.active')
+      document.body.querySelectorAll('.dataset-cohorts .switch.active')
     ).map(ss => ss.parentNode.textContent);
     urlApi.updateQueryParameter('sg', selectedSubgroups.join(','));
   }
@@ -42,6 +47,7 @@ class DatasetControlContainer extends React.Component {
 
         handleApplyButton={this._handleApplyButton}
         handleDatasetSelection={this._handleDatasetSelection}
+        handleCohortSwitch={this._handleCohortSwitch}
 
         currentDatasetId={this.state.currentDatasetId}
       />
