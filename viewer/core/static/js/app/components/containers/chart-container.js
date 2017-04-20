@@ -44,6 +44,7 @@ class ChartContainer extends React.Component {
       if (nextProps.metric.populations.length === 0) {
         this.noData = true;
       } else {
+        this.noData = false;
         this._setup(nextProps);
       }
     }
