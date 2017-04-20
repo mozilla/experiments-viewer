@@ -85,7 +85,7 @@ export default class extends React.Component {
     // that we don't have a hover description for an inactive subgroup sticking
     // around.
     if (nextProps.subgroups !== this.props.subgroups) {
-      selectAll(`.secondary-menu-content .chart-info .hover-summary`).remove();
+      selectAll('.secondary-menu-content .chart-info .hover-summary').remove();
     }
   }
 
