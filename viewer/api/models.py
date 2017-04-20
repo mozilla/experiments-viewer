@@ -37,30 +37,19 @@ TOOLTIP_HELP = (
     "{p} - the individual proportion for the hovered data point.")
 
 
-METRIC_TYPES = {
-    'C': 'Categorical',
-    'N': 'Numerical',
-}
-
-
 class Metric(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
     tooltip = models.CharField(
         max_length=255, blank=True,
         help_text=TOOLTIP_HELP)
-    type = models.CharField(
-        max_length=1, choices=tuple((k, v) for k, v in METRIC_TYPES.items()),
-        default='N')
+    type = models.CharField(max_length=50)
     source_name = models.CharField(
         max_length=255,
         help_text="The metric's name in the source telemetry data.")
 
     def __unicode__(self):
-        return self.name
-
-    def type_to_text(self):
-        return METRIC_TYPES.get(self.type, '').lower()
+        return u'<Metric %s [%s]>' % (self.name, self.type)
 
 
 class Collection(models.Model):
