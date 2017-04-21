@@ -5,6 +5,7 @@
 # Python and Django
 *.pyc
 .env
+.coverage
 staticfiles/
 env/
 
