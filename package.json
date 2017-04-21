@@ -6,7 +6,7 @@
     "size": "webpack --json | webpack-bundle-size-analyzer"
   },
   "dependencies": {
-    "axios": "^0.15.1",
+    "axios": "^0.16.1",
     "babel-core": "^6.7.7",
     "babel-jest": "^19.0.0",
     "babel-loader": "^6.2.4",
