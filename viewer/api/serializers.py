@@ -17,7 +17,7 @@ class MetricSerializer(serializers.Serializer):
     name = serializers.CharField()
     description = serializers.CharField()
     tooltip = serializers.CharField()
-    type = serializers.CharField(source='type_to_text')
+    type = serializers.CharField()
 
 
 class DistributionSerializer(serializers.Serializer):
@@ -25,15 +25,12 @@ class DistributionSerializer(serializers.Serializer):
     dataSet = serializers.DateField(source='dataset.name')
     name = serializers.CharField(source='metric.name')
     description = serializers.CharField(source='metric.description')
-    type = serializers.SerializerMethodField()
+    type = serializers.CharField(source='metric.type')
     populations = serializers.SerializerMethodField()
 
     def __init__(self, *args, **kwargs):
         self.populations = kwargs.pop('populations', None)
         super(DistributionSerializer, self).__init__(*args, **kwargs)
-
-    def get_type(self, obj):
-        return obj.metric.type_to_text()
 
     def get_populations(self, obj):
         populations = []

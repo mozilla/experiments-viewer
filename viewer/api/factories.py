@@ -18,7 +18,9 @@ class DataSetFactory(factory.django.DjangoModelFactory):
 class MetricFactory(factory.django.DjangoModelFactory):
     name = factory.Sequence(lambda n: u'Metric %s' % n)
     description = factory.Sequence(lambda n: u'Description for metric %s' % n)
-    type = factory.Iterator(['C', 'N'])
+    type = factory.Iterator(['BooleanHistogram', 'CountHistogram',
+                             'EnumeratedHistogram', 'ExponentialHistogram',
+                             'FlagHistogram'])
 
     class Meta:
         model = models.Metric

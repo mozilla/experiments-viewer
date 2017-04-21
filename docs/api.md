@@ -41,14 +41,14 @@ Example output:
       "name": "CPU Architecture",
       "description": "The architecture of the client machine"
       "tooltip": "{y}% of all {pop} records have {x} architecture",
-      "type": "categorical"
+      "type": "FlagHistogram"
     },
     {
       "id": 2,
       "name": "CPU Count",
       "description": "The number of CPUs available"
       "tooltip": "{p}% of all {pop} records have {x} or more CPUs",
-      "type": "numerical"
+      "type": "CountHistogram"
     },
     ...
   ]
@@ -74,7 +74,7 @@ Example output:
 {
   "id": 1,
   "dataSet": "Experiment A",
-  "type": "categorical",
+  "type": "FlagHistogram",
   "name": "CPU Architecture",
   "populations": [
     {
@@ -140,11 +140,7 @@ Example output:
 
   <dt>type</dt>
   <dd>
-    One of <code>categorical</code> or <code>numerical</code>. When the type is
-    <code>categorical</code>, <code>points.b</code> will be a string containing
-    a word like <i>arm</i> or <i>sparc</i>. When the type is
-    <code>numerical</code>, <code>points.b</code> will be a string containing a
-    floating-point number.
+    The type of metric, e.g. "CountHistogram".
   </dd>
 
   <dt>points</dt>
