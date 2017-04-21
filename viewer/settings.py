@@ -36,8 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.staticfiles',
     'rest_framework',
+    'viewer',
     'viewer.api',
-    'viewer.core',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -67,8 +67,6 @@ TEMPLATES = [
                 'django.template.context_processors.tz',
                 'django.template.context_processors.request',
                 'django.contrib.messages.context_processors.messages',
-
-                'viewer.core.context_processors.global_settings',
             ],
         }
     }

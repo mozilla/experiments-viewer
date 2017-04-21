@@ -13,6 +13,6 @@ node_modules/
 npm-debug.log
 
 # Front-end
-viewer/core/static/**/bundle.*
+viewer/static/**/bundle.*
 .babel.json
 .v8flags.*

@@ -7,7 +7,7 @@ from .api.models import Metric
 
 
 class DVAdminSite(AdminSite):
-    site_header = 'Distribution Viewer administration'
+    site_header = 'Experiments Viewer administration'
 
 
 admin_site = DVAdminSite()
