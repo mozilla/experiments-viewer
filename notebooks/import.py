@@ -103,7 +103,10 @@ def get_metric(metric_name, metric_type):
         else:
             cursor.execute(sql, params)
             conn.commit()
-            return cursor.fetchone()[0]
+            metric_id = cursor.fetchone()[0]
+            # Update METRICS so this new metric is found.
+            metrics[metric_name] = metric_id
+            return metric_id
 
 
 def create_collection(dataset_id, metric_id, num_observations, population):
