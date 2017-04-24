@@ -39,7 +39,7 @@ def get_database_connection():
     return conn, conn.cursor()
 
 
-def create_dataset():
+def create_dataset(exp):
     sql = ('INSERT INTO api_dataset (name, date, display, import_start) '
            'VALUES (%s, %s, %s, %s) '
            'RETURNING id')
@@ -56,6 +56,16 @@ def create_dataset():
         cursor.execute(sql, params)
         conn.commit()
         return cursor.fetchone()[0]
+
+
+def display_dataset(dataset_id):
+    sql = 'UPDATE api_dataset SET display=true WHERE id=%s'
+    params = [dataset_id]
+    if DEBUG_SQL:
+        print cursor.mogrify(sql, params)
+    else:
+        cursor.execute(sql, params)
+        conn.commit()
 
 
 def get_metrics():
@@ -81,12 +91,12 @@ def get_metric(metric_name, metric_type):
     try:
         return metrics[metric_name]
     except KeyError:
-        # Not found, create it.
+        # Not found, create it, setting name=source_name.
         sql = ('INSERT INTO api_metric '
                '(source_name, type, name, description, tooltip) '
-               'VALUES (%s, %s, "", "", "") '
+               'VALUES (%s, %s, %s, %s, %s) '
                'RETURNING id')
-        params = [metric_name, metric_type]
+        params = [metric_name, metric_type, metric_name, '', '']
         if DEBUG_SQL:
             print cursor.mogrify(sql, params)
             return 0
@@ -114,16 +124,12 @@ def create_collection(dataset_id, metric_id, num_observations, population):
 def create_point(collection_id, bucket, proportion, count, rank):
     sql = ('INSERT INTO api_point '
            '(collection_id, bucket, proportion, count, rank) '
-           'VALUES (%s, %s, %s, %s, %s) '
-           'RETURNING id')
+           'VALUES (%s, %s, %s, %s, %s) ')
     params = [collection_id, bucket, proportion, count, rank]
     if DEBUG_SQL:
         print cursor.mogrify(sql, params)
-        return 0
     else:
         cursor.execute(sql, params)
-        conn.commit()
-        return cursor.fetchone()[0]
 
 
 sparkSession = SparkSession.builder.appName('experiments-viewer').getOrCreate()
@@ -153,8 +159,7 @@ for exp in missing:
     dataset_id = create_dataset(exp)
 
     # Get all rows for this experiment
-    df = df.filter("experiment_name='%s'" % exp)
-    rows = df.collect()
+    rows = df.filter("experiment_name='%s'" % exp).collect()
 
     # For each row in the data insert the histograms.
     for row in rows:
@@ -164,8 +169,12 @@ for exp in missing:
         collection_id = create_collection(dataset_id, metric_id, row['n'],
                                           row['experiment_branch'])
 
-        for rank, kv in enumerate(row['histogram'].iteritems()):
+        for rank, kv in enumerate(row['histogram'].iteritems(), 1):
             k, v = kv[0], kv[1].asDict()
             create_point(collection_id, k, v['pdf'], v['count'], rank)
+        conn.commit()
 
         # TODO: Store row['statistics']
+
+    # Flag dataset as viewable.
+    display_dataset(dataset_id)
