@@ -1,6 +1,6 @@
 Django==1.10.7
 PyOpenSSL==17.0.0
-contextlib2==0.5.4
+contextlib2==0.5.5
 djangorestframework==3.6.2
 dj-database-url==0.4.2
 factory_boy==2.8.1
