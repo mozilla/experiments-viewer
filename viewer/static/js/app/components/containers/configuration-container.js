@@ -9,7 +9,7 @@ export default class extends React.Component {
   constructor(props) {
     super(props);
 
-    this.configureSubgroupsClass = 'configure-subgroups';
+    this.configurePopulationsClass = 'configure-populations';
     this.configureChartsClass = 'configure-charts';
 
     this._handleModifyCharts = this._handleModifyCharts.bind(this);
@@ -55,7 +55,7 @@ export default class extends React.Component {
         handleModifyCharts={this._handleModifyCharts}
 
         configureChartsClass={this.configureChartsClass}
-        configureSubgroupsClass={this.configureSubgroupsClass}
+        configurePopulationsClass={this.configurePopulationsClass}
       />
     );
   }

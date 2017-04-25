@@ -13,7 +13,7 @@ $colors = {
   'control': $mild-blue,
   'group A': #9b4be2,
   'group B': #e24b91,
-  // Below, some suitable colors for future subgroups:
+  // Below, some suitable colors for future populations:
   // 'TBD': #f3d6b4,
   // 'TBD': #dde24b,
   // 'TBD': #4be29b,
@@ -21,13 +21,13 @@ $colors = {
   // 'TBD': #de3b35,
 };
 
-for $subgroup, $color in $colors {
-  [data-subgroup={'"' + $subgroup + '"'}] {
+for $population, $color in $colors {
+  [data-population={'"' + $population + '"'}] {
     line, .line, .focus {
       stroke: $color;
     }
 
-    .subgroup-name {
+    .population-name {
       color: $color;
     }
   }

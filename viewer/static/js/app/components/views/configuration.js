@@ -4,7 +4,7 @@ import * as utils from '../../utils';
 
 
 export default function(props) {
-  let maybeDataFieldset, maybeSubgroupsFieldset, maybeChartsFieldset;
+  let maybeDataFieldset, maybePopulationsFieldset, maybeChartsFieldset;
 
   if (props.configureOutliers || props.configureScale) {
     maybeDataFieldset = (
@@ -60,7 +60,7 @@ export default function(props) {
       <div className="configuration">
         <h3>Configuration</h3>
         <form>
-          {maybeSubgroupsFieldset}
+          {maybePopulationsFieldset}
           {maybeDataFieldset}
           {maybeChartsFieldset}
         </form>

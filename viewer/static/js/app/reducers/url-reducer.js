@@ -6,7 +6,7 @@ const defaultQueryParameters = {
   ds: 1,
   metrics: 'ALL',
   scale: 'linear',
-  sg: 'ALL',
+  pop: 'ALL',
   showOutliers: false,
 };
 

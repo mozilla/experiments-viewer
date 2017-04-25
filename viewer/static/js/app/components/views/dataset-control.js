@@ -18,7 +18,7 @@ export default function(props) {
       </div>
       <div className="dataset-cohorts">
         {props.currentDataset.populations.map(cohort => {
-          const isActive = props.subgroupsToShow.includes(cohort);
+          const isActive = props.populationsToShow.includes(cohort);
           return (
             <Switch key={cohort} label={cohort} onClick={props.handleCohortSwitch} active={isActive} />
           );

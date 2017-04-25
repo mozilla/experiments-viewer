@@ -17,7 +17,7 @@ class ChartDetailContainer extends React.Component {
   }
 
   componentDidMount() {
-    metricApi.getMetric(this.props.datasetId, this.metricId, this.props.subgroupsToShow).then(result => {
+    metricApi.getMetric(this.props.datasetId, this.metricId, this.props.populationsToShow).then(result => {
       if (result && result.response && result.response.status === 404) {
         this.setState({got404: true});
       }
