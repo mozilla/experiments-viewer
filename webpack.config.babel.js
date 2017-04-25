@@ -21,10 +21,10 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 module.exports = {
-  entry: './viewer/core/static/js/app/app.js',
+  entry: './viewer/static/js/app/app.js',
   output: {
-    filename: './viewer/core/static/js/bundle.js',
-    sourceMapFilename: './viewer/core/static/js/bundle.map'
+    filename: './viewer/static/js/bundle.js',
+    sourceMapFilename: './viewer/static/js/bundle.map'
   },
   devtool: '#source-map',
   plugins,

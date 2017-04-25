@@ -1,7 +1,7 @@
 #!/bin/sh
 
 run_back_end_tests() {
-  flake8 viewer && ./manage.py test
+  flake8 viewer && coverage run ./manage.py test
 }
 
 run_front_end_tests() {
@@ -33,6 +33,7 @@ case $1 in
     if [[ $1 == "backend" ]]; then
         shift
         run_back_end_tests
+        coverage report -m
     elif [[ $1 == "frontend" ]]; then
         run_front_end_tests
     else
@@ -40,7 +41,6 @@ case $1 in
         backend_rc=$?
         run_front_end_tests
         frontend_rc=$?
-        echo
 
         if [[ $backend_rc == 0 && $frontend_rc == 0 ]]; then
             echo "All tests pass!!!"

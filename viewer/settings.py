@@ -32,12 +32,11 @@ INSTALLED_APPS = [
     'django.contrib.admin.apps.SimpleAdminConfig',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.messages',
     'django.contrib.sessions',
     'django.contrib.staticfiles',
     'rest_framework',
+    'viewer',
     'viewer.api',
-    'viewer.core',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -46,7 +45,6 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
     'viewer.middleware.CORSMiddleware',
 ]
 
@@ -56,7 +54,6 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'APP_DIRS': True,
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'OPTIONS': {
             'context_processors': [
                 'django.contrib.auth.context_processors.auth',
@@ -66,9 +63,6 @@ TEMPLATES = [
                 'django.template.context_processors.static',
                 'django.template.context_processors.tz',
                 'django.template.context_processors.request',
-                'django.contrib.messages.context_processors.messages',
-
-                'viewer.core.context_processors.global_settings',
             ],
         }
     }
