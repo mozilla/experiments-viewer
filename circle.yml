@@ -7,9 +7,10 @@ machine:
         - docker
 
 dependencies:
-    override:
+    pre:
         - docker info
-        - docker build -t "app:build" .
+    override:
+        - ./bin/build
 
 test:
     override:
