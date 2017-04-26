@@ -22,15 +22,15 @@ export default class extends React.Component {
     let props = this.props;
     let x0 = props.xScale.invert(mouse(this.refs.rect)[0]);
 
-    for (let subgroupName in props.subgroups) {
-      if (props.subgroups.hasOwnProperty(subgroupName)) {
+    for (let populationName in props.populations) {
+      if (props.populations.hasOwnProperty(populationName)) {
 
-        const currentData = props.subgroups[subgroupName][props.activeDatasetName];
+        const currentData = props.populations[populationName][props.activeDatasetName];
 
         let i = this.bisector(currentData, x0, 1);
         let d0 = currentData[i - 1];
 
-        this.focusElm = selectAll(`.chart-${props.metricId} .subgroup[data-subgroup="${subgroupName}"] .focus`);
+        this.focusElm = selectAll(`.chart-${props.metricId} .population[data-population="${populationName}"] .focus`);
 
         // Ternary to fix comparison with array index out of bounds.
         let d1 = currentData[i] ? currentData[i] : currentData[i - 1];
@@ -44,13 +44,13 @@ export default class extends React.Component {
         // Position the focus circle on chart line.
         this.focusElm.attr('transform', `translate(${props.xScale(d.x)}, ${props.yScale(d.y)})`);
 
-        // Set hover text for this subgroup, creating the paragraph element in
+        // Set hover text for this population, creating the paragraph element in
         // the process if necessary
-        let hoverSummary = select(`.secondary-menu-content .chart-info .hover-summary[data-subgroup="${subgroupName}"]`);
+        let hoverSummary = select(`.secondary-menu-content .chart-info .hover-summary[data-population="${populationName}"]`);
         if (hoverSummary.empty()) {
-          select('.secondary-menu-content .chart-info').append('p').classed('hover-summary', true).attr('data-subgroup', subgroupName);
+          select('.secondary-menu-content .chart-info').append('p').classed('hover-summary', true).attr('data-population', populationName);
         }
-        hoverSummary.html(this._getHoverString(props.metricType, d.x, d.y, proportion, subgroupName));
+        hoverSummary.html(this._getHoverString(props.metricType, d.x, d.y, proportion, populationName));
       }
     }
   }
@@ -58,7 +58,7 @@ export default class extends React.Component {
   _getFormattedVal(val) {
     return d3Format.format('.1%')(val).replace('%', '');
   }
-  _getHoverString(metricType, x, y, p, subgroup) {
+  _getHoverString(metricType, x, y, p, population) {
     let result = this.props.hoverString;
     if (!result) return '';
 
@@ -67,24 +67,24 @@ export default class extends React.Component {
         x: this.props.refLabels[x],
         p: this._getFormattedVal(p),
         y: this._getFormattedVal(y),
-        pop: '<span class="subgroup-name">' + subgroup.toLowerCase() + '</span>',
+        pop: '<span class="population-name">' + population.toLowerCase() + '</span>',
       });
     } else {
       result = format(result, {
         x,
         p: this._getFormattedVal(p),
         y: this._getFormattedVal(y),
-        pop: '<span class="subgroup-name">' + subgroup.toLowerCase() + '</span>',
+        pop: '<span class="population-name">' + population.toLowerCase() + '</span>',
       });
     }
     return result;
   }
 
   componentWillUpdate(nextProps) {
-    // If the list of active subgroups changed, remove all hover descriptions so
-    // that we don't have a hover description for an inactive subgroup sticking
+    // If the list of active populations changed, remove all hover descriptions so
+    // that we don't have a hover description for an inactive population sticking
     // around.
-    if (nextProps.subgroups !== this.props.subgroups) {
+    if (nextProps.populations !== this.props.populations) {
       selectAll('.secondary-menu-content .chart-info .hover-summary').remove();
     }
   }

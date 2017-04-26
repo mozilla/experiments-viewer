@@ -12,22 +12,22 @@ export default class extends React.Component {
     super(props);
   }
 
-  renderSubgroups(props, subgroupData) {
+  renderPopulations(props, populationData) {
     let renderings = [];
 
-    for (let subgroupName in subgroupData) {
-      if (subgroupData.hasOwnProperty(subgroupName)) {
+    for (let populationName in populationData) {
+      if (populationData.hasOwnProperty(populationName)) {
 
-        const currentSubgroup = subgroupData[subgroupName];
+        const currentPopulation = populationData[populationName];
 
         renderings.push(
-          <g key={props.metricId + subgroupName} className="subgroup" data-subgroup={subgroupName}>
+          <g key={props.metricId + populationName} className="population" data-population={populationName}>
             <ChartLineContainer
-              subgroupName={subgroupName}
+              populationName={populationName}
               metricId={props.metricId}
               xScale={props.xScale}
               yScale={props.yScale}
-              data={currentSubgroup[props.activeDatasetName]}
+              data={currentPopulation[props.activeDatasetName]}
             />
             <ChartFocus />
           </g>
@@ -54,7 +54,7 @@ export default class extends React.Component {
       );
     } else {
       var control, sdExcludingControl, sdOnlyControl;
-      if (this.props.subgroupData['control']) {
+      if (this.props.populationData['control']) {
 
         // ES6!
         //
@@ -62,11 +62,11 @@ export default class extends React.Component {
         // const control = this.props.populdationData['control'];
         // const sdExcludingControl = this.props.populdationData[... everything else ...];
         // const sdOnlyControl = { 'control': control };
-        ({'control': control, ...sdExcludingControl} = this.props.subgroupData);
+        ({'control': control, ...sdExcludingControl} = this.props.populationData);
         sdOnlyControl = { 'control': control }
 
       } else {
-        sdExcludingControl = this.props.subgroupData;
+        sdExcludingControl = this.props.populationData;
       }
 
       return (
@@ -92,22 +92,22 @@ export default class extends React.Component {
                 refLabels={this.props.refLabels}
                 size={this.props.size.innerWidth}
               />
-              <g className="subgroups">
+              <g className="populations">
                 {/*
                 In SVG, the elemenet that appears last in the markup has the
-                greatest "z-index". We want the "control" subgroup to appear
-                above other subgroups when they overlap, so we need to render
+                greatest "z-index". We want the "control" population to appear
+                above other populations when they overlap, so we need to render
                 it last.
                 */}
-                {this.renderSubgroups(this.props, sdExcludingControl)}
-                {sdOnlyControl && this.renderSubgroups(this.props, sdOnlyControl)}
+                {this.renderPopulations(this.props, sdExcludingControl)}
+                {sdOnlyControl && this.renderPopulations(this.props, sdOnlyControl)}
               </g>
               <ChartHoverContainer
                 metricId={this.props.metricId}
                 size={this.props.size}
                 xScale={this.props.xScale}
                 yScale={this.props.yScale}
-                subgroups={this.props.subgroupData}
+                populations={this.props.populationData}
                 activeDatasetName={this.props.activeDatasetName}
                 hoverString={this.props.hoverString}
                 refLabels={this.props.refLabels}

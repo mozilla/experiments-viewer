@@ -5,56 +5,9 @@ import * as metricActions from '../actions/metric-actions';
 
 
 export const endpoints = {
-  GET_SUBGROUPS: `${location.origin}/datasets/`,
   GET_METRICS: `${location.origin}/metrics/`,
   GET_METRIC: `${location.origin}/metric/`,
 };
-
-// Given a location object, return the specified dataset ID.
-export function getDatasetId(location) {
-  if (location.query && location.query.ds) {
-    return parseInt(location.query.ds, 10);
-  }
-}
-
-// Given a location object, return an array of all metric IDs specified in the
-// ?metrics query parameter.
-export function getSpecifiedMetricIds(location) {
-  if (location.query && location.query.metrics) {
-    return location.query.metrics.split(',').map(s => parseInt(s, 10));
-  } else {
-    return [];
-  }
-}
-
-// Given a location object, return an array of all subgroups specified in the
-// ?sg query parameter.
-export function getSpecifiedSubgroups(location) {
-  if (location.query && location.query.sg) {
-    return location.query.sg.split(',');
-  } else {
-    return [];
-  }
-}
-
-// Return an array of valid subgroups for the given dataset. For example:
-// ['control', 'variation1', 'variation2']
-export function getSubgroups(datasetId) {
-  store.dispatch(metricActions.gettingSubgroups());
-  return axios.get(endpoints.GET_SUBGROUPS).then(response => {
-    const activeDatasetMeta = response.data.datasets.find(ds => {
-      return ds.id === datasetId;
-    });
-
-    const subgroups = activeDatasetMeta.populations;
-    store.dispatch(metricActions.getSubgroupsSuccess(subgroups));
-    return subgroups;
-  }).catch(error => {
-    console.error(error);
-    store.dispatch(metricActions.getSubgroupsFailure(error.status));
-    return error;
-  });
-}
 
 // Return an object of metric metadata indexed by metric ID. If an array of
 // metricIds is passed, only include metadata about those metrics. Otherwise,
@@ -87,19 +40,19 @@ export function getMetricMetadata(metricIds) {
  * Get a single metric
  *
  * @param metricId
- * @param {Array} [subgroups] Optionally, an array of subgroups that should be
- *                            fetched. For example:
- *                            ['control', 'variation1', 'variation2']
- *                            If ommitted, all subgroups will be fetched.
+ * @param {Array} [pops] Optionally, an array of populations that should be
+ *                       fetched. For example:
+ *                       ['control', 'variation1', 'variation2']
+ *                       If ommitted, all populations will be fetched.
  */
-export function getMetric(datasetId, metricId, subgroups) {
+export function getMetric(datasetId, metricId, pops) {
   const qp = {};
   qp['ds'] = datasetId;
 
-  // If subgroups were not defined, don't included the pop query parameter. When
-  // the pop query parameter is absent, all subgroups are fetched.
-  if (subgroups) {
-    qp['pop'] = subgroups.join(',');
+  // If populations were not defined, don't included the pop query parameter.
+  // When the pop query parameter is absent, all populations are fetched.
+  if (pops) {
+    qp['pop'] = pops.join(',');
   }
 
   let queryString = '';

@@ -28,7 +28,7 @@ export default function(props) {
     }
 
     chartLinks.push(
-      <Link key={id} className="chart-link" to={`/chart/${id}/?sg=${props.location.query.sg}&showOutliers=${props.location.query.showOutliers}`}>
+      <Link key={id} className="chart-link" to={`/chart/${id}/?pop=${props.location.query.pop}&showOutliers=${props.location.query.showOutliers}`}>
         <div>
           <ChartContainer
             {...props}
@@ -54,7 +54,7 @@ export default function(props) {
           {...props}
 
           configureOutliers={true}
-          configureSubgroups={true}
+          configurePopulations={true}
           configureCharts={true}
         />
       </section>

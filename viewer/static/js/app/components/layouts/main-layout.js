@@ -11,7 +11,7 @@ export default function(props) {
       <header className="primary-header">
         <div>
           <h1>
-            <Link className="primary-header-link" to={`/?sg=${props.location.query.sg}&showOutliers=${props.location.query.showOutliers}`}>Firefox <em>Experiments</em> Viewer</Link>
+            <Link className="primary-header-link" to={`/?pop=${props.location.query.pop}&showOutliers=${props.location.query.showOutliers}`}>Firefox <em>Experiments</em> Viewer</Link>
           </h1>
         </div>
         <DatasetTitleContainer />

@@ -10,7 +10,7 @@ export default function(props) {
   return (
     <div id="chart-detail" className="chart-detail">
       <ConfigurationContainer
-        configureSubgroups={true}
+        configurePopulations={true}
         configureOutliers={props.configurableOutliers}
         configureScale={props.configurableScale}
 
