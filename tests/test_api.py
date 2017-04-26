@@ -86,7 +86,6 @@ class TestMetric(DataTestCase):
                                  email='example@mozilla.com',
                                  password='password')
         self.client.login(username='testuser', password='password')
-        self.maxDiff = None
 
     def test_basic(self):
         """
@@ -167,6 +166,12 @@ class TestMetric(DataTestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 404)
 
+    def test_metric_not_in_collection(self):
+        metric = factories.MetricFactory()
+        url = reverse('metric', args=[metric.id])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 404)
+
     def test_specific_population(self):
         # Test if we specify a population we only get that population.
         collection = (
@@ -207,7 +212,6 @@ class TestMetrics(DataTestCase):
         self.client.login(username='testuser', password='password')
 
     def test_basic(self):
-        self.maxDiff = None
         response = self.client.get(self.url)
         expected = {
             u'metrics': [

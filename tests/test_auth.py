@@ -22,6 +22,18 @@ def wrong_domain_google_verify(token, key):
             'email': 'user@example.com'}
 
 
+class TestLogin(TestCase):
+
+    def setUp(self):
+        super(TestLogin, self).setUp()
+        self.url = reverse('login')
+
+    def test_login(self):
+        response = self.client.get(self.url)
+        self.assertTemplateUsed(response, 'viewer/login.html')
+        self.assertEqual(response.status_code, 200)
+
+
 class TestLoginHandler(TestCase):
 
     def setUp(self):
