@@ -21,7 +21,8 @@ class DataSet(models.Model):
         get_latest_by = 'date'
 
     def __unicode__(self):
-        return self.date.strftime('%Y-%m-%d')
+        return u'%s, date=%s, display=%s' % (
+            self.name, self.date.strftime('%Y-%m-%d'), self.display)
 
     def get_populations(self):
         populations = set()
@@ -49,7 +50,7 @@ class Metric(models.Model):
         help_text="The metric's name in the source telemetry data.")
 
     def __unicode__(self):
-        return u'<Metric %s [%s]>' % (self.name, self.type)
+        return u'%s, type=%s' % (self.name, self.type)
 
 
 class Collection(models.Model):
@@ -57,6 +58,13 @@ class Collection(models.Model):
     metric = models.ForeignKey(Metric)
     num_observations = models.IntegerField()
     population = models.CharField(max_length=255)
+
+    def __unicode__(self):
+        return (
+            u'population=%s, n=%d, dataset_id=%d, metric_id=%d' % (
+                self.population, self.num_observations, self.dataset_id,
+                self.metric_id)
+        )
 
     def points(self):
         return self._points.annotate(

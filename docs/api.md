@@ -31,6 +31,12 @@ Example output:
 
 Lists the IDs, name, and descriptions of all metrics.
 
+Query parameters:
+
+* `ds` (optional): This string, representing the dataset ID, will be used to
+  filter the metrics found within the given dataset. If not provided, the API
+  will return all metrics across all datasets.
+
 Example output:
 
 ```

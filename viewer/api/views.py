@@ -17,6 +17,18 @@ from .serializers import (DataSetSerializer, DistributionSerializer,
                           MetricSerializer)
 
 
+def get_and_validate_dataset_id(request, param_name):
+    ds = request.query_params.get(param_name)
+    if ds:
+        try:
+            ds = int(ds)
+        except ValueError:
+            raise ParseError('DataSet ID provided is not an integer.')
+        return ds
+
+    return None
+
+
 @api_view(['GET'])
 @renderer_classes([DataSetJSONRenderer])
 def datasets(request):
@@ -28,6 +40,13 @@ def datasets(request):
 @renderer_classes([MetricsJSONRenderer])
 def metrics(request):
     metrics = Metric.objects.all().order_by('name')
+
+    ds = get_and_validate_dataset_id(request, 'ds')
+    if ds:
+        # Further filter metrics by dataset.
+        metrics = (metrics.filter(collection__dataset_id=ds)
+                          .distinct('id', 'name'))
+
     return Response([MetricSerializer(m).data for m in metrics])
 
 
@@ -39,12 +58,8 @@ def metric(request, metric_id):
     pops = pop.split(',')
 
     # Get requested dataset or most recent prior dataset from date.
-    ds = request.query_params.get('ds')
+    ds = get_and_validate_dataset_id(request, 'ds')
     if ds:
-        try:
-            ds = int(ds)
-        except ValueError:
-            raise ParseError('DataSet ID provided is not an integer.')
         dataset = DataSet.objects.visible().filter(id=ds).first()
     else:
         dataset = DataSet.objects.visible().order_by('-date').first()

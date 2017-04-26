@@ -161,6 +161,12 @@ class TestMetric(DataTestCase):
             data={'ds': '999'})
         self.assertEqual(response.status_code, 404)
 
+    def test_invalid_dataset(self):
+        response = self.client.get(
+            reverse('metric', args=[self.flag_metric.id]),
+            data={'ds': 'foo'})
+        self.assertEqual(response.status_code, 400)
+
     def test_no_metric_404(self):
         url = reverse('metric', args=['999'])
         response = self.client.get(url)
@@ -231,3 +237,17 @@ class TestMetrics(DataTestCase):
             ]
         }
         self.assertEqual(response.json(), expected)
+
+    def test_dataset_filter(self):
+
+        # Add a 3rd metric we expect not to see.
+        factories.MetricFactory(type='OtherHistogram')
+
+        response = self.client.get(self.url, data={'ds': self.dataset.id})
+        metrics = [m['id'] for m in response.json()['metrics']]
+        self.assertItemsEqual(metrics,
+                              [self.count_metric.id, self.flag_metric.id])
+
+    def test_invalid_dataset(self):
+        response = self.client.get(self.url, data={'ds': 'foo'})
+        self.assertEqual(response.status_code, 400)
