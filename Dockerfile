@@ -10,10 +10,12 @@ RUN addgroup -g 10001 app && \
 
 RUN apk --no-cache add \
     build-base \
+    bash \
+    curl \
+    git \
     openssl-dev \
     libffi-dev \
     py-cffi \
-    bash \
     postgresql-dev \
     postgresql-client \
     nodejs
@@ -42,5 +44,5 @@ RUN chown -R app:app /app
 # De-escalate from root privileges with app user.
 USER app
 
-ENTRYPOINT ["/bin/sh", "/app/bin/run.sh"]
+ENTRYPOINT ["/bin/bash", "/app/bin/run"]
 CMD ["dev"]

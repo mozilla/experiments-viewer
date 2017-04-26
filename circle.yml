@@ -13,12 +13,4 @@ dependencies:
 
 test:
     override:
-        - >
-            docker run
-            --interactive
-            --net=host
-            -e DATABASE_URL=$DATABASE_URL
-            -e DEBUG=$DEBUG
-            -e DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE
-            app:build
-            test
+        - ./bin/test
