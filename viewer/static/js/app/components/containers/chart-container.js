@@ -5,7 +5,6 @@ import * as d3Array from 'd3-array';
 
 import Chart from '../views/chart';
 import * as metricApi from '../../api/metric-api';
-import { debounce } from '../../utils';
 
 
 class ChartContainer extends React.Component {
