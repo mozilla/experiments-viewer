@@ -6,10 +6,10 @@ from .api.admin import MetricAdmin
 from .api.models import Metric
 
 
-class DVAdminSite(AdminSite):
+class ViewerAdminSite(AdminSite):
     site_header = 'Experiments Viewer administration'
 
 
-admin_site = DVAdminSite()
+admin_site = ViewerAdminSite()
 admin_site.register(Metric, MetricAdmin)
 admin_site.register(User, UserAdmin)
