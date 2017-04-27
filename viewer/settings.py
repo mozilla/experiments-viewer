@@ -1,4 +1,5 @@
 import os
+from datetime import timedelta
 
 import dj_database_url
 from decouple import config
@@ -52,6 +53,7 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'viewer.middleware.CORSMiddleware',
 ]
 
@@ -102,9 +104,20 @@ USE_L10N = False
 
 USE_TZ = True
 
-SECURE_SSL_REDIRECT = config('SSL_REDIRECT', default=False, cast=bool)
-SECURE_HSTS_SECONDS = (60 * 60 * 24 * 365)
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_HSTS_SECONDS = int(timedelta(days=365).total_seconds())
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = config('SSL_REDIRECT', default=False, cast=bool)
+SESSION_COOKIE_SECURE = True
+
+CSRF_COOKIE_HTTPONLY = True
+CSRF_COOKIE_SECURE = True
+
+SILENCED_SYSTEM_CHECKS = [
+    'security.W005',  # Deployed on Heroku and will not have subdomains.
+]
+
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
