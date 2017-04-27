@@ -12,21 +12,22 @@ class ChartContainer extends React.Component {
   constructor(props) {
     super(props);
 
-    this.margin = {top: 20, right: 20, bottom: 30, left: 40};
-    this.height = props.isDetail ? 600 : 250;
+    this.margin = {top: 15, right: 20, bottom: 30, left: 40};
+    this.height = props.isDetail ? 600 : 375;
+    this.width = 450;
     this.allDatasetName = 'all';
     this.excludingOutliersDatasetName = 'excludingOutliers';
 
-    this.state = {size: {
+    this.size = {
       height: this.height,
-      innerHeight: this.height - this.margin.top - this.margin.bottom,
+      width: this.width,
+      innerWidth: this.width - this.margin.left - this.margin.right,
+      innerHeight: this.height - this.margin.top - this.margin.bottom - 30,
       transform: `translate(${this.margin.left}, ${this.margin.top})`,
-    }};
+    };
 
-    this.handleResize = debounce(() => this._setWidth(this.props));
     this.outlierThreshold = 100;
-
-    this._setWidth = this._setWidth.bind(this);
+    this._getXScale = this._getXScale.bind(this);
   }
 
   componentDidMount() {
@@ -78,8 +79,8 @@ class ChartContainer extends React.Component {
     // regenerated.
     if (outliersSettingChanged || selectedScaleChanged) {
       this.biggestDatasetToShow = this.populationData[this.biggestPopulation.name][this.activeDatasetName];
-      this.setState({xScale: this._getXScale(this.props, this.state.size.innerWidth)});
     }
+    this.xScale = this._getXScale(this.props);
   }
 
   _setup(props) {
@@ -130,13 +131,8 @@ class ChartContainer extends React.Component {
 
     this.yScale = d3Scale.scaleLinear()
                     .domain([0, 1]) // 0% to 100%
-                    .range([this.state.size.innerHeight, 0]);
-
-    this._setWidth(props);
-
-    if (props.isDetail) {
-      window.addEventListener('resize', this.handleResize);
-    }
+                    .range([this.size.innerHeight, 0]);
+    this.xScale = this._getXScale(props);
   }
 
   // Map metric points to new keys to be used by d3.
@@ -169,13 +165,14 @@ class ChartContainer extends React.Component {
     return data.slice(indexFirst, indexLast + 1);
   }
 
-  _getXScale(props, innerWidth) {
+  _getXScale(props) {
     // Categorical charts get treated differently since they start at x: 1
     let xScale;
-    if (props.metric.type === 'categorical') {
+
+    if (props.metric.type === 'C') {
       xScale = d3Scale.scaleLinear()
                  .domain([1, d3Array.max(this.biggestDatasetToShow, d => d.x)])
-                 .range([0, innerWidth]);
+                 .range([0, this.size.innerWidth]);
     } else {
       let scaleType;
 
@@ -193,25 +190,10 @@ class ChartContainer extends React.Component {
 
       xScale = scaleType
                  .domain(d3Array.extent(this.biggestDatasetToShow, d => d.x))
-                 .range([0, innerWidth]);
+                 .range([0, this.size.innerWidth]);
     }
 
     return xScale;
-  }
-
-  _setWidth(props) {
-    // width = size of the SVG
-    let width;
-    if (props.isDetail) {
-      width = parseInt(getComputedStyle(this.chartDetail)['width'], 10);
-    } else {
-      width = 300;
-    }
-
-    // innerWidth = size of the contents of the SVG const innerWidth = width - this.margin.left - this.margin.right;
-    const xScale = this._getXScale(props, innerWidth);
-    const sizeIncludingWidth = Object.assign({}, this.state.size, {width, innerWidth});
-    this.setState({xScale, size: sizeIncludingWidth});
   }
 
   render() {
@@ -240,16 +222,12 @@ class ChartContainer extends React.Component {
           activeDatasetName={this.activeDatasetName}
           hoverString={this.props.metric.hoverString}
 
-          size={this.state.size}
-          xScale={this.state.xScale}
+          size={this.size}
+          xScale={this.xScale}
           yScale={this.yScale}
         />
       );
     }
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this._handleResize);
   }
 }
 
