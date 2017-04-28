@@ -72,6 +72,7 @@ TEMPLATES = [
                 'django.template.context_processors.static',
                 'django.template.context_processors.tz',
                 'django.template.context_processors.request',
+                'viewer.context_processors.settings',
             ],
         }
     }

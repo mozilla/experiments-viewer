@@ -115,5 +115,5 @@ def login_view(request):
     return TemplateResponse(
         request,
         template='viewer/login.html',
-        context={'google_clientid': settings.GOOGLE_AUTH_KEY,
-                 'next': request.GET.get('next', '/')})
+        context={'next': request.GET.get('next', '/')}
+    )
