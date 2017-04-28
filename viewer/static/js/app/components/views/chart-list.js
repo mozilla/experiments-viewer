@@ -30,7 +30,8 @@ export default function(props) {
     chartLinks.push(
       // Temporarily disabling the links. See https://github.com/mozilla/experiments-viewer/issues/72
       // <Link key={id} className="chart-link" to={`/chart/${id}/?pop=${props.location.query.pop}&showOutliers=${props.location.query.showOutliers}`}>
-        <div>
+      //  <div>
+        <div key={id}>
           <ChartContainer
             {...props}
 
