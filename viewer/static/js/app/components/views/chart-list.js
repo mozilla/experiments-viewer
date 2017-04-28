@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router';
+//import { Link } from 'react-router';
 
 import ChartContainer from '../containers/chart-container';
 import DescriptionContainer from '../containers/description-container';
