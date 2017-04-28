@@ -63,8 +63,10 @@ class AppContainer extends React.Component {
       this.metricIdsToShow = urlApi.getMetricIds(props.location);
     }
 
-    if (showAllPopulations && this.currentDataset.populations) {
-      this.sortedPopulationsToShow = this._sortPopulations(this.currentDataset.populations);
+    if (showAllPopulations) {
+      if (this.currentDataset.populations) {
+        this.sortedPopulationsToShow = this._sortPopulations(this.currentDataset.populations);
+      }
     } else {
       this.sortedPopulationsToShow = this._sortPopulations(urlApi.getPopulationNames(props.location));
     }

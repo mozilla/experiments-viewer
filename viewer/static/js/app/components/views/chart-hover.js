@@ -76,15 +76,6 @@ export default class extends React.Component {
     return result;
   }
 
-  componentWillUpdate(nextProps) {
-    // If the list of active populations changed, remove all hover descriptions so
-    // that we don't have a hover description for an inactive population sticking
-    // around.
-    if (nextProps.populations !== this.props.populations) {
-      selectAll('.secondary-menu-content .chart-info .hover-summary').remove();
-    }
-  }
-
   render() {
     return (
       <rect
