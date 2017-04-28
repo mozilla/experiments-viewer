@@ -24,7 +24,11 @@ export default function(props) {
       </header>
       <div className="secondary-menu">
         <div className="secondary-menu-content">
-          <div className="chart-info" />
+          <div className="chart-info">
+            {props.sortedPopulationsToShow.map(populationName => {
+              return <p key={populationName} className="hover-summary" data-population={populationName} />;
+            })}
+          </div>
         </div>
       </div>
       {/* Pass all props to the child component and render it */}

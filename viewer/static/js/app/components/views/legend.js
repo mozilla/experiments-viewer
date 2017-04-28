@@ -5,7 +5,7 @@ export default function(props) {
   return (
     <section className="legend">
       <ul>
-        {props.populationsToShow.map(populationName => {
+        {props.sortedPopulationsToShow.map(populationName => {
           return (
             <li key={populationName}>
               <svg className="example-line" data-population={populationName} width="50" height="5">

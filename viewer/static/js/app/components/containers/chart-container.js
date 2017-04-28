@@ -30,7 +30,7 @@ class ChartContainer extends React.Component {
   }
 
   componentDidMount() {
-    metricApi.getMetric(this.props.datasetId, this.props.metricId, this.props.populationsToShow);
+    metricApi.getMetric(this.props.datasetId, this.props.metricId, this.props.sortedPopulationsToShow);
 
     if (this.props.isDetail) {
       this.chartDetail = document.getElementById('chart-detail');
@@ -64,8 +64,8 @@ class ChartContainer extends React.Component {
     // If the list of populations to show changed, fetch chart data with the
     // next populations
 
-    if (nextProps.populationsToShow !== this.props.populationsToShow) {
-      metricApi.getMetric(this.props.datasetId, this.props.metricId, nextProps.populationsToShow);
+    if (nextProps.sortedPopulationsToShow !== this.props.sortedPopulationsToShow) {
+      metricApi.getMetric(this.props.datasetId, this.props.metricId, nextProps.sortedPopulationsToShow);
     }
   }
 
