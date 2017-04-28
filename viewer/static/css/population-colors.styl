@@ -9,26 +9,25 @@ pretty well with our colorscheme.
 
 - openjck
 */
-$colors = {
-  'control': $mild-blue,
-  'group A': #9b4be2,
-  'group B': #e24b91,
-  // Below, some suitable colors for future populations:
-  // 'TBD': #f3d6b4,
-  // 'TBD': #dde24b,
-  // 'TBD': #4be29b,
-  // 'TBD': #de8f35,
-  // 'TBD': #de3b35,
-};
+$colors = $mild-blue, #9b4be2, #e24b91, #f3d6b4, #dde24b, #4be29b, #de8f35, #de3b35;
 
-for $population, $color in $colors {
-  [data-population={'"' + $population + '"'}] {
-    line, .line, .focus {
+for $color, $i in $colors {
+  $ordinal = $i + 1;
+
+  .legend li:nth-of-type({$ordinal}) line {
+    stroke: $color;
+  }
+
+  .hover-summary:nth-of-type({$ordinal}) {
+    color: $color;
+  }
+
+  /* The source order for population lines is opposite to the source order of
+     other population-related UI elements, so we use nth-last-of-type here
+     instead. See the comment in chart.js for more information. */
+  .chart .population:nth-last-of-type({$ordinal}) {
+    .line, .focus {
       stroke: $color;
-    }
-
-    .population-name {
-      color: $color;
     }
   }
 }

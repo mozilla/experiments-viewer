@@ -8,34 +8,29 @@ import ChartFocus from './chart-focus';
 
 
 export default class extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+  /**
+   * sortedPopulationsToShow often updates before populationData does. That is,
+   * sortedPopulationsToShow often names populations that do not yet have
+   * corresponding data in populationData.
+   *
+   * This component can't exactly do much when that happens. It can't exactly
+   * render data that it doesn't have yet. So it's better off not re-rendering
+   * at all. As soon as populationData is updated to have data for all of the
+   * populations named in sortedPopulationsToShow, this test will pass and the
+   * component will re-render.
+   */
+  shouldComponentUpdate(nextProps) {
+    let shouldUpdate = true;
 
-  renderPopulations(props, populationData) {
-    let renderings = [];
-
-    for (let populationName in populationData) {
-      if (populationData.hasOwnProperty(populationName)) {
-
-        const currentPopulation = populationData[populationName];
-
-        renderings.push(
-          <g key={props.metricId + populationName} className="population" data-population={populationName}>
-            <ChartLineContainer
-              populationName={populationName}
-              metricId={props.metricId}
-              xScale={props.xScale}
-              yScale={props.yScale}
-              data={currentPopulation[props.activeDatasetName]}
-            />
-            <ChartFocus />
-          </g>
-        );
+    for (let i = 0; i < nextProps.sortedPopulationsToShow.length; i++) {
+      const populationName = nextProps.sortedPopulationsToShow[i];
+      if (!nextProps.populationData.hasOwnProperty(populationName)) {
+        shouldUpdate = false;
+        break;
       }
     }
 
-    return renderings;
+    return shouldUpdate;
   }
 
   render() {
@@ -53,21 +48,7 @@ export default class extends React.Component {
         </div>
       );
     } else {
-      var control, sdExcludingControl, sdOnlyControl;
-      if (this.props.populationData['control']) {
-
-        // ES6!
-        //
-        // This is equivalent the following:
-        // const control = this.props.populdationData['control'];
-        // const sdExcludingControl = this.props.populdationData[... everything else ...];
-        // const sdOnlyControl = { 'control': control };
-        ({'control': control, ...sdExcludingControl} = this.props.populationData);
-        sdOnlyControl = { 'control': control }
-
-      } else {
-        sdExcludingControl = this.props.populationData;
-      }
+      const reverseSortedPopulationsToShow = this.props.sortedPopulationsToShow.slice(0).reverse();
 
       return (
         <div className={`chart chart-${this.props.metricId}`}>
@@ -94,13 +75,41 @@ export default class extends React.Component {
               />
               <g className="populations">
                 {/*
-                In SVG, the elemenet that appears last in the markup has the
-                greatest "z-index". We want the "control" population to appear
-                above other populations when they overlap, so we need to render
-                it last.
+                In SVG, the element that appears last in source order paints above
+                everything it overlaps. It has the greatest "z-index", so to
+                speak.
+
+                sortedPopulationsToShow is an array of population names sorted
+                by their visual importance. The first name in that array
+                should be shown first in lists, for example, and the last name
+                in the array should be shown last.
+
+                As a result, we need to render these populations in reverse order.
+                The line for the last population according to the original sort
+                order is painted first, then the line for the second-to-last
+                population, and so on. At the end of this process, the first
+                population in the original sort order is painted last and has the
+                highest z-index. Hooray!
+
+                It goes without saying at this point, but we don't want to
+                iterate over populationData, even though we ultimately use the
+                data from that object, because object ordering is
+                indeterminate.
                 */}
-                {this.renderPopulations(this.props, sdExcludingControl)}
-                {sdOnlyControl && this.renderPopulations(this.props, sdOnlyControl)}
+                {reverseSortedPopulationsToShow.map(populationName => {
+                  return (
+                    <g key={this.props.metricId + populationName} className="population" data-population={populationName}>
+                      <ChartLineContainer
+                        populationName={populationName}
+                        metricId={this.props.metricId}
+                        xScale={this.props.xScale}
+                        yScale={this.props.yScale}
+                        data={this.props.populationData[populationName][this.props.activeDatasetName]}
+                      />
+                      <ChartFocus />
+                    </g>
+                  );
+                })}
               </g>
               <ChartHoverContainer
                 metricId={this.props.metricId}
