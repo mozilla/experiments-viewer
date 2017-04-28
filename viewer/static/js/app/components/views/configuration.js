@@ -65,6 +65,7 @@ export default function(props) {
           {maybeChartsFieldset}
         </form>
       </div>
+      <a className="modal-close-btn" />
     </div>
   );
 }
