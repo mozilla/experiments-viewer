@@ -15,3 +15,14 @@ export function toggleConfigurationModal(forceClose) {
     document.body.classList.add('configuration-open');
   }
 }
+
+// Array of metric types that will require an ordinal scale (categorical x-axis).
+const ordinalTypes = [
+  'EnumeratedHistogram',
+  'BooleanHistogram',
+  'C', // TODO: This is for the incorrect fixtures and will go away.
+];
+
+export function isMetricOrdinal(metricType) {
+  return ordinalTypes.indexOf(metricType) > -1;
+}

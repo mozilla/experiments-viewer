@@ -5,6 +5,7 @@ import * as d3Array from 'd3-array';
 
 import Chart from '../views/chart';
 import * as metricApi from '../../api/metric-api';
+import { isMetricOrdinal } from '../../utils';
 
 
 class ChartContainer extends React.Component {
@@ -168,7 +169,7 @@ class ChartContainer extends React.Component {
     // Categorical charts get treated differently since they start at x: 1
     let xScale;
 
-    if (props.metric.type === 'C') {
+    if (isMetricOrdinal(props.metric.type)) {
       xScale = d3Scale.scaleLinear()
                  .domain([1, d3Array.max(this.biggestDatasetToShow, d => d.x)])
                  .range([0, this.size.innerWidth]);

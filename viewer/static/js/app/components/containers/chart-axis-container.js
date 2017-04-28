@@ -4,6 +4,7 @@ import * as d3Selection from 'd3-selection';
 import * as d3Format from 'd3-format';
 
 import ChartAxis from '../views/chart-axis';
+import { isMetricOrdinal } from '../../utils';
 
 
 export default class extends React.Component {
@@ -20,7 +21,7 @@ export default class extends React.Component {
     let axisElm = d3Selection.select(`.chart-${props.metricId} .${props.axisType}.axis`);
 
     if (props.axisType === 'x') {
-      if (props.metricType === 'C') {
+      if (isMetricOrdinal(props.metricType)) {
         axis.ticks(3).tickFormat((d, i) => {
           if (i >= 0) {
             return this._getShortLabel(props.refLabels[d]);
