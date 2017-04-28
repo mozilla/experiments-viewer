@@ -100,3 +100,39 @@
   position: relative;
   top: -4px;
 }
+
+
+$close-btn-color = rgba(255,255,255,0.6);
+
+.modal-close-btn {
+  border-radius: 15px;
+  height: 30px;
+  width: 30px;
+  display: inline-block;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  box-shadow: 0 0 1px 2px $close-btn-color;
+  cursor: pointer;
+
+  &::after, &::before {
+    content: "";
+    position: absolute;
+    height: 2px;
+    width: 14px;
+    background-color: $close-btn-color;
+    transform: rotate(45deg);
+    top: 14px;
+    left: 8px;
+  }
+  &::before {
+    transform: rotate(-45deg);
+  }
+  &:hover {
+    box-shadow: 0 0 1px 2px $xtreme-green;
+
+    &::before, &::after {
+      background-color: $xtreme-green;
+    }
+  }
+}
