@@ -16,7 +16,7 @@ class AppContainer extends React.Component {
   constructor(props) {
     super(props);
     this.currentDataset = {};
-    this.populationsToShow = [];
+    this.sortedPopulationsToShow = [];
   }
 
   componentWillMount() {
@@ -27,6 +27,27 @@ class AppContainer extends React.Component {
 
   _isALL(qpKey) {
     return qpKey && qpKey === 'ALL';
+  }
+
+  // Return a sorted array of population names, where the term "sorted" means
+  // the following:
+  //
+  // The "control" population is the first element of the array and all other
+  // populations appear in alphabetical order.
+  //
+  // For example:
+  // ['z', 'b', 'control', 'a'] => ['control', 'a', 'b', 'z']
+  //
+  // We want populations to appear in this order wherever they are displayed.
+  _sortPopulations(populations) {
+    var control = populations.find(e => e === 'control');
+
+    if (control) {
+      var noControl = populations.filter(e => e !== 'control');
+      return [control].concat(noControl.sort());
+    } else {
+      return populations.sort();
+    }
   }
 
   _processProps(props) {
@@ -42,10 +63,10 @@ class AppContainer extends React.Component {
       this.metricIdsToShow = urlApi.getMetricIds(props.location);
     }
 
-    if (showAllPopulations) {
-      this.populationsToShow = this.currentDataset.populations;
+    if (showAllPopulations && this.currentDataset.populations) {
+      this.sortedPopulationsToShow = this._sortPopulations(this.currentDataset.populations);
     } else {
-      this.populationsToShow = urlApi.getPopulationNames(props.location);
+      this.sortedPopulationsToShow = this._sortPopulations(urlApi.getPopulationNames(props.location));
     }
 
     // Validate input
@@ -90,7 +111,7 @@ class AppContainer extends React.Component {
       showOutliers: this.showOutliers,
       metricMetadata: this.props.metricMetadata,
 
-      populationsToShow: this.populationsToShow,
+      sortedPopulationsToShow: this.sortedPopulationsToShow,
       metricIdsToShow: this.metricIdsToShow,
       allMetricIds: this.allMetricIds,
     });

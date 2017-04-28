@@ -44,12 +44,8 @@ export default class extends React.Component {
         // Position the focus circle on chart line.
         this.focusElm.attr('transform', `translate(${props.xScale(d.x)}, ${props.yScale(d.y)})`);
 
-        // Set hover text for this population, creating the paragraph element in
-        // the process if necessary
+        // Insert the hover text for this population at this data point
         let hoverSummary = select(`.secondary-menu-content .chart-info .hover-summary[data-population="${populationName}"]`);
-        if (hoverSummary.empty()) {
-          select('.secondary-menu-content .chart-info').append('p').classed('hover-summary', true).attr('data-population', populationName);
-        }
         hoverSummary.html(this._getHoverString(props.metricType, d.x, d.y, proportion, populationName));
       }
     }
