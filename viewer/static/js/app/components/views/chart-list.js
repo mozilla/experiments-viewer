@@ -28,7 +28,8 @@ export default function(props) {
     }
 
     chartLinks.push(
-      <Link key={id} className="chart-link" to={`/chart/${id}/?pop=${props.location.query.pop}&showOutliers=${props.location.query.showOutliers}`}>
+      // Temporarily disabling the links. See https://github.com/mozilla/experiments-viewer/issues/72
+      // <Link key={id} className="chart-link" to={`/chart/${id}/?pop=${props.location.query.pop}&showOutliers=${props.location.query.showOutliers}`}>
         <div>
           <ChartContainer
             {...props}
@@ -39,7 +40,7 @@ export default function(props) {
             tooltip={maybeTooltip}
           />
         </div>
-      </Link>
+      // </Link>
     );
   });
 
