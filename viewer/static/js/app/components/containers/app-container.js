@@ -17,14 +17,23 @@ class AppContainer extends React.Component {
     super(props);
     this.currentDataset = {};
     this.sortedPopulationsToShow = [];
+    this.fetchedMetadata = false;
   }
 
   componentWillMount() {
     urlApi.addMissingQueryParameters(this.props.location.query);
-    this.datasetId = urlApi.getDatasetId(this.props.location);
-
-    metricApi.getMetricMetadata(this.datasetId);
     datasetApi.getDatasets();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.location.query.ds) {
+      this.datasetId = urlApi.getDatasetId(nextProps.location);
+
+      if (!this.fetchedMetadata) {
+        metricApi.getMetricMetadata(this.datasetId);
+        this.fetchedMetadata = true;
+      }
+    }
   }
 
   _isALL(qpKey) {
