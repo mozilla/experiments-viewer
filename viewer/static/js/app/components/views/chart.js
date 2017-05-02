@@ -98,7 +98,7 @@ export default class extends React.Component {
                 */}
                 {reverseSortedPopulationsToShow.map(populationName => {
                   return (
-                    <g key={this.props.metricId + populationName} className="population" data-population={populationName}>
+                    <g key={this.props.metricId + populationName} className="population" data-population={populationName} data-population-id={this.props.populationIds[populationName]}>
                       <ChartLineContainer
                         populationName={populationName}
                         metricId={this.props.metricId}
