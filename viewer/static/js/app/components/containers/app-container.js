@@ -21,7 +21,9 @@ class AppContainer extends React.Component {
 
   componentWillMount() {
     urlApi.addMissingQueryParameters(this.props.location.query);
-    metricApi.getMetricMetadata();
+    this.datasetId = urlApi.getDatasetId(this.props.location);
+
+    metricApi.getMetricMetadata(this.datasetId);
     datasetApi.getDatasets();
   }
 

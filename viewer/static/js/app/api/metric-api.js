@@ -9,13 +9,14 @@ export const endpoints = {
   GET_METRIC: `${location.origin}/metric/`,
 };
 
-// Return an object of metric metadata indexed by metric ID. If an array of
-// metricIds is passed, only include metadata about those metrics. Otherwise,
-// include metadata about all published metrics.
-export function getMetricMetadata(metricIds) {
+// Return an object of metric metadata indexeded by metric ID. If a dataset is
+// passed, only include metadata about metrics in that dataset. If an array of
+// metricIDs is passed, only include metadata about those specific metrics.
+// Otherwise, include metadata about all published metrics.
+export function getMetricMetadata(datasetId, metricIds) {
   store.dispatch(metricActions.gettingMetricMetadata());
 
-  return axios.get(endpoints.GET_METRICS).then(response => {
+  return axios.get(`${endpoints.GET_METRICS}?ds=${datasetId}`).then(response => {
     let metricMetadata = response.data.metrics;
     const metricMetadataObject = {};
 
