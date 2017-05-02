@@ -26,7 +26,7 @@ export default function(props) {
         <div className="secondary-menu-content">
           <div className="chart-info">
             {props.sortedPopulationsToShow.map(populationName => {
-              return <p key={populationName} className="hover-summary" data-population={populationName} />;
+              return <p key={populationName} className="hover-summary" data-population={populationName} data-population-id={props.populationIds[populationName]} />;
             })}
           </div>
         </div>

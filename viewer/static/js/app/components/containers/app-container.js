@@ -63,13 +63,32 @@ class AppContainer extends React.Component {
       this.metricIdsToShow = urlApi.getMetricIds(props.location);
     }
 
+    // Assign a numeric ID to each population. For example:
+    //
+    // {
+    //     'control': 1,
+    //     'group A': 2,
+    // }
+    //
+    // By assigning the IDs here, they will be consistent throughout the
+    // application and we can, for example, assign consistent CSS colors for
+    // populations.
+    this.populationIds = {};
+    if (this.currentDataset.populations) {
+      this.allPopulationsSorted = this._sortPopulations(this.currentDataset.populations);
+      this.allPopulationsSorted.map((pop, index) => {
+        this.populationIds[pop] = index + 1;
+      });
+    }
+
     if (showAllPopulations) {
       if (this.currentDataset.populations) {
-        this.sortedPopulationsToShow = this._sortPopulations(this.currentDataset.populations);
+        this.sortedPopulationsToShow = this.allPopulationsSorted;
       }
     } else {
       this.sortedPopulationsToShow = this._sortPopulations(urlApi.getPopulationNames(props.location));
     }
+
 
     // Validate input
     switch (props.location.query.scale) {
@@ -114,6 +133,8 @@ class AppContainer extends React.Component {
       metricMetadata: this.props.metricMetadata,
 
       sortedPopulationsToShow: this.sortedPopulationsToShow,
+      populationIds: this.populationIds,
+
       metricIdsToShow: this.metricIdsToShow,
       allMetricIds: this.allMetricIds,
     });
