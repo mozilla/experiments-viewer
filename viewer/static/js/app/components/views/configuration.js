@@ -1,5 +1,6 @@
 import React from 'react';
 
+import DescriptionContainer from '../containers/description-container';
 import * as utils from '../../utils';
 
 
@@ -41,7 +42,8 @@ export default function(props) {
           const checkedByDefault = props.metricIdsToShow.indexOf(id) > -1;
 
           return (
-            <label key={id} data-description={metricMeta.description}>
+            <label key={id}>
+              <DescriptionContainer rawDescription={metricMeta.description} keepLinebreaks={false} />
               <input type="checkbox"
                      className="cb-metrics"
                      defaultChecked={checkedByDefault}

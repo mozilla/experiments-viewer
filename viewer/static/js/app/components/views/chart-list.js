@@ -24,7 +24,7 @@ export default function(props) {
 
     let maybeTooltip;
     if (thisMetricMetadata.description) {
-      maybeTooltip = <DescriptionContainer rawDescription={thisMetricMetadata.description} asTooltip={true} />;
+      maybeTooltip = <DescriptionContainer rawDescription={thisMetricMetadata.description} asTooltip={true} keepLinebreaks={true} />;
     }
 
     chartLinks.push(
