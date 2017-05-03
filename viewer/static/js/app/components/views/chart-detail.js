@@ -18,7 +18,7 @@ export default function(props) {
       />
       <Legend {...props} />
       <ChartContainer isDetail={true} {...props} />
-      <DescriptionContainer asTooltip={false} {...props} />
+      <DescriptionContainer asTooltip={false} keepLinebreaks={true} {...props} />
     </div>
   );
 }
