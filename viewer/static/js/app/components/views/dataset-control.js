@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Switch from './switch';
+import Button from './button';
 
 
 export default function(props) {
@@ -14,7 +15,12 @@ export default function(props) {
             );
           })}
         </select>
-        <button className="button btn-small apply-config" onClick={props.handleApplyButton}>apply</button>
+        <Button
+          label="apply"
+          isDisabled={props.isBtnDisabled}
+          extraClasses={['alt', 'btn-small', 'apply-config']}
+          handleClick={props.handleApplyButton}
+        />
       </div>
       <div className="dataset-cohorts">
         {props.currentDataset.populations.map(cohort => {
