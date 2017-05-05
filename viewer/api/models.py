@@ -24,6 +24,13 @@ class DataSet(models.Model):
         return u'%s, date=%s, display=%s' % (
             self.name, self.date.strftime('%Y-%m-%d'), self.display)
 
+    def get_metrics(self):
+        return list(
+            Metric.objects.filter(collection__dataset=self)
+                          .distinct('id')
+                          .values_list('id', flat=True)
+        )
+
     def get_populations(self):
         return list(
             Collection.objects.filter(dataset=self)

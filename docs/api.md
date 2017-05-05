@@ -15,11 +15,13 @@ Example output:
     {
       "id": 1,
       "name": "Experiment 1",
+      "metrics": [1, 2, 3, 4, 5],
       "populations": ["control", "group A"]
     },
     {
       "id": 2,
       "name": "Experiment 2",
+      "metrics": [2, 4, 6, 7, 8, 9],
       "populations": ["control", "group A"]
     }
   ]

@@ -37,7 +37,7 @@ export default function(props) {
       <div className={`${props.configureChartsClass} checkbox-list`} onChange={props.handleModifyCharts}>
         <h4>Charts</h4>
 
-        {props.allMetricIds.map(id => {
+        {props.currentDataset.metrics.map(id => {
           const metricMeta = props.metricMetadata[id];
           const checkedByDefault = props.metricIdsToShow.indexOf(id) > -1;
 

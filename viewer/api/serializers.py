@@ -6,7 +6,11 @@ from .models import Collection
 class DataSetSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     name = serializers.CharField()
+    metrics = serializers.SerializerMethodField()
     populations = serializers.SerializerMethodField()
+
+    def get_metrics(self, obj):
+        return obj.get_metrics()
 
     def get_populations(self, obj):
         return obj.get_populations()

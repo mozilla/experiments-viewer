@@ -1,11 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import Configuration from '../views/configuration';
 import * as utils from '../../utils';
 import * as urlApi from '../../api/url-api';
 
 
-export default class extends React.Component {
+class ConfigurationContainer extends React.Component {
   constructor(props) {
     super(props);
 
@@ -60,3 +61,11 @@ export default class extends React.Component {
     );
   }
 }
+
+const mapStateToProps = function(store, ownProps) {
+  return {
+    currentDataset: store.datasetState.currentDataset,
+  };
+};
+
+export default connect(mapStateToProps)(ConfigurationContainer);
