@@ -1,4 +1,4 @@
-Django==1.10.7
+Django==1.11.1
 PyOpenSSL==17.0.0
 contextlib2==0.5.5
 djangorestframework==3.6.2
