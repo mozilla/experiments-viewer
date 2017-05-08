@@ -3,6 +3,8 @@ import * as types from '../actions/action-types';
 
 const initialState = {
   datasets: [],
+  selectedDatasetId: 0,
+
   currentDataset: {
     id: 0,
     name: '',
@@ -18,6 +20,9 @@ const datasetReducer = function(state = initialState, action) {
     }
     case types.CHANGE_DATASET: {
       return Object.assign({}, state, {currentDataset: action.currentDataset});
+    }
+    case types.SELECT_DATASET_UI: {
+      return Object.assign({}, state, {selectedDatasetId: action.selectedDatasetId});
     }
   }
 

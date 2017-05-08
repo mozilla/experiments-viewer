@@ -27,3 +27,11 @@ export function changeDataset(dataset) {
     currentDataset: dataset,
   }
 }
+
+// Dataset UI element changed (though possibly not applied).
+export function selectDatasetUI(datasetId) {
+  return {
+    type: types.SELECT_DATASET_UI,
+    selectedDatasetId: datasetId
+  }
+}
