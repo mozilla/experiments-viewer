@@ -25,10 +25,11 @@ class DataSet(models.Model):
             self.name, self.date.strftime('%Y-%m-%d'), self.display)
 
     def get_populations(self):
-        populations = set()
-        for collection in Collection.objects.filter(dataset=self):
-            populations.add(collection.population)
-        return list(populations)
+        return list(
+            Collection.objects.filter(dataset=self)
+                              .distinct('population')
+                              .values_list('population', flat=True)
+        )
 
 
 TOOLTIP_HELP = (
