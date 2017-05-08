@@ -26,10 +26,12 @@ class AppContainer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    const previousDatasetId = this.datasetId;
+
     if (nextProps.location.query.ds) {
       this.datasetId = urlApi.getDatasetId(nextProps.location);
 
-      if (!this.fetchedMetadata) {
+      if (!this.fetchedMetadata || this.datasetId !== previousDatasetId) {
         metricApi.getMetricMetadata(this.datasetId);
         this.fetchedMetadata = true;
       }
@@ -67,9 +69,9 @@ class AppContainer extends React.Component {
     const showAllMetrics = this._isALL(props.location.query.metrics);
     const showAllPopulations = this._isALL(props.location.query.pop);
 
-    this.allMetricIds = Object.keys(props.metricMetadata);
-    if (showAllMetrics) {
-      this.metricIdsToShow = this.allMetricIds;
+    this.metricIdsToShow = [];
+    if (showAllMetrics && this.currentDataset.metrics) {
+      this.metricIdsToShow = this.currentDataset.metrics;
     } else {
       this.metricIdsToShow = urlApi.getMetricIds(props.location);
     }
@@ -129,10 +131,13 @@ class AppContainer extends React.Component {
   }
 
   render() {
-    // If we don't have dataset metadata yet, we can't render any charts. We
-    // could in theory temporarily show the "No data" message until the data
-    // comes through, but that would look weird.
-    if (this.props.datasets.length === 0) return null;
+    // If we don't know anything about the dataset or don't have any metric
+    // metdata, we can't do much right now. We could in theory temporarily show
+    // the "No data" message until the data comes through, but that would look
+    // weird.
+    if (this.props.datasets.length === 0 || Object.keys(this.props.metricMetadata).length === 0) {
+      return null;
+    }
 
     // Pass some props to the child component
     return React.cloneElement(this.props.children, {
@@ -147,7 +152,6 @@ class AppContainer extends React.Component {
       populationIds: this.populationIds,
 
       metricIdsToShow: this.metricIdsToShow,
-      allMetricIds: this.allMetricIds,
     });
   }
 }

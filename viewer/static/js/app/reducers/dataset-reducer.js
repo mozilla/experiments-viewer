@@ -6,7 +6,8 @@ const initialState = {
   currentDataset: {
     id: 0,
     name: '',
-    populations: []
+    metrics: [],
+    populations: [],
   },
 };
 
