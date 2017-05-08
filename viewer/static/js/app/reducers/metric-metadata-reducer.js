@@ -13,7 +13,8 @@ const getHoverStrings = (metadata) => {
 
   for (const id in metadata) {
     if (metadata.hasOwnProperty(id)) {
-      strings['id-' + id] = metadata[id].tooltip;
+      var tooltip = metadata[id].tooltip;
+      strings['id-' + id] = tooltip ? tooltip : '{pop}: ({x}, {y})'
     }
   }
 
