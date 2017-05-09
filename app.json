@@ -3,7 +3,18 @@
   "scripts": {
   },
   "env": {
-    "NODE_ENV": "production"
+    "NODE_ENV": "production",
+    "SESSION_COOKIE_SECURE": "True",
+    "SSL_REDIRECT": "True",
+    "DATABASE_URL": {
+      "required": true
+    },
+    "GOOGLE_AUTH_KEY": {
+      "required": true
+    },
+    "GOOGLE_AUTH_SECRET": {
+      "required": true
+    }
   },
   "formation": {
     "web": {
