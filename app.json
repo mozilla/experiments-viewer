@@ -3,6 +3,9 @@
   "scripts": {
   },
   "env": {
+    "DATABASE_URL": {
+      "required": true
+    },
     "GOOGLE_AUTH_KEY": {
       "required": true
     },
