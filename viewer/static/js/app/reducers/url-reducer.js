@@ -3,7 +3,6 @@ import { browserHistory } from 'react-router';
 
 
 const defaultQueryParameters = {
-  ds: 1,
   metrics: 'ALL',
   scale: 'linear',
   pop: 'ALL',
