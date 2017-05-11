@@ -88,15 +88,15 @@ class AppContainer extends React.Component {
     // populations.
     this.populationIds = {};
     if (this.currentDataset.populations) {
-      this.allPopulationsSorted = this._sortPopulations(this.currentDataset.populations);
-      this.allPopulationsSorted.map((pop, index) => {
+      this.sortedAllPopulations = this._sortPopulations(this.currentDataset.populations);
+      this.sortedAllPopulations.map((pop, index) => {
         this.populationIds[pop] = index + 1;
       });
     }
 
     if (showAllPopulations) {
       if (this.currentDataset.populations) {
-        this.sortedPopulationsToShow = this.allPopulationsSorted;
+        this.sortedPopulationsToShow = this.sortedAllPopulations;
       }
     } else {
       this.sortedPopulationsToShow = this._sortPopulations(urlApi.getPopulationNames(props.location));
@@ -154,6 +154,7 @@ class AppContainer extends React.Component {
       showOutliers: this.showOutliers,
       metricMetadata: this.props.metricMetadata,
 
+      sortedAllPopulations: this.sortedAllPopulations,
       sortedPopulationsToShow: this.sortedPopulationsToShow,
       populationIds: this.populationIds,
 
