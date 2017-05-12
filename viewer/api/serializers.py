@@ -38,9 +38,11 @@ class DistributionSerializer(serializers.Serializer):
 
     def get_populations(self, obj):
         populations = []
-        for pop in Collection.objects.filter(
-                dataset=obj.dataset, metric=obj.metric,
-                population__in=self.populations):
+        pops = (Collection.objects.select_related('dataset', 'metric')
+                                  .filter(dataset=obj.dataset,
+                                          metric=obj.metric,
+                                          population__in=self.populations))
+        for pop in pops:
             data = {
                 'name': pop.population,
                 'numObs': pop.num_observations,

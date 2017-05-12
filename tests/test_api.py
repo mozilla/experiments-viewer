@@ -209,6 +209,21 @@ class TestMetric(DataTestCase):
         self.assertItemsEqual([p['name'] for p in data['populations']],
                               [collection.population, 'control'])
 
+    def test_unblanced_population(self):
+        # Test a chart with no control group still works.
+
+        # Remove the control group.
+        Collection.objects.filter(dataset=self.dataset,
+                                  metric=self.count_metric,
+                                  population='control').delete()
+        populations = self.dataset.get_populations()
+        response = self.client.get(
+            reverse('metric', args=[self.count_metric.id]),
+            data={'pop': ','.join(populations)})
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        assert len(data['populations']) == 1
+
 
 class TestMetrics(DataTestCase):
 
