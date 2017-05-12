@@ -16,13 +16,15 @@ Example output:
       "id": 1,
       "name": "Experiment 1",
       "metrics": [1, 2, 3, 4, 5],
-      "populations": ["control", "group A"]
+      "populations": ["control", "group A"],
+      "subgroups": ["Windows", "Linux", "Mac"]
     },
     {
       "id": 2,
       "name": "Experiment 2",
       "metrics": [2, 4, 6, 7, 8, 9],
-      "populations": ["control", "group A"]
+      "populations": ["control", "group A"],
+      "subgroups": ["Windows", "Linux", "Mac"]
     }
   ]
 }
@@ -75,6 +77,8 @@ Query parameters:
   the most recently added experiment.
 * `pop` (optional): A comma separated list of populations. If none provided,
   all populations will be returned.
+* `sg` (optional)`: A string that will filter the data by the provided
+  subgroup.  If non provided, all subgroups will be returned.
 
 Example output:
 
@@ -84,9 +88,10 @@ Example output:
   "dataSet": "Experiment A",
   "type": "FlagHistogram",
   "name": "CPU Architecture",
+  "subgroup": "Windows",
   "populations": [
     {
-      "name": "All",
+      "name": "control",
       "numObs": 5321560,
       "points": [
         {
@@ -126,7 +131,8 @@ Example output:
           "c": 1
         }
       ]
-    }
+    },
+    ...
   ]
 }
 ```
@@ -140,15 +146,19 @@ Example output:
     from which the data was created and imported.
   </dd>
 
-  <dt>populations.name</dt>
-  <dd>
-    The population this data set applies to. Besides "All", some examples
-    include: "control" or "group-a".
-  </dd>
-
   <dt>type</dt>
   <dd>
     The type of metric, e.g. "CountHistogram".
+  </dd>
+
+  <dt>subgroup</dt>
+  <dd>
+    The subgroup of the data, e.g. "Windows".
+  </dd>
+
+  <dt>populations.name</dt>
+  <dd>
+    The population this data set applies to.
   </dd>
 
   <dt>points</dt>

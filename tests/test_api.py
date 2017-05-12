@@ -1,54 +1,10 @@
 from django.contrib.auth.models import User
-from django.test import TestCase
 from rest_framework.reverse import reverse
 
 from viewer.api import factories
 from viewer.api.models import Collection, DataSet
 
-
-class DataTestCase(TestCase):
-
-    @classmethod
-    def setUpTestData(cls):
-        # This will create 3 datasets (1 of which being hidden) with 2
-        # populations of 1 metric each.
-
-        def create_collections(dataset, population, flag_metric, count_metric):
-            kwargs = {'dataset': dataset}
-            if population:
-                kwargs['population'] = population
-
-            count_collection = factories.CollectionFactory(
-                metric=count_metric, **kwargs)
-            factories.PointFactory.create_batch(3, collection=count_collection)
-
-            flag_collection = factories.CollectionFactory(
-                metric=flag_metric, **kwargs)
-            factories.PointFactory.create_batch(3, collection=flag_collection)
-
-        count_metric = factories.MetricFactory(type='CountHistogram')
-        flag_metric = factories.MetricFactory(type='FlagHistogram')
-
-        # Create 2 viewable datasets.
-        dataset_older = factories.DataSetFactory()
-        create_collections(dataset_older, 'control', flag_metric, count_metric)
-        create_collections(dataset_older, None, flag_metric, count_metric)
-
-        dataset = factories.DataSetFactory()
-        create_collections(dataset, 'control', flag_metric, count_metric)
-        create_collections(dataset, None, flag_metric, count_metric)
-
-        # Create 1 non-viewable dataset.
-        dataset_hidden = factories.DataSetFactory(display=False)
-        create_collections(dataset_hidden, 'control', flag_metric, count_metric)
-        create_collections(dataset_hidden, None, flag_metric, count_metric)
-
-        # Save these for use in tests.
-        cls.dataset = dataset
-        cls.dataset_older = dataset_older
-        cls.dataset_hidden = dataset_hidden
-        cls.flag_metric = flag_metric
-        cls.count_metric = count_metric
+from . import DataTestCase
 
 
 class TestDataSet(DataTestCase):
@@ -69,12 +25,14 @@ class TestDataSet(DataTestCase):
                     'name': self.dataset.name,
                     'metrics': self.dataset.get_metrics(),
                     'populations': self.dataset.get_populations(),
+                    'subgroups': self.dataset.get_subgroups(),
                 },
                 {
                     'id': self.dataset_older.id,
                     'name': self.dataset_older.name,
                     'metrics': self.dataset_older.get_metrics(),
                     'populations': self.dataset_older.get_populations(),
+                    'subgroups': self.dataset.get_subgroups(),
                 },
             ]
         }
@@ -102,6 +60,7 @@ class TestMetric(DataTestCase):
             u'type': u'FlagHistogram',
             u'description': self.flag_metric.description,
             u'dataSet': self.dataset.name,
+            u'subgroup': None,
             u'populations': [
                 {
                     u'name': u'control',
@@ -124,6 +83,7 @@ class TestMetric(DataTestCase):
             u'type': u'CountHistogram',
             u'description': self.count_metric.description,
             u'dataSet': self.dataset.name,
+            u'subgroup': None,
             u'populations': [
                 {
                     u'name': u'control',
@@ -230,6 +190,21 @@ class TestMetric(DataTestCase):
         self.assertEqual(response.status_code, 200)
         data = response.json()
         assert len(data['populations']) == 1
+
+    def test_subgroup_filter(self):
+        response = self.client.get(
+            reverse('metric', args=[self.count_metric.id]),
+            data={'sg': 'Windows'})
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertEqual(data['subgroup'], 'Windows')
+        assert len(data['populations']) == 2
+
+    def test_invalid_subgroup_404(self):
+        response = self.client.get(
+            reverse('metric', args=[self.count_metric.id]),
+            data={'sg': 'FxOS'})
+        self.assertEqual(response.status_code, 404)
 
 
 class TestMetrics(DataTestCase):

@@ -30,7 +30,8 @@ class CollectionFactory(factory.django.DjangoModelFactory):
     dataset = factory.SubFactory(DataSetFactory)
     metric = factory.SubFactory(MetricFactory)
     num_observations = 12345
-    population = factory.Sequence(lambda n: u'Group %s' % (chr(65 + n)))
+    population = factory.Sequence(lambda n: u'Group %s' % n)
+    subgroup = ''
 
     class Meta:
         model = models.Collection
