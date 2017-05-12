@@ -64,11 +64,10 @@ def metric(request, metric_id):
 
     # Note: We filter by `population='control'` here to get a single record.
     # We collect the requested populations later in the serializer.
-    try:
-        qs = (Collection.objects.select_related('dataset', 'metric')
-                                .get(dataset=dataset, metric=metric,
-                                     population='control'))
-    except Collection.DoesNotExist:
+    qs = (Collection.objects.select_related('dataset', 'metric')
+                            .filter(dataset=dataset, metric=metric)
+                            .first())
+    if not qs:
         raise NotFound('No metrics found for the given dataset.')
 
     serializer = DistributionSerializer(qs, populations=pops)
