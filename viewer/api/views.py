@@ -46,10 +46,6 @@ def metrics(request):
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
 def metric(request, metric_id):
-    # Get requested population or default to "control".
-    pop = request.query_params.get('pop', 'control')
-    pops = pop.split(',')
-
     # Get requested dataset or most recent prior dataset from date.
     ds = get_and_validate_dataset_id(request, 'ds')
     if ds:
@@ -62,13 +58,18 @@ def metric(request, metric_id):
 
     metric = get_object_or_404(Metric, id=metric_id)
 
-    # Note: We filter by `population='control'` here to get a single record.
+    # Note: We simply get any record here to verify there is data.
     # We collect the requested populations later in the serializer.
     qs = (Collection.objects.select_related('dataset', 'metric')
                             .filter(dataset=dataset, metric=metric)
                             .first())
     if not qs:
         raise NotFound('No metrics found for the given dataset.')
+
+    pops = None
+    pop = request.query_params.get('pop')
+    if pop:
+        pops = pop.split(',')
 
     serializer = DistributionSerializer(qs, populations=pops)
     return Response(serializer.data)

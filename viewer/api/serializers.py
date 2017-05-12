@@ -37,17 +37,19 @@ class DistributionSerializer(serializers.Serializer):
         super(DistributionSerializer, self).__init__(*args, **kwargs)
 
     def get_populations(self, obj):
+        collections = (Collection.objects.select_related('dataset', 'metric')
+                                         .filter(dataset=obj.dataset,
+                                                 metric=obj.metric))
+        if self.populations:
+            collections = collections.filter(population__in=self.populations)
+
         populations = []
-        pops = (Collection.objects.select_related('dataset', 'metric')
-                                  .filter(dataset=obj.dataset,
-                                          metric=obj.metric,
-                                          population__in=self.populations))
-        for pop in pops:
+        for c in collections:
             data = {
-                'name': pop.population,
-                'numObs': pop.num_observations,
+                'name': c.population,
+                'numObs': c.num_observations,
             }
-            data['points'] = PointSerializer(pop.points(), many=True).data
+            data['points'] = PointSerializer(c.points(), many=True).data
             populations.append(data)
 
         return populations
