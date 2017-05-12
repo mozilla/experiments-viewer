@@ -95,7 +95,7 @@ class TestMetric(DataTestCase):
         """
         # No `ds` query string gets latest data set.
         url = reverse('metric', args=[self.flag_metric.id])
-        response = self.client.get(url)
+        response = self.client.get(url, data={'pop': 'control'})
         expected = {
             u'name': self.flag_metric.name,
             u'id': self.flag_metric.id,
@@ -117,7 +117,7 @@ class TestMetric(DataTestCase):
         self.assertEqual(response.json(), expected)
 
         url = reverse('metric', args=[self.count_metric.id])
-        response = self.client.get(url)
+        response = self.client.get(url, data={'pop': 'control'})
         expected = {
             u'name': self.count_metric.name,
             u'id': self.count_metric.id,
@@ -208,6 +208,13 @@ class TestMetric(DataTestCase):
         assert len(data['populations']) == 2
         self.assertItemsEqual([p['name'] for p in data['populations']],
                               [collection.population, 'control'])
+
+    def test_defaults_to_all(self):
+        response = self.client.get(
+            reverse('metric', args=[self.count_metric.id]))
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        assert len(data['populations']) == 2
 
     def test_unblanced_population(self):
         # Test a chart with no control group still works.

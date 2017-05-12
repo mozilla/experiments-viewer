@@ -74,7 +74,7 @@ Query parameters:
   find the `DataSet` (aka experiment). If none provided this will default to
   the most recently added experiment.
 * `pop` (optional): A comma separated list of populations. If none provided,
-  this will default to "All".
+  all populations will be returned.
 
 Example output:
 
