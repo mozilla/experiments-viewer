@@ -4,6 +4,7 @@ import * as d3Format from 'd3-format';
 
 import { select, selectAll, mouse } from 'd3-selection';
 import format from 'string-template';
+import { isMetricOrdinal } from '../../utils';
 
 
 export default class extends React.Component {
@@ -58,7 +59,7 @@ export default class extends React.Component {
     let result = this.props.hoverString;
     if (!result) return '';
 
-    if (metricType === 'categorical') {
+    if (isMetricOrdinal(metricType)) {
       result = format(result, {
         x: this.props.refLabels[x],
         p: this._getFormattedVal(p),
