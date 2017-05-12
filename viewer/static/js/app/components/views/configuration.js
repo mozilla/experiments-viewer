@@ -42,7 +42,7 @@ export default function(props) {
           const checkedByDefault = props.metricIdsToShow.indexOf(id) > -1;
 
           return (
-            <label key={id}>
+            <label key={id} title={metricMeta.name}>
               <DescriptionContainer rawDescription={metricMeta.description} keepLinebreaks={false} />
               <input type="checkbox"
                      className="cb-metrics"
