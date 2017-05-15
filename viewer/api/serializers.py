@@ -8,12 +8,16 @@ class DataSetSerializer(serializers.Serializer):
     name = serializers.CharField()
     metrics = serializers.SerializerMethodField()
     populations = serializers.SerializerMethodField()
+    subgroups = serializers.SerializerMethodField()
 
     def get_metrics(self, obj):
         return obj.get_metrics()
 
     def get_populations(self, obj):
         return obj.get_populations()
+
+    def get_subgroups(self, obj):
+        return obj.get_subgroups()
 
 
 class MetricSerializer(serializers.Serializer):
@@ -30,16 +34,22 @@ class DistributionSerializer(serializers.Serializer):
     name = serializers.CharField(source='metric.name')
     description = serializers.CharField(source='metric.description')
     type = serializers.CharField(source='metric.type')
+    subgroup = serializers.SerializerMethodField()
     populations = serializers.SerializerMethodField()
 
     def __init__(self, *args, **kwargs):
         self.populations = kwargs.pop('populations', None)
+        self.subgroup = kwargs.pop('subgroup', '')
         super(DistributionSerializer, self).__init__(*args, **kwargs)
+
+    def get_subgroup(self, obj):
+        return obj.subgroup if obj.subgroup else None
 
     def get_populations(self, obj):
         collections = (Collection.objects.select_related('dataset', 'metric')
                                          .filter(dataset=obj.dataset,
-                                                 metric=obj.metric))
+                                                 metric=obj.metric,
+                                                 subgroup=self.subgroup))
         if self.populations:
             collections = collections.filter(population__in=self.populations)
 

@@ -58,11 +58,17 @@ def metric(request, metric_id):
 
     metric = get_object_or_404(Metric, id=metric_id)
 
+    qs = (Collection.objects.select_related('dataset', 'metric')
+                            .filter(dataset=dataset, metric=metric))
+
+    sg = request.query_params.get('sg', '')
+    if sg:
+        qs = qs.filter(subgroup=sg)
+
     # Note: We simply get any record here to verify there is data.
     # We collect the requested populations later in the serializer.
-    qs = (Collection.objects.select_related('dataset', 'metric')
-                            .filter(dataset=dataset, metric=metric)
-                            .first())
+    qs = qs.first()
+
     if not qs:
         raise NotFound('No metrics found for the given dataset.')
 
@@ -71,5 +77,5 @@ def metric(request, metric_id):
     if pop:
         pops = pop.split(',')
 
-    serializer = DistributionSerializer(qs, populations=pops)
+    serializer = DistributionSerializer(qs, populations=pops, subgroup=sg)
     return Response(serializer.data)

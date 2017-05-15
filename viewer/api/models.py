@@ -35,8 +35,14 @@ class DataSet(models.Model):
         return list(
             Collection.objects.filter(dataset=self)
                               .distinct('population')
-                              .values_list('population', flat=True)
-        )
+                              .values_list('population', flat=True))
+
+    def get_subgroups(self):
+        return list(
+            Collection.objects.filter(dataset=self)
+                              .exclude(subgroup='')
+                              .distinct('subgroup')
+                              .values_list('subgroup', flat=True))
 
 
 TOOLTIP_HELP = (
@@ -66,12 +72,13 @@ class Collection(models.Model):
     metric = models.ForeignKey(Metric)
     num_observations = models.IntegerField()
     population = models.CharField(max_length=255)
+    subgroup = models.CharField(max_length=255, default='')
 
     def __unicode__(self):
         return (
-            u'population=%s, n=%d, dataset_id=%d, metric_id=%d' % (
-                self.population, self.num_observations, self.dataset_id,
-                self.metric_id)
+            u'population=%s, subgroup=%s, n=%d, dataset_id=%d, metric_id=%d'
+            % (self.population, self.subgroup, self.num_observations,
+               self.dataset_id, self.metric_id)
         )
 
     def points(self):

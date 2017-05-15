@@ -187,5 +187,9 @@ LOGGING = {
         #     'handlers': ['console'],
         #     'propagate': False,
         # },
+        'django.db': {
+            'level': 'INFO',  # Set to DEBUG to see all the queries.
+            'handlers': ['console'],
+        },
     }
 }
