@@ -35,3 +35,10 @@ export function selectDatasetUI(datasetId) {
     selectedDatasetId: datasetId
   }
 }
+
+export function changeSubgroup(subgroup) {
+  return {
+    type: types.CHANGE_SUBGROUP,
+    subgroup
+  }
+}

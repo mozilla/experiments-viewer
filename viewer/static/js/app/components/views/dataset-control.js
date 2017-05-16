@@ -22,6 +22,16 @@ export default function(props) {
           handleClick={props.handleApplyButton}
         />
       </div>
+      <div className="dataset-subgroups">
+        <select className="dataset-subgroup-selection" value={props.subgroup} onChange={props.handleSubgroupSelection}>
+          <option value="all">all</option>
+          {props.currentDataset.subgroups.map(subgroup => {
+            return (
+              <option key={subgroup} value={subgroup}>{subgroup}</option>
+            );
+          })}
+        </select>
+      </div>
       <div className="dataset-cohorts">
         {props.sortedAllPopulations.map(cohort => {
           const isActive = props.sortedPopulationsToShow.includes(cohort);

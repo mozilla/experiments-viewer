@@ -32,6 +32,12 @@ class DatasetControlContainer extends React.Component {
     }
   }
 
+  _handleSubgroupSelection(evt) {
+    const newSubgroup = evt.target.value || '';
+    store.dispatch(datasetActions.changeSubgroup(newSubgroup));
+    urlApi.updateQueryParameter('sg', newSubgroup);
+  }
+
   _handleApplyButton(evt) {
     const selectedDatasetId = parseInt(evt.target.parentNode.querySelector('.dataset-selection').value, 10);
     urlApi.updateQueryParameter('ds', selectedDatasetId);
@@ -55,6 +61,7 @@ class DatasetControlContainer extends React.Component {
 
         handleApplyButton={this._handleApplyButton}
         handleDatasetSelection={this._handleDatasetSelection}
+        handleSubgroupSelection={this._handleSubgroupSelection}
         handleCohortSwitch={this._handleCohortSwitch}
         isBtnDisabled={this.isBtnDisabled}
 
