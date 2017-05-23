@@ -6,7 +6,7 @@ from . import models
 
 
 class DataSetFactory(factory.django.DjangoModelFactory):
-    name = factory.Sequence(lambda n: u'Experiment %s' % n)
+    name = factory.Sequence(lambda n: 'Experiment %s' % n)
     date = factory.Sequence(
         lambda n: datetime.date.today() + datetime.timedelta(days=n))
     display = True
@@ -16,8 +16,8 @@ class DataSetFactory(factory.django.DjangoModelFactory):
 
 
 class MetricFactory(factory.django.DjangoModelFactory):
-    name = factory.Sequence(lambda n: u'Metric %s' % n)
-    description = factory.Sequence(lambda n: u'Description for metric %s' % n)
+    name = factory.Sequence(lambda n: 'Metric %s' % n)
+    description = factory.Sequence(lambda n: 'Description for metric %s' % n)
     type = factory.Iterator(['BooleanHistogram', 'CountHistogram',
                              'EnumeratedHistogram', 'ExponentialHistogram',
                              'FlagHistogram'])
@@ -30,7 +30,7 @@ class CollectionFactory(factory.django.DjangoModelFactory):
     dataset = factory.SubFactory(DataSetFactory)
     metric = factory.SubFactory(MetricFactory)
     num_observations = 12345
-    population = factory.Sequence(lambda n: u'Group %s' % n)
+    population = factory.Sequence(lambda n: 'Group %s' % n)
     subgroup = ''
 
     class Meta:

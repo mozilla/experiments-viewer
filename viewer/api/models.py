@@ -20,8 +20,8 @@ class DataSet(models.Model):
     class Meta:
         get_latest_by = 'date'
 
-    def __unicode__(self):
-        return u'%s, date=%s, display=%s' % (
+    def __str__(self):
+        return '%s, date=%s, display=%s' % (
             self.name, self.date.strftime('%Y-%m-%d'), self.display)
 
     def get_metrics(self):
@@ -63,8 +63,8 @@ class Metric(models.Model):
         max_length=255,
         help_text="The metric's name in the source telemetry data.")
 
-    def __unicode__(self):
-        return u'%s, type=%s' % (self.name, self.type)
+    def __str__(self):
+        return '%s, type=%s' % (self.name, self.type)
 
 
 class Collection(models.Model):
@@ -74,9 +74,9 @@ class Collection(models.Model):
     population = models.CharField(max_length=255)
     subgroup = models.CharField(max_length=255, default='')
 
-    def __unicode__(self):
+    def __str__(self):
         return (
-            u'population=%s, subgroup=%s, n=%d, dataset_id=%d, metric_id=%d'
+            'population=%s, subgroup=%s, n=%d, dataset_id=%d, metric_id=%d'
             % (self.population, self.subgroup, self.num_observations,
                self.dataset_id, self.metric_id)
         )

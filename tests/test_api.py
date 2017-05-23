@@ -55,20 +55,20 @@ class TestMetric(DataTestCase):
         url = reverse('metric', args=[self.flag_metric.id])
         response = self.client.get(url, data={'pop': 'control'})
         expected = {
-            u'name': self.flag_metric.name,
-            u'id': self.flag_metric.id,
-            u'type': u'FlagHistogram',
-            u'description': self.flag_metric.description,
-            u'dataSet': self.dataset.name,
-            u'subgroup': None,
-            u'populations': [
+            'name': self.flag_metric.name,
+            'id': self.flag_metric.id,
+            'type': 'FlagHistogram',
+            'description': self.flag_metric.description,
+            'dataSet': self.dataset.name,
+            'subgroup': None,
+            'populations': [
                 {
-                    u'name': u'control',
-                    u'numObs': 12345,
-                    u'points': [
-                        {u'p': 0.9, u'c': 0.9, u'b': u'x86', u'refRank': 1},
-                        {u'p': 0.07, u'c': 0.97, u'b': u'arm', u'refRank': 2},
-                        {u'p': 0.03, u'c': 1.0, u'b': u'ppc', u'refRank': 3}
+                    'name': 'control',
+                    'numObs': 12345,
+                    'points': [
+                        {'p': 0.9, 'c': 0.9, 'b': 'x86', 'refRank': 1},
+                        {'p': 0.07, 'c': 0.97, 'b': 'arm', 'refRank': 2},
+                        {'p': 0.03, 'c': 1.0, 'b': 'ppc', 'refRank': 3}
                     ],
                 }
             ]
@@ -78,20 +78,20 @@ class TestMetric(DataTestCase):
         url = reverse('metric', args=[self.count_metric.id])
         response = self.client.get(url, data={'pop': 'control'})
         expected = {
-            u'name': self.count_metric.name,
-            u'id': self.count_metric.id,
-            u'type': u'CountHistogram',
-            u'description': self.count_metric.description,
-            u'dataSet': self.dataset.name,
-            u'subgroup': None,
-            u'populations': [
+            'name': self.count_metric.name,
+            'id': self.count_metric.id,
+            'type': 'CountHistogram',
+            'description': self.count_metric.description,
+            'dataSet': self.dataset.name,
+            'subgroup': None,
+            'populations': [
                 {
-                    u'name': u'control',
-                    u'numObs': 12345,
-                    u'points': [
-                        {u'p': 0.9, u'c': 0.9, u'b': u'x86', u'refRank': 1},
-                        {u'p': 0.07, u'c': 0.97, u'b': u'arm', u'refRank': 2},
-                        {u'p': 0.03, u'c': 1.0, u'b': u'ppc', u'refRank': 3}
+                    'name': 'control',
+                    'numObs': 12345,
+                    'points': [
+                        {'p': 0.9, 'c': 0.9, 'b': 'x86', 'refRank': 1},
+                        {'p': 0.07, 'c': 0.97, 'b': 'arm', 'refRank': 2},
+                        {'p': 0.03, 'c': 1.0, 'b': 'ppc', 'refRank': 3}
                     ],
                 }
             ]
@@ -166,7 +166,7 @@ class TestMetric(DataTestCase):
         self.assertEqual(response.status_code, 200)
         data = response.json()
         assert len(data['populations']) == 2
-        self.assertItemsEqual([p['name'] for p in data['populations']],
+        self.assertCountEqual([p['name'] for p in data['populations']],
                               [collection.population, 'control'])
 
     def test_defaults_to_all(self):
@@ -219,19 +219,19 @@ class TestMetrics(DataTestCase):
     def test_basic(self):
         response = self.client.get(self.url)
         expected = {
-            u'metrics': [
+            'metrics': [
                 {
-                    u'id': self.count_metric.id,
-                    u'name': self.count_metric.name,
-                    u'description': self.count_metric.description,
-                    u'tooltip': self.count_metric.tooltip,
-                    u'type': u'CountHistogram',
+                    'id': self.count_metric.id,
+                    'name': self.count_metric.name,
+                    'description': self.count_metric.description,
+                    'tooltip': self.count_metric.tooltip,
+                    'type': 'CountHistogram',
                 }, {
-                    u'id': self.flag_metric.id,
-                    u'name': self.flag_metric.name,
-                    u'description': self.flag_metric.description,
-                    u'tooltip': self.flag_metric.tooltip,
-                    u'type': u'FlagHistogram',
+                    'id': self.flag_metric.id,
+                    'name': self.flag_metric.name,
+                    'description': self.flag_metric.description,
+                    'tooltip': self.flag_metric.tooltip,
+                    'type': 'FlagHistogram',
                 }
             ]
         }
@@ -244,7 +244,7 @@ class TestMetrics(DataTestCase):
 
         response = self.client.get(self.url, data={'ds': self.dataset.id})
         metrics = [m['id'] for m in response.json()['metrics']]
-        self.assertItemsEqual(metrics,
+        self.assertCountEqual(metrics,
                               [self.count_metric.id, self.flag_metric.id])
 
     def test_invalid_dataset(self):
