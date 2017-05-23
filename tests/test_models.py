@@ -6,7 +6,7 @@ from . import DataTestCase
 class TestDataSet(DataTestCase):
 
     def test_get_metrics(self):
-        self.assertItemsEqual(self.dataset.get_metrics(),
+        self.assertCountEqual(self.dataset.get_metrics(),
                               [self.flag_metric.id, self.count_metric.id])
 
     def test_get_populations(self):
@@ -15,8 +15,7 @@ class TestDataSet(DataTestCase):
                               .distinct('population')
                               .values_list('population', flat=True))
 
-        self.assertItemsEqual(self.dataset.get_populations(),
-                              pops)
+        self.assertCountEqual(self.dataset.get_populations(), pops)
 
     def test_get_subgroups(self):
         subgroups = list(
@@ -25,5 +24,4 @@ class TestDataSet(DataTestCase):
                               .distinct('subgroup')
                               .values_list('subgroup', flat=True))
 
-        self.assertItemsEqual(self.dataset.get_subgroups(),
-                              subgroups)
+        self.assertCountEqual(self.dataset.get_subgroups(), subgroups)
