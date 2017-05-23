@@ -31,7 +31,12 @@ class ChartContainer extends React.Component {
   }
 
   componentDidMount() {
-    metricApi.getMetric(this.props.datasetId, this.props.metricId, this.props.sortedPopulationsToShow);
+    metricApi.getMetric(
+      this.props.datasetId,
+      this.props.metricId,
+      this.props.sortedPopulationsToShow,
+      this.props.subgroup
+    );
 
     if (this.props.isDetail) {
       this.chartDetail = document.getElementById('chart-detail');
@@ -64,9 +69,13 @@ class ChartContainer extends React.Component {
 
     // If the list of populations to show changed, fetch chart data with the
     // next populations
-
     if (nextProps.sortedPopulationsToShow !== this.props.sortedPopulationsToShow) {
-      metricApi.getMetric(this.props.datasetId, this.props.metricId, nextProps.sortedPopulationsToShow);
+      metricApi.getMetric(
+        this.props.datasetId,
+        this.props.metricId,
+        nextProps.sortedPopulationsToShow,
+        nextProps.subgroup
+      );
     }
   }
 
@@ -234,6 +243,7 @@ class ChartContainer extends React.Component {
 const mapStateToProps = function(store, ownProps) {
   return {
     metric: store.metricState.metrics[ownProps.metricId],
+    subgroup: store.datasetState.subgroup,
   };
 };
 

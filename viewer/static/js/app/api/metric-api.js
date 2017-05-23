@@ -46,7 +46,7 @@ export function getMetricMetadata(datasetId, metricIds) {
  *                       ['control', 'variation1', 'variation2']
  *                       If ommitted, all populations will be fetched.
  */
-export function getMetric(datasetId, metricId, pops) {
+export function getMetric(datasetId, metricId, pops, subgroup) {
   const qp = {};
   qp['ds'] = datasetId;
 
@@ -54,6 +54,10 @@ export function getMetric(datasetId, metricId, pops) {
   // When the pop query parameter is absent, all populations are fetched.
   if (pops) {
     qp['pop'] = pops.join(',');
+  }
+
+  if (subgroup) {
+    qp['sg'] = subgroup;
   }
 
   let queryString = '';

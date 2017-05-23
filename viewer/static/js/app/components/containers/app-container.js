@@ -120,6 +120,11 @@ class AppContainer extends React.Component {
     if (props.location.query && props.location.query.showOutliers) {
       this.showOutliers = props.location.query.showOutliers === 'true';
     }
+
+    // Subgroup in URL param if set. One of 'Linux', 'Windows', 'Mac'.
+    if (props.location.query && props.location.query.sg) {
+      store.dispatch(datasetActions.changeSubgroup(props.location.query.sg));
+    }
   }
 
   componentWillUpdate(nextProps) {
@@ -157,6 +162,7 @@ class AppContainer extends React.Component {
       sortedAllPopulations: this.sortedAllPopulations,
       sortedPopulationsToShow: this.sortedPopulationsToShow,
       populationIds: this.populationIds,
+      subgroup: this.props.subgroup,
 
       metricIdsToShow: this.metricIdsToShow,
     });
@@ -167,6 +173,7 @@ const mapStateToProps = function(store, ownProps) {
   return {
     datasets: store.datasetState.datasets,
     metricMetadata: store.metricMetadataState.metadata,
+    subgroup: store.datasetState.subgroup,
   };
 };
 
