@@ -38,7 +38,7 @@ export default class extends React.Component {
       // contains populations that don't have any corresponding data yet.
       //
       // If there is no data for this population, don't attempt to render it.
-      if (!props.populationData[currentPopulationName]) return null;
+      if (!props.populationData[currentPopulationName]) continue;
 
       populationComponents.push(
         <g key={props.metricId + currentPopulationName} className="population" data-population={currentPopulationName} data-population-id={props.populationIds[currentPopulationName]}>
