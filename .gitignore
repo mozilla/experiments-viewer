@@ -1,6 +1,7 @@
 # Misc
 .bash_history
 .psql_history
+*.dump
 
 # Python and Django
 *.pyc
