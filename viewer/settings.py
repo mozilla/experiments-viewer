@@ -148,7 +148,7 @@ GOOGLE_AUTH_SECRET = config('GOOGLE_AUTH_SECRET', '_HoDDGIq_ZrhBiES-ozIhUgh')
 GOOGLE_AUTH_HOSTED_DOMAIN = 'mozilla.com'
 
 # Google Analytics
-TRACKING_ID = config('TRACKING_ID', default=None)
+TRACKING_ID = config('TRACKING_ID', default='')
 
 # Sentry set up.
 SENTRY_DSN = config('SENTRY_DSN', default=None)
