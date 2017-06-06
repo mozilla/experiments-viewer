@@ -1,5 +1,8 @@
 {
   "name": "viewer",
+  "engines": {
+    "npm": "5.x.x"
+  },
   "scripts": {
     "test": "gulp test",
     "postinstall": "gulp build",
