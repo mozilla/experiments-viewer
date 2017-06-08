@@ -4,6 +4,16 @@ import Switch from './switch';
 import Button from './button';
 
 
+/**
+ * Sort an array of subgroups such that "All" is the first element of the array
+ * and the rest appear in alphabetical order.
+ */
+function sortSubgroups(subgroups) {
+  const allIndex = subgroups.indexOf('All');
+  const all = subgroups.splice(allIndex, 1);
+  return all.concat(subgroups.sort());
+}
+
 export default function(props) {
   return (
     <section className="dataset-control-wrapper">
@@ -24,8 +34,7 @@ export default function(props) {
       </div>
       <div className="dataset-subgroups">
         <select className="dataset-subgroup-selection" value={props.subgroup} onChange={props.handleSubgroupSelection}>
-          <option value="all">all</option>
-          {props.currentDataset.subgroups.map(subgroup => {
+          {sortSubgroups(props.currentDataset.subgroups).map(subgroup => {
             return (
               <option key={subgroup} value={subgroup}>{subgroup}</option>
             );
