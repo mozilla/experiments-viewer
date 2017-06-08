@@ -48,8 +48,11 @@ class DistributionSerializer(serializers.Serializer):
     def get_populations(self, obj):
         collections = (Collection.objects.select_related('dataset', 'metric')
                                          .filter(dataset=obj.dataset,
-                                                 metric=obj.metric,
-                                                 subgroup=self.subgroup))
+                                                 metric=obj.metric))
+
+        if self.subgroup:
+            collections = collections.filter(subgroup=self.subgroup)
+
         if self.populations:
             collections = collections.filter(population__in=self.populations)
 
