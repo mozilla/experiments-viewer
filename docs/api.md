@@ -78,7 +78,7 @@ Query parameters:
 * `pop` (optional): A comma separated list of populations. If none provided,
   all populations will be returned.
 * `sg` (optional)`: A string that will filter the data by the provided
-  subgroup.  If non provided, all subgroups will be returned.
+  subgroup.  If none provided, the "All" subgroup will be returned.
 
 Example output:
 

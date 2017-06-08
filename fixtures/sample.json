@@ -425,7 +425,7 @@
     "metric": 251,
     "num_observations": 8754,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -436,7 +436,7 @@
     "metric": 251,
     "num_observations": 5632,
     "population": "blue_button",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -447,7 +447,7 @@
     "metric": 256,
     "num_observations": 34174,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -458,7 +458,7 @@
     "metric": 256,
     "num_observations": 31725,
     "population": "blue_button",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -469,7 +469,7 @@
     "metric": 257,
     "num_observations": 7796,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -480,7 +480,7 @@
     "metric": 257,
     "num_observations": 7457,
     "population": "blue_button",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -491,7 +491,7 @@
     "metric": 258,
     "num_observations": 5602,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -502,7 +502,7 @@
     "metric": 258,
     "num_observations": 5607,
     "population": "blue_button",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -513,7 +513,7 @@
     "metric": 262,
     "num_observations": 5648,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -524,7 +524,7 @@
     "metric": 262,
     "num_observations": 5133,
     "population": "blue_button",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -535,7 +535,7 @@
     "metric": 263,
     "num_observations": 893,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -546,7 +546,7 @@
     "metric": 263,
     "num_observations": 974,
     "population": "blue_button",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -557,7 +557,7 @@
     "metric": 264,
     "num_observations": 1690,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -568,7 +568,7 @@
     "metric": 264,
     "num_observations": 517,
     "population": "blue_button",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -579,7 +579,7 @@
     "metric": 265,
     "num_observations": 657,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -590,7 +590,7 @@
     "metric": 265,
     "num_observations": 246,
     "population": "blue_button",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -601,7 +601,7 @@
     "metric": 268,
     "num_observations": 2781,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -612,7 +612,7 @@
     "metric": 268,
     "num_observations": 2571,
     "population": "blue_button",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -623,7 +623,7 @@
     "metric": 269,
     "num_observations": 8978,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -634,7 +634,7 @@
     "metric": 269,
     "num_observations": 5602,
     "population": "blue_button",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -645,7 +645,7 @@
     "metric": 270,
     "num_observations": 12153,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -656,7 +656,7 @@
     "metric": 270,
     "num_observations": 11393,
     "population": "blue_button",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -667,7 +667,7 @@
     "metric": 275,
     "num_observations": 210,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -678,7 +678,7 @@
     "metric": 275,
     "num_observations": 150,
     "population": "blue_button",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -689,7 +689,7 @@
     "metric": 276,
     "num_observations": 3682,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -700,7 +700,7 @@
     "metric": 276,
     "num_observations": 2772,
     "population": "blue_button",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -711,7 +711,7 @@
     "metric": 278,
     "num_observations": 90186,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -722,7 +722,7 @@
     "metric": 278,
     "num_observations": 81185,
     "population": "blue_button",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -733,7 +733,7 @@
     "metric": 279,
     "num_observations": 1747,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -744,7 +744,7 @@
     "metric": 279,
     "num_observations": 487,
     "population": "blue_button",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -755,7 +755,7 @@
     "metric": 282,
     "num_observations": 743,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -766,7 +766,7 @@
     "metric": 282,
     "num_observations": 1101,
     "population": "blue_button",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -777,7 +777,7 @@
     "metric": 283,
     "num_observations": 1910,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -788,7 +788,7 @@
     "metric": 283,
     "num_observations": 449,
     "population": "blue_button",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -799,7 +799,7 @@
     "metric": 285,
     "num_observations": 6275,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -810,7 +810,7 @@
     "metric": 285,
     "num_observations": 2149,
     "population": "blue_button",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -821,7 +821,7 @@
     "metric": 287,
     "num_observations": 85416,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -832,7 +832,7 @@
     "metric": 287,
     "num_observations": 76362,
     "population": "blue_button",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -843,7 +843,7 @@
     "metric": 288,
     "num_observations": 23602,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -854,7 +854,7 @@
     "metric": 288,
     "num_observations": 18881,
     "population": "blue_button",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -865,7 +865,7 @@
     "metric": 289,
     "num_observations": 3703,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -876,7 +876,7 @@
     "metric": 289,
     "num_observations": 3491,
     "population": "blue_button",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -887,7 +887,7 @@
     "metric": 290,
     "num_observations": 24358,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -898,7 +898,7 @@
     "metric": 290,
     "num_observations": 22980,
     "population": "blue_button",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -909,7 +909,7 @@
     "metric": 292,
     "num_observations": 3559,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -920,7 +920,7 @@
     "metric": 292,
     "num_observations": 3487,
     "population": "blue_button",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -931,7 +931,7 @@
     "metric": 294,
     "num_observations": 31869,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -942,7 +942,7 @@
     "metric": 294,
     "num_observations": 29367,
     "population": "blue_button",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -953,7 +953,7 @@
     "metric": 295,
     "num_observations": 12153,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -964,7 +964,7 @@
     "metric": 295,
     "num_observations": 11393,
     "population": "blue_button",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -975,7 +975,7 @@
     "metric": 297,
     "num_observations": 12578,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -986,7 +986,7 @@
     "metric": 297,
     "num_observations": 9710,
     "population": "blue_button",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -997,7 +997,7 @@
     "metric": 252,
     "num_observations": 227,
     "population": "branch_2",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1008,7 +1008,7 @@
     "metric": 264,
     "num_observations": 2684,
     "population": "branch_1",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1019,7 +1019,7 @@
     "metric": 269,
     "num_observations": 27591,
     "population": "branch_2",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1030,7 +1030,7 @@
     "metric": 270,
     "num_observations": 41412,
     "population": "branch_2",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1041,7 +1041,7 @@
     "metric": 279,
     "num_observations": 2897,
     "population": "branch_1",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1052,7 +1052,7 @@
     "metric": 283,
     "num_observations": 2751,
     "population": "branch_1",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1063,7 +1063,7 @@
     "metric": 285,
     "num_observations": 14570,
     "population": "branch_2",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1074,7 +1074,7 @@
     "metric": 289,
     "num_observations": 12001,
     "population": "branch_2",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1085,7 +1085,7 @@
     "metric": 290,
     "num_observations": 78085,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1096,7 +1096,7 @@
     "metric": 292,
     "num_observations": 11358,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1107,7 +1107,7 @@
     "metric": 297,
     "num_observations": 37291,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1118,7 +1118,7 @@
     "metric": 258,
     "num_observations": 18107,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1129,7 +1129,7 @@
     "metric": 263,
     "num_observations": 2828,
     "population": "branch_1",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1140,7 +1140,7 @@
     "metric": 269,
     "num_observations": 22881,
     "population": "branch_1",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1151,7 +1151,7 @@
     "metric": 270,
     "num_observations": 38768,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1162,7 +1162,7 @@
     "metric": 275,
     "num_observations": 581,
     "population": "branch_2",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1173,7 +1173,7 @@
     "metric": 277,
     "num_observations": 156,
     "population": "branch_1",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1184,7 +1184,7 @@
     "metric": 278,
     "num_observations": 276898,
     "population": "branch_2",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1195,7 +1195,7 @@
     "metric": 282,
     "num_observations": 4915,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1206,7 +1206,7 @@
     "metric": 287,
     "num_observations": 263441,
     "population": "branch_2",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1217,7 +1217,7 @@
     "metric": 289,
     "num_observations": 11022,
     "population": "branch_1",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1228,7 +1228,7 @@
     "metric": 291,
     "num_observations": 523,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1239,7 +1239,7 @@
     "metric": 294,
     "num_observations": 102711,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1250,7 +1250,7 @@
     "metric": 294,
     "num_observations": 95099,
     "population": "branch_2",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1261,7 +1261,7 @@
     "metric": 251,
     "num_observations": 27235,
     "population": "branch_2",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1272,7 +1272,7 @@
     "metric": 258,
     "num_observations": 19999,
     "population": "branch_1",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1283,7 +1283,7 @@
     "metric": 275,
     "num_observations": 574,
     "population": "branch_1",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1294,7 +1294,7 @@
     "metric": 276,
     "num_observations": 11124,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1305,7 +1305,7 @@
     "metric": 281,
     "num_observations": 362,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1316,7 +1316,7 @@
     "metric": 287,
     "num_observations": 248445,
     "population": "branch_1",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1327,7 +1327,7 @@
     "metric": 291,
     "num_observations": 462,
     "population": "branch_1",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1338,7 +1338,7 @@
     "metric": 293,
     "num_observations": 378,
     "population": "branch_2",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1349,7 +1349,7 @@
     "metric": 296,
     "num_observations": 444,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1360,7 +1360,7 @@
     "metric": 298,
     "num_observations": 241,
     "population": "branch_2",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1371,7 +1371,7 @@
     "metric": 252,
     "num_observations": 163,
     "population": "branch_1",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1382,7 +1382,7 @@
     "metric": 253,
     "num_observations": 1084,
     "population": "branch_2",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1393,7 +1393,7 @@
     "metric": 263,
     "num_observations": 2943,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1404,7 +1404,7 @@
     "metric": 276,
     "num_observations": 10685,
     "population": "branch_1",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1415,7 +1415,7 @@
     "metric": 289,
     "num_observations": 12088,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1426,7 +1426,7 @@
     "metric": 291,
     "num_observations": 364,
     "population": "branch_2",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1437,7 +1437,7 @@
     "metric": 293,
     "num_observations": 317,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1448,7 +1448,7 @@
     "metric": 295,
     "num_observations": 34434,
     "population": "branch_1",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1459,7 +1459,7 @@
     "metric": 298,
     "num_observations": 173,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1470,7 +1470,7 @@
     "metric": 250,
     "num_observations": 2291,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1481,7 +1481,7 @@
     "metric": 253,
     "num_observations": 132,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1492,7 +1492,7 @@
     "metric": 256,
     "num_observations": 103456,
     "population": "branch_2",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1503,7 +1503,7 @@
     "metric": 262,
     "num_observations": 16161,
     "population": "branch_1",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1514,7 +1514,7 @@
     "metric": 264,
     "num_observations": 5131,
     "population": "branch_2",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1525,7 +1525,7 @@
     "metric": 265,
     "num_observations": 1727,
     "population": "branch_1",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1536,7 +1536,7 @@
     "metric": 267,
     "num_observations": 638,
     "population": "branch_2",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1547,7 +1547,7 @@
     "metric": 277,
     "num_observations": 278,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1558,7 +1558,7 @@
     "metric": 281,
     "num_observations": 294,
     "population": "branch_1",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1569,7 +1569,7 @@
     "metric": 293,
     "num_observations": 256,
     "population": "branch_1",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1580,7 +1580,7 @@
     "metric": 296,
     "num_observations": 210,
     "population": "branch_1",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1591,7 +1591,7 @@
     "metric": 250,
     "num_observations": 1373,
     "population": "branch_2",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1602,7 +1602,7 @@
     "metric": 252,
     "num_observations": 245,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1613,7 +1613,7 @@
     "metric": 262,
     "num_observations": 17683,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1624,7 +1624,7 @@
     "metric": 263,
     "num_observations": 2363,
     "population": "branch_2",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1635,7 +1635,7 @@
     "metric": 265,
     "num_observations": 1415,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1646,7 +1646,7 @@
     "metric": 269,
     "num_observations": 22816,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1657,7 +1657,7 @@
     "metric": 277,
     "num_observations": 178,
     "population": "branch_2",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1668,7 +1668,7 @@
     "metric": 285,
     "num_observations": 14054,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1679,7 +1679,7 @@
     "metric": 292,
     "num_observations": 10494,
     "population": "branch_1",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1690,7 +1690,7 @@
     "metric": 297,
     "num_observations": 36412,
     "population": "branch_1",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1701,7 +1701,7 @@
     "metric": 251,
     "num_observations": 22446,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1712,7 +1712,7 @@
     "metric": 257,
     "num_observations": 26592,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1723,7 +1723,7 @@
     "metric": 258,
     "num_observations": 18662,
     "population": "branch_2",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1734,7 +1734,7 @@
     "metric": 262,
     "num_observations": 18431,
     "population": "branch_2",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1745,7 +1745,7 @@
     "metric": 265,
     "num_observations": 1400,
     "population": "branch_2",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1756,7 +1756,7 @@
     "metric": 268,
     "num_observations": 8986,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1767,7 +1767,7 @@
     "metric": 275,
     "num_observations": 802,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1778,7 +1778,7 @@
     "metric": 278,
     "num_observations": 263041,
     "population": "branch_1",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1789,7 +1789,7 @@
     "metric": 281,
     "num_observations": 316,
     "population": "branch_2",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1800,7 +1800,7 @@
     "metric": 283,
     "num_observations": 5329,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1811,7 +1811,7 @@
     "metric": 288,
     "num_observations": 77060,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1822,7 +1822,7 @@
     "metric": 296,
     "num_observations": 168,
     "population": "branch_2",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1833,7 +1833,7 @@
     "metric": 297,
     "num_observations": 36038,
     "population": "branch_2",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1844,7 +1844,7 @@
     "metric": 250,
     "num_observations": 2333,
     "population": "branch_1",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1855,7 +1855,7 @@
     "metric": 256,
     "num_observations": 104525,
     "population": "branch_1",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1866,7 +1866,7 @@
     "metric": 257,
     "num_observations": 22078,
     "population": "branch_2",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1877,7 +1877,7 @@
     "metric": 267,
     "num_observations": 192,
     "population": "branch_1",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1888,7 +1888,7 @@
     "metric": 268,
     "num_observations": 8415,
     "population": "branch_2",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1899,7 +1899,7 @@
     "metric": 270,
     "num_observations": 34434,
     "population": "branch_1",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1910,7 +1910,7 @@
     "metric": 276,
     "num_observations": 10723,
     "population": "branch_2",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1921,7 +1921,7 @@
     "metric": 279,
     "num_observations": 3843,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1932,7 +1932,7 @@
     "metric": 282,
     "num_observations": 4630,
     "population": "branch_1",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1943,7 +1943,7 @@
     "metric": 287,
     "num_observations": 262718,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1954,7 +1954,7 @@
     "metric": 290,
     "num_observations": 74596,
     "population": "branch_1",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1965,7 +1965,7 @@
     "metric": 290,
     "num_observations": 72922,
     "population": "branch_2",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1976,7 +1976,7 @@
     "metric": 294,
     "num_observations": 97556,
     "population": "branch_1",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1987,7 +1987,7 @@
     "metric": 295,
     "num_observations": 38768,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -1998,7 +1998,7 @@
     "metric": 253,
     "num_observations": 1009,
     "population": "branch_1",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -2009,7 +2009,7 @@
     "metric": 256,
     "num_observations": 109599,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -2020,7 +2020,7 @@
     "metric": 264,
     "num_observations": 5074,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -2031,7 +2031,7 @@
     "metric": 267,
     "num_observations": 544,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -2042,7 +2042,7 @@
     "metric": 278,
     "num_observations": 281985,
     "population": "control",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -2053,7 +2053,7 @@
     "metric": 279,
     "num_observations": 5988,
     "population": "branch_2",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -2064,7 +2064,7 @@
     "metric": 282,
     "num_observations": 3226,
     "population": "branch_2",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -2075,7 +2075,7 @@
     "metric": 285,
     "num_observations": 8859,
     "population": "branch_1",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -2086,7 +2086,7 @@
     "metric": 288,
     "num_observations": 71976,
     "population": "branch_1",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -2097,7 +2097,7 @@
     "metric": 295,
     "num_observations": 41412,
     "population": "branch_2",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -2108,7 +2108,7 @@
     "metric": 251,
     "num_observations": 22385,
     "population": "branch_1",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -2119,7 +2119,7 @@
     "metric": 257,
     "num_observations": 20212,
     "population": "branch_1",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -2130,7 +2130,7 @@
     "metric": 268,
     "num_observations": 8327,
     "population": "branch_1",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -2141,7 +2141,7 @@
     "metric": 283,
     "num_observations": 5458,
     "population": "branch_2",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -2152,7 +2152,7 @@
     "metric": 288,
     "num_observations": 70724,
     "population": "branch_2",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -2163,7 +2163,7 @@
     "metric": 292,
     "num_observations": 10478,
     "population": "branch_2",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {
@@ -2174,7 +2174,7 @@
     "metric": 298,
     "num_observations": 106,
     "population": "branch_1",
-    "subgroup": ""
+    "subgroup": "All"
   }
 },
 {

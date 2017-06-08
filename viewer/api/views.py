@@ -61,7 +61,7 @@ def metric(request, metric_id):
     qs = (Collection.objects.select_related('dataset', 'metric')
                             .filter(dataset=dataset, metric=metric))
 
-    sg = request.query_params.get('sg', '')
+    sg = request.query_params.get('sg')
     if sg:
         qs = qs.filter(subgroup=sg)
 

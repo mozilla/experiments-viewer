@@ -60,7 +60,7 @@ class TestMetric(DataTestCase):
             'type': 'FlagHistogram',
             'description': self.flag_metric.description,
             'dataSet': self.dataset.name,
-            'subgroup': None,
+            'subgroup': 'All',
             'populations': [
                 {
                     'name': 'control',
@@ -83,7 +83,7 @@ class TestMetric(DataTestCase):
             'type': 'CountHistogram',
             'description': self.count_metric.description,
             'dataSet': self.dataset.name,
-            'subgroup': None,
+            'subgroup': 'All',
             'populations': [
                 {
                     'name': 'control',

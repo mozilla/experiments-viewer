@@ -39,7 +39,9 @@ class DistributionSerializer(serializers.Serializer):
 
     def __init__(self, *args, **kwargs):
         self.populations = kwargs.pop('populations', None)
-        self.subgroup = kwargs.pop('subgroup', '')
+        subgroup = kwargs.pop('subgroup')
+        # If it's ``None``, default to "All".
+        self.subgroup = subgroup if subgroup else 'All'
         super(DistributionSerializer, self).__init__(*args, **kwargs)
 
     def get_subgroup(self, obj):
@@ -48,10 +50,8 @@ class DistributionSerializer(serializers.Serializer):
     def get_populations(self, obj):
         collections = (Collection.objects.select_related('dataset', 'metric')
                                          .filter(dataset=obj.dataset,
-                                                 metric=obj.metric))
-
-        if self.subgroup:
-            collections = collections.filter(subgroup=self.subgroup)
+                                                 metric=obj.metric,
+                                                 subgroup=self.subgroup))
 
         if self.populations:
             collections = collections.filter(population__in=self.populations)
