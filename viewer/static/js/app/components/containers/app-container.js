@@ -6,6 +6,7 @@ import * as urlApi from '../../api/url-api';
 import * as datasetApi from '../../api/dataset-api';
 import * as datasetActions from '../../actions/dataset-actions';
 import store from '../../store';
+import { bumpSort } from '../../utils';
 
 
 /**
@@ -42,27 +43,6 @@ class AppContainer extends React.Component {
     return qpKey && qpKey === 'ALL';
   }
 
-  // Return a sorted array of population names, where the term "sorted" means
-  // the following:
-  //
-  // The "control" population is the first element of the array and all other
-  // populations appear in alphabetical order.
-  //
-  // For example:
-  // ['z', 'b', 'control', 'a'] => ['control', 'a', 'b', 'z']
-  //
-  // We want populations to appear in this order wherever they are displayed.
-  _sortPopulations(populations) {
-    var control = populations.find(e => e === 'control');
-
-    if (control) {
-      var noControl = populations.filter(e => e !== 'control');
-      return [control].concat(noControl.sort());
-    } else {
-      return populations.sort();
-    }
-  }
-
   _processProps(props) {
     this.datasetId = urlApi.getDatasetId(props.location);
 
@@ -88,7 +68,7 @@ class AppContainer extends React.Component {
     // populations.
     this.populationIds = {};
     if (this.currentDataset.populations) {
-      this.sortedAllPopulations = this._sortPopulations(this.currentDataset.populations);
+      this.sortedAllPopulations = bumpSort(this.currentDataset.populations, 'control');
       this.sortedAllPopulations.map((pop, index) => {
         this.populationIds[pop] = index + 1;
       });
@@ -99,7 +79,7 @@ class AppContainer extends React.Component {
         this.sortedPopulationsToShow = this.sortedAllPopulations;
       }
     } else {
-      this.sortedPopulationsToShow = this._sortPopulations(urlApi.getPopulationNames(props.location));
+      this.sortedPopulationsToShow = bumpSort(urlApi.getPopulationNames(props.location), 'control');
     }
 
 

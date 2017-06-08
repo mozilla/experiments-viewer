@@ -2,20 +2,12 @@ import React from 'react';
 
 import Switch from './switch';
 import Button from './button';
+import { bumpSort } from '../../utils';
 
-
-/**
- * Sort an array of subgroups such that "All" is the first element of the array
- * and the rest appear in alphabetical order.
- */
-function sortSubgroups(subgroups) {
-  const sgCopy = subgroups.slice();
-  const allIndex = sgCopy.indexOf('All');
-  const all = sgCopy.splice(allIndex, 1);
-  return all.concat(sgCopy.sort());
-}
 
 export default function(props) {
+  const sortedSubgroups = bumpSort(props.currentDataset.subgroups, 'All');
+
   return (
     <section className="dataset-control-wrapper">
       <div className="dataset-config-content">
@@ -35,7 +27,7 @@ export default function(props) {
       </div>
       <div className="dataset-subgroups">
         <select className="dataset-subgroup-selection" value={props.subgroup} onChange={props.handleSubgroupSelection}>
-          {sortSubgroups(props.currentDataset.subgroups).map(subgroup => {
+          {sortedSubgroups.map(subgroup => {
             return (
               <option key={subgroup} value={subgroup}>{subgroup}</option>
             );
