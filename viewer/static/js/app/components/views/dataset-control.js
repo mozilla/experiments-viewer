@@ -9,9 +9,10 @@ import Button from './button';
  * and the rest appear in alphabetical order.
  */
 function sortSubgroups(subgroups) {
-  const allIndex = subgroups.indexOf('All');
-  const all = subgroups.splice(allIndex, 1);
-  return all.concat(subgroups.sort());
+  const sgCopy = subgroups.slice();
+  const allIndex = sgCopy.indexOf('All');
+  const all = sgCopy.splice(allIndex, 1);
+  return all.concat(sgCopy.sort());
 }
 
 export default function(props) {
