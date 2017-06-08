@@ -9,9 +9,9 @@ from psycopg2.extras import LoggingConnection
 from pyspark.sql import SparkSession
 
 
-PATH = 's3://telemetry-test-bucket/ssuh/fake_experiment_analysis/'
-LOG_LEVEL = logging.DEBUG  # Change to incr/decr logging output.
-DEBUG_SQL = True  # Set to True to not insert any data.
+PATH = 's3://telemetry-test-bucket/experiments_analysis/'
+LOG_LEVEL = logging.INFO  # Change to incr/decr logging output.
+DEBUG_SQL = False  # Set to True to not insert any data.
 METRICS = None
 
 
@@ -109,12 +109,13 @@ def get_metric(metric_name, metric_type):
             return metric_id
 
 
-def create_collection(dataset_id, metric_id, num_observations, population):
+def create_collection(dataset_id, metric_id, num_observations, population,
+                      subgroup):
     sql = ('INSERT INTO api_collection '
-           '(dataset_id, metric_id, num_observations, population) '
-           'VALUES (%s, %s, %s, %s) '
+           '(dataset_id, metric_id, num_observations, population, subgroup) '
+           'VALUES (%s, %s, %s, %s, %s) '
            'RETURNING id')
-    params = [dataset_id, metric_id, num_observations, population]
+    params = [dataset_id, metric_id, num_observations, population, subgroup]
     if DEBUG_SQL:
         print cursor.mogrify(sql, params)
         return 0
@@ -143,7 +144,7 @@ conn, cursor = get_database_connection()
 
 # Get list of distinct experiments.
 experiments = set([r[0] for r in
-                   df.select('experiment_name').distinct().collect()])
+                   df.select('experiment_id').distinct().collect()])
 
 # Check list of experiments against what we have in the database.
 # If there's a new one, import it.
@@ -162,15 +163,16 @@ for exp in missing:
     dataset_id = create_dataset(exp)
 
     # Get all rows for this experiment
-    rows = df.filter("experiment_name='%s'" % exp).collect()
+    rows = df.filter("experiment_id='%s'" % exp).collect()
 
     # For each row in the data insert the histograms.
     for row in rows:
         row = row.asDict()
 
-        metric_id = get_metric(row['metric_name'], row['metric_Type'])  # XXX
-        collection_id = create_collection(dataset_id, metric_id, row['n'],
-                                          row['experiment_branch'])
+        metric_id = get_metric(row['metric_name'], row['metric_type'])
+        collection_id = create_collection(
+            dataset_id, metric_id, row['n'], row['experiment_branch'],
+            row['subgroup'] or '')
 
         for rank, kv in enumerate(row['histogram'].iteritems(), 1):
             k, v = kv[0], kv[1].asDict()
