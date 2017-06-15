@@ -12,5 +12,5 @@ Secure copy ('scp') the Python file to the host machine.
 Next you can submit the Python file to Spark, with the specified arguments to
 more closely match how Airflow will execute jobs:
 
-  spark-submit --executor-cores 8 --master yarn --deploy-mode client "./aggregate-and-import.py"
+  spark-submit --executor-cores 8 --master yarn --deploy-mode client "./import.py"
 

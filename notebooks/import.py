@@ -1,6 +1,5 @@
 import datetime
 import logging
-import sys
 
 import boto3
 import psycopg2
@@ -9,7 +8,7 @@ from psycopg2.extras import LoggingConnection
 from pyspark.sql import SparkSession
 
 
-PATH = 's3://telemetry-test-bucket/experiments_analysis/'
+PATH = 's3://telemetry-parquet/experiments_aggregates/v1/'
 LOG_LEVEL = logging.INFO  # Change to incr/decr logging output.
 DEBUG_SQL = False  # Set to True to not insert any data.
 METRICS = None
@@ -44,7 +43,7 @@ def create_dataset(exp):
            'VALUES (%s, %s, %s, %s) '
            'RETURNING id')
     params = [
-        exp,
+        'TMP-%s' % exp,  # Store initially with a temporary prefix.
         datetime.date.today(),
         False,
         datetime.datetime.now(),
@@ -58,9 +57,44 @@ def create_dataset(exp):
         return cursor.fetchone()[0]
 
 
-def display_dataset(dataset_id):
-    sql = 'UPDATE api_dataset SET display=true WHERE id=%s'
-    params = [dataset_id]
+def display_dataset(exp, dataset_id):
+    # Determine if we're replacing a previous import of this experiment.
+    old_dataset_id = 0
+
+    sql = 'SELECT id FROM api_dataset WHERE name=%s'
+    params = [exp]
+    if DEBUG_SQL:
+        print cursor.mogrify(sql, params)
+    else:
+        cursor.execute(sql, params)
+        result = cursor.fetchone()
+        if result:
+            old_dataset_id = result[0]
+
+    if old_dataset_id:
+        # If we are replacing a dataset, we need to delete the old one and
+        # update the just added one with the old ID.
+        sql = '''
+            BEGIN;
+            DELETE FROM api_dataset WHERE id=%s;
+            UPDATE api_dataset
+              SET id=%s,
+                  name=%s,
+                  display=true
+              WHERE id=%s;
+            COMMIT;
+        '''
+        params = [
+            old_dataset_id,
+            old_dataset_id,
+            exp,
+            dataset_id,
+        ]
+    else:
+        # This is a new dataset.
+        sql = 'UPDATE api_dataset SET display=true, name=%s WHERE id=%s'
+        params = [exp, dataset_id]
+
     if DEBUG_SQL:
         print cursor.mogrify(sql, params)
     else:
@@ -136,30 +170,26 @@ def create_point(collection_id, bucket, proportion, count, rank):
         cursor.execute(sql, params)
 
 
+yesterday = (datetime.date.today() -
+             datetime.timedelta(days=1)).strftime('%Y%m%d')
+
+print 'Querying data for date: %s' % yesterday
+
 sparkSession = SparkSession.builder.appName('experiments-viewer').getOrCreate()
-df = sparkSession.read.parquet(PATH)
+df = sparkSession.read.parquet(PATH).filter("date='%s'" % yesterday).cache()
 
 # Get database connection and initialize logging.
 conn, cursor = get_database_connection()
 
 # Get list of distinct experiments.
-experiments = set([r[0] for r in
-                   df.select('experiment_id').distinct().collect()])
+experiments = set(
+    [r[0] for r in df.select('experiment_id')
+                     .distinct()
+                     .collect()]
+)
 
-# Check list of experiments against what we have in the database.
-# If there's a new one, import it.
-sql = 'SELECT name FROM api_dataset'
-cursor.execute(sql)
-db_experiments = set([r[0] for r in cursor.fetchall()])
-
-missing = list(experiments - db_experiments)
-if not missing:
-    print('No new experiments found. Exiting.')
-    sys.exit()
-
-
-for exp in missing:
-    print 'Inserting data for new experiment: %s' % exp
+for exp in experiments:
+    print 'Inserting data for experiment: %s' % exp
     dataset_id = create_dataset(exp)
 
     # Get all rows for this experiment
@@ -182,4 +212,4 @@ for exp in missing:
         # TODO: Store row['statistics']
 
     # Flag dataset as viewable.
-    display_dataset(dataset_id)
+    display_dataset(exp, dataset_id)
