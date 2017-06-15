@@ -90,5 +90,5 @@ class Point(models.Model):
     collection = models.ForeignKey(Collection, related_name='_points')
     bucket = models.CharField(max_length=255)
     proportion = models.FloatField()
-    count = models.IntegerField(null=True)
+    count = models.BigIntegerField(null=True)
     rank = models.IntegerField(null=True)
