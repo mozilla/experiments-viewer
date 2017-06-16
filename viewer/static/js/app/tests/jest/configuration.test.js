@@ -2,7 +2,7 @@ import React from 'react';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
-import Configuration from '../components/views/configuration';
+import Configuration from '../../components/views/configuration';
 
 
 let outliersSpy, scaleSpy, configurationMock;
