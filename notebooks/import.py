@@ -1,5 +1,6 @@
 import datetime
 import logging
+from os import environ
 
 import boto3
 import psycopg2
@@ -80,7 +81,8 @@ def display_dataset(exp, dataset_id):
             UPDATE api_dataset
               SET id=%s,
                   name=%s,
-                  display=true
+                  display=true,
+                  import_stop=%s
               WHERE id=%s;
             COMMIT;
         '''
@@ -88,12 +90,19 @@ def display_dataset(exp, dataset_id):
             old_dataset_id,
             old_dataset_id,
             exp,
+            datetime.datetime.now(),
             dataset_id,
         ]
     else:
         # This is a new dataset.
-        sql = 'UPDATE api_dataset SET display=true, name=%s WHERE id=%s'
-        params = [exp, dataset_id]
+        sql = '''
+            UPDATE api_dataset
+                SET display=true,
+                    name=%s,
+                    import_stop=%s
+                WHERE id=%s'
+        '''
+        params = [exp, datetime.datetime.now(), dataset_id]
 
     if DEBUG_SQL:
         print cursor.mogrify(sql, params)
@@ -170,13 +179,17 @@ def create_point(collection_id, bucket, proportion, count, rank):
         cursor.execute(sql, params)
 
 
-yesterday = (datetime.date.today() -
-             datetime.timedelta(days=1)).strftime('%Y%m%d')
+process_date = environ.get('date')
+if not process_date:
+    # If no date in environment, assume we are running manually and use
+    # yesterday's date.
+    process_date = (datetime.date.today() -
+                    datetime.timedelta(days=1)).strftime('%Y%m%d')
 
-print 'Querying data for date: %s' % yesterday
+print 'Querying data for date: %s' % process_date
 
 sparkSession = SparkSession.builder.appName('experiments-viewer').getOrCreate()
-df = sparkSession.read.parquet(PATH).filter("date='%s'" % yesterday).cache()
+df = sparkSession.read.parquet(PATH).filter("date='%s'" % process_date).cache()
 
 # Get database connection and initialize logging.
 conn, cursor = get_database_connection()
