@@ -9,7 +9,8 @@ from psycopg2.extras import LoggingConnection
 from pyspark.sql import SparkSession
 
 
-PATH = 's3://telemetry-parquet/experiments_aggregates/v1/'
+BUCKET = environ.get('bucket', 'telemetry-parquet')
+PATH = 's3://%s/experiments_aggregates/v1/' % BUCKET
 LOG_LEVEL = logging.INFO  # Change to incr/decr logging output.
 DEBUG_SQL = False  # Set to True to not insert any data.
 METRICS = None
