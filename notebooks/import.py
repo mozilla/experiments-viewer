@@ -101,7 +101,7 @@ def display_dataset(exp, dataset_id):
                 SET display=true,
                     name=%s,
                     import_stop=%s
-                WHERE id=%s'
+                WHERE id=%s
         '''
         params = [exp, datetime.datetime.now(), dataset_id]
 
