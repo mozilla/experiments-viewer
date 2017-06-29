@@ -50,6 +50,7 @@
     "webpack-stream": "^3.1.0"
   },
   "devDependencies": {
+    "gulp-nightwatch": "^0.3.2",
     "webpack-bundle-size-analyzer": "^2.0.2"
   }
 }

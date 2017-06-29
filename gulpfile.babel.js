@@ -10,6 +10,7 @@ import cp from 'child_process';
 import eslint from 'gulp-eslint';
 import jest from 'gulp-jest';
 import nib from 'nib';
+import nightwatch from 'gulp-nightwatch';
 import path from 'path';
 import sourcemaps from 'gulp-sourcemaps';
 import stylus from 'gulp-stylus';
@@ -61,10 +62,15 @@ gulp.task('lint:js', ['build:js'], () => {
 });
 
 gulp.task('jest', ['build:js'], () => {
-  return gulp.src(path.resolve(paths.js, 'app/tests'))
+  return gulp.src(path.resolve(paths.js, 'app/tests/jest'))
              .pipe(jest());
 });
 
+gulp.task('nightwatch', ['build:js'], () => {
+  return gulp.src('')
+             .pipe(nightwatch());
+});
+
 gulp.task('build', ['build:js', 'build:css']);
-gulp.task('test', ['lint:js', 'jest']);
+gulp.task('test', ['lint:js', 'jest', 'nightwatch']);
 gulp.task('default', ['build']);

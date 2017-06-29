@@ -1,0 +1,13 @@
+{
+  "src_folders": ["./viewer/static/js/app/tests/nightwatch"],
+  "output_folder": false,
+
+  "test_settings": {
+    "default": {
+      "launch_url" : "http://localhost:8000",
+      "desiredCapabilities": {
+        "browserName": "phantomjs"
+      }
+    }
+  }
+}

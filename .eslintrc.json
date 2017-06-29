@@ -6,7 +6,8 @@
     "jest": true
   },
   "globals": {
-    "process": false
+    "process": false,
+    "module": false
   },
   "parserOptions": {
     "ecmaVersion": 6,

@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'enzyme';
 
-import DescriptionContainer from '../components/containers/description-container';
+import DescriptionContainer from '../../components/containers/description-container';
 
 describe('DescriptionContainer', () => {
   it('All HTML should be stripped', () => {

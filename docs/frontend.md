@@ -8,6 +8,8 @@ Setup
 
 1. `npm install`
 2. `npm install -g gulp`
+3. Install browser automation tools
+  * Mac: `brew install selenium-server-standalone phantomjs`
 
 Run
 ===
@@ -21,7 +23,5 @@ if you see an error about a missing or out-of-date dependency:
 Testing
 =======
 
-Run `gulp test` to run the frontend tests from your host machine.
-
-If you'd like to run the frontend tests inside the docker container, run
-`docker-compose run server test frontend`.
+1. Run `selenium-server`
+2. In another terminal, run `gulp test`
