@@ -163,30 +163,32 @@ Example output:
 
   <dt>points</dt>
   <dd>
-    <dt>b</dt>
-    <dd>
-      The bin to which a given amount of weight is assigned
-    </dd>
+    <dl>
+      <dt>b</dt>
+      <dd>
+        The bin to which a given amount of weight is assigned
+      </dd>
 
-    <dt>p</dt>
-    <dd>
-      The proportion of weight assigned to that bin (all <code>p</code>s should
-      sum to 1)
-    </dd>
+      <dt>p</dt>
+      <dd>
+        The proportion of weight assigned to that bin (all <code>p</code>s should
+        sum to 1)
+      </dd>
 
-    <dt>c</dt>
-    <dd>
-      The cumulative amount of weight if the bins are sorted in
-      <code>refRank</code> order
-    </dd>
+      <dt>c</dt>
+      <dd>
+        The cumulative amount of weight if the bins are sorted in
+        <code>refRank</code> order
+      </dd>
 
-    <dt>refRank</dt>
-    <dd>
-      The sort order of the bin from the reference population ordered from most
-      weight to least weight. This is needed because if you display more than one
-      population, the proportion of records bins will be be different, so you need
-      a stable ranking to display them side-by-side.
-    </dd>
+      <dt>refRank</dt>
+      <dd>
+        The sort order of the bin from the reference population ordered from most
+        weight to least weight. This is needed because if you display more than one
+        population, the proportion of records bins will be be different, so you need
+        a stable ranking to display them side-by-side.
+      </dd>
+    </dl>
   </dd>
 </dl>
 
