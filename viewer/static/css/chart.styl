@@ -39,9 +39,16 @@ $line-width = 1px;
   }
 }
 
+/* Give population lines opacity so that they can overlap each other and blend.
+   We need to target g.population rather than the line itself because each
+   g.population has only one line. */
+.population {
+  opacity: .6;
+}
+
 .line {
   fill: none;
-  stroke-width: 1.5px;
+  stroke-width: 2.0px;
 }
 
 .tick {
