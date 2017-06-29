@@ -1,15 +1,7 @@
 @import 'lib';
 
-/*
-Colors selected by playing around with [1] with $mild-blue as the base color. To
-be honest, I don't know much about color theory, but these looked like they fit
-pretty well with our colorscheme.
-
-[1] http://www.colorschemer.com/online.html
-
-- openjck
-*/
-$colors = $mild-blue, #9b4be2, #e24b91, #f3d6b4, #dde24b, #4be29b, #de8f35, #de3b35;
+// See https://sashat.me/2017/01/11/list-of-20-simple-distinct-colors/
+$colors = $mild-blue, #e6194b, #3cb44b, #ffe119, #f58231, #911eb4, #46f0f0, #fabebe;
 
 for $color, $zero-based-index in $colors {
   $ordinal = $zero-based-index + 1;
