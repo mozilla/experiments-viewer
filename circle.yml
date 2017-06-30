@@ -1,6 +1,4 @@
 machine:
-    pre:
-        - sudo curl --output /usr/local/bin/phantomjs https://s3.amazonaws.com/circle-downloads/phantomjs-2.1.1
     environment:
         DATABASE_URL: postgresql://ubuntu:@127.0.0.1:5432/circle_test
         DEBUG: False
@@ -15,9 +13,12 @@ dependencies:
         - ./bin/build
     post:
         - wget https://selenium-release.storage.googleapis.com/3.4/selenium-server-standalone-3.4.0.jar
-        - java -jar selenium-server-standalone-3.4.0.jar:
-            background: true
+        - sudo curl --output /usr/local/bin/phantomjs https://s3.amazonaws.com/circle-downloads/phantomjs-2.1.1
 
 test:
+    pre:
+        - docker-compose up
+        - java -jar selenium-server-standalone-3.4.0.jar:
+            background: true
     override:
         - ./bin/test
