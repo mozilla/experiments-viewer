@@ -72,5 +72,5 @@ gulp.task('nightwatch', ['build:js'], () => {
 });
 
 gulp.task('build', ['build:js', 'build:css']);
-gulp.task('test', ['lint:js', 'jest', 'nightwatch']);
+gulp.task('test', ['lint:js', 'jest']);
 gulp.task('default', ['build']);
