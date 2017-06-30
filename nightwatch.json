@@ -2,12 +2,24 @@
   "src_folders": ["./viewer/static/js/app/tests/nightwatch"],
   "output_folder": false,
 
+  "selenium": {
+    "start_process" : true,
+    "server_path" : "./node_modules/selenium-server-standalone-jar/jar/selenium-server-standalone-3.4.0.jar",
+    "log_path" : "",
+    "host" : "127.0.0.1",
+    "port" : 4444
+  },
+
   "test_settings": {
     "default": {
       "launch_url" : "http://localhost:8000",
       "desiredCapabilities": {
         "browserName": "phantomjs"
       }
+    },
+
+    "circleci": {
+      "output_folder" : "${CIRCLE_TEST_REPORTS}"
     }
   }
 }

@@ -3,6 +3,7 @@ machine:
         DATABASE_URL: postgresql://ubuntu:@127.0.0.1:5432/circle_test
         DEBUG: False
         DJANGO_SETTINGS_MODULE: viewer.settings
+        CIRCLECI: True
     services:
         - docker
 
@@ -11,7 +12,11 @@ dependencies:
         - docker info
     override:
         - ./bin/build
+    post:
+        - sudo curl --output /usr/local/bin/docker-compose https://github.com/docker/compose/releases/download/1.14.0/docker-compose-`uname -s`-`uname -m`
 
 test:
+    pre:
+        - docker-compose up
     override:
         - ./bin/test

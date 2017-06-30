@@ -8,8 +8,6 @@ Setup
 
 1. `npm install`
 2. `npm install -g gulp`
-3. Install browser automation tools
-  * Mac: `brew install selenium-server-standalone phantomjs`
 
 Run
 ===
@@ -23,5 +21,4 @@ if you see an error about a missing or out-of-date dependency:
 Testing
 =======
 
-1. Run `selenium-server`
-2. In another terminal, run `gulp test`
+1. Run `gulp test`
