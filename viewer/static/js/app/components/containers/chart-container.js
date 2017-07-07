@@ -32,7 +32,7 @@ class ChartContainer extends React.Component {
 
   componentDidMount() {
     metricApi.getMetric(
-      this.props.datasetId,
+      this.props.dataset,
       this.props.metricId,
       this.props.sortedPopulationsToShow,
       this.props.subgroup
@@ -71,7 +71,7 @@ class ChartContainer extends React.Component {
     // next populations
     if (nextProps.sortedPopulationsToShow !== this.props.sortedPopulationsToShow) {
       metricApi.getMetric(
-        this.props.datasetId,
+        this.props.dataset,
         this.props.metricId,
         nextProps.sortedPopulationsToShow,
         nextProps.subgroup

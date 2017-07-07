@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 from rest_framework.decorators import api_view, renderer_classes
-from rest_framework.exceptions import NotFound, ParseError
+from rest_framework.exceptions import NotFound
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 
@@ -8,18 +8,6 @@ from .models import Collection, DataSet, Metric
 from .renderers import DataSetJSONRenderer, MetricsJSONRenderer
 from .serializers import (DataSetSerializer, DistributionSerializer,
                           MetricSerializer)
-
-
-def get_and_validate_dataset_id(request, param_name):
-    ds = request.query_params.get(param_name)
-    if ds:
-        try:
-            ds = int(ds)
-        except ValueError:
-            raise ParseError('DataSet ID provided is not an integer.')
-        return ds
-
-    return None
 
 
 @api_view(['GET'])
@@ -34,11 +22,13 @@ def datasets(request):
 def metrics(request):
     metrics = Metric.objects.all().order_by('name')
 
-    ds = get_and_validate_dataset_id(request, 'ds')
+    ds = request.query_params.get('ds')
     if ds:
         # Further filter metrics by dataset.
-        metrics = (metrics.filter(collection__dataset_id=ds)
+        metrics = (metrics.filter(collection__dataset__name=ds)
                           .distinct('id', 'name'))
+        if not metrics:
+            raise NotFound('No data set with given dataset found.')
 
     return Response([MetricSerializer(m).data for m in metrics])
 
@@ -47,14 +37,14 @@ def metrics(request):
 @renderer_classes([JSONRenderer])
 def metric(request, metric_id):
     # Get requested dataset or most recent prior dataset from date.
-    ds = get_and_validate_dataset_id(request, 'ds')
+    ds = request.query_params.get('ds')
     if ds:
-        dataset = DataSet.objects.visible().filter(id=ds).first()
+        dataset = DataSet.objects.visible().filter(name=ds).first()
     else:
         dataset = DataSet.objects.visible().order_by('-date').first()
 
     if not dataset:
-        raise NotFound('No data set with given name found.')
+        raise NotFound('No data set with given dataset found.')
 
     metric = get_object_or_404(Metric, id=metric_id)
 

@@ -102,7 +102,7 @@ class TestMetric(DataTestCase):
         # Test that passing ?ds= works.
         response = self.client.get(
             reverse('metric', args=[self.flag_metric.id]),
-            data={'ds': self.dataset_older.id})
+            data={'ds': self.dataset_older.name})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(DataSet.objects.visible().count(), 2)
         self.assertEqual(response.json()['dataSet'], self.dataset_older.name)
@@ -122,12 +122,6 @@ class TestMetric(DataTestCase):
             reverse('metric', args=[self.flag_metric.id]),
             data={'ds': '999'})
         self.assertEqual(response.status_code, 404)
-
-    def test_invalid_dataset(self):
-        response = self.client.get(
-            reverse('metric', args=[self.flag_metric.id]),
-            data={'ds': 'foo'})
-        self.assertEqual(response.status_code, 400)
 
     def test_no_metric_404(self):
         url = reverse('metric', args=['999'])
@@ -242,11 +236,11 @@ class TestMetrics(DataTestCase):
         # Add a 3rd metric we expect not to see.
         factories.MetricFactory(type='OtherHistogram')
 
-        response = self.client.get(self.url, data={'ds': self.dataset.id})
+        response = self.client.get(self.url, data={'ds': self.dataset.name})
         metrics = [m['id'] for m in response.json()['metrics']]
         self.assertCountEqual(metrics,
                               [self.count_metric.id, self.flag_metric.id])
 
-    def test_invalid_dataset(self):
-        response = self.client.get(self.url, data={'ds': 'foo'})
-        self.assertEqual(response.status_code, 400)
+    def test_no_dataset(self):
+        response = self.client.get(self.url, data={'ds': '999'})
+        self.assertEqual(response.status_code, 404)

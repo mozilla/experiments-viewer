@@ -27,13 +27,13 @@ class AppContainer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const previousDatasetId = this.datasetId;
+    const previousDataset = this.dataset;
 
     if (nextProps.location.query.ds) {
-      this.datasetId = urlApi.getDatasetId(nextProps.location);
+      this.dataset = urlApi.getDataset(nextProps.location);
 
-      if (!this.fetchedMetadata || this.datasetId !== previousDatasetId) {
-        metricApi.getMetricMetadata(this.datasetId);
+      if (!this.fetchedMetadata || this.dataset !== previousDataset) {
+        metricApi.getMetricMetadata(this.dataset);
         this.fetchedMetadata = true;
       }
     }
@@ -44,7 +44,7 @@ class AppContainer extends React.Component {
   }
 
   _processProps(props) {
-    this.datasetId = urlApi.getDatasetId(props.location);
+    this.dataset = urlApi.getDataset(props.location);
 
     const showAllMetrics = this._isALL(props.location.query.metrics);
     const showAllPopulations = this._isALL(props.location.query.pop);
@@ -109,12 +109,12 @@ class AppContainer extends React.Component {
 
   componentWillUpdate(nextProps) {
     if (nextProps.datasets.length > 0) {
-      if (this.datasetId) {
-        this.currentDataset = nextProps.datasets.find(ds => ds.id === this.datasetId) || {};
+      if (this.dataset) {
+        this.currentDataset = nextProps.datasets.find(ds => ds.name === this.dataset) || {};
       } else {
         this.currentDataset = nextProps.datasets[0];
-        this.datasetId = this.currentDataset.id;
-        urlApi.updateQueryParameter('ds', this.datasetId);
+        this.dataset = this.currentDataset.name;
+        urlApi.updateQueryParameter('ds', this.dataset);
       }
       store.dispatch(datasetActions.changeDataset(this.currentDataset));
     }
@@ -132,7 +132,7 @@ class AppContainer extends React.Component {
 
     // Pass some props to the child component
     return React.cloneElement(this.props.children, {
-      datasetId: this.datasetId,
+      dataset: this.dataset,
       currentDataset: this.currentDataset,
 
       scale: this.scale,

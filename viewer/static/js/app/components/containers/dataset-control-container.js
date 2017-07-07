@@ -11,7 +11,7 @@ class DatasetControlContainer extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {currentDatasetId: props.datasetId};
+    this.state = {currentDataset: props.dataset};
 
     this._handleApplyButton = this._handleApplyButton.bind(this);
     this._handleDatasetSelection = this._handleDatasetSelection.bind(this);
@@ -19,13 +19,13 @@ class DatasetControlContainer extends React.Component {
   }
 
   _handleDatasetSelection(evt) {
-    const activeDataset = store.getState().datasetState.currentDataset.id;
-    const selectedDatasetId = parseInt(evt.target.parentNode.querySelector('.dataset-selection').value, 10);
+    const activeDataset = store.getState().datasetState.currentDataset.name;
+    const selectedDataset = evt.target.parentNode.querySelector('.dataset-selection').value;
 
-    store.dispatch(datasetActions.selectDatasetUI(selectedDatasetId));
+    store.dispatch(datasetActions.selectDatasetUI(selectedDataset));
 
     // sets the apply button disabled state
-    if (selectedDatasetId !== activeDataset) {
+    if (selectedDataset !== activeDataset) {
       this.isBtnDisabled = false;
     } else {
       this.isBtnDisabled = true;
@@ -39,8 +39,8 @@ class DatasetControlContainer extends React.Component {
   }
 
   _handleApplyButton(evt) {
-    const selectedDatasetId = parseInt(evt.target.parentNode.querySelector('.dataset-selection').value, 10);
-    urlApi.updateQueryParameter('ds', selectedDatasetId);
+    const selectedDataset = evt.target.parentNode.querySelector('.dataset-selection').value;
+    urlApi.updateQueryParameter('ds', selectedDataset);
     urlApi.updateQueryParameter('pop', 'ALL');
     this.isBtnDisabled = true;
   }
@@ -65,7 +65,7 @@ class DatasetControlContainer extends React.Component {
         handleCohortSwitch={this._handleCohortSwitch}
         isBtnDisabled={this.isBtnDisabled}
 
-        currentDatasetId={this.props.selectedDatasetId}
+        currentDataset={this.props.selectedDataset}
       />
     );
   }
@@ -75,7 +75,7 @@ const mapStateToProps = function(store) {
   return {
     datasets: store.datasetState.datasets,
     currentDataset: store.datasetState.currentDataset,
-    selectedDatasetId: store.datasetState.selectedDatasetId
+    selectedDataset: store.datasetState.selectedDataset
   };
 };
 

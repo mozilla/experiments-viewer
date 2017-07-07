@@ -13,10 +13,10 @@ export const endpoints = {
 // passed, only include metadata about metrics in that dataset. If an array of
 // metricIDs is passed, only include metadata about those specific metrics.
 // Otherwise, include metadata about all published metrics.
-export function getMetricMetadata(datasetId, metricIds) {
+export function getMetricMetadata(dataset, metricIds) {
   store.dispatch(metricActions.gettingMetricMetadata());
 
-  return axios.get(`${endpoints.GET_METRICS}?ds=${datasetId}`).then(response => {
+  return axios.get(`${endpoints.GET_METRICS}?ds=${dataset}`).then(response => {
     let metricMetadata = response.data.metrics;
     const metricMetadataObject = {};
 
@@ -46,9 +46,9 @@ export function getMetricMetadata(datasetId, metricIds) {
  *                       ['control', 'variation1', 'variation2']
  *                       If ommitted, all populations will be fetched.
  */
-export function getMetric(datasetId, metricId, pops, subgroup) {
+export function getMetric(dataset, metricId, pops, subgroup) {
   const qp = {};
-  qp['ds'] = datasetId;
+  qp['ds'] = dataset;
 
   // If populations were not defined, don't included the pop query parameter.
   // When the pop query parameter is absent, all populations are fetched.

@@ -29,10 +29,10 @@ export function changeDataset(dataset) {
 }
 
 // Dataset UI element changed (though possibly not applied).
-export function selectDatasetUI(datasetId) {
+export function selectDatasetUI(dataset) {
   return {
     type: types.SELECT_DATASET_UI,
-    selectedDatasetId: datasetId
+    selectedDataset: dataset
   }
 }
 
