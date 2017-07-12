@@ -15,6 +15,7 @@ Example output:
     {
       "id": 1,
       "name": "Experiment 1",
+      "date": "2017-01-01",
       "metrics": [1, 2, 3, 4, 5],
       "populations": ["control", "group A"],
       "subgroups": ["Windows", "Linux", "Mac"]
@@ -22,6 +23,7 @@ Example output:
     {
       "id": 2,
       "name": "Experiment 2",
+      "date": "2017-02-01",
       "metrics": [2, 4, 6, 7, 8, 9],
       "populations": ["control", "group A"],
       "subgroups": ["Windows", "Linux", "Mac"]
