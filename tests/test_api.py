@@ -23,6 +23,7 @@ class TestDataSet(DataTestCase):
                 {
                     'id': self.dataset.id,
                     'name': self.dataset.name,
+                    'date': self.dataset.date.strftime('%Y-%m-%d'),
                     'metrics': self.dataset.get_metrics(),
                     'populations': self.dataset.get_populations(),
                     'subgroups': self.dataset.get_subgroups(),
@@ -30,6 +31,7 @@ class TestDataSet(DataTestCase):
                 {
                     'id': self.dataset_older.id,
                     'name': self.dataset_older.name,
+                    'date': self.dataset_older.date.strftime('%Y-%m-%d'),
                     'metrics': self.dataset_older.get_metrics(),
                     'populations': self.dataset_older.get_populations(),
                     'subgroups': self.dataset.get_subgroups(),

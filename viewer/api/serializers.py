@@ -6,6 +6,7 @@ from .models import Collection
 class DataSetSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     name = serializers.CharField()
+    date = serializers.CharField()
     metrics = serializers.SerializerMethodField()
     populations = serializers.SerializerMethodField()
     subgroups = serializers.SerializerMethodField()
