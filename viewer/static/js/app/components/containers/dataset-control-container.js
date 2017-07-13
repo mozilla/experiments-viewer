@@ -64,8 +64,6 @@ class DatasetControlContainer extends React.Component {
         handleSubgroupSelection={this._handleSubgroupSelection}
         handleCohortSwitch={this._handleCohortSwitch}
         isBtnDisabled={this.isBtnDisabled}
-
-        currentDataset={this.props.selectedDataset}
       />
     );
   }

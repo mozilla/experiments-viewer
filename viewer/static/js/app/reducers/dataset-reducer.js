@@ -3,7 +3,7 @@ import * as types from '../actions/action-types';
 
 const initialState = {
   datasets: [],
-  selectedDatasetId: 0,
+  selectedDataset: '',
   subgroup: '',
 
   currentDataset: {
@@ -24,7 +24,7 @@ const datasetReducer = function(state = initialState, action) {
       return Object.assign({}, state, {currentDataset: action.currentDataset});
     }
     case types.SELECT_DATASET_UI: {
-      return Object.assign({}, state, {selectedDatasetId: action.selectedDatasetId});
+      return Object.assign({}, state, {selectedDataset: action.selectedDataset});
     }
     case types.CHANGE_SUBGROUP: {
       return Object.assign({}, state, {subgroup: action.subgroup});
