@@ -74,7 +74,7 @@ Returns data for a specific metric, grouped by the population, if provided.
 
 Query parameters:
 
-* `ds` (optional): This string, representing the dataset ID, will be used to
+* `ds` (optional): This string, representing the dataset name, will be used to
   find the `DataSet` (aka experiment). If none provided this will default to
   the most recently added experiment.
 * `pop` (optional): A comma separated list of populations. If none provided,
@@ -87,7 +87,7 @@ Example output:
 ```
 {
   "id": 1,
-  "dataSet": "Experiment A",
+  "dataSet": "experiment-a",
   "type": "FlagHistogram",
   "name": "CPU Architecture",
   "subgroup": "Windows",

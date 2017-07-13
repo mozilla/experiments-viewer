@@ -11,10 +11,10 @@ export default function(props) {
   return (
     <section className="dataset-control-wrapper">
       <div className="dataset-config-content">
-        <select className="dataset-selection" value={props.currentDatasetId} onChange={props.handleDatasetSelection}>
+        <select className="dataset-selection" value={props.selectedDataset} onChange={props.handleDatasetSelection}>
           {props.datasets.map(dataset => {
             return (
-              <option key={dataset.id} value={dataset.id}>{dataset.name}</option>
+              <option key={dataset.name} value={dataset.name}>{dataset.name}</option>
             );
           })}
         </select>

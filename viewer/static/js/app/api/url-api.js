@@ -5,9 +5,9 @@ import * as urlActions from '../actions/url-actions';
 /**
  * Given a location object, return the specified dataset ID
  */
-export function getDatasetId(location) {
+export function getDataset(location) {
   if (location.query && location.query.ds) {
-    return parseInt(location.query.ds, 10);
+    return location.query.ds;
   }
 }
 
