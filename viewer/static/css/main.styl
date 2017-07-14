@@ -28,17 +28,22 @@ a {
   display: flex;
   flex-wrap: wrap;
   font-size: 14px;
-  height: $header-height;
-  justify-content: space-between;
+  min-height: $header-height;
+  justify-content: space-around;
   margin-bottom: $med-padding;
   width: 100%;
+  padding: $med-padding;
 
   > * {
     text-align: center;
+    align-self: center;
+    margin: $min-padding 0;
   }
+
   > div:first-child {
     width: 100%;
   }
+
   h2 {
     font-size: 14px;
     font-weight: 200;
@@ -81,7 +86,6 @@ summary {
 
   .github-link {
     margin-right: 25px;
-    align-self: center;
 
     img {
       width: 22px;
@@ -97,11 +101,9 @@ main {
 @media $base-tablet {
   .primary-header {
     justify-content: space-between;
-    padding: $med-padding $med-padding $med-padding+$min-padding;
+    padding: 0;
 
     > * {
-      align-self: center;
-      text-align: left;
       width: auto;
     }
     > div:first-child {
