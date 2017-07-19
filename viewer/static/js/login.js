@@ -17,7 +17,10 @@ function performSignIn(googleUser) {
 
   window.fetch(req).then(response => {
     if (response.status === 200) {
-      window.location.pathname = document.querySelector('html').dataset.logintarget;
+      // We want the URL to exactly equal the contents of data-logintarget. If
+      // we set window.location.pathname here instead, the ?next query parameter
+      // would persist. We don't want that.
+      window.location = document.querySelector('html').dataset.logintarget;
     } else {
       var auth2 = gapi.auth2.getAuthInstance();
       auth2.signOut();
