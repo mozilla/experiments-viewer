@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import dateFormat from 'dateFormat';
+import dateFormat from 'dateformat';
 
 import DatasetDate from '../views/dataset-date';
 
