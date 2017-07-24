@@ -213,6 +213,14 @@ for exp in experiments:
     for row in rows:
         row = row.asDict()
 
+        # Some rows contain metadata about the experiment that we store differently.
+        if row['metric_type'] == 'Metadata':
+            stats = row['statistics']
+            total_pings = [s['value'] for s in stats if s['name'] == 'Total Pings'][0]
+            total_clients = [s['value'] for s in stats if s['name'] == 'Total Clients'][0]
+            # TODO: Store these
+            continue
+
         metric_id = get_metric(row['metric_name'], row['metric_type'])
         collection_id = create_collection(
             dataset_id, metric_id, row['n'], row['experiment_branch'],
