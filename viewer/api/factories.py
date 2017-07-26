@@ -46,3 +46,15 @@ class PointFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = models.Point
+
+
+class StatsFactory(factory.django.DjangoModelFactory):
+    dataset = factory.SubFactory(DataSetFactory)
+    metric = factory.SubFactory(MetricFactory)
+    population = factory.Sequence(lambda n: 'Group %s' % n)
+    subgroup = 'All'
+    key = factory.Sequence(lambda n: 'key-%s' % n)
+    value = factory.Iterator([1, 10, 100, 1000])
+
+    class Meta:
+        model = models.Stats

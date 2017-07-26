@@ -32,10 +32,21 @@ class DataSet(models.Model):
         )
 
     def get_populations(self):
-        return list(
+        populations = (
             Collection.objects.filter(dataset=self)
                               .distinct('population')
                               .values_list('population', flat=True))
+
+        stats = (
+            Stats.objects.filter(dataset=self)
+                         .values_list('population', 'key', 'value'))
+        data = {
+            p: {
+                k: v for b, k, v in stats if b == p
+            } for p in populations
+        }
+
+        return data
 
     def get_subgroups(self):
         return list(
@@ -92,3 +103,12 @@ class Point(models.Model):
     proportion = models.FloatField()
     count = models.BigIntegerField(null=True)
     rank = models.IntegerField(null=True)
+
+
+class Stats(models.Model):
+    dataset = models.ForeignKey(DataSet)
+    metric = models.ForeignKey(Metric, blank=True, null=True)
+    population = models.CharField(max_length=255, default='')
+    subgroup = models.CharField(max_length=255, default='')
+    key = models.CharField(max_length=100)
+    value = models.IntegerField()

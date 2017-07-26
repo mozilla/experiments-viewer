@@ -15,7 +15,7 @@
   "pk": 8,
   "fields": {
     "name": "fakeExperiment",
-    "date": "2017-04-24",
+    "date": "2017-05-24",
     "display": true,
     "import_start": "2017-04-24T17:36:51.426Z",
     "import_stop": null
@@ -234231,6 +234231,126 @@
     "proportion": 0.0,
     "count": 0,
     "rank": 1
+  }
+},
+{
+  "model": "api.stats",
+  "pk": 2,
+  "fields": {
+    "dataset": 7,
+    "metric": null,
+    "population": "control",
+    "subgroup": "",
+    "key": "total_pings",
+    "value": 123456
+  }
+},
+{
+  "model": "api.stats",
+  "pk": 3,
+  "fields": {
+    "dataset": 7,
+    "metric": null,
+    "population": "control",
+    "subgroup": "",
+    "key": "total_clients",
+    "value": 12345
+  }
+},
+{
+  "model": "api.stats",
+  "pk": 4,
+  "fields": {
+    "dataset": 7,
+    "metric": null,
+    "population": "blue_button",
+    "subgroup": "",
+    "key": "total_pings",
+    "value": 234567
+  }
+},
+{
+  "model": "api.stats",
+  "pk": 5,
+  "fields": {
+    "dataset": 7,
+    "metric": null,
+    "population": "blue_button",
+    "subgroup": "",
+    "key": "total_clients",
+    "value": 23456
+  }
+},
+{
+  "model": "api.stats",
+  "pk": 6,
+  "fields": {
+    "dataset": 8,
+    "metric": null,
+    "population": "control",
+    "subgroup": "",
+    "key": "total_pings",
+    "value": 34567
+  }
+},
+{
+  "model": "api.stats",
+  "pk": 7,
+  "fields": {
+    "dataset": 8,
+    "metric": null,
+    "population": "branch_1",
+    "subgroup": "",
+    "key": "total_pings",
+    "value": 4567
+  }
+},
+{
+  "model": "api.stats",
+  "pk": 8,
+  "fields": {
+    "dataset": 8,
+    "metric": null,
+    "population": "branch_2",
+    "subgroup": "",
+    "key": "total_pings",
+    "value": 5678
+  }
+},
+{
+  "model": "api.stats",
+  "pk": 9,
+  "fields": {
+    "dataset": 8,
+    "metric": null,
+    "population": "control",
+    "subgroup": "",
+    "key": "total_clients",
+    "value": 3456
+  }
+},
+{
+  "model": "api.stats",
+  "pk": 10,
+  "fields": {
+    "dataset": 8,
+    "metric": null,
+    "population": "branch_1",
+    "subgroup": "",
+    "key": "total_clients",
+    "value": 456
+  }
+},
+{
+  "model": "api.stats",
+  "pk": 11,
+  "fields": {
+    "dataset": 8,
+    "metric": null,
+    "population": "branch_2",
+    "subgroup": "",
+    "key": "total_clients",
+    "value": 567
   }
 }
 ]
