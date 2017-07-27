@@ -8,6 +8,8 @@ SUBGROUPS = ('Windows', 'Linux', 'Mac', 'Other')
 
 class DataTestCase(TestCase):
 
+    maxDiff = None
+
     @classmethod
     def setUpTestData(cls):
         # This will create 3 datasets (1 of which being hidden) with 2
@@ -49,18 +51,23 @@ class DataTestCase(TestCase):
         # Create 2 viewable datasets.
         dataset_older = factories.DataSetFactory()
         create_collections(dataset_older, 'control', flag_metric, count_metric)
-        create_collections(dataset_older, None, flag_metric, count_metric)
+        create_collections(dataset_older, 'chaos', flag_metric, count_metric)
 
         dataset = factories.DataSetFactory()
         create_collections(dataset, 'control', flag_metric, count_metric)
-        create_collections(dataset, None, flag_metric, count_metric)
+        create_collections(dataset, 'chaos', flag_metric, count_metric)
 
         # Create 1 non-viewable dataset.
         dataset_hidden = factories.DataSetFactory(display=False)
         create_collections(dataset_hidden, 'control', flag_metric,
                            count_metric, create_subgroups=False)
-        create_collections(dataset_hidden, None, flag_metric, count_metric,
+        create_collections(dataset_hidden, 'chaos', flag_metric, count_metric,
                            create_subgroups=False)
+
+        # Create some stats tied to datasets.
+        for pop in ('control', 'chaos'):
+            factories.StatsFactory(dataset=dataset, metric=None, population=pop)
+            factories.StatsFactory(dataset=dataset, metric=None, population=pop)
 
         # Save these for use in tests.
         cls.dataset = dataset

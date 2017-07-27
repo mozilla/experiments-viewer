@@ -9,8 +9,8 @@ describe('utils.js', () => {
     });
 
     it ('strings', () => {
-      const populations = ['group B', 'group A', 'group C', 'control'];
-      const sortedPopulations = utils.bumpSort(populations, 'control');
+      const populations = {'group B': {}, 'group A': {}, 'group C': {}, 'control': {}};
+      const sortedPopulations = utils.bumpSort(Object.keys(populations), 'control');
       expect(sortedPopulations).toEqual(['control', 'group A', 'group B', 'group C']);
 
       const names = ['brittany', 'alex', 'zoey', 'joe', 'kate'];

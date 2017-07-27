@@ -68,7 +68,7 @@ class AppContainer extends React.Component {
     // populations.
     this.populationIds = {};
     if (this.currentDataset.populations) {
-      this.sortedAllPopulations = bumpSort(this.currentDataset.populations, 'control');
+      this.sortedAllPopulations = bumpSort(Object.keys(this.currentDataset.populations), 'control');
       this.sortedAllPopulations.map((pop, index) => {
         this.populationIds[pop] = index + 1;
       });
@@ -79,7 +79,7 @@ class AppContainer extends React.Component {
         this.sortedPopulationsToShow = this.sortedAllPopulations;
       }
     } else {
-      this.sortedPopulationsToShow = bumpSort(urlApi.getPopulationNames(props.location), 'control');
+      this.sortedPopulationsToShow = bumpSort(Object.keys(urlApi.getPopulationNames(props.location)), 'control');
     }
 
 

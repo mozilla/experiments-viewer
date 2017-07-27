@@ -17,7 +17,16 @@ Example output:
       "name": "Experiment 1",
       "date": "2017-01-01",
       "metrics": [1, 2, 3, 4, 5],
-      "populations": ["control", "group A"],
+      "populations": {
+        "control": {
+          "total_pings": 12345,
+          "total_clients": 1234
+        },
+        "group A": {
+          "total_pings": 23456,
+          "total_clients": 2345
+        }
+      },
       "subgroups": ["Windows", "Linux", "Mac"]
     },
     {
@@ -25,7 +34,16 @@ Example output:
       "name": "Experiment 2",
       "date": "2017-02-01",
       "metrics": [2, 4, 6, 7, 8, 9],
-      "populations": ["control", "group A"],
+      "populations": {
+        "control": {
+          "total_pings": 12345,
+          "total_clients": 1234
+        },
+        "group A": {
+          "total_pings": 23456,
+          "total_clients": 2345
+        }
+      },
       "subgroups": ["Windows", "Linux", "Mac"]
     }
   ]

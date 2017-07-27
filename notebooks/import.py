@@ -180,6 +180,17 @@ def create_point(collection_id, bucket, proportion, count, rank):
         cursor.execute(sql, params)
 
 
+def create_stat(dataset_id, metric_id, population, subgroup, key, value):
+    sql = ('INSERT INTO api_stats '
+           '(dataset_id, metric_id, population, subgroup, key, value) '
+           'VALUES (%s, %s, %s, %s, %s, %s) ')
+    params = [dataset_id, metric_id, population, subgroup, key, value]
+    if DEBUG_SQL:
+        print cursor.mogrify(sql, params)
+    else:
+        cursor.execute(sql, params)
+
+
 process_date = environ.get('date')
 if not process_date:
     # If no date in environment, assume we are running manually and use
@@ -213,25 +224,33 @@ for exp in experiments:
     for row in rows:
         row = row.asDict()
 
-        # Some rows contain metadata about the experiment that we store differently.
-        if row['metric_type'] == 'Metadata':
+        metric_name = row['metric_name']
+        metric_type = row['metric_type']
+        population = row['experiment_branch']
+
+        # Some rows contain metadata about the experiment that we store
+        # differently.
+        if metric_type == 'Metadata':
             stats = row['statistics']
-            total_pings = [s['value'] for s in stats if s['name'] == 'Total Pings'][0]
-            total_clients = [s['value'] for s in stats if s['name'] == 'Total Clients'][0]
-            # TODO: Store these
+            total_pings = [s['value'] for s in stats
+                           if s['name'] == 'Total Pings'][0]
+            total_clients = [s['value'] for s in stats
+                             if s['name'] == 'Total Clients'][0]
+            create_stat(dataset_id, None, population, '',
+                        'total_pings', total_pings)
+            create_stat(dataset_id, None, population, '',
+                        'total_clients', total_clients)
+
             continue
 
-        metric_id = get_metric(row['metric_name'], row['metric_type'])
+        metric_id = get_metric(metric_name, metric_type)
         collection_id = create_collection(
-            dataset_id, metric_id, row['n'], row['experiment_branch'],
-            row['subgroup'] or '')
+            dataset_id, metric_id, row['n'], population, row['subgroup'] or '')
 
         for rank, kv in enumerate(row['histogram'].iteritems(), 1):
             k, v = kv[0], kv[1].asDict()
             create_point(collection_id, k, v['pdf'], v['count'], rank)
         conn.commit()
-
-        # TODO: Store row['statistics']
 
     # Flag dataset as viewable.
     display_dataset(exp, dataset_id)
