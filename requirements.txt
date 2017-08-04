@@ -11,7 +11,7 @@ httplib2==0.10.3
 mock==2.0.0
 oauth2client==4.1.2
 psycopg2==2.7.3
-pyasn1==0.2.3
+pyasn1==0.3.2
 pyasn1-modules==0.0.10
 python-decouple==3.0
 raven==6.1.0
