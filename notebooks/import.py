@@ -10,6 +10,7 @@ from pyspark.sql import SparkSession
 
 
 BUCKET = environ.get('bucket', 'telemetry-parquet')
+DB = environ.get('db', 'experiments-viewer-db')
 PATH = 's3://%s/experiments_aggregates/v1/' % BUCKET
 LOG_LEVEL = logging.INFO  # Change to incr/decr logging output.
 DEBUG_SQL = False  # Set to True to not insert any data.
@@ -28,10 +29,11 @@ def get_database_connection():
         s3.Object('net-mozaws-prod-us-west-2-pipeline-metadata',
                   'sources.json').get()['Body'])
     creds = ujson.load(
-        s3.Object('net-mozaws-prod-us-west-2-pipeline-metadata',
-                  '%s/write/credentials.json' % (
-                      metasrcs['experiments-viewer-db']['metadata_prefix'],
-                  )).get()['Body'])
+        s3.Object(
+            'net-mozaws-prod-us-west-2-pipeline-metadata',
+            '%s/write/credentials.json'
+            % metasrcs[DB]['metadata_prefix']
+        ).get()['Body'])
     conn = psycopg2.connect(connection_factory=LoggingConnection,
                             host=creds['host'], port=creds.get('port', 5432),
                             user=creds['username'], password=creds['password'],
