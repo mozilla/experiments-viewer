@@ -18,3 +18,4 @@ npm-debug.log
 viewer/static/**/bundle.*
 .babel.json
 .v8flags.*
+selenium-debug.log
