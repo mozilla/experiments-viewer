@@ -18,7 +18,3 @@ npm-debug.log
 viewer/static/**/bundle.*
 .babel.json
 .v8flags.*
-
-# Temporarily ignore package-lock.json as it's causing issues on Heroku
-# https://github.com/heroku/heroku-buildpack-nodejs/issues/425
-package-lock.json
