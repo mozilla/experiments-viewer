@@ -26,7 +26,7 @@ export default class extends React.Component {
     for (let populationName in props.populations) {
       if (props.populations.hasOwnProperty(populationName)) {
 
-        const currentData = props.populations[populationName][props.activeDatasetName];
+        const currentData = props.populations[populationName]['data'][props.activeDatasetName];
 
         let i = this.bisector(currentData, x0, 1);
         let d0 = currentData[i - 1];
@@ -47,7 +47,7 @@ export default class extends React.Component {
 
         // Insert the hover text for this population at this data point
         let hoverSummary = select(`.secondary-menu-content .chart-info .hover-summary[data-population="${populationName}"]`);
-        hoverSummary.html(this._getHoverString(props.metricType, d.x, d.y, proportion, populationName));
+        hoverSummary.html(this._getHoverString(props.metricType, d.x, d.y, proportion, populationName, props.populations[populationName].numObs));
       }
     }
   }
@@ -55,7 +55,7 @@ export default class extends React.Component {
   _getFormattedVal(val) {
     return d3Format.format('.1%')(val).replace('%', '');
   }
-  _getHoverString(metricType, x, y, p, population) {
+  _getHoverString(metricType, x, y, p, population, numObs) {
     let result = this.props.hoverString;
     if (!result) return '';
 
@@ -64,6 +64,7 @@ export default class extends React.Component {
         x: this.props.refLabels[x],
         p: this._getFormattedVal(p),
         y: this._getFormattedVal(y),
+        n: numObs.toLocaleString('en-US'),
         pop: '<span class="population-name">' + population.toLowerCase() + '</span>',
       });
     } else {
@@ -71,6 +72,7 @@ export default class extends React.Component {
         x,
         p: this._getFormattedVal(p),
         y: this._getFormattedVal(y),
+        n: numObs.toLocaleString('en-US'),
         pop: '<span class="population-name">' + population.toLowerCase() + '</span>',
       });
     }

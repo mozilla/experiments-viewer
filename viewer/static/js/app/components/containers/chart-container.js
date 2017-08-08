@@ -87,7 +87,7 @@ class ChartContainer extends React.Component {
     // x-axis will need to show different ticks and thus needs to be
     // regenerated.
     if (outliersSettingChanged || selectedScaleChanged) {
-      this.biggestDatasetToShow = this.populationData[this.biggestPopulation.name][this.activeDatasetName];
+      this.biggestDatasetToShow = this.populationData[this.biggestPopulation.name]['data'][this.activeDatasetName];
     }
     this.xScale = this._getXScale(this.props);
   }
@@ -113,10 +113,13 @@ class ChartContainer extends React.Component {
         this.biggestPopulation = population;
       }
 
-      this.populationData[population.name] = {};
-      this.populationData[population.name][this.allDatasetName] = fmtData;
+      this.populationData[population.name] = {
+        numObs: population.numObs,
+        data: {},
+      };
+      this.populationData[population.name]['data'][this.allDatasetName] = fmtData;
       if (fmtDataExcludingOutliers) {
-        this.populationData[population.name][this.excludingOutliersDatasetName] = fmtDataExcludingOutliers;
+        this.populationData[population.name]['data'][this.excludingOutliersDatasetName] = fmtDataExcludingOutliers;
       }
     }
 
@@ -131,7 +134,7 @@ class ChartContainer extends React.Component {
     // outliers.
     //
     // We'll need this when setting the scales.
-    this.biggestDatasetToShow = this.populationData[this.biggestPopulation.name][this.activeDatasetName];
+    this.biggestDatasetToShow = this.populationData[this.biggestPopulation.name]['data'][this.activeDatasetName];
 
     this.refLabels = [];
     this.biggestDatasetToShow.map(item => {

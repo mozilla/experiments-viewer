@@ -47,7 +47,7 @@ export default class extends React.Component {
             metricId={props.metricId}
             xScale={props.xScale}
             yScale={props.yScale}
-            data={props.populationData[currentPopulationName][props.activeDatasetName]}
+            data={props.populationData[currentPopulationName]['data'][props.activeDatasetName]}
           />
           <ChartFocus />
         </g>
