@@ -67,10 +67,17 @@ gulp.task('jest', ['build:js'], () => {
 });
 
 gulp.task('nightwatch', ['build:js'], () => {
+  const cliArgs = {};
+  if (process.env.CIRCLECI) {
+    cliArgs['env'] = 'circleci';
+  }
+
   return gulp.src('')
-             .pipe(nightwatch());
+             .pipe(nightwatch({
+               cliArgs,
+             }));
 });
 
 gulp.task('build', ['build:js', 'build:css']);
-gulp.task('test', ['lint:js', 'jest']);
+gulp.task('test', ['lint:js', 'jest', 'nightwatch']);
 gulp.task('default', ['build']);
