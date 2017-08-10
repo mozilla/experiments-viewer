@@ -71,14 +71,16 @@ Example output:
       "name": "CPU Architecture",
       "description": "The architecture of the client machine"
       "tooltip": "{y}% of all {pop} records have {x} architecture",
-      "type": "FlagHistogram"
+      "type": "FlagHistogram",
+      "units": ""
     },
     {
       "id": 2,
       "name": "CPU Count",
       "description": "The number of CPUs available"
       "tooltip": "{p}% of all {pop} records have {x} or more CPUs",
-      "type": "CountHistogram"
+      "type": "CountHistogram",
+      "units": "CPUs"
     },
     ...
   ]

@@ -65,11 +65,12 @@ TOOLTIP_HELP = (
 
 class Metric(models.Model):
     name = models.CharField(max_length=255)
-    description = models.TextField()
+    description = models.TextField(blank=True, default='')
     tooltip = models.CharField(
         max_length=255, blank=True,
         help_text=TOOLTIP_HELP)
-    type = models.CharField(max_length=50)
+    type = models.CharField(max_length=50, blank=True, default='')
+    units = models.CharField(max_length=50, blank=True, default='')
     source_name = models.CharField(
         max_length=255,
         help_text="The metric's name in the source telemetry data.")

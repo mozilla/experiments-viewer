@@ -21,6 +21,7 @@ class MetricFactory(factory.django.DjangoModelFactory):
     type = factory.Iterator(['BooleanHistogram', 'CountHistogram',
                              'EnumeratedHistogram', 'ExponentialHistogram',
                              'FlagHistogram'])
+    units = 'ms'
 
     class Meta:
         model = models.Metric
