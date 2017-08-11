@@ -18,7 +18,10 @@ RUN apk --no-cache add \
     py-cffi \
     postgresql-dev \
     postgresql-client \
-    nodejs
+    nodejs \
+    openjdk8-jre
+
+ENV JAVA_HOME /usr/lib/jvm/default-jvm
 
 COPY requirements.txt /app/requirements.txt
 RUN pip install -U pip && \
@@ -27,6 +30,10 @@ RUN pip install -U pip && \
 
 COPY package.json /app/package.json
 RUN npm install
+
+# HACK: For some reason, Selenium insists on looking for phantomjs at
+# /usr/local/bin/phantomjs even when it isn't supposed to be there.
+RUN ln -s /app/node_modules/phantomjs-prebuilt/bin/phantomjs /usr/local/bin/phantomjs
 
 # Clean up some build packages after we're done with Python.
 RUN apk del --purge build-base gcc
