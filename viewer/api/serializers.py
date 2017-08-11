@@ -27,6 +27,7 @@ class MetricSerializer(serializers.Serializer):
     description = serializers.CharField()
     tooltip = serializers.CharField()
     type = serializers.CharField()
+    units = serializers.CharField()
 
 
 class DistributionSerializer(serializers.Serializer):

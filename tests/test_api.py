@@ -222,12 +222,14 @@ class TestMetrics(DataTestCase):
                     'description': self.count_metric.description,
                     'tooltip': self.count_metric.tooltip,
                     'type': 'CountHistogram',
+                    'units': 'ms',
                 }, {
                     'id': self.flag_metric.id,
                     'name': self.flag_metric.name,
                     'description': self.flag_metric.description,
                     'tooltip': self.flag_metric.tooltip,
                     'type': 'FlagHistogram',
+                    'units': 'ms',
                 }
             ]
         }
