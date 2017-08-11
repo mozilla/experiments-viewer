@@ -2,6 +2,7 @@
 .bash_history
 .psql_history
 *.dump
+*.swp
 
 # Python and Django
 *.pyc
@@ -13,6 +14,7 @@ env/
 # Node
 node_modules/
 npm-debug.log
+.npm
 
 # Front-end
 viewer/static/**/bundle.*
