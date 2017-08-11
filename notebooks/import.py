@@ -5,7 +5,7 @@ from os import environ
 import boto3
 import psycopg2
 import ujson
-from psycopg2.extras import LoggingConnection
+from psycopg2.extras import LoggingConnection, execute_values
 from pyspark.sql import SparkSession
 
 
@@ -171,15 +171,22 @@ def create_collection(dataset_id, metric_id, num_observations, population,
         return cursor.fetchone()[0]
 
 
-def create_point(collection_id, bucket, proportion, count, rank):
+def create_points(collection_id, histogram):
+    params = []
     sql = ('INSERT INTO api_point '
            '(collection_id, bucket, proportion, count, rank) '
-           'VALUES (%s, %s, %s, %s, %s) ')
-    params = [collection_id, bucket, proportion, count, rank]
+           'VALUES %s')
+
+    for rank, kv in enumerate(histogram.iteritems(), 1):
+        k, v = kv[0], kv[1].asDict()
+        params.append(
+            (collection_id, k, v['pdf'], v['count'], rank)
+        )
+
     if DEBUG_SQL:
-        print cursor.mogrify(sql, params)
+        print sql, params
     else:
-        cursor.execute(sql, params)
+        execute_values(cursor, sql, params)  # default: page_size=100
 
 
 def create_stat(dataset_id, metric_id, population, subgroup, key, value):
@@ -248,10 +255,8 @@ for exp in experiments:
         metric_id = get_metric(metric_name, metric_type)
         collection_id = create_collection(
             dataset_id, metric_id, row['n'], population, row['subgroup'] or '')
+        create_points(collection_id, row['histogram'])
 
-        for rank, kv in enumerate(row['histogram'].iteritems(), 1):
-            k, v = kv[0], kv[1].asDict()
-            create_point(collection_id, k, v['pdf'], v['count'], rank)
         conn.commit()
 
     # Flag dataset as viewable.
