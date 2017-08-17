@@ -233,6 +233,7 @@ class ChartContainer extends React.Component {
           metricType={this.props.metric.type}
           activeDatasetName={this.activeDatasetName}
           hoverString={this.props.metric.hoverString}
+          xunit={this.props.xunit}
 
           size={this.size}
           xScale={this.xScale}

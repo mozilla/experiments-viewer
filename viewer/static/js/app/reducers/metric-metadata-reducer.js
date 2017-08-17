@@ -5,7 +5,8 @@ const initialState = {
   isFetching: false,
   metadata: {},
   hoverStrings: {},
-  status: 200
+  status: 200,
+  units: '',
 };
 
 const getHoverStrings = (metadata) => {
@@ -14,7 +15,7 @@ const getHoverStrings = (metadata) => {
   for (const id in metadata) {
     if (metadata.hasOwnProperty(id)) {
       var tooltip = metadata[id].tooltip;
-      strings['id-' + id] = tooltip ? tooltip : '{pop}: x={x}, y={y}%, n={n}'
+      strings['id-' + id] = tooltip ? tooltip : '{pop}: x={x} {xunit}, y={y}%, n={n}';
     }
   }
 
@@ -31,7 +32,7 @@ const metricMetadataReducer = function(state = initialState, action) {
         isFetching: false,
         metadata: newMetadata,
         hoverStrings: getHoverStrings(newMetadata),
-        status: 200
+        status: 200,
       });
     }
     case types.GET_METRIC_METADATA_FAILURE:
