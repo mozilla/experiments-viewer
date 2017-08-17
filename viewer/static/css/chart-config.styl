@@ -3,10 +3,14 @@ $control-height = 40px;
 .chart-config {
   display: flex;
   height: $control-height;
+  background-color: #000;
   background-image: radial-gradient(40% 728%, rgba(126, 211, 33, 0.3), #000000);
   margin: -20px 0 20px;
   padding: 10px 15px;
   justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 2;
 
   > * {
     align-self: flex-start;
