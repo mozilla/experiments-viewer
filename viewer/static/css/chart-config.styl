@@ -1,4 +1,7 @@
+@import 'lib';
+
 $control-height = 40px;
+$switch-font-size = 12px;
 
 .chart-config {
   display: flex;
@@ -52,4 +55,21 @@ $control-height = 40px;
 
 .dataset-control-wrapper {
   display: flex;
+}
+
+.switch-and-counts {
+  display: grid;
+  grid-gap: 5px;
+  grid-template-columns: auto auto;
+  align-items: center;
+
+  margin: 0 $med-padding;
+}
+
+.switch-wrapper {
+  font-size: $switch-font-size;
+}
+
+.cohort-counts {
+  font-size: $switch-font-size;
 }

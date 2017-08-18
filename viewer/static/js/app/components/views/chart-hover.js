@@ -6,7 +6,6 @@ import { select, selectAll, mouse } from 'd3-selection';
 import format from 'string-template';
 import { isMetricOrdinal } from '../../utils';
 
-
 export default class extends React.Component {
   componentDidMount() {
     let hoverElm = select(this.rect);

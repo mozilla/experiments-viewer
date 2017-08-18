@@ -37,8 +37,13 @@ export default function(props) {
       <div className="dataset-cohorts">
         {props.sortedAllPopulations.map(cohort => {
           const isActive = props.sortedPopulationsToShow.includes(cohort);
+          const numClients = props.currentDataset.populations[cohort].total_clients.toLocaleString('en-US');
+          const numPings = props.currentDataset.populations[cohort].total_pings.toLocaleString('en-US');
           return (
-            <Switch key={cohort} label={cohort} onClick={props.handleCohortSwitch} active={isActive} />
+            <div key={cohort} className="switch-and-counts">
+              <Switch key={cohort} label={cohort} onClick={props.handleCohortSwitch} active={isActive} />
+              <span className="cohort-counts">({numClients} clients / {numPings} pings)</span>
+            </div>
           );
         })}
       </div>
