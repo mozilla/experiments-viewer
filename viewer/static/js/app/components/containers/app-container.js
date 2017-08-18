@@ -79,7 +79,7 @@ class AppContainer extends React.Component {
         this.sortedPopulationsToShow = this.sortedAllPopulations;
       }
     } else {
-      this.sortedPopulationsToShow = bumpSort(Object.keys(urlApi.getPopulationNames(props.location)), 'control');
+      this.sortedPopulationsToShow = bumpSort(urlApi.getPopulationNames(props.location), 'control');
     }
 
 
