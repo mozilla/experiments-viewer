@@ -47,7 +47,9 @@ export default class extends React.Component {
 
         // Insert the hover text for this population at this data point
         let hoverSummary = select(`.secondary-menu-content .chart-info .hover-summary[data-population="${populationName}"]`);
-        hoverSummary.html(this._getHoverString(props.metricType, d.x, d.y, proportion, populationName, props.populations[populationName].numObs));
+        hoverSummary.html(this._getHoverString(props.metricType, d.x, d.y,
+                                               proportion, populationName, props.xunit,
+                                               props.populations[populationName].numObs));
       }
     }
   }
@@ -55,7 +57,7 @@ export default class extends React.Component {
   _getFormattedVal(val) {
     return d3Format.format('.1%')(val).replace('%', '');
   }
-  _getHoverString(metricType, x, y, p, population, numObs) {
+  _getHoverString(metricType, x, y, p, population, xunit, numObs) {
     let result = this.props.hoverString;
     if (!result) return '';
 
@@ -66,6 +68,7 @@ export default class extends React.Component {
         y: this._getFormattedVal(y),
         n: numObs.toLocaleString('en-US'),
         pop: '<span class="population-name">' + population.toLowerCase() + '</span>',
+        xunit,
       });
     } else {
       result = format(result, {
@@ -74,6 +77,7 @@ export default class extends React.Component {
         y: this._getFormattedVal(y),
         n: numObs.toLocaleString('en-US'),
         pop: '<span class="population-name">' + population.toLowerCase() + '</span>',
+        xunit,
       });
     }
     return result;

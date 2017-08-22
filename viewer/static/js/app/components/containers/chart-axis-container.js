@@ -35,6 +35,16 @@ export default class extends React.Component {
       axis.ticks(6, d3Format.format('.0%'));
       axisElm.call(axis);
     }
+
+
+    if (props.axisType === 'x' && props.xunit) {
+      const svgElm = d3Selection.select(`.chart-${props.metricId} svg`);
+      svgElm.append('text')
+            .attr('class', 'label')
+            .attr('text-anchor', 'middle')
+            .attr('transform', `translate(${(props.width + 20) / 2}, ${props.height - 20})`)
+            .text(props.xunit);
+    }
   }
 
   _getShortLabel(lbl) {

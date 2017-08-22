@@ -39,6 +39,7 @@ export default function(props) {
             isDetail={false}
             showOutliers={showOutliers}
             tooltip={maybeTooltip}
+            xunit={thisMetricMetadata.units}
           />
         </div>
       // </Link>

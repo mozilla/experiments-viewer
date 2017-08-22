@@ -88,6 +88,9 @@ export default class extends React.Component {
                 axisType="x"
                 refLabels={props.refLabels}
                 size={props.size.innerHeight}
+                height={props.size.height}
+                width={props.size.width}
+                xunit={props.xunit}
               />
               <ChartAxisContainer
                 metricId={props.metricId}
@@ -95,6 +98,8 @@ export default class extends React.Component {
                 axisType="y"
                 refLabels={props.refLabels}
                 size={props.size.innerWidth}
+                height={props.size.height}
+                width={props.size.width}
               />
               <g className="populations">
                 {this._populationComponents(props.sortedPopulationsToShow)}
@@ -109,6 +114,7 @@ export default class extends React.Component {
                 hoverString={props.hoverString}
                 refLabels={props.refLabels}
                 metricType={props.metricType}
+                xunit={props.xunit}
               />
             </g>
           </svg>
