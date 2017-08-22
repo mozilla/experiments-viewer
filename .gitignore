@@ -21,3 +21,8 @@ viewer/static/**/bundle.*
 .babel.json
 .v8flags.*
 selenium-debug.log
+
+# The presence of package-lock.json causes builds to occasionally fail. See this
+# issue:
+# https://github.com/npm/npm/issues/16839
+package-lock.json
