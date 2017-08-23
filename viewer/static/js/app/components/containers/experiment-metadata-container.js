@@ -1,0 +1,34 @@
+import React from 'react';
+import { connect } from 'react-redux';
+import dateFormat from 'dateformat';
+
+import ExperimentMetadata from '../views/experiment-metadata';
+
+class ExperimentMetadataContainer extends React.Component {
+  render() {
+    return <ExperimentMetadata {...this.props } />;
+  }
+}
+
+const mapStateToProps = function(store) {
+  const currentDataset = store.datasetState.currentDataset;
+
+  let numClients = 0;
+  let numPings = 0;
+  for (let populationName in currentDataset.populations) {
+    if (currentDataset.populations.hasOwnProperty(populationName)) {
+      const thisPopulation = currentDataset.populations[populationName];
+      numClients += thisPopulation.total_clients;
+      numPings += thisPopulation.total_pings;
+    }
+  }
+
+  return {
+    name: currentDataset.name,
+    date: dateFormat(new Date(currentDataset.date), 'longDate', true),
+    numClients,
+    numPings,
+  };
+};
+
+export default connect(mapStateToProps)(ExperimentMetadataContainer);
