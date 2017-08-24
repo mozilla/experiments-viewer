@@ -46,26 +46,27 @@ def get_database_connection():
     return conn, conn.cursor()
 
 
-def create_dataset(exp, date):
+def create_dataset(exp, process_date):
     # Check last import date to avoid importing stale data via backfills.
+    process_date_dt = datetime.datetime.strptime(process_date, '%Y%m%d').date()
+
     sql = 'SELECT date FROM api_dataset WHERE name=%s'
     params = [exp]
     cursor.execute(sql, params)
     result = cursor.fetchone()
     if result:
         prior_import_date = result[0]
-        process_date = datetime.datetime.strptime(date, '%Y%m%d').date()
-        if process_date <= prior_import_date:
+        if process_date_dt <= prior_import_date:
             raise StaleImportError(
                 'Process date %s is older than previous import date %s' % (
-                    process_date, prior_import_date))
+                    process_date_dt, prior_import_date))
 
     sql = ('INSERT INTO api_dataset (name, date, display, import_start) '
            'VALUES (%s, %s, %s, %s) '
            'RETURNING id')
     params = [
         'TMP-%s' % exp,  # Store initially with a temporary prefix.
-        datetime.date.today(),
+        process_date_dt,
         False,
         datetime.datetime.now(),
     ]
