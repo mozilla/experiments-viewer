@@ -21,6 +21,10 @@ logging.basicConfig(level=LOG_LEVEL)
 logger = logging.getLogger(__name__)
 
 
+class StaleImportError(Exception):
+    "Raise when we detect that we're importing data older than existing data."
+
+
 def get_database_connection():
     global logger
 
@@ -42,7 +46,20 @@ def get_database_connection():
     return conn, conn.cursor()
 
 
-def create_dataset(exp):
+def create_dataset(exp, date):
+    # Check last import date to avoid importing stale data via backfills.
+    sql = 'SELECT date FROM api_dataset WHERE name=%s'
+    params = [exp]
+    cursor.execute(sql, params)
+    result = cursor.fetchone()
+    if result:
+        prior_import_date = result[0]
+        process_date = datetime.datetime.strptime(date, '%Y%m%d').date()
+        if process_date <= prior_import_date:
+            raise StaleImportError(
+                'Process date %s is older than previous import date %s' % (
+                    process_date, prior_import_date))
+
     sql = ('INSERT INTO api_dataset (name, date, display, import_start) '
            'VALUES (%s, %s, %s, %s) '
            'RETURNING id')
@@ -223,8 +240,13 @@ experiments = set(
 )
 
 for exp in experiments:
-    print 'Inserting data for experiment: %s' % exp
-    dataset_id = create_dataset(exp)
+
+    try:
+        dataset_id = create_dataset(exp, process_date)
+        print 'Inserting data for experiment: %s' % exp
+    except StaleImportError as e:
+        print e
+        continue
 
     # Get all rows for this experiment
     rows = df.filter("experiment_id='%s'" % exp).collect()
