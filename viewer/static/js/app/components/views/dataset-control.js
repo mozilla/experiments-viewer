@@ -49,18 +49,18 @@ export default function(props) {
             numPings = cohortMeta.total_pings.toLocaleString('en-US');
           }
 
-          let maybeCounts = null;
-          if (numClients !== 0 && numPings !== 0) {
-            maybeCounts = (
-              <span className="cohort-counts">({numClients} clients / {numPings} pings)</span>
-            );
-          }
-
           return (
-            <div key={cohort} className={`switch-and-counts ${cohort}`}>
-              <Switch key={cohort} label={cohort} onClick={props.handleCohortSwitch} active={isActive} />
-              {maybeCounts}
-            </div>
+            <Switch
+                key={cohort}
+
+                label={cohort}
+                cohort={cohort}
+                numClients={numClients}
+                numPings={numPings}
+
+                onClick={props.handleCohortSwitch}
+                active={isActive}
+            />
           );
         })}
       </div>

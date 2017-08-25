@@ -100,15 +100,15 @@ describe('DatasetControlContainer', () => {
       for (let populationName in fd.populations) {
         if (fd.populations.hasOwnProperty(populationName)) {
 
-          const countElm = dcc.find(`.switch-and-counts.${populationName} .cohort-counts`);
+          const countElm = dcc.find(`.switch-wrapper .${populationName}`);
           const thisPopClients = fd.populations[populationName].total_clients || 0;
           const thisPopPings = fd.populations[populationName].total_pings || 0;
 
           if (thisPopClients !== 0 && thisPopPings !== 0) {
-            expect(countElm.text()).toContain(thisPopClients.toLocaleString('en-US') + ' clients');
-            expect(countElm.text()).toContain(thisPopPings.toLocaleString('en-US') + ' pings');
+            expect(countElm.prop('title')).toContain(thisPopClients.toLocaleString('en-US') + ' clients');
+            expect(countElm.prop('title')).toContain(thisPopPings.toLocaleString('en-US') + ' pings');
           } else {
-            expect(countElm.exists()).toBeFalsy();
+            expect(countElm.prop('title')).toBeNull();
           }
 
         }

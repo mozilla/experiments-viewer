@@ -25,12 +25,22 @@ export default class extends React.Component {
   }
 
   render() {
+    let maybeTitle = null;
+    if (this.props.numClients !== 0 && this.props.numPings !== 0) {
+      maybeTitle = `(${this.props.numClients} clients / ${this.props.numPings} pings)`;
+    }
+
+    let maybeLabel = null;
+    if (this.props.label) {
+      maybeLabel = <span className={`population-name ${this.props.cohort}`} title={maybeTitle}>{this.props.label}</span>
+    }
+
     return (
       <div className="switch-wrapper" onClick={this.toggleSwitch}>
         <span className={this.props.active ? 'switch active' : 'switch'}>
           <b className="handle" />
         </span>
-        {this.props.label ? this.props.label : ''}
+        {maybeLabel}
       </div>
     );
   }
