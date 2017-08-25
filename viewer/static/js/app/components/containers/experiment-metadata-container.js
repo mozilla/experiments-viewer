@@ -18,8 +18,14 @@ const mapStateToProps = function(store) {
   for (let populationName in currentDataset.populations) {
     if (currentDataset.populations.hasOwnProperty(populationName)) {
       const thisPopulation = currentDataset.populations[populationName];
-      numClients += thisPopulation.total_clients;
-      numPings += thisPopulation.total_pings;
+
+      if (thisPopulation.total_clients) {
+        numClients += thisPopulation.total_clients;
+      }
+
+      if (thisPopulation.total_pings) {
+        numPings += thisPopulation.total_pings;
+      }
     }
   }
 
