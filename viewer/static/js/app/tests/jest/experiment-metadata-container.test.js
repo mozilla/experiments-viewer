@@ -9,7 +9,7 @@ import * as datasetActions from '../../actions/dataset-actions';
 
 
 describe('ExperimentMetadataContainer', () => {
-  let store, ddc;
+  let store, emc;
 
   /* eslint-disable camelcase */
   const fetchedDatasets = [
@@ -53,6 +53,22 @@ describe('ExperimentMetadataContainer', () => {
         C: { total_clients: 6000, total_pings: 6100 },
       },
     },
+    {
+      date: '2017-07-31',
+      populations: {
+        A: { total_pings: 600 },
+        B: {},
+        C: { total_clients: 6000 },
+      },
+    },
+    {
+      date: '2017-08-01',
+      populations: {
+        A: {},
+        B: {},
+        C: {},
+      },
+    },
   ];
   /* eslint-enable camelcase */
 
@@ -64,11 +80,11 @@ describe('ExperimentMetadataContainer', () => {
     store = createStore(reducers);
     store.dispatch(datasetActions.getDatasetsSuccess(fetchedDatasets));
     store.dispatch(datasetActions.changeDataset(fetchedDatasets[0]));
-    ddc = mount(<Provider store={store}><ExperimentMetadataContainer /></Provider>);
+    emc = mount(<Provider store={store}><ExperimentMetadataContainer /></Provider>);
   });
 
   it('Date is parsed correctly', () => {
-    const dateElm = ddc.find('.experiment-date');
+    const dateElm = emc.find('.experiment-date');
 
     expect(dateElm.text()).toContain('December 31, 2016');
 
@@ -83,10 +99,16 @@ describe('ExperimentMetadataContainer', () => {
 
     store.dispatch(datasetActions.changeDataset(fetchedDatasets[4]));
     expect(dateElm.text()).toContain('May 1, 2017');
+
+    store.dispatch(datasetActions.changeDataset(fetchedDatasets[5]));
+    expect(dateElm.text()).toContain('July 31, 2017');
+
+    store.dispatch(datasetActions.changeDataset(fetchedDatasets[6]));
+    expect(dateElm.text()).toContain('August 1, 2017');
   });
 
   it('Client count is correct', () => {
-    const clientElm = ddc.find('.experiment-num-clients');
+    const clientElm = emc.find('.experiment-num-clients');
 
     expect(clientElm.text()).toContain('3,100');
 
@@ -101,10 +123,16 @@ describe('ExperimentMetadataContainer', () => {
 
     store.dispatch(datasetActions.changeDataset(fetchedDatasets[4]));
     expect(clientElm.text()).toContain('11,500');
+
+    store.dispatch(datasetActions.changeDataset(fetchedDatasets[5]));
+    expect(clientElm.text()).toContain('6,000');
+
+    store.dispatch(datasetActions.changeDataset(fetchedDatasets[6]));
+    expect(clientElm.text()).toContain('0');
   });
 
   it('Ping count is correct', () => {
-    const pingElm = ddc.find('.experiment-num-pings');
+    const pingElm = emc.find('.experiment-num-pings');
 
     expect(pingElm.text()).toContain('3,400');
 
@@ -119,5 +147,11 @@ describe('ExperimentMetadataContainer', () => {
 
     store.dispatch(datasetActions.changeDataset(fetchedDatasets[4]));
     expect(pingElm.text()).toContain('11,800');
+
+    store.dispatch(datasetActions.changeDataset(fetchedDatasets[5]));
+    expect(pingElm.text()).toContain('600');
+
+    store.dispatch(datasetActions.changeDataset(fetchedDatasets[5]));
+    expect(pingElm.text()).toContain('0');
   });
 });

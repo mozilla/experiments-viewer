@@ -12,9 +12,9 @@ export default function(props) {
     <section className="dataset-control-wrapper">
       <div className="dataset-config-content">
         <select className="dataset-selection" defaultValue={props.currentDataset.name} onChange={props.handleDatasetSelection}>
-          {props.datasets.map(dataset => {
+          {props.datasets.map((dataset, index) => {
             return (
-              <option key={dataset.name} value={dataset.name}>{dataset.name}</option>
+              <option key={index} value={dataset.name}>{dataset.name}</option>
             );
           })}
         </select>
@@ -37,12 +37,29 @@ export default function(props) {
       <div className="dataset-cohorts">
         {props.sortedAllPopulations.map(cohort => {
           const isActive = props.sortedPopulationsToShow.includes(cohort);
-          const numClients = props.currentDataset.populations[cohort].total_clients.toLocaleString('en-US');
-          const numPings = props.currentDataset.populations[cohort].total_pings.toLocaleString('en-US');
+          const cohortMeta = props.currentDataset.populations[cohort];
+
+          let numClients = 0;
+          if (cohortMeta.total_clients) {
+            numClients = cohortMeta.total_clients.toLocaleString('en-US');
+          }
+
+          let numPings = 0;
+          if (cohortMeta.total_pings) {
+            numPings = cohortMeta.total_pings.toLocaleString('en-US');
+          }
+
+          let maybeCounts = null;
+          if (numClients !== 0 && numPings !== 0) {
+              maybeCounts = (
+                <span className="cohort-counts">({numClients} clients / {numPings} pings)</span>
+              );
+          }
+
           return (
-            <div key={cohort} className="switch-and-counts">
+            <div key={cohort} className={`switch-and-counts ${cohort}`}>
               <Switch key={cohort} label={cohort} onClick={props.handleCohortSwitch} active={isActive} />
-              <span className="cohort-counts">({numClients} clients / {numPings} pings)</span>
+              {maybeCounts}
             </div>
           );
         })}
