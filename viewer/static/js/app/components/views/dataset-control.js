@@ -51,9 +51,9 @@ export default function(props) {
 
           let maybeCounts = null;
           if (numClients !== 0 && numPings !== 0) {
-              maybeCounts = (
-                <span className="cohort-counts">({numClients} clients / {numPings} pings)</span>
-              );
+            maybeCounts = (
+              <span className="cohort-counts">({numClients} clients / {numPings} pings)</span>
+            );
           }
 
           return (

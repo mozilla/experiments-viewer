@@ -104,8 +104,12 @@ describe('DatasetControlContainer', () => {
           const thisPopClients = fd.populations[populationName].total_clients || 0;
           const thisPopPings = fd.populations[populationName].total_pings || 0;
 
-          expect(countElm.text()).toContain(thisPopClients.toLocaleString('en-US') + ' clients');
-          expect(countElm.text()).toContain(thisPopPings.toLocaleString('en-US') + ' pings');
+          if (thisPopClients !== 0 && thisPopPings !== 0) {
+            expect(countElm.text()).toContain(thisPopClients.toLocaleString('en-US') + ' clients');
+            expect(countElm.text()).toContain(thisPopPings.toLocaleString('en-US') + ' pings');
+          } else {
+            expect(countElm.exists()).toBeFalsy();
+          }
 
         }
       }
