@@ -4,12 +4,16 @@ The experiments viewer is a dashboard for viewing the results of Firefox "featur
 
 [![Build](https://img.shields.io/circleci/project/mozilla/experiments-viewer.svg)](https://circleci.com/gh/mozilla/experiments-viewer/)
 
+---
+
 ## Table of contents
 
 - Installation
     - [Install Docker](docs/docker.md)
     - [Install Frontend](docs/frontend.md)
 - [API Documentation](docs/api.md)
+
+---
 
 ## More information
 
