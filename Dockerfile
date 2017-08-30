@@ -16,6 +16,7 @@ RUN apk --no-cache add \
     openssl-dev \
     libffi-dev \
     py-cffi \
+    postgresql \
     postgresql-dev \
     postgresql-client \
     nodejs

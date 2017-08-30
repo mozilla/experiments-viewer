@@ -40,7 +40,7 @@ class CollectionFactory(factory.django.DjangoModelFactory):
 
 class PointFactory(factory.django.DjangoModelFactory):
     collection = factory.SubFactory(CollectionFactory)
-    bucket = factory.Iterator(['x86', 'arm', 'ppc'])
+    bucket = factory.Iterator(['1', '10', '100'])
     proportion = factory.Iterator([0.90, 0.07, 0.03])
     count = 13579
     rank = factory.Iterator([1, 2, 3])
