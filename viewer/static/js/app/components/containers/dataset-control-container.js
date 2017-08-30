@@ -13,36 +13,23 @@ class DatasetControlContainer extends React.Component {
 
     this.state = {currentDataset: props.dataset};
 
-    this._handleApplyButton = this._handleApplyButton.bind(this);
     this._handleDatasetSelection = this._handleDatasetSelection.bind(this);
-    this.isBtnDisabled = true;
   }
 
   _handleDatasetSelection(evt) {
     const activeDataset = store.getState().datasetState.currentDataset.name;
     const selectedDataset = evt.target.parentNode.querySelector('.dataset-selection').value;
 
-    store.dispatch(datasetActions.selectDatasetUI(selectedDataset));
+    urlApi.updateQueryParameter('ds', selectedDataset);
+    urlApi.updateQueryParameter('pop', 'ALL');
 
-    // sets the apply button disabled state
-    if (selectedDataset !== activeDataset) {
-      this.isBtnDisabled = false;
-    } else {
-      this.isBtnDisabled = true;
-    }
+    store.dispatch(datasetActions.selectDatasetUI(selectedDataset));
   }
 
   _handleSubgroupSelection(evt) {
     const newSubgroup = evt.target.value || '';
     store.dispatch(datasetActions.changeSubgroup(newSubgroup));
     urlApi.updateQueryParameter('sg', newSubgroup);
-  }
-
-  _handleApplyButton(evt) {
-    const selectedDataset = evt.target.parentNode.querySelector('.dataset-selection').value;
-    urlApi.updateQueryParameter('ds', selectedDataset);
-    urlApi.updateQueryParameter('pop', 'ALL');
-    this.isBtnDisabled = true;
   }
 
   // elm = switch parent element = '.switch-wrapper'
@@ -59,11 +46,9 @@ class DatasetControlContainer extends React.Component {
       <DatasetControl
         {...this.props}
 
-        handleApplyButton={this._handleApplyButton}
         handleDatasetSelection={this._handleDatasetSelection}
         handleSubgroupSelection={this._handleSubgroupSelection}
         handleCohortSwitch={this._handleCohortSwitch}
-        isBtnDisabled={this.isBtnDisabled}
       />
     );
   }
