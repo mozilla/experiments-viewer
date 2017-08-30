@@ -157,10 +157,10 @@ def get_metric(metric_name, metric_type):
     except KeyError:
         # Not found, create it, setting name=source_name.
         sql = ('INSERT INTO api_metric '
-               '(source_name, type, name, description, tooltip) '
-               'VALUES (%s, %s, %s, %s, %s) '
+               '(source_name, type, name, description, tooltip, units) '
+               'VALUES (%s, %s, %s, %s, %s, %s) '
                'RETURNING id')
-        params = [metric_name, metric_type, metric_name, '', '']
+        params = [metric_name, metric_type, metric_name, '', '', '']
         if DEBUG_SQL:
             print cursor.mogrify(sql, params)
             return 0
