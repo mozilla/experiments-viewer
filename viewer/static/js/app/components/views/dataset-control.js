@@ -18,12 +18,6 @@ export default function(props) {
             );
           })}
         </select>
-        <Button
-          label="apply"
-          isDisabled={props.isBtnDisabled}
-          extraClasses={['alt', 'btn-small', 'apply-config']}
-          handleClick={props.handleApplyButton}
-        />
       </div>
       <div className="dataset-subgroups">
         <select className="dataset-subgroup-selection" value={props.subgroup} onChange={props.handleSubgroupSelection}>
