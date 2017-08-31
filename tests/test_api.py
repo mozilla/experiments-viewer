@@ -23,6 +23,7 @@ class TestDataSet(DataTestCase):
                 {
                     'id': self.dataset.id,
                     'name': self.dataset.name,
+                    'slug': self.dataset.slug,
                     'date': self.dataset.date.strftime('%Y-%m-%d'),
                     'metrics': self.dataset.get_metrics(),
                     'populations': self.dataset.get_populations(),
@@ -31,6 +32,7 @@ class TestDataSet(DataTestCase):
                 {
                     'id': self.dataset_older.id,
                     'name': self.dataset_older.name,
+                    'slug': self.dataset_older.slug,
                     'date': self.dataset_older.date.strftime('%Y-%m-%d'),
                     'metrics': self.dataset_older.get_metrics(),
                     'populations': self.dataset_older.get_populations(),
@@ -61,7 +63,7 @@ class TestMetric(DataTestCase):
             'id': self.flag_metric.id,
             'type': 'FlagHistogram',
             'description': self.flag_metric.description,
-            'dataSet': self.dataset.name,
+            'dataSet': self.dataset.slug,
             'subgroup': 'All',
             'populations': [
                 {
@@ -84,7 +86,7 @@ class TestMetric(DataTestCase):
             'id': self.count_metric.id,
             'type': 'CountHistogram',
             'description': self.count_metric.description,
-            'dataSet': self.dataset.name,
+            'dataSet': self.dataset.slug,
             'subgroup': 'All',
             'populations': [
                 {
@@ -104,10 +106,10 @@ class TestMetric(DataTestCase):
         # Test that passing ?ds= works.
         response = self.client.get(
             reverse('metric', args=[self.flag_metric.id]),
-            data={'ds': self.dataset_older.name})
+            data={'ds': self.dataset_older.slug})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(DataSet.objects.visible().count(), 2)
-        self.assertEqual(response.json()['dataSet'], self.dataset_older.name)
+        self.assertEqual(response.json()['dataSet'], self.dataset_older.slug)
 
     def test_display_dataset(self):
         # Test that a newer dataset with display=False isn't returned.
@@ -116,7 +118,7 @@ class TestMetric(DataTestCase):
         response = self.client.get(
             reverse('metric', args=[self.flag_metric.id]))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json()['dataSet'], self.dataset.name)
+        self.assertEqual(response.json()['dataSet'], self.dataset.slug)
 
     def test_date_with_no_data_404(self):
         # Testing dataset id=999 should find no dataset and return a 404.
@@ -240,7 +242,7 @@ class TestMetrics(DataTestCase):
         # Add a 3rd metric we expect not to see.
         factories.MetricFactory(type='OtherHistogram')
 
-        response = self.client.get(self.url, data={'ds': self.dataset.name})
+        response = self.client.get(self.url, data={'ds': self.dataset.slug})
         metrics = [m['id'] for m in response.json()['metrics']]
         self.assertCountEqual(metrics,
                               [self.count_metric.id, self.flag_metric.id])

@@ -15,6 +15,7 @@ Example output:
     {
       "id": 1,
       "name": "Experiment 1",
+      "slug": "experiment-1",
       "date": "2017-01-01",
       "metrics": [1, 2, 3, 4, 5],
       "populations": {
@@ -32,6 +33,7 @@ Example output:
     {
       "id": 2,
       "name": "Experiment 2",
+      "slug": "experiment-2",
       "date": "2017-02-01",
       "metrics": [2, 4, 6, 7, 8, 9],
       "populations": {
@@ -107,7 +109,7 @@ Example output:
 ```
 {
   "id": 1,
-  "dataSet": "experiment-a",
+  "dataSet": "experiment-1",
   "type": "FlagHistogram",
   "name": "CPU Architecture",
   "subgroup": "Windows",

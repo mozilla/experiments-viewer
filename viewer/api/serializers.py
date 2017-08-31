@@ -6,6 +6,7 @@ from .models import Collection
 class DataSetSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     name = serializers.CharField()
+    slug = serializers.CharField()
     date = serializers.CharField()
     metrics = serializers.SerializerMethodField()
     populations = serializers.SerializerMethodField()
@@ -32,7 +33,7 @@ class MetricSerializer(serializers.Serializer):
 
 class DistributionSerializer(serializers.Serializer):
     id = serializers.IntegerField(source='metric.id')
-    dataSet = serializers.DateField(source='dataset.name')
+    dataSet = serializers.DateField(source='dataset.slug')
     name = serializers.CharField(source='metric.name')
     description = serializers.CharField(source='metric.description')
     type = serializers.CharField(source='metric.type')
