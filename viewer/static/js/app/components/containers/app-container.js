@@ -110,10 +110,10 @@ class AppContainer extends React.Component {
   componentWillUpdate(nextProps) {
     if (nextProps.datasets.length > 0) {
       if (this.dataset) {
-        this.currentDataset = nextProps.datasets.find(ds => ds.name === this.dataset) || {};
+        this.currentDataset = nextProps.datasets.find(ds => ds.slug === this.dataset) || {};
       } else {
         this.currentDataset = nextProps.datasets[0];
-        this.dataset = this.currentDataset.name;
+        this.dataset = this.currentDataset.slug;
         urlApi.updateQueryParameter('ds', this.dataset);
       }
       store.dispatch(datasetActions.changeDataset(this.currentDataset));

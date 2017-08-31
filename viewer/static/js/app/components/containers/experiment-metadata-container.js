@@ -31,6 +31,7 @@ const mapStateToProps = function(store) {
 
   return {
     name: currentDataset.name,
+    slug: currentDataset.slug,
     date: dateFormat(new Date(currentDataset.date), 'longDate', true),
     numClients,
     numPings,

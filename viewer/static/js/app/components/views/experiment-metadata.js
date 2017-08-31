@@ -1,10 +1,7 @@
 import React from 'react';
 
 export default function(props) {
-  let maybeName = null;
-  if (props.name) {
-    maybeName = <span className="experiment-name">{props.name}</span>;
-  }
+  let maybeName = <span className="experiment-name">{props.name || props.slug}</span>;
 
   let maybeDate = null;
   if (props.date) {
