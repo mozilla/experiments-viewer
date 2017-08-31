@@ -25,7 +25,7 @@ def metrics(request):
     ds = request.query_params.get('ds')
     if ds:
         # Further filter metrics by dataset.
-        metrics = (metrics.filter(collection__dataset__name=ds)
+        metrics = (metrics.filter(collection__dataset__slug=ds)
                           .distinct('id', 'name'))
         if not metrics:
             raise NotFound('No data set with given dataset found.')
@@ -39,7 +39,7 @@ def metric(request, metric_id):
     # Get requested dataset or most recent prior dataset from date.
     ds = request.query_params.get('ds')
     if ds:
-        dataset = DataSet.objects.visible().filter(name=ds).first()
+        dataset = DataSet.objects.visible().filter(slug=ds).first()
     else:
         dataset = DataSet.objects.visible().order_by('-date').first()
 

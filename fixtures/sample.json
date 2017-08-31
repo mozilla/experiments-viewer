@@ -3,7 +3,8 @@
   "model": "api.dataset",
   "pk": 7,
   "fields": {
-    "name": "fake_button_change_experiment",
+    "name": "Fake button change experiment",
+    "slug": "fake-button-change-experiment",
     "date": "2017-04-24",
     "display": true,
     "import_start": "2017-04-24T17:33:53.519Z",
@@ -14,7 +15,8 @@
   "model": "api.dataset",
   "pk": 8,
   "fields": {
-    "name": "fakeExperiment",
+    "name": "Fake experiment 1",
+    "slug": "fake-experiment-1",
     "date": "2017-05-24",
     "display": true,
     "import_start": "2017-04-24T17:36:51.426Z",

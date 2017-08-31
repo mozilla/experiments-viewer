@@ -9,7 +9,8 @@ class DataSetQuerySet(models.QuerySet):
 
 
 class DataSet(models.Model):
-    name = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=255, default='')
+    slug = models.CharField(max_length=50, unique=True)
     date = models.DateField()
     display = models.BooleanField(default=False)
     import_start = models.DateTimeField(null=True)
@@ -22,7 +23,7 @@ class DataSet(models.Model):
 
     def __str__(self):
         return '%s, date=%s, display=%s' % (
-            self.name, self.date.strftime('%Y-%m-%d'), self.display)
+            self.slug, self.date.strftime('%Y-%m-%d'), self.display)
 
     def get_metrics(self):
         return list(
