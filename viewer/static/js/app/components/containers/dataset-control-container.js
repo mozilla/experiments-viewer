@@ -17,7 +17,6 @@ class DatasetControlContainer extends React.Component {
   }
 
   _handleDatasetSelection(evt) {
-    const activeDataset = store.getState().datasetState.currentDataset.name;
     const selectedDataset = evt.target.parentNode.querySelector('.dataset-selection').value;
 
     urlApi.updateQueryParameter('ds', selectedDataset);

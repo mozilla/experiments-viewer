@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Switch from './switch';
-import Button from './button';
 import { bumpSort } from '../../utils';
 
 
