@@ -17,7 +17,6 @@ class ChartContainer extends React.Component {
     this.width = 450;
     this.allDatasetName = 'all';
     this.excludingOutliersDatasetName = 'excludingOutliers';
-    this.isOrdinal = false;
 
     this.size = {
       height: this.height,
@@ -95,7 +94,7 @@ class ChartContainer extends React.Component {
 
   _setup(props) {
     this.biggestPopulation = props.metric.populations[0]; // To start... we'll bubble up the actual biggest population later
-    this.isOrdinal = isMetricOrdinal(props.metric.type);
+
     this.populationData = {};
     for (let i = 0; i < props.metric.populations.length; i++) {
       const population = props.metric.populations[i];
@@ -138,10 +137,8 @@ class ChartContainer extends React.Component {
     this.biggestDatasetToShow = this.populationData[this.biggestPopulation.name]['data'][this.activeDatasetName];
 
     this.refLabels = [];
-    this.xValues = [];
     this.biggestDatasetToShow.map(item => {
       this.refLabels[item.x] = item.label;
-      this.xValues.push(item.x);
     });
 
     this.yScale = d3Scale.scaleLinear()
@@ -182,14 +179,19 @@ class ChartContainer extends React.Component {
 
   _getXScale(props) {
     // Categorical charts get treated differently since they start at x: 1
-    let xScale = null;
+    let xScale;
 
-    if (this.isOrdinal) {
-      xScale = d3Scale.scalePoint().domain(this.xValues).range([1, this.size.innerWidth]);
+    if (isMetricOrdinal(props.metric.type)) {
+      xScale = d3Scale.scaleLinear()
+                 .domain([1, d3Array.max(this.biggestDatasetToShow, d => d.x)])
+                 .range([0, this.size.innerWidth]);
     } else {
       let scaleType;
 
       switch(props.scale) {
+        case 'linear':
+          scaleType = d3Scale.scaleLinear();
+          break;
         case 'log':
           scaleType = d3Scale.scaleLog();
           break;
@@ -232,7 +234,6 @@ class ChartContainer extends React.Component {
           activeDatasetName={this.activeDatasetName}
           hoverString={this.props.metric.hoverString}
           xunit={this.props.xunit}
-          isOrdinal={this.isOrdinal}
 
           size={this.size}
           xScale={this.xScale}

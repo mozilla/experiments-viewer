@@ -12,10 +12,6 @@ export default class extends React.Component {
                 .x(d => props.xScale(d.x))
                 .y(d => props.yScale(d.y));
 
-    if (props.isOrdinal) {
-      line.curve(d3Shape.curveStepBefore);
-    }
-
     d3Selection.select(`.chart-${props.metricId} .population[data-population="${props.populationName}"] .line`).datum(props.data).attr('d', line);
   }
 
