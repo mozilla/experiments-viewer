@@ -183,7 +183,7 @@ class ChartContainer extends React.Component {
 
     if (isMetricOrdinal(props.metric.type)) {
       xScale = d3Scale.scaleLinear()
-                 .domain([1, d3Array.max(this.biggestDatasetToShow, d => d.x)])
+                 .domain([0, d3Array.max(this.biggestDatasetToShow, d => d.x)])
                  .range([0, this.size.innerWidth]);
     } else {
       let scaleType;
