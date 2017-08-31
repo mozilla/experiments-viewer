@@ -20,7 +20,7 @@ export function toggleConfigurationModal(forceClose) {
 const ordinalTypes = [
   'EnumeratedHistogram',
   'BooleanHistogram',
-  'C', // TODO: This is for the incorrect fixtures and will go away.
+  'ExponentialHistogram',
 ];
 
 export function isMetricOrdinal(metricType) {

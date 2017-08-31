@@ -47,6 +47,7 @@ export default class extends React.Component {
             metricId={props.metricId}
             xScale={props.xScale}
             yScale={props.yScale}
+            isOrdinal={props.isOrdinal}
             data={props.populationData[currentPopulationName]['data'][props.activeDatasetName]}
           />
           <ChartFocus />
@@ -73,6 +74,46 @@ export default class extends React.Component {
         </div>
       );
     } else {
+      // TODO: This is terribad! Create a new component OrdinalChart or BarChart etc.
+      if (props.isOrdinal) {
+        return (
+          <div className={`chart chart-${props.metricId}`}>
+            <div className={props.tooltip ? 'tooltip-wrapper' : ''}>
+              <h2 className={`chart-list-name ${props.tooltip ? 'tooltip-hover-target' : ''}`}>{props.name}</h2>
+              {props.tooltip ? props.tooltip : ''}
+            </div>
+            <svg width={props.size.width} height={props.size.height}>
+              <g transform={props.size.transform}>
+                <ChartAxisContainer
+                  metricId={props.metricId}
+                  metricType={props.metricType}
+                  scale={props.xScale}
+                  axisType="x"
+                  refLabels={props.refLabels}
+                  size={props.size.innerHeight}
+                  height={props.size.height}
+                  width={props.size.width}
+                  xunit={props.xunit}
+                  isOrdinal={props.isOrdinal}
+                />
+                <ChartAxisContainer
+                  metricId={props.metricId}
+                  scale={props.yScale}
+                  axisType="y"
+                  refLabels={props.refLabels}
+                  size={props.size.innerWidth}
+                  height={props.size.height}
+                  width={props.size.width}
+                  isOrdinal={props.isOrdinal}
+                />
+                <g className="populations">
+                  {this._populationComponents(props.sortedPopulationsToShow)}
+                </g>
+              </g>
+            </svg>
+          </div>
+        );
+      }
       return (
         <div className={`chart chart-${props.metricId}`}>
           <div className={props.tooltip ? 'tooltip-wrapper' : ''}>
@@ -91,6 +132,7 @@ export default class extends React.Component {
                 height={props.size.height}
                 width={props.size.width}
                 xunit={props.xunit}
+                isOrdinal={props.isOrdinal}
               />
               <ChartAxisContainer
                 metricId={props.metricId}
@@ -100,6 +142,7 @@ export default class extends React.Component {
                 size={props.size.innerWidth}
                 height={props.size.height}
                 width={props.size.width}
+                isOrdinal={props.isOrdinal}
               />
               <g className="populations">
                 {this._populationComponents(props.sortedPopulationsToShow)}
