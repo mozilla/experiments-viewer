@@ -153,7 +153,7 @@ class ChartContainer extends React.Component {
 
     for (let i = 0; i < dataPoints.length; i++) {
       formattedPoints.push({
-        x: dataPoints[i]['refRank'] || parseFloat(dataPoints[i]['b']),
+        x: parseFloat(dataPoints[i]['b']),
         y: dataPoints[i]['p'],
         p: dataPoints[i]['p'],
         label: dataPoints[i]['b']
@@ -183,7 +183,7 @@ class ChartContainer extends React.Component {
 
     if (isMetricOrdinal(props.metric.type)) {
       xScale = d3Scale.scaleLinear()
-                 .domain([1, d3Array.max(this.biggestDatasetToShow, d => d.x)])
+                 .domain([0, d3Array.max(this.biggestDatasetToShow, d => d.x)])
                  .range([0, this.size.innerWidth]);
     } else {
       let scaleType;
