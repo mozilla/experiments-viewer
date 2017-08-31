@@ -9,6 +9,7 @@ const initialState = {
   currentDataset: {
     id: 0,
     name: '',
+    slug: '',
     date: '',
     metrics: [],
     populations: [],
