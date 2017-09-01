@@ -4,6 +4,7 @@ from os import environ
 
 import boto3
 import psycopg2
+import requests
 import ujson
 from psycopg2.extras import LoggingConnection, execute_values
 from pyspark.sql import SparkSession
@@ -12,10 +13,13 @@ from pyspark.sql import SparkSession
 BUCKET = environ.get('bucket', 'telemetry-parquet')
 DB = environ.get('db', 'experiments-viewer-db')
 PATH = 's3://%s/experiments_aggregates/v1/' % BUCKET
+NORMANDY_URL = ('https://normandy.services.mozilla.com/api/v1/recipe/'
+                '?latest_revision__action=3')
 LOG_LEVEL = logging.INFO  # Change to incr/decr logging output.
 DEBUG_SQL = False  # Set to True to not insert any data.
-METRICS = None
 
+EXPERIMENTS = None
+METRICS = None
 
 logging.basicConfig(level=LOG_LEVEL)
 logger = logging.getLogger(__name__)
@@ -46,11 +50,28 @@ def get_database_connection():
     return conn, conn.cursor()
 
 
+def get_experiments():
+    global EXPERIMENTS
+
+    if EXPERIMENTS is not None:
+        return EXPERIMENTS
+
+    resp = requests.get(NORMANDY_URL)
+    if resp.status_code == 200:
+        EXPERIMENTS = {r['arguments']['slug']: r for r in resp.json()}
+    else:
+        EXPERIMENTS = {}
+
+    return EXPERIMENTS
+
+
 def create_dataset(exp, process_date):
     # Check last import date to avoid importing stale data via backfills.
     process_date_dt = datetime.datetime.strptime(process_date, '%Y%m%d').date()
 
-    sql = 'SELECT date FROM api_dataset WHERE name=%s'
+    experiments = get_experiments()
+
+    sql = 'SELECT date FROM api_dataset WHERE slug=%s'
     params = [exp]
     cursor.execute(sql, params)
     result = cursor.fetchone()
@@ -61,10 +82,11 @@ def create_dataset(exp, process_date):
                 'Process date %s is older than previous import date %s' % (
                     process_date_dt, prior_import_date))
 
-    sql = ('INSERT INTO api_dataset (name, date, display, import_start) '
-           'VALUES (%s, %s, %s, %s) '
+    sql = ('INSERT INTO api_dataset (name, slug, date, display, import_start) '
+           'VALUES (%s, %s, %s, %s, %s) '
            'RETURNING id')
     params = [
+        experiments.get(exp, {}).get('name', ''),
         'TMP-%s' % exp,  # Store initially with a temporary prefix.
         process_date_dt,
         False,
@@ -83,7 +105,7 @@ def display_dataset(exp, dataset_id):
     # Determine if we're replacing a previous import of this experiment.
     old_dataset_id = 0
 
-    sql = 'SELECT id FROM api_dataset WHERE name=%s'
+    sql = 'SELECT id FROM api_dataset WHERE slug=%s'
     params = [exp]
     if DEBUG_SQL:
         print cursor.mogrify(sql, params)
@@ -101,7 +123,7 @@ def display_dataset(exp, dataset_id):
             DELETE FROM api_dataset WHERE id=%s;
             UPDATE api_dataset
               SET id=%s,
-                  name=%s,
+                  slug=%s,
                   display=true,
                   import_stop=%s
               WHERE id=%s;
@@ -119,7 +141,7 @@ def display_dataset(exp, dataset_id):
         sql = '''
             UPDATE api_dataset
                 SET display=true,
-                    name=%s,
+                    slug=%s,
                     import_stop=%s
                 WHERE id=%s
         '''
