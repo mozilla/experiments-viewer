@@ -25,14 +25,9 @@ export default class extends React.Component {
   }
 
   render() {
-    let maybeTitle = null;
-    if (this.props.numClients !== 0 && this.props.numPings !== 0) {
-      maybeTitle = `(${this.props.numClients} clients / ${this.props.numPings} pings)`;
-    }
-
     let maybeLabel = null;
     if (this.props.label) {
-      maybeLabel = <span className={`population-name ${this.props.cohort}`} title={maybeTitle}>{this.props.label}</span>
+      maybeLabel = <span className={`population-name ${this.props.populationName}`} title={this.props.countString}>{this.props.label}</span>
     }
 
     return (

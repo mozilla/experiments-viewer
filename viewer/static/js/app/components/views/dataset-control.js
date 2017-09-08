@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Switch from './switch';
-import { bumpSort } from '../../utils';
+import { bumpSort, getCountString } from '../../utils';
 
 
 export default function(props) {
@@ -34,29 +34,19 @@ export default function(props) {
         </select>
       </div>
       {maybeSubgroupSelector}
-      <div className="dataset-cohorts">
-        {props.sortedAllPopulations.map(cohort => {
-          const isActive = props.sortedPopulationsToShow.includes(cohort);
-          const cohortMeta = props.currentDataset.populations[cohort];
-
-          let numClients = 0;
-          if (cohortMeta.total_clients) {
-            numClients = cohortMeta.total_clients.toLocaleString('en-US');
-          }
-
-          let numPings = 0;
-          if (cohortMeta.total_pings) {
-            numPings = cohortMeta.total_pings.toLocaleString('en-US');
-          }
+      <div className="dataset-populations">
+        {props.sortedAllPopulations.map(populationName => {
+          const isActive = props.sortedPopulationsToShow.includes(populationName);
+          const populationMeta = props.currentDataset.populations[populationName];
+          const countString = getCountString(populationMeta.total_clients, populationMeta.total_pings);
 
           return (
             <Switch
-                key={cohort}
+                key={populationName}
 
-                label={cohort}
-                cohort={cohort}
-                numClients={numClients}
-                numPings={numPings}
+                label={populationName}
+                populationName={populationName}
+                countString={countString}
 
                 onClick={props.handleCohortSwitch}
                 active={isActive}
