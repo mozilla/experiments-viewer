@@ -228,6 +228,7 @@ class ChartContainer extends React.Component {
           isFetching={false}
 
           name={this.props.metric.name}
+          endpoint={this.props.endpoint}
           populationData={this.populationData}
           refLabels={this.refLabels}
           metricType={this.props.metric.type}
@@ -245,10 +246,18 @@ class ChartContainer extends React.Component {
 }
 
 const mapStateToProps = function(store, ownProps) {
-  return {
-    metric: store.metricState.metrics[ownProps.metricId],
+  const props = {
     subgroup: store.datasetState.subgroup,
   };
+
+  const metric = store.metricState.metrics[ownProps.metricId];
+
+  if (metric) {
+    props['metric'] = metric.content;
+    props['endpoint'] = metric.endpoint;
+  }
+
+  return props;
 };
 
 export default connect(mapStateToProps)(ChartContainer);

@@ -21,10 +21,11 @@ export function getMetricMetadataFailure(status) {
   };
 }
 
-export function getMetricSuccess(metricId, metric) {
+export function getMetricSuccess(metricId, endpoint, metric) {
   return {
     type: types.GET_METRIC_SUCCESS,
     metricId,
+    endpoint,
     metric,
   };
 }

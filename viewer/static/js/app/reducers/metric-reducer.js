@@ -10,9 +10,11 @@ const metricReducer = function(state = initialState, action) {
   switch(action.type) {
     case types.GET_METRIC_SUCCESS: {
       let metric = action.metric;
+      const endpoint = action.endpoint;
       metric.hoverString = store.getState().metricMetadataState.hoverStrings['id-' + action.metricId];
 
-      const newMetrics = Object.assign({}, state.metrics, {[action.metricId]: metric});
+      const metricObject = { content: metric, endpoint: endpoint };
+      const newMetrics = Object.assign({}, state.metrics, {[action.metricId]: metricObject});
       return Object.assign({}, state, {metrics: newMetrics});
     }
   }

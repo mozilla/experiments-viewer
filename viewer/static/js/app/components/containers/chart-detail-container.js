@@ -71,9 +71,16 @@ class ChartDetailContainer extends React.Component {
 }
 
 const mapStateToProps = function(store, ownProps) {
-  return {
-    metric: store.metricState.metrics[parseInt(ownProps.params.metricId, 10)],
-  };
+  const props = {};
+
+  const metric = store.metricState.metrics[Number(ownProps.params.metricId)];
+
+  if (metric) {
+    props['metric'] = metric.content;
+    props['endpoint'] = metric.endpoint;
+  }
+
+  return props;
 };
 
 export default connect(mapStateToProps)(ChartDetailContainer);
