@@ -6,7 +6,7 @@ export default function(props) {
   let maybeDate = null;
   if (props.date) {
     maybeDate = (
-      <span className="experiment-date">Imported on {props.date}</span>
+      <span className="experiment-date">Through {props.date}</span>
     );
   }
 
