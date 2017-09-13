@@ -72,8 +72,9 @@ export function getMetric(dataset, metricId, pops, subgroup) {
     }
   }
 
-  return axios.get(`${endpoints.GET_METRIC}${metricId}/?${queryString}`).then(response => {
-    store.dispatch(metricActions.getMetricSuccess(metricId, response.data));
+  const endpoint = `${endpoints.GET_METRIC}${metricId}/?${queryString}`;
+  return axios.get(endpoint).then(response => {
+    store.dispatch(metricActions.getMetricSuccess(metricId, endpoint, response.data));
     return response.data;
   }).catch(error => {
     console.error(error);

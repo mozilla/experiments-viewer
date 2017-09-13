@@ -80,6 +80,7 @@ export default class extends React.Component {
             <h2 className={`chart-list-name ${props.tooltip ? 'tooltip-hover-target' : ''}`}>{props.name}</h2>
             {props.tooltip ? props.tooltip : ''}
           </div>
+          <a className="get-json" href={props.endpoint}>Get JSON</a>
           <svg width={props.size.width} height={props.size.height}>
             <g transform={props.size.transform}>
               <ChartAxisContainer
