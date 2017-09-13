@@ -7,6 +7,21 @@ import { bumpSort } from '../../utils';
 export default function(props) {
   const sortedSubgroups = bumpSort(props.currentDataset.subgroups, 'All');
 
+  let maybeSubgroupSelector = null;
+  if (sortedSubgroups.length > 1) {
+    maybeSubgroupSelector = (
+      <div className="dataset-subgroups">
+        <select className="dataset-subgroup-selection" value={props.subgroup} onChange={props.handleSubgroupSelection}>
+          {sortedSubgroups.map(subgroup => {
+            return (
+              <option key={subgroup} value={subgroup}>{subgroup}</option>
+            );
+          })}
+        </select>
+      </div>
+    );
+  }
+
   return (
     <section className="dataset-control-wrapper">
       <div className="dataset-config-content">
@@ -18,15 +33,7 @@ export default function(props) {
           })}
         </select>
       </div>
-      <div className="dataset-subgroups">
-        <select className="dataset-subgroup-selection" value={props.subgroup} onChange={props.handleSubgroupSelection}>
-          {sortedSubgroups.map(subgroup => {
-            return (
-              <option key={subgroup} value={subgroup}>{subgroup}</option>
-            );
-          })}
-        </select>
-      </div>
+      {maybeSubgroupSelector}
       <div className="dataset-cohorts">
         {props.sortedAllPopulations.map(cohort => {
           const isActive = props.sortedPopulationsToShow.includes(cohort);
