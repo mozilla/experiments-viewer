@@ -45,3 +45,17 @@ export function bumpSort(array, valueToBump) {
   const arrayOfBumped = arrayCopy.splice(valueIndex, 1);
   return arrayOfBumped.concat(arrayCopy.sort());
 }
+
+/**
+ * Given a client count and a ping count, return a string that can be used to
+ * display the number of clients and pings.
+ */
+export function getCountString(clients = 0, pings = 0) {
+  let string = null;
+
+  if (clients !== 0 && pings !== 0) {
+    string = `(${clients.toLocaleString('en-US')} clients / ${pings.toLocaleString('en-US')} pings)`;
+  }
+
+  return string;
+}

@@ -4,7 +4,7 @@ import React from 'react';
 import ChartContainer from '../containers/chart-container';
 import DescriptionContainer from '../containers/description-container';
 import ConfigurationContainer from '../containers/configuration-container';
-import Legend from '../views/legend';
+import LegendContainer from '../containers/legend-container';
 import DatasetControlContainer from '../containers/dataset-control-container';
 import * as utils from '../../utils';
 
@@ -61,7 +61,7 @@ export default function(props) {
           configureCharts={true}
         />
       </section>
-      <Legend {...props} />
+      <LegendContainer {...props} />
       <section className="charts">
         {chartLinks}
       </section>
