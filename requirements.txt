@@ -18,7 +18,7 @@ raven==6.1.0
 requests==2.18.4
 rsa==3.4.2
 simplejson==3.11.1
-six==1.10.0
+six==1.11.0
 uritemplate==3.0.0
 whitenoise==3.3.0
 
