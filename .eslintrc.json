@@ -21,7 +21,6 @@
     "camelcase": 2,
     "eqeqeq": 2,
     "guard-for-in": 2,
-    "indent": ["error", 2, { "SwitchCase": 1 }],
     "no-console": ["error", { "allow": ["error"]}],
     "no-unused-vars": ["error", { "args": "none"}],
     "quotes": [2, "single"],
