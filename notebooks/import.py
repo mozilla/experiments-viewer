@@ -217,8 +217,8 @@ def create_points(collection_id, histogram):
            '(collection_id, bucket, proportion, count, rank) '
            'VALUES %s')
 
-    for rank, kv in enumerate(histogram.iteritems(), 1):
-        k, v = kv[0], kv[1].asDict()
+    for rank, k in enumerate(sorted(histogram.keys())):
+        v = histogram[k].asDict()
         params.append(
             (collection_id, k, v['pdf'], v['count'], rank)
         )
