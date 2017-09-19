@@ -10,7 +10,7 @@ class DataSetQuerySet(models.QuerySet):
 
 class DataSet(models.Model):
     name = models.CharField(max_length=255, default='')
-    slug = models.CharField(max_length=50, unique=True)
+    slug = models.CharField(max_length=255, unique=True)
     date = models.DateField()
     display = models.BooleanField(default=False)
     import_start = models.DateTimeField(null=True)
