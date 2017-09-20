@@ -8,6 +8,8 @@ from . import models
 class DataSetFactory(factory.django.DjangoModelFactory):
     name = factory.Sequence(lambda n: 'Long name for experiment %s' % n)
     slug = factory.Sequence(lambda n: 'experiment-%s' % n)
+    created_at = factory.Sequence(
+        lambda n: datetime.date.today() - datetime.timedelta(days=n + 7))
     date = factory.Sequence(
         lambda n: datetime.date.today() + datetime.timedelta(days=n))
     display = True

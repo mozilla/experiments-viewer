@@ -111,6 +111,12 @@ class TestMetric(DataTestCase):
         self.assertEqual(DataSet.objects.visible().count(), 2)
         self.assertEqual(response.json()['dataSet'], self.dataset_older.slug)
 
+    def test_no_dataset_defaults_to_latest(self):
+        response = self.client.get(
+            reverse('metric', args=[self.flag_metric.id]))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json()['dataSet'], self.dataset.slug)
+
     def test_display_dataset(self):
         # Test that a newer dataset with display=False isn't returned.
         factories.DataSetFactory(display=False)

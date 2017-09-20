@@ -49,13 +49,13 @@ class DataTestCase(TestCase):
         flag_metric = factories.MetricFactory(type='FlagHistogram')
 
         # Create 2 viewable datasets.
-        dataset_older = factories.DataSetFactory()
-        create_collections(dataset_older, 'control', flag_metric, count_metric)
-        create_collections(dataset_older, 'chaos', flag_metric, count_metric)
-
         dataset = factories.DataSetFactory()
         create_collections(dataset, 'control', flag_metric, count_metric)
         create_collections(dataset, 'chaos', flag_metric, count_metric)
+
+        dataset_older = factories.DataSetFactory()
+        create_collections(dataset_older, 'control', flag_metric, count_metric)
+        create_collections(dataset_older, 'chaos', flag_metric, count_metric)
 
         # Create 1 non-viewable dataset.
         dataset_hidden = factories.DataSetFactory(display=False)
