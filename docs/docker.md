@@ -51,3 +51,34 @@ Tips & Tricks
 * If you change `requirements.txt` to add dependencies for Django, you must rebuild `server`:
 
   `make build`
+
+
+Getting Production Data
+=======================
+
+Sometimes it is useful to develop against production data. To do this we
+trigger a backup on Heroku, download the backup, and import it into our docker
+conainter's database.
+
+**NOTE**: This assumes you have a Heroku git remote named "prod" tracking the
+production branch on Heroku.
+
+* Create a new backup. Take note of the backup ID:
+
+  `heroku pg:backups:capture --remote prod`
+
+* If needed, you can list all the current backups:
+
+  `heroku pg:backups --remote prod`
+
+* Download the backup file. Change "b001" to the backup ID noted above.:
+
+  `heroku pg:backups:download --remote prod -o latest.dump b001`
+
+* Shell into the docker container:
+
+  `make shell`
+
+* Import the database:
+
+  `pg_restore -h db -U postgres -d postgres --clean latest.dump`
