@@ -12,6 +12,9 @@ export default class extends React.Component {
     this.focusElm = select(`.chart-${this.props.metricId} .focus`);
     this.bisector = d3Array.bisector(d => d.x).left;
 
+    if (this.props.metricType === 'ExponentialHistogram') {
+      this.bisector = d3Array.bisector(d => d.index).left;
+    }
     // Terrible hack to bind an event in a way d3 prefers.
     // Normally this would be in the container and we'd pass it the event.
     hoverElm.on('mousemove', () => {
@@ -42,13 +45,19 @@ export default class extends React.Component {
         let proportion = props.metricType === 'categorical' ? currentData[d.x - 1].p : d.p;
 
         // Position the focus circle on chart line.
-        this.focusElm.attr('transform', `translate(${props.xScale(d.x)}, ${props.yScale(d.y)})`);
+        if (props.metricType === 'ExponentialHistogram') {
+          d = x0 - d0.index > d1.index - x0 ? d1 : d0;
+          this.focusElm.attr('transform', `translate(${props.xScale(d.index)}, ${props.yScale(d.y)})`);
+        } else {
+          this.focusElm.attr('transform', `translate(${props.xScale(d.x)}, ${props.yScale(d.y)})`);
+        }
 
         // Insert the hover text for this population at this data point
         let hoverSummary = select(`.secondary-menu-content .chart-info .hover-summary[data-population="${populationName}"]`);
+
         hoverSummary.html(this._getHoverString(props.metricType, d.x, d.y,
                                                proportion, populationName, props.xunit,
-                                               props.populations[populationName].numObs));
+                                               props.populations[populationName].numObs), d.index);
       }
     }
   }
@@ -56,7 +65,7 @@ export default class extends React.Component {
   _getFormattedVal(val) {
     return d3Format.format('.1%')(val).replace('%', '');
   }
-  _getHoverString(metricType, x, y, p, population, xunit, numObs) {
+  _getHoverString(metricType, x, y, p, population, xunit, numObs, index) {
     let result = this.props.hoverString;
     if (!result) return '';
 
@@ -71,7 +80,7 @@ export default class extends React.Component {
       });
     } else {
       result = format(result, {
-        x,
+        x: metricType === 'ExponentialHistogram' ? this.props.refLabels[index] : x,
         p: this._getFormattedVal(p),
         y: this._getFormattedVal(y),
         n: numObs.toLocaleString('en-US'),

@@ -137,9 +137,15 @@ class ChartContainer extends React.Component {
     this.biggestDatasetToShow = this.populationData[this.biggestPopulation.name]['data'][this.activeDatasetName];
 
     this.refLabels = [];
-    this.biggestDatasetToShow.map(item => {
-      this.refLabels[item.x] = item.label;
-    });
+    if (props.metric.type === 'ExponentialHistogram') {
+      this.biggestDatasetToShow.map(item => {
+        this.refLabels.push(item.label);
+      });
+    } else {
+      this.biggestDatasetToShow.map(item => {
+        this.refLabels[item.x] = item.label;
+      });
+    }
 
     this.yScale = d3Scale.scaleLinear()
                     .domain([0, 1]) // 0% to 100%
@@ -153,6 +159,7 @@ class ChartContainer extends React.Component {
 
     for (let i = 0; i < dataPoints.length; i++) {
       formattedPoints.push({
+        index: parseInt(dataPoints[i]['refRank'], 10),
         x: parseFloat(dataPoints[i]['b']),
         y: dataPoints[i]['p'],
         p: dataPoints[i]['p'],
@@ -185,6 +192,10 @@ class ChartContainer extends React.Component {
       xScale = d3Scale.scaleLinear()
                  .domain([0, d3Array.max(this.biggestDatasetToShow, d => d.x)])
                  .range([0, this.size.innerWidth]);
+    } else if (props.metric.type === 'ExponentialHistogram') {
+      xScale = d3Scale.scaleLinear()
+                .domain([0, this.biggestDatasetToShow.length - 1])
+                .range([0, this.size.innerWidth]);
     } else {
       let scaleType;
 
