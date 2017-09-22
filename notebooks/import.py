@@ -47,7 +47,7 @@ def get_database_connection():
                             user=creds['username'], password=creds['password'],
                             dbname=creds['db_name'])
     conn.initialize(logger)
-    return conn, conn.cursor()
+    return conn
 
 
 def get_experiments():
@@ -65,7 +65,7 @@ def get_experiments():
     return EXPERIMENTS
 
 
-def create_dataset(exp, process_date):
+def create_dataset(cursor, exp, process_date):
     # Check last import date to avoid importing stale data via backfills.
     process_date_dt = datetime.datetime.strptime(process_date, '%Y%m%d').date()
 
@@ -97,11 +97,10 @@ def create_dataset(exp, process_date):
         return 0
     else:
         cursor.execute(sql, params)
-        conn.commit()
         return cursor.fetchone()[0]
 
 
-def display_dataset(exp, dataset_id):
+def display_dataset(cursor, exp, dataset_id):
     # Determine if we're replacing a previous import of this experiment.
     old_dataset_id = 0
 
@@ -119,7 +118,6 @@ def display_dataset(exp, dataset_id):
         # If we are replacing a dataset, we need to delete the old one and
         # update the just added one with the old ID.
         sql = '''
-            BEGIN;
             DELETE FROM api_dataset WHERE id=%s;
             UPDATE api_dataset
               SET id=%s,
@@ -127,7 +125,6 @@ def display_dataset(exp, dataset_id):
                   display=true,
                   import_stop=%s
               WHERE id=%s;
-            COMMIT;
         '''
         params = [
             old_dataset_id,
@@ -151,10 +148,9 @@ def display_dataset(exp, dataset_id):
         print cursor.mogrify(sql, params)
     else:
         cursor.execute(sql, params)
-        conn.commit()
 
 
-def get_metrics():
+def get_metrics(cursor):
     global METRICS
 
     if METRICS is not None:
@@ -166,14 +162,14 @@ def get_metrics():
     return METRICS
 
 
-def get_metric(metric_name, metric_type):
+def get_metric(cursor, metric_name, metric_type):
     """
     Attempts to get the `metric_id` given the metric source name.
 
     If not found, creates a new metric.
 
     """
-    metrics = get_metrics()
+    metrics = get_metrics(cursor)
     try:
         return metrics[metric_name]
     except KeyError:
@@ -188,15 +184,14 @@ def get_metric(metric_name, metric_type):
             return 0
         else:
             cursor.execute(sql, params)
-            conn.commit()
             metric_id = cursor.fetchone()[0]
             # Update METRICS so this new metric is found.
             metrics[metric_name] = metric_id
             return metric_id
 
 
-def create_collection(dataset_id, metric_id, num_observations, population,
-                      subgroup):
+def create_collection(cursor, dataset_id, metric_id, num_observations,
+                      population, subgroup):
     sql = ('INSERT INTO api_collection '
            '(dataset_id, metric_id, num_observations, population, subgroup) '
            'VALUES (%s, %s, %s, %s, %s) '
@@ -207,11 +202,10 @@ def create_collection(dataset_id, metric_id, num_observations, population,
         return 0
     else:
         cursor.execute(sql, params)
-        conn.commit()
         return cursor.fetchone()[0]
 
 
-def create_points(collection_id, histogram):
+def create_points(cursor, collection_id, histogram):
     params = []
     sql = ('INSERT INTO api_point '
            '(collection_id, bucket, proportion, count, rank) '
@@ -229,7 +223,8 @@ def create_points(collection_id, histogram):
         execute_values(cursor, sql, params)  # default: page_size=100
 
 
-def create_stat(dataset_id, metric_id, population, subgroup, key, value):
+def create_stat(cursor, dataset_id, metric_id, population, subgroup, key,
+                value):
     sql = ('INSERT INTO api_stats '
            '(dataset_id, metric_id, population, subgroup, key, value) '
            'VALUES (%s, %s, %s, %s, %s, %s) ')
@@ -253,7 +248,7 @@ sparkSession = SparkSession.builder.appName('experiments-viewer').getOrCreate()
 df = sparkSession.read.parquet(PATH).filter("date='%s'" % process_date).cache()
 
 # Get database connection and initialize logging.
-conn, cursor = get_database_connection()
+conn = get_database_connection()
 
 # Get list of distinct experiments.
 experiments = set(
@@ -264,8 +259,11 @@ experiments = set(
 
 for exp in experiments:
 
+    # Get a fresh cursor, the first command will start the transaction.
+    cursor = conn.cursor()
+
     try:
-        dataset_id = create_dataset(exp, process_date)
+        dataset_id = create_dataset(cursor, exp, process_date)
         print 'Inserting data for experiment: %s' % exp
     except StaleImportError as e:
         print e
@@ -290,19 +288,21 @@ for exp in experiments:
                            if s['name'] == 'Total Pings'][0]
             total_clients = [s['value'] for s in stats
                              if s['name'] == 'Total Clients'][0]
-            create_stat(dataset_id, None, population, '',
+            create_stat(cursor, dataset_id, None, population, '',
                         'total_pings', total_pings)
-            create_stat(dataset_id, None, population, '',
+            create_stat(cursor, dataset_id, None, population, '',
                         'total_clients', total_clients)
 
             continue
 
-        metric_id = get_metric(metric_name, metric_type)
-        collection_id = create_collection(
-            dataset_id, metric_id, row['n'], population, row['subgroup'] or '')
-        create_points(collection_id, row['histogram'])
-
-        conn.commit()
+        metric_id = get_metric(cursor, metric_name, metric_type)
+        collection_id = create_collection(cursor, dataset_id, metric_id,
+                                          row['n'], population,
+                                          row['subgroup'] or '')
+        create_points(cursor, collection_id, row['histogram'])
 
     # Flag dataset as viewable.
-    display_dataset(exp, dataset_id)
+    display_dataset(cursor, exp, dataset_id)
+
+    # Commit the transaction for this experiment.
+    conn.commit()
