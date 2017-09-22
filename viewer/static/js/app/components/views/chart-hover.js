@@ -57,7 +57,7 @@ export default class extends React.Component {
 
         hoverSummary.html(this._getHoverString(props.metricType, d.x, d.y,
                                                proportion, populationName, props.xunit,
-                                               props.populations[populationName].numObs), d.index);
+                                               props.populations[populationName].numObs, d.index));
       }
     }
   }
