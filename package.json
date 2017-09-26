@@ -50,7 +50,7 @@
     "selenium-server-standalone-jar": "^3.5.3",
     "sinon": "^3.3.0",
     "string-template": "^1.0.0",
-    "striptags": "^2.2.0",
+    "striptags": "^2.2.1",
     "webpack-stream": "^4.0.0"
   },
   "devDependencies": {
