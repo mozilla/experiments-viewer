@@ -35,7 +35,7 @@ class DatasetControlContainer extends React.Component {
   // available but curently unused.
   _handleCohortSwitch(elm) {
     const selectedPopulations = Array.from(
-      document.body.querySelectorAll('.dataset-cohorts .switch.active')
+      document.body.querySelectorAll('.dataset-populations .switch.active')
     ).map(sp => sp.parentNode.textContent);
     urlApi.updateQueryParameter('pop', selectedPopulations.join(','));
   }
