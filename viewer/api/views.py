@@ -13,7 +13,7 @@ from .serializers import (DataSetSerializer, DistributionSerializer,
 @api_view(['GET'])
 @renderer_classes([DataSetJSONRenderer])
 def datasets(request):
-    datasets = DataSet.objects.visible().order_by('-date')
+    datasets = DataSet.objects.visible().order_by('-created_at')
     return Response([DataSetSerializer(d).data for d in datasets])
 
 
@@ -36,12 +36,12 @@ def metrics(request):
 @api_view(['GET'])
 @renderer_classes([JSONRenderer])
 def metric(request, metric_id):
-    # Get requested dataset or most recent prior dataset from date.
+    # Get requested dataset or most recent prior dataset by date.
     ds = request.query_params.get('ds')
     if ds:
         dataset = DataSet.objects.visible().filter(slug=ds).first()
     else:
-        dataset = DataSet.objects.visible().order_by('-date').first()
+        dataset = DataSet.objects.visible().order_by('-created_at').first()
 
     if not dataset:
         raise NotFound('No data set with given dataset found.')

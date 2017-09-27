@@ -33,7 +33,7 @@ class MetricSerializer(serializers.Serializer):
 
 class DistributionSerializer(serializers.Serializer):
     id = serializers.IntegerField(source='metric.id')
-    dataSet = serializers.DateField(source='dataset.slug')
+    dataSet = serializers.CharField(source='dataset.slug')
     name = serializers.CharField(source='metric.name')
     description = serializers.CharField(source='metric.description')
     type = serializers.CharField(source='metric.type')

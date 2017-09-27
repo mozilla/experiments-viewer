@@ -11,6 +11,7 @@ class DataSetQuerySet(models.QuerySet):
 class DataSet(models.Model):
     name = models.CharField(max_length=255, default='')
     slug = models.CharField(max_length=255, unique=True)
+    created_at = models.DateTimeField(null=True)
     date = models.DateField()
     display = models.BooleanField(default=False)
     import_start = models.DateTimeField(null=True)
@@ -19,11 +20,11 @@ class DataSet(models.Model):
     objects = DataSetQuerySet.as_manager()
 
     class Meta:
-        get_latest_by = 'date'
+        get_latest_by = 'created_at'
 
     def __str__(self):
         return '%s, date=%s, display=%s' % (
-            self.slug, self.date.strftime('%Y-%m-%d'), self.display)
+            self.slug, self.created_at.strftime('%Y-%m-%d'), self.display)
 
     def get_metrics(self):
         return list(

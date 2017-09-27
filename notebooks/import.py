@@ -70,6 +70,12 @@ def create_dataset(cursor, exp, process_date):
     process_date_dt = datetime.datetime.strptime(process_date, '%Y%m%d').date()
 
     experiments = get_experiments()
+    experiment_name = experiments.get(exp, {}).get('name', '')
+    try:
+        experiment_created_at = datetime.datetime.strptime(
+            experiments.get(exp, {}).get('approval_request', {}).get('created'))
+    except ValueError:
+        experiment_created_at = None
 
     sql = 'SELECT date FROM api_dataset WHERE slug=%s'
     params = [exp]
@@ -82,12 +88,16 @@ def create_dataset(cursor, exp, process_date):
                 'Process date %s is older than previous import date %s' % (
                     process_date_dt, prior_import_date))
 
-    sql = ('INSERT INTO api_dataset (name, slug, date, display, import_start) '
-           'VALUES (%s, %s, %s, %s, %s) '
-           'RETURNING id')
+    sql = '''
+        INSERT INTO api_dataset
+            (name, slug, created_at, date, display, import_start)
+        VALUES (%s, %s, %s, %s, %s, %s)
+        RETURNING id
+    '''
     params = [
-        experiments.get(exp, {}).get('name', ''),
+        experiment_name,
         'TMP-%s' % exp,  # Store initially with a temporary prefix.
+        experiment_created_at,
         process_date_dt,
         False,
         datetime.datetime.now(),
