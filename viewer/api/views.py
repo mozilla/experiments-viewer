@@ -1,3 +1,4 @@
+from django.db.models import F
 from django.shortcuts import get_object_or_404
 from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.exceptions import NotFound
@@ -13,7 +14,10 @@ from .serializers import (DataSetSerializer, DistributionSerializer,
 @api_view(['GET'])
 @renderer_classes([DataSetJSONRenderer])
 def datasets(request):
-    datasets = DataSet.objects.visible().order_by('-created_at')
+    datasets = (
+        DataSet.objects.visible()
+                       .order_by(F('created_at').desc(nulls_last=True))
+    )
     return Response([DataSetSerializer(d).data for d in datasets])
 
 
@@ -41,7 +45,11 @@ def metric(request, metric_id):
     if ds:
         dataset = DataSet.objects.visible().filter(slug=ds).first()
     else:
-        dataset = DataSet.objects.visible().order_by('-created_at').first()
+        dataset = (
+            DataSet.objects.visible()
+                           .order_by(F('created_at').desc(nulls_last=True))
+                           .first()
+        )
 
     if not dataset:
         raise NotFound('No data set with given dataset found.')

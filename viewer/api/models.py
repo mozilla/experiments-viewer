@@ -24,7 +24,7 @@ class DataSet(models.Model):
 
     def __str__(self):
         return '%s, date=%s, display=%s' % (
-            self.slug, self.created_at.strftime('%Y-%m-%d'), self.display)
+            self.slug, self.created_at, self.display)
 
     def get_metrics(self):
         return list(
