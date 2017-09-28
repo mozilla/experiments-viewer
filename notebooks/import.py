@@ -76,7 +76,7 @@ def create_dataset(cursor, exp, process_date):
             experiments.get(exp, {})
                        .get('approval_request', {})
                        .get('created', ''), '%Y-%m-%dT%H:%M:%S.%fZ')
-    except ValueError:
+    except (ValueError, AttributeError):
         experiment_created_at = None
 
     sql = 'SELECT date FROM api_dataset WHERE slug=%s'
