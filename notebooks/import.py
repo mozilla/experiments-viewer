@@ -73,8 +73,9 @@ def create_dataset(cursor, exp, process_date):
     experiment_name = experiments.get(exp, {}).get('name', '')
     try:
         experiment_created_at = datetime.datetime.strptime(
-            experiments.get(exp, {}).get('approval_request', {}).get('created'),
-            '%Y-%m-%dT%H:%M:%S.%fZ')
+            experiments.get(exp, {})
+                       .get('approval_request', {})
+                       .get('created', ''), '%Y-%m-%dT%H:%M:%S.%fZ')
     except ValueError:
         experiment_created_at = None
 
