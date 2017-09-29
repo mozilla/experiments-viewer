@@ -14,10 +14,10 @@ class TestDataSet(DataTestCase):
                                  email='example@mozilla.com',
                                  password='password')
         self.client.login(username='testuser', password='password')
+        self.url = reverse('datasets')
 
     def test_basic(self):
-        url = reverse('datasets')
-        response = self.client.get(url)
+        response = self.client.get(self.url)
         expected = {
             'datasets': [
                 {
@@ -41,6 +41,16 @@ class TestDataSet(DataTestCase):
             ]
         }
         self.assertEqual(response.json(), expected)
+
+    def test_null_ordering(self):
+        # Sometimes the `created_at` field can be NULL.
+        self.dataset.created_at = None
+        self.dataset.save()
+
+        response = self.client.get(self.url)
+        data = response.json()
+        self.assertEqual(len(data['datasets']), 2)
+        self.assertEqual(data['datasets'][0]['id'], self.dataset_older.id)
 
 
 class TestMetric(DataTestCase):
@@ -101,6 +111,15 @@ class TestMetric(DataTestCase):
             ]
         }
         self.assertEqual(response.json(), expected)
+
+    def test_null_ordering(self):
+        # Sometimes the `created_at` field can be NULL.
+        self.dataset.created_at = None
+        self.dataset.save()
+
+        url = reverse('metric', args=[self.flag_metric.id])
+        response = self.client.get(url)
+        self.assertEqual(response.json()['dataSet'], self.dataset_older.slug)
 
     def test_specific_experiment(self):
         # Test that passing ?ds= works.
