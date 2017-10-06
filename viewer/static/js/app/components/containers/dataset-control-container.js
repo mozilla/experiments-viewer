@@ -19,10 +19,10 @@ class DatasetControlContainer extends React.Component {
   _handleDatasetSelection(evt) {
     const selectedDataset = evt.target.parentNode.querySelector('.dataset-selection').value;
 
+    store.dispatch(datasetActions.selectDatasetUI(selectedDataset));
+
     urlApi.updateQueryParameter('ds', selectedDataset);
     urlApi.updateQueryParameter('pop', 'ALL');
-
-    store.dispatch(datasetActions.selectDatasetUI(selectedDataset));
   }
 
   _handleSubgroupSelection(evt) {

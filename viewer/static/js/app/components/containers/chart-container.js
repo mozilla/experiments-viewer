@@ -46,7 +46,7 @@ class ChartContainer extends React.Component {
   componentWillReceiveProps(nextProps) {
     // If the metric data changed or just came through for the first time, set
     // the chart up before the next render occurs.
-    if (this.props.metric !== nextProps.metric) {
+    if (nextProps.metric && this.props.metric !== nextProps.metric) {
       if (nextProps.metric.populations.length === 0) {
         this.noData = true;
       } else {
@@ -89,7 +89,10 @@ class ChartContainer extends React.Component {
     if (outliersSettingChanged || selectedScaleChanged) {
       this.biggestDatasetToShow = this.populationData[this.biggestPopulation.name]['data'][this.activeDatasetName];
     }
-    this.xScale = this._getXScale(this.props);
+
+    if (this.props.metric && this.biggestDatasetToShow) {
+      this.xScale = this._getXScale(this.props);
+    }
   }
 
   _setup(props) {

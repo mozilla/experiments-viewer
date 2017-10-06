@@ -41,6 +41,9 @@ export default function(props) {
           const metricMeta = props.metricMetadata[id];
           const checkedByDefault = props.metricIdsToShow.indexOf(id) > -1;
 
+          // Don't show anything if we don't have metadata for this metric ID yet
+          if (!metricMeta) return;
+
           return (
             <label key={id} title={metricMeta.name}>
               <DescriptionContainer rawDescription={metricMeta.description} keepLinebreaks={false} />
