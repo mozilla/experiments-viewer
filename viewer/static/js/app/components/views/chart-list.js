@@ -14,6 +14,10 @@ export default function(props) {
 
   props.metricIdsToShow.map(id => {
     const thisMetricMetadata = props.metricMetadata[id];
+
+    // Don't show anything if we don't have metadata for this metric ID yet
+    if (!thisMetricMetadata) return;
+
     let showOutliers = props.showOutliers;
 
     // Always show outliers in categorical charts. Outlying categories don't make
