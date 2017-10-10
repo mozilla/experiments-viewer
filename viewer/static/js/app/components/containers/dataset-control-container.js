@@ -21,8 +21,16 @@ class DatasetControlContainer extends React.Component {
 
     store.dispatch(datasetActions.selectDatasetUI(selectedDataset));
 
-    urlApi.updateQueryParameter('ds', selectedDataset);
-    urlApi.updateQueryParameter('pop', 'ALL');
+    // Force window refresh with updated query params (modern browser suppport only).
+    if ('URLSearchParams' in window) {
+      const searchParams = new URLSearchParams(window.location.search);
+      searchParams.set('ds', selectedDataset);
+      searchParams.set('pop', 'ALL');
+      window.location.search = searchParams.toString();
+    } else {
+      urlApi.updateQueryParameter('ds', selectedDataset);
+      urlApi.updateQueryParameter('pop', 'ALL');
+    }
   }
 
   _handleSubgroupSelection(evt) {
