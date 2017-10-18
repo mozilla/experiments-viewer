@@ -4,7 +4,7 @@ import * as d3Selection from 'd3-selection';
 import * as d3Format from 'd3-format';
 
 import ChartAxis from '../views/chart-axis';
-import { isMetricOrdinal } from '../../utils';
+import { isMetricOrdinal, isMetricHistogram } from '../../utils';
 
 
 export default class extends React.Component {
@@ -28,7 +28,7 @@ export default class extends React.Component {
           }
         });
       } else {
-        if (props.metricType === 'ExponentialHistogram') {
+        if (isMetricHistogram(props.metricType)) {
           axis.ticks(8).tickFormat((d, i) => {
             return props.refLabels[d];
           });

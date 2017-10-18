@@ -3,6 +3,7 @@ import * as d3Shape from 'd3-shape';
 import * as d3Selection from 'd3-selection';
 
 import ChartLine from '../views/chart-line';
+import { isMetricHistogram } from '../../utils';
 
 
 export default class extends React.Component {
@@ -12,8 +13,7 @@ export default class extends React.Component {
                 .x(d => props.xScale(d.x))
                 .y(d => props.yScale(d.y));
 
-    // TODO: Add helper function to identify any series requiring curveStepAfter.
-    if (props.metricType === 'ExponentialHistogram') {
+    if (isMetricHistogram(props.metricType)) {
       line = d3Shape.line()
                 .x(d => props.xScale(d.index))
                 .y(d => props.yScale(d.y));
