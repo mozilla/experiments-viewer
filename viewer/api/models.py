@@ -1,5 +1,19 @@
-from django.db.models.expressions import RawSQL
+from collections import namedtuple
+
 from django.db import models
+
+
+# Buckets used for histogram.
+BUCKETS = [
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17,
+    18, 19, 21, 23, 25, 27, 29, 31, 34, 37, 40, 43, 46, 50, 54,
+    58, 63, 68, 74, 80, 86, 93, 101, 109, 118, 128, 138, 149, 161,
+    174, 188, 203, 219, 237, 256, 277, 299, 323, 349, 377, 408,
+    441, 477, 516, 558, 603, 652, 705, 762, 824, 891, 963, 1041,
+    1125, 1216, 1315, 1422, 1537, 1662, 1797, 1943, 2101, 2271,
+    2455, 2654, 2869, 3102, 3354, 3626, 3920, 4238, 4582, 4954,
+    5356, 5791, 6261, 6769, 7318, 7912, 8554, 9249, 10000
+]
 
 
 class DataSetQuerySet(models.QuerySet):
@@ -96,8 +110,44 @@ class Collection(models.Model):
         )
 
     def points(self):
-        return self._points.annotate(
-            cumulative=RawSQL('SUM(proportion) OVER (ORDER BY bucket::int)', []))
+        return list(
+            self._points.extra(select={'bucket_int': 'CAST(bucket AS INTEGER)'})
+            .order_by('bucket_int'))
+
+    def hdr(self):
+        # Return points using pseudo HDR histogram bucketing.
+        points = self.points()
+
+        hist = {k: {'rank': i,
+                    'count': 0,
+                    'proportion': 0.0} for i, k in enumerate(BUCKETS, 1)}
+        p = points.pop(0)
+        low_b = None
+
+        for b in BUCKETS:
+            if low_b is None:
+                low_b = b
+                continue
+
+            if p is None:
+                break
+
+            while p.bucket_int >= low_b and p.bucket_int < b:
+                hist[low_b]['count'] += p.count
+                hist[low_b]['proportion'] += p.proportion
+
+                try:
+                    p = points.pop(0)
+                except IndexError:
+                    p = None
+                    break
+
+            low_b = b
+
+        Hist = namedtuple('Hist', ['bucket', 'count', 'proportion', 'rank'])
+        return [Hist(bucket=k, count=v['count'], proportion=v['proportion'],
+                     rank=v['rank'])
+                for k, v in hist.items()]
 
 
 class Point(models.Model):

@@ -19,7 +19,8 @@ class DataSetFactory(factory.django.DjangoModelFactory):
 
 
 class MetricFactory(factory.django.DjangoModelFactory):
-    name = factory.Sequence(lambda n: 'scalar_cats_a_purring_%s' % n)
+    name = factory.Sequence(lambda n: 'cats_a_purring_%s' % n)
+    source_name = factory.Sequence(lambda n: 'scalar_cats_a_purring_%s' % n)
     description = factory.Sequence(lambda n: 'Description for metric %s' % n)
     type = factory.Iterator(['BooleanHistogram', 'CountHistogram',
                              'EnumeratedHistogram', 'ExponentialHistogram',
@@ -45,7 +46,7 @@ class PointFactory(factory.django.DjangoModelFactory):
     collection = factory.SubFactory(CollectionFactory)
     bucket = factory.Iterator(['1', '10', '100'])
     proportion = factory.Iterator([0.90, 0.07, 0.03])
-    count = 13579
+    count = factory.Iterator([12600, 980, 420])
     rank = factory.Iterator([1, 2, 3])
 
     class Meta:

@@ -65,7 +65,12 @@ class DistributionSerializer(serializers.Serializer):
                 'name': c.population,
                 'numObs': c.num_observations,
             }
-            data['points'] = PointSerializer(c.points(), many=True).data
+            # If the metric has type "UintScalar", update the bucketing to be
+            # exponential-ish.
+            if obj.metric.type == 'UintScalar':
+                data['points'] = PointSerializer(c.hdr(), many=True).data
+            else:
+                data['points'] = PointSerializer(c.points(), many=True).data
             populations.append(data)
 
         return populations
@@ -73,6 +78,7 @@ class DistributionSerializer(serializers.Serializer):
 
 class PointSerializer(serializers.Serializer):
     b = serializers.CharField(source='bucket')
-    c = serializers.FloatField(source='cumulative')
-    p = serializers.FloatField(source='proportion')
+    c = serializers.IntegerField(source='count')
+    p = serializers.DecimalField(max_digits=None, decimal_places=16,
+                                 coerce_to_string=False, source='proportion')
     refRank = serializers.IntegerField(source='rank')
