@@ -38,7 +38,7 @@ export default class extends React.Component {
       }
       axisElm.attr('transform', `translate(0, ${props.size})`).call(axis);
     } else {
-      axis.ticks(6, d3Format.format('.0%'));
+      axis.ticks(3, d3Format.format('.0%'));
       axisElm.call(axis);
     }
 

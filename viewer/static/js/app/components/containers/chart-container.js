@@ -100,9 +100,14 @@ class ChartContainer extends React.Component {
     this.biggestPopulation = props.metric.populations[0]; // To start... we'll bubble up the actual biggest population later
 
     this.populationData = {};
+    this.allPopulationsDataPoints = [];
+
     for (let i = 0; i < props.metric.populations.length; i++) {
       const population = props.metric.populations[i];
       const fmtData = this._getFormattedData(population.points);
+
+      // Store all points in a flat array to be used with d3Array.extent() for the y-axis d3Axis.domain()
+      this.allPopulationsDataPoints = this.allPopulationsDataPoints.concat(this.allPopulationsDataPoints, fmtData);
 
       // Check against false explicitly because props are sometimes undefined
       let fmtDataExcludingOutliers;
@@ -152,8 +157,10 @@ class ChartContainer extends React.Component {
     }
 
     this.yScale = d3Scale.scaleLinear()
-                    .domain([0, 1]) // 0% to 100%
-                    .range([this.size.innerHeight, 0]);
+                    .domain(d3Array.extent(this.allPopulationsDataPoints, d => d.y))
+                    .range([this.size.innerHeight, 0])
+                    .nice();
+
     this.xScale = this._getXScale(props);
   }
 
