@@ -26,7 +26,8 @@ class ChartContainer extends React.Component {
       transform: `translate(${this.margin.left}, ${this.margin.top})`,
     };
 
-    this.outlierThreshold = 100;
+    this.outliersThreshold = 10;
+    this.outliersSmallestProportion = 0.0001;
     this._getXScale = this._getXScale.bind(this);
   }
 
@@ -173,17 +174,25 @@ class ChartContainer extends React.Component {
     return formattedPoints;
   }
 
-  // Return an array with only the central 99% of elements included. Assumes
-  // data is sorted.
+  // Return an array with buckets with data less than the
+  // `outliersSmallestProportion` trimmed from left and right.
   _removeOutliers(data) {
     if (data.length <= this.outliersThreshold) return data;
 
-    // The indices of the first and last element to be included in the result
-    const indexFirst = Math.round(data.length * 0.005) - 1;
-    const indexLast = Math.round(data.length * 0.995) - 1;
+    let indexFirst = 0;
+    for (; indexFirst < data.length; indexFirst++) {
+        if (data[indexFirst]['p'] > this.outliersSmallestProportion) {
+            break;
+        }
+    }
+    let indexLast = data.length - 1;
+    for (; indexLast >= 0; indexLast--) {
+        if (data[indexLast]['p'] > this.outliersSmallestProportion) {
+            break;
+        }
+    }
 
-    // Add 1 to indexLast because the second paramater to Array.slice is not
-    // inclusive
+    // Add 1 because the second paramater to Array.slice is not inclusive.
     return data.slice(indexFirst, indexLast + 1);
   }
 
