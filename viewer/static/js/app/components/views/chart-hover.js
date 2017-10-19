@@ -4,7 +4,7 @@ import * as d3Format from 'd3-format';
 
 import { select, selectAll, mouse } from 'd3-selection';
 import format from 'string-template';
-import { isMetricOrdinal } from '../../utils';
+import { isMetricOrdinal, isMetricHistogram } from '../../utils';
 
 export default class extends React.Component {
   componentDidMount() {
@@ -12,7 +12,7 @@ export default class extends React.Component {
     this.focusElm = select(`.chart-${this.props.metricId} .focus`);
     this.bisector = d3Array.bisector(d => d.x).left;
 
-    if (this.props.metricType === 'ExponentialHistogram') {
+    if (isMetricHistogram(this.props.metricType)) {
       this.bisector = d3Array.bisector(d => d.index).left;
     }
     // Terrible hack to bind an event in a way d3 prefers.
@@ -45,7 +45,7 @@ export default class extends React.Component {
         let proportion = props.metricType === 'categorical' ? currentData[d.x - 1].p : d.p;
 
         // Position the focus circle on chart line.
-        if (props.metricType === 'ExponentialHistogram') {
+        if (isMetricHistogram(props.metricType)) {
           d = x0 - d0.index > d1.index - x0 ? d1 : d0;
           this.focusElm.attr('transform', `translate(${props.xScale(d.index)}, ${props.yScale(d.y)})`);
         } else {
@@ -80,7 +80,7 @@ export default class extends React.Component {
       });
     } else {
       result = format(result, {
-        x: metricType === 'ExponentialHistogram' ? this.props.refLabels[index] : x,
+        x: isMetricHistogram(metricType) ? this.props.refLabels[index] : x,
         p: this._getFormattedVal(p),
         y: this._getFormattedVal(y),
         n: numObs.toLocaleString('en-US'),

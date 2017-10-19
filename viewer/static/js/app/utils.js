@@ -22,8 +22,18 @@ const ordinalTypes = [
   'BooleanHistogram',
 ];
 
+// Array of histograms that will require a custom linear scale.
+const histogramTypes = [
+  'LinearHistogram',
+  'ExponentialHistogram',
+];
+
 export function isMetricOrdinal(metricType) {
   return ordinalTypes.indexOf(metricType) > -1;
+}
+
+export function isMetricHistogram(metricType) {
+  return histogramTypes.indexOf(metricType) > -1;
 }
 
 /**

@@ -5,7 +5,7 @@ import * as d3Array from 'd3-array';
 
 import Chart from '../views/chart';
 import * as metricApi from '../../api/metric-api';
-import { isMetricOrdinal } from '../../utils';
+import { isMetricOrdinal, isMetricHistogram } from '../../utils';
 
 
 class ChartContainer extends React.Component {
@@ -140,7 +140,7 @@ class ChartContainer extends React.Component {
     this.biggestDatasetToShow = this.populationData[this.biggestPopulation.name]['data'][this.activeDatasetName];
 
     this.refLabels = [];
-    if (props.metric.type === 'ExponentialHistogram') {
+    if (isMetricHistogram(props.metric.type)) {
       this.biggestDatasetToShow.map(item => {
         this.refLabels.push(item.label);
       });
@@ -195,7 +195,7 @@ class ChartContainer extends React.Component {
       xScale = d3Scale.scaleLinear()
                  .domain([0, d3Array.max(this.biggestDatasetToShow, d => d.x)])
                  .range([0, this.size.innerWidth]);
-    } else if (props.metric.type === 'ExponentialHistogram') {
+    } else if (isMetricHistogram(props.metric.type)) {
       xScale = d3Scale.scaleLinear()
                 .domain([0, this.biggestDatasetToShow.length - 1])
                 .range([0, this.size.innerWidth]);
