@@ -19,7 +19,8 @@ class DataSetFactory(factory.django.DjangoModelFactory):
 
 
 class MetricFactory(factory.django.DjangoModelFactory):
-    name = factory.Sequence(lambda n: 'scalar_cats_a_purring_%s' % n)
+    name = factory.Sequence(lambda n: 'cats_a_purring_%s' % n)
+    source_name = factory.Sequence(lambda n: 'scalar_cats_a_purring_%s' % n)
     description = factory.Sequence(lambda n: 'Description for metric %s' % n)
     type = factory.Iterator(['BooleanHistogram', 'CountHistogram',
                              'EnumeratedHistogram', 'ExponentialHistogram',
