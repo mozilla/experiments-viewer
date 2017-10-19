@@ -96,8 +96,9 @@ class Collection(models.Model):
         )
 
     def points(self):
-        return self._points.annotate(
-            cumulative=RawSQL('SUM(proportion) OVER (ORDER BY bucket::int)', []))
+        return list(
+            self._points.extra(select={'bucket_int': 'CAST(bucket AS INTEGER)'})
+            .order_by('bucket_int'))
 
 
 class Point(models.Model):

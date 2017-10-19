@@ -73,6 +73,6 @@ class DistributionSerializer(serializers.Serializer):
 
 class PointSerializer(serializers.Serializer):
     b = serializers.CharField(source='bucket')
-    c = serializers.FloatField(source='cumulative')
     p = serializers.FloatField(source='proportion')
+    c = serializers.IntegerField(source='count')
     refRank = serializers.IntegerField(source='rank')

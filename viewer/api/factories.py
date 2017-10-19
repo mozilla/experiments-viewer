@@ -45,7 +45,7 @@ class PointFactory(factory.django.DjangoModelFactory):
     collection = factory.SubFactory(CollectionFactory)
     bucket = factory.Iterator(['1', '10', '100'])
     proportion = factory.Iterator([0.90, 0.07, 0.03])
-    count = 13579
+    count = factory.Iterator([12600, 980, 420])
     rank = factory.Iterator([1, 2, 3])
 
     class Meta:

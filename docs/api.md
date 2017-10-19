@@ -122,31 +122,31 @@ Example output:
           "p": 0.932504,
           "refRank": 1,
           "b": "x86",
-          "c": 0.932504
+          "c": 345
         },
         {
           "p": 0.0672972,
           "refRank": 2,
           "b": "x86-64",
-          "c": 0.999801
+          "c": 234
         },
         {
           "p": 0.00015503,
           "refRank": 3,
           "b": "missing",
-          "c": 0.999956
+          "c": 123
         },
         {
           "p": 0.0000362676,
           "refRank": 4,
           "b": "arm",
-          "c": 0.999992
+          "c": 23
         },
         {
           "p": 0.00000357038,
           "refRank": 5,
           "b": "sparc",
-          "c": 0.999996
+          "c": 12
         },
         {
           "p": 0.00000432204,
@@ -201,8 +201,7 @@ Example output:
 
       <dt>c</dt>
       <dd>
-        The cumulative amount of weight if the bins are sorted in
-        <code>refRank</code> order
+        The count of records belonging to bin <code>b</code>
       </dd>
 
       <dt>refRank</dt>
@@ -218,6 +217,5 @@ Example output:
 
 #### Other notes
 
-* Data points are guaranteed to be in order, such that the `c` and the `b` (when
-  the data is numerical) of an object are always higher than those of the object
-  before it.
+* Data points are guaranteed to be in order, such that the `b` of an object are
+  always higher than those of the object before it.

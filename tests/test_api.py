@@ -80,9 +80,9 @@ class TestMetric(DataTestCase):
                     'name': 'control',
                     'numObs': 12345,
                     'points': [
-                        {'p': 0.9, 'c': 0.9, 'b': '1', 'refRank': 1},
-                        {'p': 0.07, 'c': 0.97, 'b': '10', 'refRank': 2},
-                        {'p': 0.03, 'c': 1.0, 'b': '100', 'refRank': 3}
+                        {'p': 0.9, 'c': 12600, 'b': '1', 'refRank': 1},
+                        {'p': 0.07, 'c': 980, 'b': '10', 'refRank': 2},
+                        {'p': 0.03, 'c': 420, 'b': '100', 'refRank': 3}
                     ],
                 }
             ]
@@ -103,9 +103,9 @@ class TestMetric(DataTestCase):
                     'name': 'control',
                     'numObs': 12345,
                     'points': [
-                        {'p': 0.9, 'c': 0.9, 'b': '1', 'refRank': 1},
-                        {'p': 0.07, 'c': 0.97, 'b': '10', 'refRank': 2},
-                        {'p': 0.03, 'c': 1.0, 'b': '100', 'refRank': 3}
+                        {'p': 0.9, 'c': 12600, 'b': '1', 'refRank': 1},
+                        {'p': 0.07, 'c': 980, 'b': '10', 'refRank': 2},
+                        {'p': 0.03, 'c': 420, 'b': '100', 'refRank': 3}
                     ],
                 }
             ]
