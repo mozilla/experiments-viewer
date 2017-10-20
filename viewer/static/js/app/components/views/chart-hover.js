@@ -74,6 +74,7 @@ export default class extends React.Component {
         x: this.props.refLabels[x],
         p: this._getFormattedVal(p),
         y: this._getFormattedVal(y),
+        clients: (numObs * p).toLocaleString('en-US'),
         n: numObs.toLocaleString('en-US'),
         pop: '<span class="population-name">' + population.toLowerCase() + '</span>',
         xunit,
@@ -84,6 +85,7 @@ export default class extends React.Component {
         p: this._getFormattedVal(p),
         y: this._getFormattedVal(y),
         n: numObs.toLocaleString('en-US'),
+        clients: (numObs * p).toLocaleString('en-US'),
         pop: '<span class="population-name">' + population.toLowerCase() + '</span>',
         xunit,
       });
