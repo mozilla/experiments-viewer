@@ -132,7 +132,7 @@ class ChartContainer extends React.Component {
       }
     }
 
-    if (props.showOutliers === false && this.biggestPopulation.points.length > this.outlierThreshold) {
+    if (props.showOutliers === false && this.biggestPopulation.points.length > this.outliersThreshold) {
       this.activeDatasetName = this.excludingOutliersDatasetName;
     } else {
       this.activeDatasetName = this.allDatasetName;
