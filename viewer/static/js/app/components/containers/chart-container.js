@@ -186,21 +186,15 @@ class ChartContainer extends React.Component {
   _removeOutliers(data) {
     if (data.length <= this.outliersThreshold) return data;
 
-    let indexFirst = 0;
-    for (; indexFirst < data.length; indexFirst++) {
-        if (data[indexFirst]['p'] > this.outliersSmallestProportion) {
-            break;
-        }
-    }
     let indexLast = data.length - 1;
     for (; indexLast >= 0; indexLast--) {
-        if (data[indexLast]['p'] > this.outliersSmallestProportion) {
-            break;
-        }
+      if (data[indexLast]['p'] > this.outliersSmallestProportion) {
+        break;
+      }
     }
 
     // Add 1 because the second paramater to Array.slice is not inclusive.
-    return data.slice(indexFirst, indexLast + 1);
+    return data.slice(0, indexLast + 1);
   }
 
   _getXScale(props) {
