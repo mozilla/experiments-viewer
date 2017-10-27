@@ -297,6 +297,35 @@ class TestScalarMetric(TestCase):
                          {'b': '40', 'c': 1, 'refRank': 29,
                           'p': round(1 / 3053.0, 16)})
 
+    def test_basic_api_v2(self):
+        url = reverse('v2-metric-by-id',
+                      args=[self.dataset.id, self.metric.id])
+        response = self.client.get(url)
+        data = response.json()
+
+        # Spot check some basic top level information.
+        self.assertEqual(data['name'], self.metric.name)
+        self.assertEqual(data['type'], self.metric.type)
+        self.assertEqual(data['populations'][0]['name'], 'control')
+
+        # Spot check a few buckets.
+        points = data['populations'][0]['data']
+        self.assertEqual(points[1],
+                         {'x': 1, 'count': 100,
+                          'y': round(100 / 3053.0, 16)})
+        # Bucket 19 should contain data from 19 and 20.
+        self.assertEqual(points[19],
+                         {'x': 19, 'count': 90,
+                          'y': round((50 + 40) / 3053.0, 16)})
+        # Bucket 31 should contain data from 31, 32, 33.
+        self.assertEqual(points[25],
+                         {'x': 31, 'count': 4,
+                          'y': round((2 + 1 + 1) / 3053.0, 16)})
+        # Make sure the last bucket to have data is included.
+        self.assertEqual(points[28],
+                         {'x': 40, 'count': 1,
+                          'y': round(1 / 3053.0, 16)})
+
 
 class TestMetrics(DataTestCase):
 
