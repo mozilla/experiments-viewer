@@ -4,17 +4,14 @@ import * as d3Format from 'd3-format';
 
 import { select, selectAll, mouse } from 'd3-selection';
 import format from 'string-template';
-import { isMetricOrdinal, isMetricHistogram } from '../../utils';
+
 
 export default class extends React.Component {
   componentDidMount() {
     let hoverElm = select(this.rect);
     this.focusElm = select(`.chart-${this.props.metricId} .focus`);
-    this.bisector = d3Array.bisector(d => d.x).left;
+    this.bisector = d3Array.bisector(d => d.index).left;
 
-    if (isMetricHistogram(this.props.metricType)) {
-      this.bisector = d3Array.bisector(d => d.index).left;
-    }
     // Terrible hack to bind an event in a way d3 prefers.
     // Normally this would be in the container and we'd pass it the event.
     hoverElm.on('mousemove', () => {
@@ -45,12 +42,8 @@ export default class extends React.Component {
         let proportion = props.metricType === 'categorical' ? currentData[d.x - 1].p : d.p;
 
         // Position the focus circle on chart line.
-        if (isMetricHistogram(props.metricType)) {
-          d = x0 - d0.index > d1.index - x0 ? d1 : d0;
-          this.focusElm.attr('transform', `translate(${props.xScale(d.index)}, ${props.yScale(d.y)})`);
-        } else {
-          this.focusElm.attr('transform', `translate(${props.xScale(d.x)}, ${props.yScale(d.y)})`);
-        }
+        d = x0 - d0.index > d1.index - x0 ? d1 : d0;
+        this.focusElm.attr('transform', `translate(${props.xScale(d.index)}, ${props.yScale(d.y)})`);
 
         // Insert the hover text for this population at this data point
         let hoverSummary = select(`.secondary-menu-content .chart-info .hover-summary[data-population="${populationName}"]`);
@@ -69,26 +62,14 @@ export default class extends React.Component {
     let result = this.props.hoverString;
     if (!result) return '';
 
-    if (isMetricOrdinal(metricType)) {
-      result = format(result, {
-        x: this.props.refLabels[x],
-        p: this._getFormattedVal(p),
-        y: this._getFormattedVal(y),
-        n: numObs.toLocaleString('en-US'),
-        pop: '<span class="population-name">' + population.toLowerCase() + '</span>',
-        xunit,
-      });
-    } else {
-      result = format(result, {
-        x: isMetricHistogram(metricType) ? this.props.refLabels[index] : x,
-        p: this._getFormattedVal(p),
-        y: this._getFormattedVal(y),
-        n: numObs.toLocaleString('en-US'),
-        pop: '<span class="population-name">' + population.toLowerCase() + '</span>',
-        xunit,
-      });
-    }
-    return result;
+    return format(result, {
+      x: this.props.refLabels[index],
+      p: this._getFormattedVal(p),
+      y: this._getFormattedVal(y),
+      n: numObs.toLocaleString('en-US'),
+      pop: '<span class="population-name">' + population.toLowerCase() + '</span>',
+      xunit,
+    });
   }
 
   render() {

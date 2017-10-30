@@ -4,7 +4,6 @@ import * as d3Selection from 'd3-selection';
 import * as d3Format from 'd3-format';
 
 import ChartAxis from '../views/chart-axis';
-import { isMetricOrdinal, isMetricHistogram } from '../../utils';
 
 
 export default class extends React.Component {
@@ -21,27 +20,14 @@ export default class extends React.Component {
     let axisElm = d3Selection.select(`.chart-${props.metricId} .${props.axisType}.axis`);
 
     if (props.axisType === 'x') {
-      if (isMetricOrdinal(props.metricType)) {
-        axis.ticks(3).tickFormat((d, i) => {
-          if (i >= 0) {
-            return this._getShortLabel(props.refLabels[d]);
-          }
-        });
-      } else {
-        if (isMetricHistogram(props.metricType)) {
-          axis.ticks(8).tickFormat((d, i) => {
-            return props.refLabels[d];
-          });
-        } else {
-          axis.ticks(3, ',.2r');
-        }
-      }
+      axis.ticks(8).tickFormat((d, i) => {
+        return props.refLabels[d];
+      });
       axisElm.attr('transform', `translate(0, ${props.size})`).call(axis);
     } else {
       axis.ticks(3, d3Format.format('.0%'));
       axisElm.call(axis);
     }
-
 
     if (props.axisType === 'x' && props.xunit) {
       const svgElm = d3Selection.select(`.chart-${props.metricId} svg`);

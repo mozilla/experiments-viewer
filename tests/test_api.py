@@ -282,19 +282,19 @@ class TestScalarMetric(TestCase):
         # Spot check a few buckets.
         points = data['populations'][0]['points']
         self.assertEqual(points[1],
-                         {'b': '1', 'c': 100, 'refRank': 2,
+                         {'b': '1', 'c': 100, 'refRank': 1,
                           'p': round(100 / 3053.0, 16)})
         # Bucket 19 should contain data from 19 and 20.
         self.assertEqual(points[19],
-                         {'b': '19', 'c': 90, 'refRank': 20,
+                         {'b': '19', 'c': 90, 'refRank': 19,
                           'p': round((50 + 40) / 3053.0, 16)})
         # Bucket 31 should contain data from 31, 32, 33.
         self.assertEqual(points[25],
-                         {'b': '31', 'c': 4, 'refRank': 26,
+                         {'b': '31', 'c': 4, 'refRank': 25,
                           'p': round((2 + 1 + 1) / 3053.0, 16)})
         # Make sure the last bucket to have data is included.
         self.assertEqual(points[28],
-                         {'b': '40', 'c': 1, 'refRank': 29,
+                         {'b': '40', 'c': 1, 'refRank': 28,
                           'p': round(1 / 3053.0, 16)})
 
 
