@@ -120,7 +120,7 @@ class Collection(models.Model):
 
         hist = {k: {'rank': i,
                     'count': 0,
-                    'proportion': 0.0} for i, k in enumerate(BUCKETS, 1)}
+                    'proportion': 0.0} for i, k in enumerate(BUCKETS)}
         p = points.pop(0)
         low_b = None
 
