@@ -5,7 +5,6 @@ import * as d3Array from 'd3-array';
 
 import Chart from '../views/chart';
 import * as metricApi from '../../api/metric-api';
-import { isMetricOrdinal, isMetricHistogram } from '../../utils';
 
 
 class ChartContainer extends React.Component {
@@ -146,15 +145,10 @@ class ChartContainer extends React.Component {
     this.biggestDatasetToShow = this.populationData[this.biggestPopulation.name]['data'][this.activeDatasetName];
 
     this.refLabels = [];
-    if (isMetricHistogram(props.metric.type)) {
-      this.biggestDatasetToShow.map(item => {
-        this.refLabels.push(item.label);
-      });
-    } else {
-      this.biggestDatasetToShow.map(item => {
-        this.refLabels[item.x] = item.label;
-      });
-    }
+
+    this.biggestDatasetToShow.map(item => {
+      this.refLabels.push(item.label);
+    });
 
     this.yScale = d3Scale.scaleLinear()
                     .domain(d3Array.extent(this.allPopulationsDataPoints, d => d.y))
@@ -198,38 +192,9 @@ class ChartContainer extends React.Component {
   }
 
   _getXScale(props) {
-    // Categorical charts get treated differently since they start at x: 1
-    let xScale;
-
-    if (isMetricOrdinal(props.metric.type)) {
-      xScale = d3Scale.scaleLinear()
-                 .domain([0, d3Array.max(this.biggestDatasetToShow, d => d.x)])
-                 .range([0, this.size.innerWidth]);
-    } else if (isMetricHistogram(props.metric.type)) {
-      xScale = d3Scale.scaleLinear()
-                .domain([0, this.biggestDatasetToShow.length - 1])
-                .range([0, this.size.innerWidth]);
-    } else {
-      let scaleType;
-
-      switch(props.scale) {
-        case 'linear':
-          scaleType = d3Scale.scaleLinear();
-          break;
-        case 'log':
-          scaleType = d3Scale.scaleLog();
-          break;
-        default:
-          scaleType = d3Scale.scaleLinear();
-          break;
-      }
-
-      xScale = scaleType
-                 .domain(d3Array.extent(this.biggestDatasetToShow, d => d.x))
-                 .range([0, this.size.innerWidth]);
-    }
-
-    return xScale;
+    return d3Scale.scaleLinear()
+            .domain([0, this.biggestDatasetToShow.length - 1])
+            .range([0, this.size.innerWidth]);
   }
 
   render() {

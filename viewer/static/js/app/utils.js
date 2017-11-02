@@ -16,26 +16,6 @@ export function toggleConfigurationModal(forceClose) {
   }
 }
 
-// Array of metric types that will require an ordinal scale (categorical x-axis).
-const ordinalTypes = [
-  'EnumeratedHistogram',
-  'BooleanHistogram',
-];
-
-// Array of histograms that will require a custom linear scale.
-const histogramTypes = [
-  'LinearHistogram',
-  'ExponentialHistogram',
-];
-
-export function isMetricOrdinal(metricType) {
-  return ordinalTypes.indexOf(metricType) > -1;
-}
-
-export function isMetricHistogram(metricType) {
-  return histogramTypes.indexOf(metricType) > -1;
-}
-
 /**
  * Return a new sorted array, except with one value bumped to the front. This
  * function does not sort an array in place; a new array is returned.
