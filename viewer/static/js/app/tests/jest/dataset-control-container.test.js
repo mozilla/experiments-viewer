@@ -1,11 +1,15 @@
 import React from 'react';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-15';
 import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
-import { mount } from 'enzyme';
 
 import DatasetControlContainer from '../../components/containers/dataset-control-container';
 import datasetReducer from '../../reducers/dataset-reducer';
 import * as datasetActions from '../../actions/dataset-actions';
+
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('DatasetControlContainer', () => {
   let store;
@@ -95,7 +99,7 @@ describe('DatasetControlContainer', () => {
   it('Client and ping counts are correct', () => {
     fetchedDatasets.forEach((fd) => {
       store.dispatch(datasetActions.changeDataset(fd));
-      const dcc = mount(<Provider store={store}><DatasetControlContainer {...props} /></Provider>);
+      const dcc = Enzyme.mount(<Provider store={store}><DatasetControlContainer {...props} /></Provider>);
 
       for (let populationName in fd.populations) {
         if (fd.populations.hasOwnProperty(populationName)) {

@@ -1,12 +1,15 @@
 import React from 'react';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-15';
 import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
-import { mount } from 'enzyme';
 
 import ExperimentMetadataContainer from '../../components/containers/experiment-metadata-container';
 import datasetReducer from '../../reducers/dataset-reducer';
 import * as datasetActions from '../../actions/dataset-actions';
 
+
+Enzyme.configure({ adapter: new Adapter() });
 
 describe('ExperimentMetadataContainer', () => {
   let store, emc;
@@ -80,7 +83,7 @@ describe('ExperimentMetadataContainer', () => {
     store = createStore(reducers);
     store.dispatch(datasetActions.getDatasetsSuccess(fetchedDatasets));
     store.dispatch(datasetActions.changeDataset(fetchedDatasets[0]));
-    emc = mount(<Provider store={store}><ExperimentMetadataContainer /></Provider>);
+    emc = Enzyme.mount(<Provider store={store}><ExperimentMetadataContainer /></Provider>);
   });
 
   it('Date is parsed correctly', () => {
