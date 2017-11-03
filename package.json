@@ -25,6 +25,7 @@
     "d3-shape": "^1.0.3",
     "dateformat": "^3.0.0",
     "enzyme": "^3.1.0",
+    "enzyme-adapter-react-15": "^1.0.4",
     "eslint-plugin-react": "^7.0.1",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^4.0.0",

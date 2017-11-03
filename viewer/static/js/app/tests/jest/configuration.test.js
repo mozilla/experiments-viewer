@@ -1,18 +1,21 @@
 import React from 'react';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-15';
 import sinon from 'sinon';
-import { shallow } from 'enzyme';
 
 import Configuration from '../../components/views/configuration';
 
 
 let outliersSpy, scaleSpy, configurationMock;
 
+Enzyme.configure({ adapter: new Adapter() });
+
 describe('Configuration', () => {
   beforeAll(() => {
     outliersSpy = sinon.spy();
     scaleSpy = sinon.spy();
 
-    configurationMock = shallow(
+    configurationMock = Enzyme.shallow(
       <Configuration
         configureOutliers={true}
         configureScale={true}
