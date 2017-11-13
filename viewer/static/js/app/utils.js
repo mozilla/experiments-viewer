@@ -8,14 +8,6 @@ export function debounce(fn, wait = 250) {
   };
 }
 
-export function toggleConfigurationModal(forceClose) {
-  if (document.body.classList.contains('configuration-open') || (typeof forceClose === 'boolean' && forceClose)) {
-    document.body.classList.remove('configuration-open');
-  } else {
-    document.body.classList.add('configuration-open');
-  }
-}
-
 /**
  * Return a new sorted array, except with one value bumped to the front. This
  * function does not sort an array in place; a new array is returned.
