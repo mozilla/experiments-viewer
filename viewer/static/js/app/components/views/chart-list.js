@@ -56,8 +56,8 @@ export default function(props) {
             show outliers
           </label>
         </div>
+        <LegendContainer {...props} />
       </section>
-      <LegendContainer {...props} />
       <section className="charts">{charts}</section>
     </article>
   );
