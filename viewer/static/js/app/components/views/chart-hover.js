@@ -56,8 +56,14 @@ export default class extends React.Component {
   }
 
   _getFormattedVal(val) {
-    return d3Format.format('.1%')(val).replace('%', '');
+    // Check whether the percentage is less than 1.
+    if (val * 100 < 1) {
+      return d3Format.format('.3%')(val).replace('%', '');
+    } else {
+      return d3Format.format('.1%')(val).replace('%', '');
+    }
   }
+
   _getHoverString(metricType, x, y, p, population, xunit, numObs, index) {
     let result = this.props.hoverString;
     if (!result) return '';
