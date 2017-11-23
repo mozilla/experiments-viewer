@@ -38,7 +38,7 @@
     "gulp-stylus": "^2.3.1",
     "jest-cli": "^21.1.0",
     "nib": "^1.1.0",
-    "nl2br": "0.0.3",
+    "nl2br": "^0.0.3",
     "phantomjs-prebuilt": "^2.1.14",
     "react": "^15.0.1",
     "react-addons-test-utils": "^15.3.2",
