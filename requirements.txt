@@ -1,5 +1,5 @@
 Django==1.11.7
-PyOpenSSL==17.4.0
+PyOpenSSL==17.5.0
 contextlib2==0.5.5
 djangorestframework==3.7.3
 dj-database-url==0.4.2
