@@ -96,8 +96,8 @@ class Metric(models.Model):
 
 
 class Collection(models.Model):
-    dataset = models.ForeignKey(DataSet)
-    metric = models.ForeignKey(Metric)
+    dataset = models.ForeignKey(DataSet, on_delete=models.CASCADE)
+    metric = models.ForeignKey(Metric, on_delete=models.CASCADE)
     num_observations = models.IntegerField()
     population = models.CharField(max_length=255)
     subgroup = models.CharField(max_length=255, default='')
@@ -151,7 +151,8 @@ class Collection(models.Model):
 
 
 class Point(models.Model):
-    collection = models.ForeignKey(Collection, related_name='_points')
+    collection = models.ForeignKey(Collection, on_delete=models.CASCADE,
+                                   related_name='_points')
     bucket = models.CharField(max_length=255)
     proportion = models.FloatField()
     count = models.BigIntegerField(null=True)
@@ -159,8 +160,9 @@ class Point(models.Model):
 
 
 class Stats(models.Model):
-    dataset = models.ForeignKey(DataSet)
-    metric = models.ForeignKey(Metric, blank=True, null=True)
+    dataset = models.ForeignKey(DataSet, on_delete=models.CASCADE)
+    metric = models.ForeignKey(Metric, on_delete=models.CASCADE,
+                               blank=True, null=True)
     population = models.CharField(max_length=255, default='')
     subgroup = models.CharField(max_length=255, default='')
     key = models.CharField(max_length=100)

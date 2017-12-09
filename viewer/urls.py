@@ -1,4 +1,4 @@
-from django.conf.urls import include, url
+from django.conf.urls import url
 from django.contrib.auth import views as django_auth_views
 
 from .admin import admin_site
@@ -28,7 +28,7 @@ urlpatterns = [
 
     # Admin
     url(r'^admin/login/$', auth_views.login_view),
-    url(r'^admin/', include(admin_site.urls)),
+    url(r'^admin/', admin_site.urls),
 
     # The catch-all.
     url(r'.*', IndexView.as_view(), name='index'),

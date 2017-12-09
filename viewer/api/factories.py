@@ -1,6 +1,7 @@
 import datetime
 
 import factory
+from django.utils import timezone
 
 from . import models
 
@@ -9,9 +10,9 @@ class DataSetFactory(factory.django.DjangoModelFactory):
     name = factory.Sequence(lambda n: 'Long name for experiment %s' % n)
     slug = factory.Sequence(lambda n: 'experiment-%s' % n)
     created_at = factory.Sequence(
-        lambda n: datetime.date.today() - datetime.timedelta(days=n + 7))
+        lambda n: timezone.now() - datetime.timedelta(days=n + 7))
     date = factory.Sequence(
-        lambda n: datetime.date.today() + datetime.timedelta(days=n))
+        lambda n: timezone.now() + datetime.timedelta(days=n))
     display = True
 
     class Meta:
