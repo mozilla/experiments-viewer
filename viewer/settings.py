@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'viewer.api',
 ]
 
-MIDDLEWARE_CLASSES = [
+MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'dockerflow.django.middleware.DockerflowMiddleware',
     'django.middleware.common.CommonMiddleware',

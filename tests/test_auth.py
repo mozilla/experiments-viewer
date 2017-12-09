@@ -49,24 +49,24 @@ class TestLoginHandler(TestCase):
         res = self.post({'token': 'fake-token'})
         self.assertEqual(res.status_code, 200)
         user = get_user(self.client)
-        assert user.is_authenticated()
+        assert user.is_authenticated
 
     @patch.object(client, 'verify_id_token', bad_google_verify)
     def test_bad_login(self):
         res = self.post({'token': 'fake-token'})
         self.assertEqual(res.status_code, 403)
         user = get_user(self.client)
-        assert not user.is_authenticated()
+        assert not user.is_authenticated
 
     @patch.object(client, 'verify_id_token', wrong_domain_google_verify)
     def test_wrong_domain_login(self):
         res = self.post({'token': 'fake-token'})
         self.assertEqual(res.status_code, 403)
         user = get_user(self.client)
-        assert not user.is_authenticated()
+        assert not user.is_authenticated
 
     def test_login_nodata(self):
         res = self.post({})
         self.assertEqual(res.status_code, 400)
         user = get_user(self.client)
-        assert not user.is_authenticated()
+        assert not user.is_authenticated
