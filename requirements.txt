@@ -1,7 +1,7 @@
 Django==2.0.1
 PyOpenSSL==17.4.0
 contextlib2==0.5.5
-djangorestframework==3.7.3
+djangorestframework==3.7.7
 dj-database-url==0.4.2
 dockerflow==2017.11.0
 factory_boy==2.9.2
