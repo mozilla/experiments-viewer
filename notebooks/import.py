@@ -318,3 +318,14 @@ for exp in experiments:
 
     # Commit the transaction for this experiment.
     conn.commit()
+
+
+# Update enabled flag for all experiments.
+for slug, exp in get_experiments().items():
+    sql = 'UPDATE api_dataset SET enabled=%s WHERE slug=%s'
+    params = [exp.get('enabled'), slug]
+    if DEBUG_SQL:
+        print cursor.mogrify(sql, params)
+    else:
+        cursor.execute(sql, params)
+    conn.commit()

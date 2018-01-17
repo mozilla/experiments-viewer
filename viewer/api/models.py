@@ -30,6 +30,7 @@ class DataSet(models.Model):
     display = models.BooleanField(default=False)
     import_start = models.DateTimeField(null=True)
     import_stop = models.DateTimeField(null=True)
+    enabled = models.BooleanField(default=False)
 
     objects = DataSetQuerySet.as_manager()
 
