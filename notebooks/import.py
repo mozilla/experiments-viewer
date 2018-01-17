@@ -92,8 +92,8 @@ def create_dataset(cursor, exp, process_date):
 
     sql = '''
         INSERT INTO api_dataset
-            (name, slug, created_at, date, display, import_start)
-        VALUES (%s, %s, %s, %s, %s, %s)
+            (name, slug, created_at, date, display, import_start, enabled)
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
         RETURNING id
     '''
     params = [
@@ -103,6 +103,7 @@ def create_dataset(cursor, exp, process_date):
         process_date_dt,
         False,
         datetime.datetime.now(),
+        experiments[exp].get('enabled', False),
     ]
     if DEBUG_SQL:
         print cursor.mogrify(sql, params)
