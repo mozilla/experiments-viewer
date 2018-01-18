@@ -5,7 +5,7 @@ djangorestframework==3.7.7
 dj-database-url==0.4.2
 dockerflow==2017.11.0
 factory_boy==2.9.2
-google-api-python-client==1.6.4
+google-api-python-client==1.6.5
 gunicorn==19.7.1
 httplib2==0.10.3
 mock==2.0.0
