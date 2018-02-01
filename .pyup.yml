@@ -1,4 +1,5 @@
 update: all
+schedule: "every week"
 search: False
 requirements:
   - requirements.txt
