@@ -68,7 +68,9 @@ gulp.task('jest', ['build:js'], () => {
 
 gulp.task('nightwatch', ['build:js'], () => {
   return gulp.src('')
-             .pipe(nightwatch());
+             .pipe(nightwatch({
+                 configFile: 'nightwatch.conf.js',
+             }));
 });
 
 gulp.task('build', ['build:js', 'build:css']);
