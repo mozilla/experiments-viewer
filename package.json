@@ -9,7 +9,7 @@
     "size": "webpack --json | webpack-bundle-size-analyzer"
   },
   "dependencies": {
-    "axios": "^0.17.0",
+    "axios": "^0.18.0",
     "babel-core": "^6.7.7",
     "babel-jest": "^22.0.3",
     "babel-loader": "^7.1.1",
