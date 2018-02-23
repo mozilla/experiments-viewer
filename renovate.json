@@ -4,5 +4,9 @@
     ],
     "docker": {
         "enabled": false
-    }
+    },
+    "packageRules": [
+        "packageNames": ["react-router"],
+        "separatePatchReleases": true
+    ]
 }
