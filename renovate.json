@@ -6,7 +6,9 @@
         "enabled": false
     },
     "packageRules": [
-        "packageNames": ["react-router"],
-        "separatePatchReleases": true
+        {
+            "packageNames": ["react-router"],
+            "separatePatchReleases": true
+        }
     ]
 }
