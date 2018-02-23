@@ -1,5 +1,6 @@
 import path from 'path';
 import webpack from 'webpack';
+import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 
 const plugins = [
   new webpack.DefinePlugin({
@@ -13,12 +14,7 @@ const plugins = [
 // Debugging is a bit tricker when the bundle is compressed, so only compress it
 // on production.
 if (process.env.NODE_ENV === 'production') {
-  plugins.push(new webpack.optimize.UglifyJsPlugin({
-    comments: false,
-    compress: {
-      warnings: false
-    }
-  }));
+  plugins.push(new UglifyJsPlugin());
 }
 
 module.exports = {
