@@ -3,7 +3,7 @@ PyOpenSSL==17.5.0
 contextlib2==0.5.5
 djangorestframework==3.7.7
 dj-database-url==0.4.2
-dockerflow==2017.11.0
+dockerflow==2018.2.1
 factory_boy==2.10.0
 google-api-python-client==1.6.5
 gunicorn==19.7.1
