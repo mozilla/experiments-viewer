@@ -32,7 +32,7 @@
     "gulp-clean-css": "3.9.2",
     "gulp-concat": "2.6.1",
     "gulp-eslint": "4.0.2",
-    "gulp-jest": "3.0.1",
+    "gulp-jest": "4.0.0",
     "gulp-nightwatch": "0.3.2",
     "gulp-sourcemaps": "2.6.4",
     "gulp-stylus": "2.7.0",
