@@ -13,8 +13,7 @@ from pyspark.sql import SparkSession
 BUCKET = environ.get('bucket', 'telemetry-parquet')
 DB = environ.get('db', 'experiments-viewer-db')
 PATH = 's3://%s/experiments_aggregates/v1/' % BUCKET
-NORMANDY_URL = ('https://normandy.services.mozilla.com/api/v1/recipe/'
-                '?latest_revision__action=3')
+NORMANDY_URL = 'https://normandy.services.mozilla.com/api/v1/recipe/'
 LOG_LEVEL = logging.INFO  # Change to incr/decr logging output.
 DEBUG_SQL = False  # Set to True to not insert any data.
 
@@ -103,7 +102,7 @@ def create_dataset(cursor, exp, process_date):
         process_date_dt,
         False,
         datetime.datetime.now(),
-        experiments[exp].get('enabled', False),
+        experiments.get(exp, {}).get('enabled', False),
     ]
     if DEBUG_SQL:
         print cursor.mogrify(sql, params)
