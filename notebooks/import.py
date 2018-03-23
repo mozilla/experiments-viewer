@@ -17,7 +17,7 @@ NORMANDY_URL = 'https://normandy.services.mozilla.com/api/v1/recipe/'
 LOG_LEVEL = logging.INFO  # Change to incr/decr logging output.
 DEBUG_SQL = False  # Set to True to not insert any data.
 
-EXPERIMENTS = None
+EXPERIMENTS = {}
 METRICS = None
 
 logging.basicConfig(level=LOG_LEVEL)
@@ -52,12 +52,16 @@ def get_database_connection():
 def get_experiments():
     global EXPERIMENTS
 
-    if EXPERIMENTS is not None:
+    if EXPERIMENTS:
         return EXPERIMENTS
 
     resp = requests.get(NORMANDY_URL)
     if resp.status_code == 200:
-        EXPERIMENTS = {r['arguments']['slug']: r for r in resp.json()}
+        for exp in resp.json():
+            try:
+                EXPERIMENTS[exp['arguments']['slug']] = exp
+            except KeyError:
+                pass
     else:
         EXPERIMENTS = {}
 
