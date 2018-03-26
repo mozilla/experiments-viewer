@@ -52,7 +52,7 @@
     "string-template": "1.0.0",
     "striptags": "3.1.1",
     "uglifyjs-webpack-plugin": "1.2.4",
-    "webpack-stream": "4.0.2"
+    "webpack-stream": "4.0.3"
   },
   "devDependencies": {
     "webpack-bundle-size-analyzer": "2.7.0"
