@@ -7,7 +7,7 @@ dockerflow==2018.2.1
 factory_boy==2.10.0
 google-api-python-client==1.6.6
 gunicorn==19.7.1
-httplib2==0.10.3
+httplib2==0.11.3
 mock==2.0.0
 oauth2client==4.1.2
 psycopg2==2.7.4
