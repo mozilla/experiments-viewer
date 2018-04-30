@@ -16,7 +16,7 @@
     "babel-plugin-transform-object-rest-spread": "6.26.0",
     "babel-preset-env": "1.6.1",
     "babel-preset-react": "6.24.1",
-    "browser-sync": "2.23.7",
+    "browser-sync": "2.24.1",
     "d3-array": "1.2.1",
     "d3-axis": "1.0.8",
     "d3-format": "1.2.2",
