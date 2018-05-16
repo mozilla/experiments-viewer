@@ -240,11 +240,14 @@ def create_points(cursor, collection_id, histogram):
 
 
 def create_stat(cursor, dataset_id, metric_id, population, subgroup, key,
-                value):
+                value, confidence_low=None, confidence_high=None,
+                confidence_level=None):
     sql = ('INSERT INTO api_stats '
-           '(dataset_id, metric_id, population, subgroup, key, value) '
-           'VALUES (%s, %s, %s, %s, %s, %s) ')
-    params = [dataset_id, metric_id, population, subgroup, key, value]
+           '(dataset_id, metric_id, population, subgroup, key, value, '
+           ' confidence_low, confidence_high, confidence_level) '
+           'VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s) ')
+    params = [dataset_id, metric_id, population, subgroup, key, value,
+              confidence_low, confidence_high, confidence_level]
     if DEBUG_SQL:
         print cursor.mogrify(sql, params)
     else:
@@ -316,6 +319,14 @@ for exp in experiments:
                                           row['n'], population,
                                           row['subgroup'] or '')
         create_points(cursor, collection_id, row['histogram'])
+
+        # Gather stats.
+        mean = [r for r in row['statistics'] if r.name == 'Mean']
+        if mean:
+            m = mean[0]
+            create_stat(cursor, dataset_id, metric_id, population, '', 'mean',
+                        m.value, m.confidence_low, m.confidence_high,
+                        m.confidence_level)
 
     # Flag dataset as viewable.
     display_dataset(cursor, exp, dataset_id)

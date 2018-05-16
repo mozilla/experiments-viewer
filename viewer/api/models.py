@@ -167,4 +167,7 @@ class Stats(models.Model):
     population = models.CharField(max_length=255, default='')
     subgroup = models.CharField(max_length=255, default='')
     key = models.CharField(max_length=100)
-    value = models.IntegerField()
+    value = models.FloatField()
+    confidence_low = models.FloatField(blank=True, null=True)
+    confidence_high = models.FloatField(blank=True, null=True)
+    confidence_level = models.FloatField(blank=True, null=True)
