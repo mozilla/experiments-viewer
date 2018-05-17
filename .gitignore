@@ -4,20 +4,6 @@
 *.dump
 *.swp
 
-# Python and Django
-*.pyc
-.env
-.coverage
-staticfiles/
-env/
-
 # Node
 node_modules/
 npm-debug.log
-.npm
-
-# Front-end
-viewer/static/**/bundle.*
-.babel.json
-.v8flags.*
-selenium-debug.log
