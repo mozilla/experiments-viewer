@@ -27,5 +27,5 @@ configparser==3.5.0
 flake8==3.5.0
 mccabe==0.6.1
 pycodestyle==2.4.0
-pyflakes==1.6.0
+pyflakes==2.0.0
 coverage==4.5.1
